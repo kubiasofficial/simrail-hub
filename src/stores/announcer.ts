@@ -5,10 +5,10 @@ import { buildSegments, type AnnKind, type Segment, type PronEntry, type Templat
 import { useSettings } from './settings';
 
 interface AnnouncerState {
-  pending: number; playing: boolean; lastText: string | null; lastError: string | null;
+  pending: number; playing: boolean; nextAllowedAt:number; lastText: string | null; lastError: string | null;
   pron: PronEntry[]; templates: TemplateOverrides;
   reloadContent: () => Promise<void>;
-  announce: (key: string, kind: AnnKind, params: { station?: string | null; delayMin?: number;trainNumber?:string;isFreight?:boolean }) => boolean;
+  announce: (key: string, kind: AnnKind, params: { station?: string | null; delayMin?: number;trainNumber?:string;isFreight?:boolean;automatic?:boolean }) => boolean;
   announceService:(key:string,id:ServiceAnnouncementId,isFreight:boolean)=>boolean;
   lastSource:'recorded'|'tts'|null;
   speakText: (seg: Segment) => Promise<void>;
@@ -63,10 +63,10 @@ export const useAnnouncer = create<AnnouncerState>((set, get) => {
     set({ playing: true, lastText: seg.text });
     try { await playSegment(seg); set({ lastError: null }); }
     catch (e) { if((e as Error).name!=='AbortError')set({ lastError: (e as Error).message }); throw e; }
-    finally { set({ playing: queue.pending > 0 }); }
-  }, Date.now, (pending) => set({ pending }));
+    finally { set({ playing:false }); }
+  }, Date.now, (pending) => set({ pending }),{gapMs:()=>useSettings.getState().settings.announcements.gapSeconds*1000,onCooldown:nextAllowedAt=>set({nextAllowedAt})});
   return {
-    pending: 0, playing: false, lastText: null, lastError: null, lastSource:null, pron: [], templates: {},
+    pending: 0, playing: false, nextAllowedAt:0, lastText: null, lastError: null, lastSource:null, pron: [], templates: {},
     reloadContent: async () => {
       const [d, m] = await Promise.all([api().call('dict:list'), api().call('mods:active')]);
       set({ pron: [...(d.ok ? d.data : []), ...(m.ok ? m.data.pronunciations : [])], templates: m.ok ? m.data.templates : {} });
@@ -77,11 +77,13 @@ export const useAnnouncer = create<AnnouncerState>((set, get) => {
       if(params.isFreight)return false;
       if(segments[0])segments[0].intro=true;
       for(const segment of segments)if(segment.lang==='cs')segment.recording={kind,station:params.station??null,trainNumber:params.trainNumber??null,isFreight:false};
-      return queue.enqueue({ key, kind, segments });
+      if(!params.automatic)get().stop();
+      return queue.enqueue({ key, kind, segments,automatic:!!params.automatic,station:params.station });
     },
     announceService:(key,id,isFreight)=>{
       if(isFreight||!useSettings.getState().settings.announcements.recorded)return false;
       const entry=SERVICE_ANNOUNCEMENTS[id];if(!entry)return false;
+      get().stop();
       return queue.enqueue({key,kind:'delay',segments:[{lang:'cs',text:entry.label,intro:true,recording:{kind:'delay',station:null,trainNumber:null,isFreight:false,service:id}}]});
     },
     speakText: async (seg) => { get().stop();set({ lastText: seg.text }); try { await playSegment({...seg,intro:true}); set({ lastError: null }); } catch (e) { if((e as Error).name!=='AbortError')set({ lastError: (e as Error).message }); } },

@@ -1,3 +1,4 @@
+import {APP_LOCALES} from '../types/locale';
 import { DEFAULT_SETTINGS, type Settings, type SettingsPatch } from '../types/settings';
 
 const clamp = (n: unknown, min: number, max: number, def: number) =>
@@ -21,7 +22,8 @@ export function normalizeSettings(raw: unknown): Settings {
     manualGamePath: strOrNull(r.manualGamePath),
     recordingsPath: strOrNull(r.recordingsPath),
     launchViaSteam: true,
-    appLanguage: 'cs',
+    appLanguage:oneOf(r.appLanguage,APP_LOCALES,'cs'),
+    appCountry:oneOf(r.appCountry,['cz','de','pl','fr','sk','at','be','bg','hr','cy','dk','ee','fi','gr','hu','ie','it','lv','lt','lu','mt','nl','pt','ro','si','es','se','gb'] as const,'cz'),
     animations: bool(r.animations,d.animations),
     theme: oneOf(r.theme, ['blue', 'graphite'] as const, d.theme),
     dataRefreshSeconds: clamp(r.dataRefreshSeconds, 15, 300, d.dataRefreshSeconds),
@@ -33,6 +35,7 @@ export function normalizeSettings(raw: unknown): Settings {
     },
     announcements: {
       auto: bool(an.auto, d.announcements.auto),
+      gapSeconds:clamp(an.gapSeconds,10,60,d.announcements.gapSeconds),
       gong: bool(an.gong,d.announcements.gong),
       recorded: bool(an.recorded,d.announcements.recorded),
       language: oneOf(an.language, ['cs', 'pl', 'cs-pl'] as const, d.announcements.language),

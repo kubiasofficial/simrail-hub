@@ -1,0 +1,22 @@
+[
+  {
+    "image": "./assets/home/hero-eu07.jpg",
+    "name": "EU07 · SimRail",
+    "source": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/4E"
+  },
+  {
+    "image": "./assets/home/hero-5240850.jpg",
+    "name": "BR 285 · SimRail",
+    "source": "https://store.steampowered.com/app/5240850/"
+  },
+  {
+    "image": "./assets/home/hero-2868050.jpg",
+    "name": "Cargo Pack · SimRail",
+    "source": "https://store.steampowered.com/app/2868050/"
+  },
+  {
+    "image": "./assets/home/hero-pendolino.png",
+    "name": "ED250 Pendolino · SimRail",
+    "source": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/Pendolino"
+  }
+]

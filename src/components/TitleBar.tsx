@@ -1,3 +1,4 @@
+import {LanguageMenu} from '@/components/LanguageMenu';
 import { useEffect, useState } from 'react';
 import { Minus, Square, Copy, X, TrainFront } from 'lucide-react';
 
@@ -16,13 +17,13 @@ export function TitleBar() {
   const btn = 'no-drag grid h-9 w-12 place-items-center text-slate-400 transition-colors hover:bg-white/10 hover:text-white';
 
   return (
-    <header className="drag flex h-9 items-center justify-between border-b border-line bg-ink-950/80">
+    <header className="release-titlebar drag flex h-9 items-center justify-between border-b border-line bg-ink-950/80">
       <div className="flex items-center gap-2 pl-3 text-[13px] text-slate-300">
         <TrainFront size={15} className="text-sky-brand" />
         <span className="font-medium">SimRail Hub</span>
         {fixtures && <span className="ml-3 rounded bg-fuchsia-500/90 px-2 py-0.5 text-[11px] font-bold text-white">UKÁZKOVÁ DATA – ne živý provoz</span>}
       </div>
-      <div className="flex">
+      <div className="flex items-center"><LanguageMenu/>
         <button className={btn} aria-label="Minimalizovat" onClick={() => void window.simrailHub?.minimize()}>
           <Minus size={15} />
         </button>

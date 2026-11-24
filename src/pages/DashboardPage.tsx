@@ -1,3 +1,4 @@
+import {delaySeverity} from '@/services/delayPresentation';
 import { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import { ArrowDown, ExternalLink, Megaphone, Pause, Play, RotateCcw, SkipForward, Square, TrainFront, TriangleAlert, Wifi, WifiOff } from 'lucide-react';
 import {ServiceAnnouncementPanel} from '@/components/ServiceAnnouncementPanel';
@@ -49,6 +50,8 @@ export function DashboardPage({ standalone = false, active = true }: { standalon
   const demo = useDemo();
   const ann = useAnnouncer();
   const [showPassed, setShowPassed] = useState(false);
+  const [now,setNow]=useState(Date.now());
+  useEffect(()=>{const id=setInterval(()=>setNow(Date.now()),1000);return()=>clearInterval(id);},[]);
   const activeRow = useRef<HTMLLIElement>(null);
   const [trains, setTrains] = useState<Train[]>([]);
   const [listError, setListError] = useState<string | null>(null);
@@ -89,6 +92,7 @@ export function DashboardPage({ standalone = false, active = true }: { standalon
   const [disabled, setDisabled] = useState<string[]>([]);
   useEffect(() => { trigger.current.reset(); }, [sel.mode, server, sel.train]);
   const auto = settings.announcements.auto;
+  useEffect(()=>{if(!auto)useAnnouncer.getState().stop();},[auto]);
   const detail = feed.detail;
   const freight = !isDemo && isFreightTrain(detail?.train);
   useEffect(() => { ann.stop(); }, [sel.mode,server,sel.train,freight]); // stop queued speech when switching to freight
@@ -97,7 +101,7 @@ export function DashboardPage({ standalone = false, active = true }: { standalon
     const runKey = `${isDemo ? 'demo' : server}:${detail.train.runId ?? detail.train.number}`;
     const r = trigger.current.update({ runKey, index: detail.train.timetableIndex, speedKmh: detail.train.speedKmh, distToNextStopM: m.distanceToNextStopM, points: detail.timetable?.points ?? [], delayMin: m.delayMin });
     setDisabled(r.disabled);
-    for (const e of r.events) ann.announce(`${runKey}:${e.key}`, e.kind, { station: e.station, delayMin: e.delayMin, trainNumber:detail.train.number,isFreight:freight });
+    for (const e of r.events) ann.announce(`${runKey}:${e.key}`, e.kind, { station: e.station, delayMin: e.delayMin, trainNumber:detail.train.number,isFreight:freight,automatic:true });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [m, auto, freight]);
 
@@ -157,31 +161,10 @@ export function DashboardPage({ standalone = false, active = true }: { standalon
         <>
           {isDemo && <div className="rounded-xl bg-amber-500/90 px-4 py-1.5 text-center text-sm font-bold text-ink-950">DEMO – simulovaná data, nejde o skutečný vlak</div>}
 
-          <div className="journey-overview"><VehicleCard vehicles={feed.detail?.train?.vehicles ?? []} number={m.trainNumber}/><div className="next-stop-card panel"><span className="eyebrow">{m.current ? 'VE STANICI' : 'DALŠÍ ZASTÁVKA'}</span><h1>{m.current ?? m.next ?? NA}</h1><p>{m.current && m.next ? `Následuje ${m.next}` : m.end ? `Směr ${m.end}` : 'Konec trasy'}</p><div className="metric-pair"><strong>{m.speedKmh === null ? '—' : Math.round(m.speedKmh)} <small>km/h</small></strong><span>{fmtDelay(m)}</span></div><small className="muted">{feed.updatedAt ? `Poslední data ${new Date(feed.updatedAt).toLocaleTimeString('cs-CZ')}` : 'Čekám na data'}</small></div></div>
-          {/* hlavička vlaku */}
-          <div className="panel flex flex-wrap items-center gap-x-8 gap-y-3 rounded-2xl px-6 py-4">
-            <div>
-              <div className="text-[11px] text-slate-500">Vlak</div>
-              <div className="font-display text-3xl font-semibold text-white">{m.trainNumber}</div>
-              <div className="text-xs text-slate-400">{m.trainName ?? ''}</div>
-            </div>
-            <div className="min-w-0 flex-1">
-              <div className="text-[11px] text-slate-500">Trasa</div>
-              <div className="truncate text-lg text-white">{m.start ?? NA} <span className="text-slate-500">→</span> {m.end ?? NA}</div>
-            </div>
-            <div className={`rounded-xl border px-5 py-2 text-center ${DELAY_STYLE[m.delayClass]}`}>
-              <div className="text-[11px] opacity-70">Zpoždění{m.delayKind === 'estimate' ? ' (odhad)' : ''}</div>
-              <div className="text-xl font-semibold">{fmtDelay(m)}</div>
-            </div>
-            <div className="text-right"><Conn c={m.connection} /></div>
-          </div>
-
-          <div className="grid grid-cols-3 gap-3">
-            <Station label="Předchozí stanice" value={m.previous} tone="text-slate-300" />
-            <Station label="Aktuální stanice" value={m.current ?? (m.phase === 'moving' ? 'Mezi stanicemi' : m.phase === 'standing-unknown' ? 'Stojí (poloha vůči stanici neznámá)' : null)} tone={m.current ? 'text-emerald-300' : 'text-white'} />
-            <Station label="Následující stanice" value={m.next} />
-          </div>
-
+          <section className="journey-overview journey-summary"><div className="train-compact"><VehicleCard vehicles={feed.detail?.train?.vehicles??[]} number={m.trainNumber}/><p>{m.start??'—'} → {m.end??'—'}</p><Conn c={m.connection}/></div>
+          <div className="journey-station-panel"><div className="journey-stations"><div><span>Předchozí</span><strong key={'previous:'+m.previous}>{m.previous??'—'}</strong></div><div className="current-station"><span>Aktuální</span><strong key={'current:'+m.current}>{m.current??(m.phase==='moving'?'Mezi stanicemi':m.phase==='standing-unknown'?'Stojí mimo potvrzenou stanici':'—')}</strong></div><div><span>Následující</span><strong key={'next:'+m.next}>{m.next??'—'}</strong></div></div>
+          <div className="journey-metrics"><div className="journey-speed"><strong>{m.speedKmh===null?'—':Math.round(m.speedKmh)}</strong><span>km/h</span></div><div className="delay-indicator" data-severity={delaySeverity(m.delayMin)} key={delaySeverity(m.delayMin)} role="status"><span>Zpoždění{m.delayKind==='estimate'?' · odhad':''}</span><strong>{fmtDelay(m)}</strong>{(m.delayMin??0)>20&&<small>Výrazné zpoždění</small>}</div></div>
+          <small className="journey-updated">{feed.updatedAt?'Poslední data '+new Date(feed.updatedAt).toLocaleTimeString('cs-CZ'):'Čekám na data'}</small></div></section>
           <div className="grid grid-cols-[1fr_20rem] gap-4">
             {/* seznam stanic */}
             <div className="panel rounded-2xl p-4">
@@ -232,6 +215,7 @@ export function DashboardPage({ standalone = false, active = true }: { standalon
                 <label className="mb-3 flex items-center gap-2 text-xs text-slate-300">
                   <input type="checkbox" checked={auto} onChange={(e) => void updateSettings({ announcements: { auto: e.target.checked } })} /> Automatická hlášení
                 </label>
+                {auto&&ann.nextAllowedAt>now&&!ann.playing&&<p className="announcement-cooldown">Další automatické hlášení nejdříve za {Math.ceil((ann.nextAllowedAt-now)/1000)} s</p>}
                 {auto && disabled.map((d, i) => <div key={i} className="mb-2 flex gap-2 rounded-lg border border-amber-500/30 bg-amber-500/10 p-2 text-[11px] text-amber-100"><TriangleAlert size={13} className="mt-0.5 shrink-0" />{d}</div>)}
                 <div className="grid grid-cols-2 gap-2 text-xs">
                   {([['next-station', 'Příští stanice'], ['approaching', 'Blížíme se'], ['arrived', 'Příjezd'], ['terminal', 'Konečná'], ['delay', 'Zpoždění']] as [AnnKind, string][]).map(([k, label]) => (
@@ -240,7 +224,7 @@ export function DashboardPage({ standalone = false, active = true }: { standalon
                   ))}
                   <button onClick={() => ann.stop()} className="flex items-center justify-center gap-1 rounded-lg border border-line px-2 py-1.5 text-slate-300 hover:bg-white/5"><Square size={11} /> Zastavit</button>
                 </div>
-                <ServiceAnnouncementPanel freight={freight}/>
+                <details className="manual-announcements"><summary>Vlastní hlášení · ruční ovládání</summary><ServiceAnnouncementPanel freight={freight}/></details>
                 <div className="mt-3 text-[11px] text-sky-soft" role="status">{ann.lastSource==='recorded'?'Zdroj: vlastní nahrávka':ann.lastSource==='tts'?'Zdroj: syntetický hlas':''}</div>
                 <div className="mt-3 min-h-8 text-[11px] text-slate-400">{ann.pending > 0 && <span>Ve frontě: {ann.pending} · </span>}{ann.lastText ? `Naposledy: „${ann.lastText}“` : 'Zatím nic nebylo přehráno.'}</div>
                 {ann.lastError && <div role="alert" className="friendly-error"><strong>Hlášení se nepodařilo přehrát.</strong><p>Zkontrolujte hlas v Nastavení nebo vyzkoušejte systémový hlas.</p><button className="secondary-action" onClick={() => void navigator.clipboard.writeText(ann.lastError ?? '')}>Kopírovat chybu</button><details><summary>Technické podrobnosti</summary>{ann.lastError}</details></div>}

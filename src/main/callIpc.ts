@@ -1,3 +1,5 @@
+import {net} from 'electron';
+import {DlcService} from '../services/DlcService';
 import { autoUpdater } from 'electron-updater';
 import { AutomaticUpdates } from '../services/AutomaticUpdates';
 import { app, dialog, ipcMain, BrowserWindow } from 'electron';
@@ -24,6 +26,8 @@ export function registerCallIpc(ctx: AppContext, openDashboard: (server: string 
   const { settings, tracking, tts, mods, log } = ctx;
   const mobile = new MobileServer(tracking, join(__dirname, '../../dist'));
   const cloud=new CloudAccount();
+  const dlc=new DlcService(async(url,init)=>{const r=await net.fetch(url,init);return {ok:r.ok,status:r.status,text:()=>r.text()};});
+
   const automaticUpdates=new AutomaticUpdates(autoUpdater,app.isPackaged&&!process.env.PORTABLE_EXECUTABLE_FILE);
   const updateTimer=setTimeout(()=>void automaticUpdates.check(),15000);
   const updateInterval=setInterval(()=>void automaticUpdates.check(),6*60*60*1000);
@@ -47,6 +51,7 @@ export function registerCallIpc(ctx: AppContext, openDashboard: (server: string 
   };
   const modList = async () => mods.list();
   const recordings=async()=>new LocalRecordings((await settings.get()).recordingsPath??join(app.getPath('desktop'),'simrail-hub','hlaseni'));
+  on('dlc:list',region=>safe('dlc',()=>dlc.get(typeof region==='string'?region:'cz')));
   on('audio:gong',()=>safe('audio',async()=>encodeWav(gongSamples())));
   on('recordings:status',()=>safe('audio',async()=>(await recordings()).status()));
   on('recordings:choose',()=>safe('audio',async()=>{const choice=await dialog.showOpenDialog({title:'Složka soukromých nahrávek',properties:['openDirectory'],defaultPath:join(app.getPath('desktop'),'simrail-hub','hlaseni')});if(choice.canceled||!choice.filePaths[0])return null;await settings.update({recordingsPath:choice.filePaths[0]});return (await recordings()).status();}));

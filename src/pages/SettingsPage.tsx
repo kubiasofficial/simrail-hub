@@ -1,3 +1,4 @@
+import {APP_LOCALES,LANGUAGE_NAMES,type AppLocale} from '@/types/locale';
 import { useEffect, useState, useCallback, createContext, useContext, type ReactNode } from 'react';
 import { Download, FileDown, FolderSearch, Loader2, RefreshCw, Trash2, Volume2, Undo2 } from 'lucide-react';
 import { useSettings } from '@/stores/settings';
@@ -80,7 +81,7 @@ export function SettingsPage() {
 
       <Section title="Aplikace">
         <Row label="Animace rozhraní" hint="Jemné přechody a plynulý pohyb značek na mapě"><input type="checkbox" checked={s.animations} onChange={e=>void update({animations:e.target.checked})}/></Row>
-        <Row label="Jazyk aplikace" hint="Zatím je k dispozici pouze čeština"><select className={field} disabled value="cs"><option value="cs">Čeština</option></select></Row>
+        <Row label="Jazyk aplikace" hint="Jazyk rozhraní nemění jazyk zvukových hlášení."><select className={field} value={s.appLanguage} onChange={e=>void update({appLanguage:e.target.value as AppLocale})}>{APP_LOCALES.map(locale=><option key={locale} value={locale}>{LANGUAGE_NAMES[locale]}</option>)}</select></Row>
         <Row label="Motiv"><select className={field} value={s.theme} onChange={(e) => void update({ theme: e.target.value as 'blue' | 'graphite' })}><option value="blue">Tmavě modrý</option><option value="graphite">Antracitový</option></select></Row>
       </Section>
 
@@ -104,6 +105,7 @@ export function SettingsPage() {
 
       {tab==='Hlášení'&&<RecordingPanel/>}
       <Section title="Hlášení a hlas">
+        <Row label="Mezera mezi automatickými hlášeními" hint="Od konce hlášení do začátku dalšího. Omluva za zpoždění nejdříve po 15 minutách."><select className={field} value={s.announcements.gapSeconds} onChange={e=>void update({announcements:{gapSeconds:Number(e.target.value)}})}>{[10,15,20,30,45,60].map(n=><option key={n} value={n}>{n} s</option>)}</select></Row>
         <Row label="Automatická hlášení" hint="Podle jízdního řádu, polohy a rychlosti"><input type="checkbox" checked={s.announcements.auto} onChange={(e) => void update({ announcements: { auto: e.target.checked } })} /></Row>
         <Row label="Jazyk hlášení"><select className={field} value={s.announcements.language} onChange={(e) => void update({ announcements: { language: e.target.value as 'cs' | 'pl' | 'cs-pl' } })}><option value="cs">Česky</option><option value="pl">Polsky</option><option value="cs-pl">Česky + polsky</option></select></Row>
         <Row label="Hlasový engine" hint="Piper = offline, přirozenější; systémový hlas = bez stahování, jen pokud je ve Windows český hlas">

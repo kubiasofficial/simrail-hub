@@ -74,45 +74,31 @@ export const DEFAULT_TRIGGER: TriggerConfig = { approachM: 2000, arrivedM: 300, 
 
 /** Stavový automat automatických hlášení: každou událost pro daný jízdní běh vyvolá nejvýše jednou. */
 export class AnnouncementTrigger {
-  private fired = new Set<string>();
-  private run: string | null = null;
-  constructor(private cfg: TriggerConfig = DEFAULT_TRIGGER) {}
-
-  reset() { this.fired.clear(); this.run = null; }
-
-  update(inp: TriggerInput): { events: AnnouncementEvent[]; disabled: string[] } {
-    if (inp.runKey !== this.run) { this.fired.clear(); this.run = inp.runKey; }
-    if (inp.isFreight) return {events:[],disabled:[]};
-    const disabled: string[] = [];
-    if (!inp.points.length) return { events: [], disabled: ['Chybí jízdní řád vlaku – automatická hlášení jsou vypnutá, použijte ruční režim.'] };
-    if (inp.index === null) return { events: [], disabled: ['API neposkytlo index jízdního řádu – automatická hlášení jsou vypnutá, použijte ruční režim.'] };
-    if (inp.speedKmh === null) return { events: [], disabled: ['API neposkytlo rychlost vlaku – automatická hlášení jsou vypnutá, použijte ruční režim.'] };
-
-    const events: AnnouncementEvent[] = [];
-    const emit = (key: string, e: Omit<AnnouncementEvent, 'key'>) => { if (!this.fired.has(key)) { this.fired.add(key); events.push({ key, ...e }); } };
-    const moving = inp.speedKmh >= this.cfg.movingKmh;
-    const stopped = inp.speedKmh <= this.cfg.stoppedKmh;
-    const idx = Math.min(Math.max(inp.index, 0), inp.points.length - 1);
-    const si = inp.points.findIndex((p, k) => k >= idx && isPassengerStop(p));
-    const stop = si >= 0 ? inp.points[si] : null;
-
-    if (stop) {
-      const isLast = si === inp.points.length - 1;
-      if (moving) emit(`next:${si}`, { kind: 'next-station', station: stop.name });
-      if (inp.distToNextStopM === null) {
-        disabled.push(`Chybí souřadnice stanice „${stop.name}“ – hlášení „blížíme se“ a „příjezd“ nelze spustit automaticky.`);
-      } else {
-        if (moving && inp.distToNextStopM <= this.cfg.approachM) {
-          emit(`${isLast ? 'terminal' : 'approach'}:${si}`, isLast ? { kind: 'terminal', station: stop.name } : { kind: 'approaching', station: stop.name });
-        }
-        // Výchozí stanici (index 0) neohlašujeme jako příjezd – vlak v ní na začátku jízdy jen stojí.
-        if (stopped && si > 0 && inp.distToNextStopM <= this.cfg.arrivedM) emit(`arrived:${si}`, { kind: 'arrived', station: stop.name });
-      }
-    }
-    if (moving && inp.delayMin !== null && inp.delayMin >= this.cfg.delayStepMin) {
-      const bucket = Math.floor(inp.delayMin / this.cfg.delayStepMin) * this.cfg.delayStepMin;
-      emit(`delay:${bucket}`, { kind: 'delay', station: null, delayMin: inp.delayMin });
-    }
-    return { events, disabled };
+ private fired=new Set<string>();private run:string|null=null;private lastDelayAt:number|null=null;private delaySequence=0;
+ constructor(private cfg:TriggerConfig=DEFAULT_TRIGGER,private now:()=>number=Date.now){}
+ reset(){this.fired.clear();this.run=null;this.lastDelayAt=null;this.delaySequence=0;}
+ update(inp:TriggerInput):{events:AnnouncementEvent[];disabled:string[]}{
+  if(inp.runKey!==this.run){this.reset();this.run=inp.runKey;}
+  if(inp.isFreight)return {events:[],disabled:[]};
+  const disabled:string[]=[];
+  if(!inp.points.length||inp.index===null||inp.speedKmh===null)return {events:[],disabled:['Chybí jízdní řád, index nebo rychlost vlaku. Použijte ruční režim.']};
+  const events:AnnouncementEvent[]=[];
+  const emit=(key:string,kind:AnnKind,station:string)=>{if(!this.fired.has(key)){this.fired.add(key);events.push({key,kind,station});}};
+  const moving=inp.speedKmh>=this.cfg.movingKmh,stopped=inp.speedKmh<=this.cfg.stoppedKmh;
+  const idx=Math.min(Math.max(inp.index,0),inp.points.length-1);
+  const si=inp.points.findIndex((p,k)=>k>=idx&&isPassengerStop(p)),stop=si>=0?inp.points[si]:null;
+  if(stop){
+   if(inp.distToNextStopM===null)disabled.push('Chybí souřadnice stanice „'+stop.name+'“ — blížíme se a příjezd nelze spustit automaticky.');
+   if(stopped&&si>0&&inp.distToNextStopM!==null&&inp.distToNextStopM<=this.cfg.arrivedM){
+    this.fired.add('next:'+si);this.fired.add('approach:'+si);this.fired.add('terminal:'+si);emit('arrived:'+si,'arrived',stop.name);
+   }else if(moving&&inp.distToNextStopM!==null&&inp.distToNextStopM<=this.cfg.approachM){
+    this.fired.add('next:'+si);const terminal=si===inp.points.length-1;emit((terminal?'terminal':'approach')+':'+si,terminal?'terminal':'approaching',stop.name);
+   }else if(moving)emit('next:'+si,'next-station',stop.name);
   }
+  if(inp.delayMin!==null&&inp.delayMin<=0)this.lastDelayAt=null;
+  if(inp.delayMin!==null&&inp.delayMin>0&&!events.length&&(this.lastDelayAt===null||this.now()-this.lastDelayAt>=15*60*1000)){
+   this.lastDelayAt=this.now();events.push({key:'delay:'+this.delaySequence++,kind:'delay',station:null,delayMin:inp.delayMin});
+  }
+  return {events,disabled};
+ }
 }

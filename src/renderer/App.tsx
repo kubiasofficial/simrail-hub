@@ -1,3 +1,4 @@
+import {Localization} from '@/components/Localization';
 import { useEffect } from 'react';
 import { UpdatePanel } from '@/components/UpdatePanel';
 import { useAutomaticUpdates } from '@/stores/automaticUpdates';
@@ -24,11 +25,11 @@ export function App() {
   useEffect(()=>{if(isStandaloneDashboard())return;void useAutomaticUpdates.getState().refresh();const id=setInterval(()=>void useAutomaticUpdates.getState().refresh(),2000);return()=>clearInterval(id);},[]);
 
   if (isStandaloneDashboard()) {
-    return <div className="h-full overflow-y-auto"><DashboardPage standalone /></div>;
+    return <div className="h-full overflow-y-auto"><Localization/><DashboardPage standalone /></div>;
   }
   return (
     <div className="flex h-full flex-col">
-      <TitleBar />
+      <Localization/><TitleBar />
       <UpdatePanel compact/>
       <div className="flex min-h-0 flex-1">
         <Sidebar />

@@ -1,0 +1,102 @@
+{
+  "checkedAt": 1795518962159,
+  "region": "cz",
+  "items": [
+    {
+      "id": 5240850,
+      "name": "BR 285",
+      "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5240850/646116143c9de88461a54815ad33763cc842840a/header.jpg?t=1790780887",
+      "fallbackImage": "./assets/dlc/5240850.jpg",
+      "url": "https://store.steampowered.com/app/5240850/",
+      "upcoming": false,
+      "releaseDate": "30. zář. 2026",
+      "price": "12,99€",
+      "currency": "EUR",
+      "discount": 0
+    },
+    {
+      "id": 4916490,
+      "name": "Łódź North Region",
+      "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4916490/bb2e28e29d1e5dd8a56d6ced40e0ce099071009c/header.jpg?t=1794239552",
+      "fallbackImage": "./assets/dlc/4916490.jpg",
+      "url": "https://store.steampowered.com/app/4916490/",
+      "upcoming": false,
+      "releaseDate": "13. srp. 2026",
+      "price": "12,99€",
+      "currency": "EUR",
+      "discount": 0
+    },
+    {
+      "id": 2868050,
+      "name": "Cargo Pack",
+      "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2868050/header.jpg?t=1741890162",
+      "fallbackImage": "./assets/dlc/2868050.jpg",
+      "url": "https://store.steampowered.com/app/2868050/",
+      "upcoming": false,
+      "releaseDate": "22. dub. 2024",
+      "price": "19,50€",
+      "currency": "EUR",
+      "discount": 0
+    },
+    {
+      "id": 3583200,
+      "name": "Łódź - Warsaw",
+      "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3583200/f9852964dfab65a77c5ed3b310c8f752aa9ca13d/header.jpg?t=1786016906",
+      "fallbackImage": "./assets/dlc/3583200.jpg",
+      "url": "https://store.steampowered.com/app/3583200/",
+      "upcoming": false,
+      "releaseDate": "30. dub. 2025",
+      "price": "12,79€",
+      "currency": "EUR",
+      "discount": 0
+    },
+    {
+      "id": 4009000,
+      "name": "Łódź Junction",
+      "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4009000/2c7c65fc5caee73a0980e03e98a2174cb599458b/header.jpg?t=1786016267",
+      "fallbackImage": "./assets/dlc/4009000.jpg",
+      "url": "https://store.steampowered.com/app/4009000/",
+      "upcoming": false,
+      "releaseDate": "26. úno. 2026",
+      "price": "12,79€",
+      "currency": "EUR",
+      "discount": 0
+    },
+    {
+      "id": 4009020,
+      "name": "CD 163 Series",
+      "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4009020/96fd824199e06e0b640ffe9b08eacb278fdea63d/header.jpg?t=1786016520",
+      "fallbackImage": "./assets/dlc/4009020.jpg",
+      "url": "https://store.steampowered.com/app/4009020/",
+      "upcoming": false,
+      "releaseDate": "25. led. 2026",
+      "price": "12,79€",
+      "currency": "EUR",
+      "discount": 0
+    },
+    {
+      "id": 4380650,
+      "name": "Impuls 2",
+      "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4380650/359093d722b492112fe57d7c7a04ce768ecb85cc/header.jpg?t=1786015573",
+      "fallbackImage": "./assets/dlc/4380650.jpg",
+      "url": "https://store.steampowered.com/app/4380650/",
+      "upcoming": false,
+      "releaseDate": "26. úno. 2026",
+      "price": "12,79€",
+      "currency": "EUR",
+      "discount": 0
+    },
+    {
+      "id": 5548340,
+      "name": "Lublin Region",
+      "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5548340/dba151267b8b6632cfb5b0ba51b3c33888395626/header.jpg?t=1794340444",
+      "fallbackImage": "./assets/dlc/5548340.jpg",
+      "url": "https://store.steampowered.com/app/5548340/",
+      "upcoming": true,
+      "releaseDate": "Prosinec 2026",
+      "price": null,
+      "currency": null,
+      "discount": 0
+    }
+  ]
+}

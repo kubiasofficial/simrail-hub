@@ -1,0 +1,3 @@
+export const APP_LOCALES=["cs", "en", "de", "pl", "fr", "sk", "nl", "bg", "hr", "el", "da", "et", "fi", "hu", "it", "es", "lv", "lt", "pt", "ro", "sl", "sv", "ga", "mt", "lb", "tr"] as const;
+export type AppLocale=typeof APP_LOCALES[number];
+export const LANGUAGE_NAMES={"cs": "Čeština", "en": "English", "de": "Deutsch", "pl": "Polski", "fr": "Français", "sk": "Slovenčina", "nl": "Nederlands", "bg": "Български", "hr": "Hrvatski", "el": "Ελληνικά", "da": "Dansk", "et": "Eesti", "fi": "Suomi", "hu": "Magyar", "it": "Italiano", "es": "Español", "lv": "Latviešu", "lt": "Lietuvių", "pt": "Português", "ro": "Română", "sl": "Slovenščina", "sv": "Svenska", "ga": "Gaeilge", "mt": "Malti", "lb": "Lëtzebuergesch", "tr": "Türkçe"} as const;

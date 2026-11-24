@@ -112,3 +112,10 @@ Provoz je na Spark bez fakturace: viz [bezplatný provoz](docs/FREE-HOSTING.md) 
 ## Aktualizace launcheru
 
 Launcher upozorní na nové vydání a otevře stránku ke stažení. Automatické stažení a instalace zatím nejsou implementované.
+
+
+### Veřejná beta 0.5.0
+Podrobnosti a omezení jsou v [poznámkách k vydání](docs/RELEASE-0.5.0.md).
+Překlad základního ovládání nabízí výběr zemí EU a angličtinu; úplné překlady podrobností jsou rozpracované.
+Mapový podklad používá OpenStreetMap s místní úpravou tmavého/světlého vzhledu. Dlaždice se načítají jen pro zobrazenou oblast a ukládá je standardní disková HTTP cache Electronu; aplikace nic hromadně nestahuje.
+[Pravidla poskytovatele mapových dlaždic](https://operations.osmfoundation.org/policies/tiles/).

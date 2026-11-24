@@ -5,8 +5,8 @@ import {normalizeSettings} from './settingsSchema';
 export interface AccountStatus {email:string;uid:string}
 type Session=AccountStatus&{idToken:string;refreshToken:string;expires:number};
 export function portableSettings(settings:Settings):SettingsPatch {
- const {animations,theme,appLanguage,dataRefreshSeconds,selectedServer,map,announcements}=settings;
- return {animations,theme,appLanguage,dataRefreshSeconds,selectedServer,map,announcements};
+ const {animations,theme,appLanguage,appCountry,dataRefreshSeconds,selectedServer,map,announcements}=settings;
+ return {animations,theme,appLanguage,appCountry,dataRefreshSeconds,selectedServer,map,announcements};
 }
 export class CloudAccount {
  private session:Session|null=null;

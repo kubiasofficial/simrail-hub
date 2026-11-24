@@ -1,0 +1,17 @@
+import {useEffect,useRef,useState} from 'react';
+import {X,ArrowUpRight} from 'lucide-react';
+import snapshot from '@/data/dlc-snapshot.json';
+import type {DlcCatalog} from '@/types/dlc';
+export function DlcDialog({onClose}:{onClose:()=>void}){
+ const dialog=useRef<HTMLDialogElement>(null);const [tab,setTab]=useState<'all'|'upcoming'>('all'),[region,setRegion]=useState('cz');
+ const [data,setData]=useState<DlcCatalog>({...snapshot,cached:true}),[loading,setLoading]=useState(true),[error,setError]=useState('');
+ useEffect(()=>{const d=dialog.current!;d.showModal();const close=()=>onClose();d.addEventListener('close',close);return()=>{d.removeEventListener('close',close);d.close();};},[onClose]);
+ useEffect(()=>{let alive=true;setLoading(true);setError('');void window.simrailHub!.call('dlc:list',region).then(r=>{if(!alive)return;if(r.ok)setData(r.data);else setError(r.error);}).catch(()=>{if(alive)setError('Steam není dostupný.');}).finally(()=>{if(alive)setLoading(false);});return()=>{alive=false;};},[region]);
+ const items=data.items.filter(x=>tab==='all'||x.upcoming);
+ return <dialog ref={dialog} className="dlc-panel" aria-labelledby="dlc-title" onClick={e=>{if(e.target===e.currentTarget){const r=e.currentTarget.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)onClose();}}}>
+ <header className="dlc-head"><div><div className="eyebrow">ROZŠIŘ SVŮJ SIMRAIL</div><h2 id="dlc-title">Dostupná DLC</h2><p>Nové tratě a soupravy přímo z oficiálního obchodu.</p></div><button className="icon-button" onClick={onClose} aria-label="Zavřít DLC"><X/></button></header>
+ <div className="dlc-toolbar"><div className="dlc-tabs"><button aria-pressed={tab==='all'} onClick={()=>setTab('all')}>Všechna <span>{data.items.length}</span></button><button aria-pressed={tab==='upcoming'} onClick={()=>setTab('upcoming')}>Nadcházející <span>{data.items.filter(x=>x.upcoming).length}</span></button></div><label>Steam <select aria-label="Region obchodu Steam" value={region} onChange={e=>setRegion(e.target.value)}><option value="cz">Česko / EUR</option><option value="pl">Polsko / PLN</option><option value="de">Německo / EUR</option><option value="gb">Británie / GBP</option><option value="us">USA / USD</option></select></label></div>
+ {error&&<p role="status" className="dlc-note">{error} Zobrazen uložený přehled.</p>}
+ <div className="dlc-grid">{items.map(d=><article className="dlc-card" key={d.id}><img src={d.fallbackImage||d.image} alt={d.name} onError={e=>{if(!e.currentTarget.dataset.retried){e.currentTarget.dataset.retried='true';e.currentTarget.src=d.image;}}}/><div className="dlc-card-content"><h3>{d.name}</h3><p className="dlc-date">{d.upcoming?'Nadcházející · ':'Vydáno '}{d.releaseDate??'Datum neoznámeno'}</p><div className="dlc-purchase"><strong>{data.region===region?d.price??'Cena neoznámena':'Načítám cenu…'}</strong><a href={d.url} target="_blank" rel="noreferrer">Steam <ArrowUpRight size={14}/></a></div></div></article>)}
+ {!items.length&&<p className="dlc-empty">V tomto přehledu nejsou žádná nadcházející DLC.</p>}</div><footer className="dlc-footer"><span>{loading?'Ověřuji ceny na Steamu…':(data.cached?'Uložený přehled · ':'Ověřeno ')+new Date(data.checkedAt).toLocaleDateString('cs-CZ')}</span><a href="https://store.steampowered.com/dlc/1422130/" target="_blank" rel="noreferrer">Všechna DLC na Steamu <ArrowUpRight size={14}/></a></footer></dialog>;
+}

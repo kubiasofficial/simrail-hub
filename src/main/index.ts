@@ -99,6 +99,7 @@ if (!app.requestSingleInstanceLock()) {
     if (mainWindow) { if (mainWindow.isMinimized()) mainWindow.restore(); mainWindow.focus(); }
   });
   void app.whenReady().then(() => {
+    session.defaultSession.webRequest.onBeforeSendHeaders({urls:['https://tile.openstreetmap.org/*']},(details,callback)=>{callback({requestHeaders:{...details.requestHeaders,'User-Agent':'SimRailHub/'+app.getVersion()+' (+https://github.com/kubiasofficial/simrail-hub)'}});});
     session.defaultSession.setPermissionRequestHandler((_wc, _perm, cb) => cb(false));
     registerIpc();
     const ctx = createContext();

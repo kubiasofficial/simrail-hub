@@ -165,12 +165,13 @@ describe('automatická hlášení – stavový automat', () => {
     expect(keys.some((k) => k.startsWith('next:'))).toBe(true);
     expect(disabled.join(' ')).toMatch(/Chybí souřadnice/);
   });
-  it('hlášení zpoždění se spustí po prahu a neopakuje se v témže pásmu', () => {
-    const t = new AnnouncementTrigger();
-    const inp: TriggerInput = { runKey: 'r', index: 1, speedKmh: 60, distToNextStopM: 9000, points: sim.timetable.points, delayMin: 6 };
-    expect(t.update(inp).events.map((e) => e.kind)).toContain('delay');
-    expect(t.update({ ...inp, delayMin: 7 }).events.map((e) => e.kind)).not.toContain('delay');
-    expect(t.update({ ...inp, delayMin: 11 }).events.map((e) => e.kind)).toContain('delay');
+  it('hlášení zpoždění opakuje nejdříve po patnácti minutách', () => {
+    let now=0;const t=new AnnouncementTrigger(undefined,()=>now);
+    const inp:TriggerInput={runKey:'r',index:1,speedKmh:60,distToNextStopM:9000,points:sim.timetable.points,delayMin:6};
+    expect(t.update(inp).events.map(e=>e.kind)).toContain('next-station');
+    expect(t.update(inp).events.map(e=>e.kind)).toContain('delay');
+    now=1000;expect(t.update({...inp,delayMin:11}).events.map(e=>e.kind)).not.toContain('delay');
+    now=900000;expect(t.update({...inp,delayMin:11}).events.map(e=>e.kind)).toContain('delay');
   });
 });
 

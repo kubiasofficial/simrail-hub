@@ -1,3 +1,4 @@
+import type {AppLocale} from './locale';
 export type AnnouncementLang = 'cs' | 'pl' | 'cs-pl';
 export type TtsEngine = 'piper' | 'system';
 
@@ -7,7 +8,8 @@ export interface Settings {
   recordingsPath: string | null;
   /** Spouštění je vždy přes Steam URI (jiná cesta není podporována). */
   launchViaSteam: true;
-  appLanguage: 'cs';
+  appLanguage: AppLocale;
+  appCountry:string;
   animations:boolean;
   theme: 'blue' | 'graphite';
   dataRefreshSeconds: number;
@@ -15,6 +17,7 @@ export interface Settings {
   map: { basemap: 'osm' | 'osm-dark' | 'light'; railwayOverlay: boolean; followSelected: boolean };
   announcements: {
     auto: boolean;
+    gapSeconds:number;
     gong: boolean;
     recorded: boolean;
     language: AnnouncementLang;
@@ -33,13 +36,13 @@ export const DEFAULT_SETTINGS: Settings = {
   manualGamePath: null,
   recordingsPath: null,
   launchViaSteam: true,
-  appLanguage: 'cs',
+  appLanguage: 'cs',appCountry:'cz',
   animations:true,
   theme: 'blue',
   dataRefreshSeconds: 30,
   selectedServer: null,
   map: { basemap: 'osm-dark', railwayOverlay: true, followSelected: false },
-  announcements: { auto: false, gong:true, recorded:true, language: 'cs', engine: 'piper', voiceId: 'cs_CZ-jirka-medium', volume: 0.8, rate: 1 },
+  announcements: { auto: false, gapSeconds:30, gong:true, recorded:true, language: 'cs', engine: 'piper', voiceId: 'cs_CZ-jirka-medium', volume: 0.8, rate: 1 },
   updates: { repo: 'kubiasofficial/simrail-hub' },
   onboarding: { dismissed: false }
 };

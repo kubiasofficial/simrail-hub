@@ -13,11 +13,17 @@ export class TrainTrackingService {
   private stations = new Map<string, Cached<StationCoord[]>>();
   private timetables = new Map<string, Cached<Timetable[]>>();
   private profiles: SteamProfiles;
+  private pendingTrains=new Map<string,Promise<TrainsResult>>();
   constructor(private fetchFn: FetchLike, private now: () => number = Date.now) { this.profiles = new SteamProfiles(fetchFn); }
 
   private fresh<T>(c: Cached<T> | undefined, ttl: number): T | null { return c && this.now() - c.at < ttl ? c.value : null; }
 
-  async getTrains(code: string, force = false): Promise<TrainsResult> {
+  async getTrains(code:string,force=false):Promise<TrainsResult>{
+    const pending=this.pendingTrains.get(code);if(pending)return pending;
+    const work=this.loadTrains(code,force).finally(()=>this.pendingTrains.delete(code));
+    this.pendingTrains.set(code,work);return work;
+  }
+  private async loadTrains(code: string, force = false): Promise<TrainsResult> {
     const hit = this.fresh(this.trains.get(code), force ? 1_500 : 3_000);
     if (hit) return { ok: true, data: hit };
     try {
