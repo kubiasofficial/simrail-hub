@@ -1,4 +1,4 @@
-# SimRail Hub 0.3.0
+# SimRail Hub 0.3.1
 
 Český komunitní launcher pro SimRail na Windows 10/11. Electron, React, TypeScript, Leaflet, SQLite a Piper. Neoficiální aplikace.
 
