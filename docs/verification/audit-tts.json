@@ -1,0 +1,19 @@
+{
+  "results": [
+    {
+      "voice": "cs_CZ-jirka-medium",
+      "bytes": 167072,
+      "durationSeconds": 3.787482993197279,
+      "peak": 0.999969482421875,
+      "synthesisMs": 2510
+    },
+    {
+      "voice": "pl_PL-darkman-medium",
+      "bytes": 126112,
+      "durationSeconds": 2.858684807256236,
+      "peak": 0.999969482421875,
+      "synthesisMs": 683
+    }
+  ],
+  "installedUserFilesChanged": false
+}

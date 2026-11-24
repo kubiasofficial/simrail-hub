@@ -29,7 +29,7 @@ Obecné nahrávky lze použít v osobních vlacích nezávisle na čísle. Nahra
 ## Novinky
 
 - Sjednocený vzhled, krátké přechody, animovaný detail mapy a vypínatelné animace.
-- Nastavení rozdělené do kategorií Obecné, Mapa, Hlášení, Účet a Aktualizace.
+- Nastavení rozdělené do kategorií Obecné, Mapa, Hlášení a Aktualizace.
 - Pro cestující se vybírají pouze PH (CommercialStop), technické pobyty se neohlašují.
 
 - Nová hlavní obrazovka, sjednocené karty, čitelnější palubní počítač a přehlednější nastavení.
@@ -101,13 +101,11 @@ Aktuální snímky vozidel a stanic pocházejí z oficiální SimRail Wiki, podr
 - Ověření: 98 testů, skutečné audio v Electronu, přechod z cizí stránky simulující čtečku QR do Chrome s mobilní velikostí, načtení živých dat a přepnutí nákladního/osobního vlaku. Výsledky v `docs/verification/fixes-results.json`. Fyzický telefon nebyl dostupný k ověření.
 
 
-## Účet a synchronizace 0.3.0
+## Lokální nastavení a odstranění účtů
 
-V Nastavení je volitelný účet přes e-mail/heslo. Uložení a načtení nastavení je ruční: na prvním PC přihlásit a „Uložit do cloudu“, na druhém PC přihlásit stejný účet a „Načíst z cloudu“. Cesta ke hře a místní soubory zůstávají na každém počítači zvlášť. Relace trvá do zavření aplikace. Cloudová nastavení a účet lze smazat přímo v launcheru.
+Pracovní větev stabilizace verze 0.5.0 již registraci ani přihlašování nenabízí. Nastavení, výslovnost, doplňky, oblíbené servery a výběr vlaku zůstávají v existujícím místním úložišti. Nastavení funguje bez internetu. Místní cesty a nahrávky se nikam neodesílají.
 
-Ověřena skutečná registrace, druhá relace, přenos preferencí, oddělení soukromých dat a smazání testovacích účtů. Výsledek: `docs/verification/cloud-results.json`.
-
-Provoz je na Spark bez fakturace: viz [bezplatný provoz](docs/FREE-HOSTING.md) a [soukromí](docs/PRIVACY.md). Při vyčerpání bezplatných limitů může být cloud nedostupný, lokální funkce zůstávají dostupné.
+[Postup migrace starých cloudových nastavení](docs/CLOUD-MIGRATION.md) a [soukromí](docs/PRIVACY.md). Produkční služby ani data se odstraněním integrace v kódu automaticky nevypínají. Firebase Hosting zůstává zachovaný.
 
 ## Aktualizace launcheru
 
@@ -119,3 +117,7 @@ Podrobnosti a omezení jsou v [poznámkách k vydání](docs/RELEASE-0.5.0.md).
 Překlad základního ovládání nabízí výběr zemí EU a angličtinu; úplné překlady podrobností jsou rozpracované.
 Mapový podklad používá OpenStreetMap s místní úpravou tmavého/světlého vzhledu. Dlaždice se načítají jen pro zobrazenou oblast a ukládá je standardní disková HTTP cache Electronu; aplikace nic hromadně nestahuje.
 [Pravidla poskytovatele mapových dlaždic](https://operations.osmfoundation.org/policies/tiles/).
+
+## Audit a stabilizace 0.5.0 – neveřejná pracovní větev
+Změny nejsou novým vydáním. Číslo verze zůstává 0.5.0, neproběhl push ani deployment.
+Výsledky, bezpečnostní nálezy, výkon a neověřené oblasti: [český report](docs/AUDIT-0.5.0.md).

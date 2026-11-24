@@ -1,0 +1,11 @@
+{
+  "version": "0.5.0",
+  "fixtures": false,
+  "liveServers": 19,
+  "cloudDenied": true,
+  "localSettings": true,
+  "privateAudioBundled": false,
+  "removedAccountCodeBundled": false,
+  "installerExecuted": false,
+  "deployed": false
+}

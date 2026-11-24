@@ -1,0 +1,75 @@
+{
+  "note": "Short live-data observations, not a controlled benchmark. Long runs closed before the final sample; no 30-minute result is claimed. Later cleanup fixes are not represented by a new 30-minute run.",
+  "before": {
+    "startedAt": "2026-11-24T17:02:07.674Z",
+    "startupMs": 482,
+    "dashboardMs": 2392,
+    "longRunCompleted": false,
+    "phases": [
+      {
+        "name": "home-idle",
+        "workingSetMiBLast": 387.96484375,
+        "cpuAverage": 0.2660197050416915,
+        "apiPerMinute": 146,
+        "seconds": 30
+      },
+      {
+        "name": "map",
+        "workingSetMiBLast": 428.671875,
+        "cpuAverage": 0.25479303210031345,
+        "apiPerMinute": 48,
+        "seconds": 60
+      },
+      {
+        "name": "dashboard",
+        "workingSetMiBLast": 473.1875,
+        "cpuAverage": 0.24613672704976775,
+        "apiPerMinute": 26,
+        "seconds": 30
+      },
+      {
+        "name": "minimized",
+        "workingSetMiBLast": 468.94140625,
+        "cpuAverage": 0.1528979877848237,
+        "apiPerMinute": 26,
+        "seconds": 30
+      }
+    ]
+  },
+  "after": {
+    "startedAt": "2026-11-24T17:24:20.434Z",
+    "startupMs": 636,
+    "dashboardMs": 1451,
+    "longRunCompleted": false,
+    "phases": [
+      {
+        "name": "home-idle",
+        "workingSetMiBLast": 392.37890625,
+        "cpuAverage": 0.16132470922081643,
+        "apiPerMinute": 74,
+        "seconds": 30
+      },
+      {
+        "name": "map",
+        "workingSetMiBLast": 429.69921875,
+        "cpuAverage": 0.24993324695697097,
+        "apiPerMinute": 47,
+        "seconds": 60
+      },
+      {
+        "name": "dashboard",
+        "workingSetMiBLast": 442.96875,
+        "cpuAverage": 0.438775548003699,
+        "apiPerMinute": 32,
+        "seconds": 30
+      },
+      {
+        "name": "minimized",
+        "workingSetMiBLast": 442.51953125,
+        "cpuAverage": 0.24678225512428306,
+        "apiPerMinute": 28,
+        "seconds": 30
+      }
+    ]
+  }
+}

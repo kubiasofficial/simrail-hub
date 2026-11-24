@@ -1,0 +1,19 @@
+{
+  "version": "0.5.0",
+  "sourceCommit": "9e052cd9015b7aacefde44e6188ebf160fe7ad11",
+  "artifacts": [
+    {
+      "name": "SimRail-Hub-Setup-0.5.0.exe",
+      "bytes": 148232257,
+      "sha256": "c3bcfd7e86c93a83a3d16537a03b6bb7cc5ffd8a4e5155f36ead8082cffc24c2",
+      "sha512": "yDRCkrumbVylnT3MwvUMt9aJq3nWXgmSa/equfj2fYs/CrMiNc3foSH+Q0fXckZy+631zctBZzXKvHLm2ag5iQ=="
+    },
+    {
+      "name": "SimRail-Hub-Portable-0.5.0.exe",
+      "bytes": 134395014,
+      "sha256": "6371f52778e31e0d0bbcb1cd42f2b6c96e82dce760dc7e02f39cf461f3257523",
+      "sha512": "mvyvtfHpnM70rvChELsn5knhK9T0iu4zNR4gqtloPnxa2qcfahVGSp5DXE4HK6awnBJfG6bdZbsaCobUbo0eUQ=="
+    }
+  ],
+  "setupManifestMatches": true
+}

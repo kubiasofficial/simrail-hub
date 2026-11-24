@@ -1,0 +1,255 @@
+{
+  "label": "manual-short",
+  "startedAt": "2026-11-24T17:57:15.422Z",
+  "startupMs": 652,
+  "phases": [
+    {
+      "name": "home-idle",
+      "elapsedSec": 30.813,
+      "seconds": 30,
+      "samples": [
+        {
+          "workingSetMiB": 459.36328125,
+          "cpu": 0.8240221271800967,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 456.15625,
+          "cpu": 0.044716477662629976,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 460.87890625,
+          "cpu": 0.11980678749793625,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 460.93359375,
+          "cpu": 0.07617079175022735,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 461.375,
+          "cpu": 0.05684924506011264,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 438.625,
+          "cpu": 0.0953961387124663,
+          "processes": 4,
+          "windows": 1
+        }
+      ],
+      "requests": 37,
+      "apiPerMinute": 74
+    },
+    {
+      "name": "map",
+      "elapsedSec": 92.996,
+      "seconds": 60,
+      "samples": [
+        {
+          "workingSetMiB": 495.30859375,
+          "cpu": 1.1334447245102308,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 483.9453125,
+          "cpu": 0.30667997373817535,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 483.8203125,
+          "cpu": 0.12232744777560345,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 489.17578125,
+          "cpu": 0.23610361351008805,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 490.01171875,
+          "cpu": 0.1342061812198299,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 456.0078125,
+          "cpu": 0.20477791209535579,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 454.9921875,
+          "cpu": 0.1296391537409094,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 457.03515625,
+          "cpu": 0.17080643363479378,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 457.3984375,
+          "cpu": 0.11593419855519536,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 460.33203125,
+          "cpu": 0.18761914998712856,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 460.30078125,
+          "cpu": 0.11867371102306429,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 463.21875,
+          "cpu": 0.183484978719062,
+          "processes": 4,
+          "windows": 1
+        }
+      ],
+      "requests": 47,
+      "apiPerMinute": 47
+    },
+    {
+      "name": "dashboard",
+      "elapsedSec": 126.601,
+      "seconds": 30,
+      "samples": [
+        {
+          "workingSetMiB": 528.53125,
+          "cpu": 0.8774722945247172,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 564.95703125,
+          "cpu": 0.7136942023566732,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 564.125,
+          "cpu": 0.1265575195930407,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 557.9609375,
+          "cpu": 0.7247632692238412,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 560.21875,
+          "cpu": 0.1578344509140744,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 477.43359375,
+          "cpu": 0.1719908631735755,
+          "processes": 4,
+          "windows": 1
+        }
+      ],
+      "requests": 16,
+      "apiPerMinute": 32
+    },
+    {
+      "name": "minimized",
+      "elapsedSec": 156.681,
+      "seconds": 30,
+      "samples": [
+        {
+          "workingSetMiB": 483.7109375,
+          "cpu": 0.18298486827014293,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 561.19921875,
+          "cpu": 0.7620732305275172,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 563.26171875,
+          "cpu": 0.14082468361301342,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 480.96484375,
+          "cpu": 0.15844794580510105,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 482.19140625,
+          "cpu": 0.11235402974845923,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 476.11328125,
+          "cpu": 0.09971285730944374,
+          "processes": 4,
+          "windows": 1
+        }
+      ],
+      "requests": 14,
+      "apiPerMinute": 28
+    },
+    {
+      "name": "long-run-end",
+      "elapsedSec": 166.712,
+      "seconds": 10,
+      "samples": [
+        {
+          "workingSetMiB": 478.29296875,
+          "cpu": 0.08596829638083606,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 478.45703125,
+          "cpu": 0.08855434291119402,
+          "processes": 4,
+          "windows": 1
+        }
+      ],
+      "requests": 5,
+      "apiPerMinute": 30
+    }
+  ],
+  "errors": [],
+  "minuteSamples": [],
+  "completed": true,
+  "initialAutomaticAnnouncements": false,
+  "dashboardMs": 1571,
+  "processExit": {
+    "code": 0,
+    "signal": null,
+    "at": "2026-11-24T18:00:01.881Z"
+  },
+  "requestedLifetimeSec": 60
+}

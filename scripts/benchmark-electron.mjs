@@ -1,0 +1,23 @@
+import {_electron as electron} from '@playwright/test';import {writeFile,mkdir} from 'node:fs/promises';import path from 'node:path';
+const label=process.argv[2]??'manual',exe=process.argv[3]??path.join(process.env.LOCALAPPDATA,'Programs','SimRail Hub','SimRail Hub.exe'),lifetime=Number(process.argv[4]??1800);
+if(!/^[a-z0-9-]+$/.test(label)||!Number.isFinite(lifetime)||lifetime<60||lifetime>7200)throw Error('Use a simple label and a lifetime of 60..7200 seconds.');
+await mkdir('docs/verification',{recursive:true});
+const env={...process.env};delete env.ELECTRON_RUN_AS_NODE;const start=Date.now();
+const app=await electron.launch({executablePath:exe,args:['--verify-hidden','--user-data-dir='+path.resolve('.test-user-audit-'+label)],env});
+const result={label,requestedLifetimeSec:lifetime,startedAt:new Date().toISOString(),startupMs:0,phases:[],errors:[],minuteSamples:[],completed:false};
+const save=()=>writeFile('docs/verification/audit-perf-'+label+'.json',JSON.stringify(result,null,2));
+try{const p=await app.firstWindow();p.on('pageerror',e=>result.errors.push(e.message));await p.waitForFunction(()=>!!window.simrailHub);result.startupMs=Date.now()-start;
+await p.evaluate(()=>window.simrailHub.call('settings:update',{onboarding:{dismissed:true},announcements:{auto:false},appLanguage:'cs'}));await p.reload();
+result.initialAutomaticAnnouncements=await p.evaluate(async()=>{const s=await window.simrailHub.call('settings:get');return s.announcements.auto;});
+if(result.initialAutomaticAnnouncements!==false)throw Error('Automatic announcements were not disabled in the measurement profile.');
+app.process().once('exit',(code,signal)=>{result.processExit={code,signal,at:new Date().toISOString()};void save();});
+await app.evaluate(({session})=>{global.auditRequests=0;session.defaultSession.webRequest.onCompleted({urls:['https://panel.simrail.eu:8084/*','https://api1.aws.simrail.eu:8082/*']},()=>{global.auditRequests++;});});
+async function sample(name,seconds=30){const samples=[];const requests=await app.evaluate(()=>global.auditRequests);await app.evaluate(({app})=>app.getAppMetrics());for(let n=0;n<seconds/5;n++){await p.waitForTimeout(5000);samples.push(await app.evaluate(({app,BrowserWindow})=>{const m=app.getAppMetrics();return {workingSetMiB:m.reduce((s,x)=>s+x.memory.workingSetSize/1024,0),cpu:m.reduce((s,x)=>s+x.cpu.percentCPUUsage,0),processes:m.length,windows:BrowserWindow.getAllWindows().length};}));}
+const end=await app.evaluate(()=>global.auditRequests);const phase={name,elapsedSec:(Date.now()-start)/1000,seconds,samples,requests:end-requests,apiPerMinute:(end-requests)*60/seconds};result.phases.push(phase);await save();console.log(label,name,JSON.stringify({memoryMiB:samples.at(-1).workingSetMiB,cpuAverage:samples.reduce((s,x)=>s+x.cpu,0)/samples.length,apiPerMinute:phase.apiPerMinute}));}
+await sample('home-idle');await p.getByRole('button',{name:'Živá mapa',exact:true}).first().click();await p.waitForSelector('.map-container');await sample('map',60);
+await p.getByLabel('Vyhledat vlak nebo stanici').fill('');await p.getByRole('button',{name:'Palubní počítač',exact:true}).first().click();const dashboardStart=Date.now();const trains=await p.evaluate(()=>window.simrailHub.call('trains:list','cz1'));const train=trains.ok?trains.data.trains.find(x=>x.type==='user')??trains.data.trains[0]:null;
+if(train){await p.getByLabel('Server',{exact:true}).selectOption('cz1');await p.getByLabel('Vlak',{exact:true}).selectOption(train.number);await p.waitForSelector('.journey-summary');result.dashboardMs=Date.now()-dashboardStart;}
+await sample('dashboard');await app.evaluate(({BrowserWindow})=>BrowserWindow.getAllWindows()[0].minimize());await sample('minimized',30);
+while(Date.now()-start<lifetime*1000){await p.waitForTimeout(10000);if(Math.floor((Date.now()-start)/1000)%60<10){result.minuteSamples.push({elapsedSec:(Date.now()-start)/1000,...await app.evaluate(({app})=>({workingSetMiB:app.getAppMetrics().reduce((s,x)=>s+x.memory.workingSetSize/1024,0)}))});await save();}}
+await sample('long-run-end',10);result.completed=true;await save();
+}catch(e){result.errors.push(e.message);result.elapsedSec=(Date.now()-start)/1000;await save();process.exitCode=1;}finally{await app.close().catch(()=>undefined);}

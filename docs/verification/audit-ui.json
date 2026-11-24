@@ -1,0 +1,30 @@
+{
+  "errors": [],
+  "removedCloud": true,
+  "accountTab": 0,
+  "minimized": {
+    "mapMutations": 0,
+    "before": "Poslední data 18:35:50",
+    "after": "Poslední data 18:36:01"
+  },
+  "windows": [
+    {
+      "id": 2,
+      "sandbox": true,
+      "nodeIntegration": false,
+      "contextIsolation": true
+    },
+    {
+      "id": 1,
+      "sandbox": true,
+      "nodeIntegration": false,
+      "contextIsolation": true
+    }
+  ],
+  "standaloneInfo": {
+    "version": "0.5.0",
+    "platform": "win32",
+    "electron": "45.4.1"
+  },
+  "audioWhileMinimized": true
+}
