@@ -20,3 +20,8 @@ service-account*.json
 docs/*.html
 docs/wiki-inspection.json
 docs/wiki-stations.json
+docs/recording/
+scripts/prepare-recording.py
+scripts/create-recording-pack.py
+scripts/create-full-recording-pack.py
+scripts/create-53xxx-pack.py

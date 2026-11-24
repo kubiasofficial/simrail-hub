@@ -89,3 +89,6 @@ Ověřena skutečná registrace, druhá relace, přenos preferencí, oddělení 
 
 Provoz je na Spark bez fakturace: viz [bezplatný provoz](docs/FREE-HOSTING.md) a [soukromí](docs/PRIVACY.md). Při vyčerpání bezplatných limitů může být cloud nedostupný, lokální funkce zůstávají dostupné.
 
+## Aktualizace launcheru
+
+Launcher upozorní na nové vydání a otevře stránku ke stažení. Automatické stažení a instalace zatím nejsou implementované.

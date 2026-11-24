@@ -18,7 +18,7 @@ with ZipFile(target, 'w', ZIP_DEFLATED, compresslevel=6) as archive:
         relative = source.relative_to(root)
         if relative.parts[0] not in directories and str(relative) not in files:
             continue
-        if not source.is_file() or 'api-samples' in relative.parts or '__pycache__' in relative.parts:
+        if not source.is_file() or 'api-samples' in relative.parts or 'recording' in relative.parts or '__pycache__' in relative.parts:
             continue
         if relative.parts[0] == 'scripts' and source.name not in scripts:
             continue
