@@ -5,7 +5,7 @@ import type { AnnouncementLang } from '../types/settings';
 import type { TimetablePoint } from '../types/trains';
 
 export type AnnKind = 'next-station' | 'approaching' | 'arrived' | 'terminal' | 'delay';
-export interface Segment { lang: 'cs' | 'pl'; text: string; intro?:boolean; recording?:{kind:AnnKind;station:string|null;trainNumber:string|null;isFreight:boolean} }
+export interface Segment { lang: 'cs' | 'pl'; text: string; intro?:boolean; recording?:import('./localAudio').RecordingRequest }
 export interface AnnouncementEvent { key: string; kind: AnnKind; station: string | null; delayMin?: number }
 export interface PronEntry { word: string; spoken: string }
 

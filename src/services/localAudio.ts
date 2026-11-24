@@ -1,3 +1,4 @@
+import {SERVICE_ANNOUNCEMENTS,isServiceAnnouncementId,type ServiceAnnouncementId,type ServiceRecordingStatus} from './serviceAnnouncements';
 import {readFile,stat} from 'node:fs/promises';
 import {join} from 'node:path';
 import type {AnnKind} from './announcements';
@@ -7,10 +8,13 @@ const STATIONS:Record<string,string>={'warszawa wschodnia':'warszawa_wschodnia',
 const PHRASES:Partial<Record<AnnKind,string>>={'next-station':'pristi_stanice',approaching:'prijizdime_do_stanice',arrived:'stanice'};
 const norm=(s:string)=>s.toLowerCase().replace(/ł/g,'l').normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim();
 export const RECORDING_FILES=[...Object.values(PHRASES),...Object.values(STATIONS)].map(s=>s+'.wav');
-export interface RecordingRequest {kind:AnnKind;station:string|null;trainNumber:string|null;isFreight:boolean}
-export interface RecordingStatus {directory:string;available:boolean;missing:string[]}
+export interface RecordingRequest {kind:AnnKind;station:string|null;trainNumber:string|null;isFreight:boolean;service?:ServiceAnnouncementId}
+export interface RecordingStatus {directory:string;available:boolean;missing:string[];services:ServiceRecordingStatus[]}
 export function recordingNames(request:RecordingRequest):string[]|null {
- if(request.isFreight||!/^53\d{3}$/.test(request.trainNumber??''))return null;
+ if(request.isFreight)return null;
+ if(request.service!==undefined)return isServiceAnnouncementId(request.service)?[SERVICE_ANNOUNCEMENTS[request.service].file]:null;
+ if(request.kind==='delay'||request.kind==='terminal')return [SERVICE_ANNOUNCEMENTS[request.kind].file];
+ if(!/^53\d{3}$/.test(request.trainNumber??''))return null;
  const phrase=PHRASES[request.kind],station=STATIONS[norm(request.station??'')];
  return phrase&&station?[phrase+'.wav',station+'.wav']:null;
 }
@@ -43,11 +47,14 @@ export function gongSamples():Float32Array {
 export function joinSamples(parts:Float32Array[]):Float32Array {const result=new Float32Array(parts.reduce((n,p)=>n+p.length,0));let offset=0;for(const part of parts){result.set(part,offset);offset+=part.length;}return result;}
 export class LocalRecordings {
  constructor(private directory:string){}
- async status():Promise<RecordingStatus>{const missing:string[]=[];for(const file of RECORDING_FILES){try{const info=await stat(join(this.directory,file));if(!info.isFile())missing.push(file);}catch{missing.push(file);}}return {directory:this.directory,available:missing.length===0,missing};}
+ async status():Promise<RecordingStatus>{const missing:string[]=[];for(const file of RECORDING_FILES){try{const info=await stat(join(this.directory,file));if(!info.isFile())missing.push(file);}catch{missing.push(file);}}const services:ServiceRecordingStatus[]=[];
+ for(const [id,entry] of Object.entries(SERVICE_ANNOUNCEMENTS)){let available=false;try{available=(await stat(join(this.directory,entry.file))).isFile();}catch{/* optional recording */}
+ services.push({id:id as ServiceAnnouncementId,label:entry.label,available});}
+ return {directory:this.directory,available:missing.length===0,missing,services};}
  async render(request:RecordingRequest,gong:boolean):Promise<Uint8Array|null>{
   const names=recordingNames(request);if(!names)return null;
   const audio:Float32Array[]=[];
   for(const name of names){let b:Buffer;try{const file=join(this.directory,name),info=await stat(file);if(info.size>5*1024*1024)throw Error('Nahrávka je příliš velká.');b=await readFile(file);}catch(e){if((e as NodeJS.ErrnoException).code==='ENOENT')return null;throw e;}audio.push(trimSilence(decodeWav(b)));}
-  return encodeWav(joinSamples([...(gong?[gongSamples(),new Float32Array(4800)]:[]),audio[0],new Float32Array(4800),audio[1]]));
+  return encodeWav(joinSamples([...(gong?[gongSamples(),new Float32Array(4800)]:[]),...audio.flatMap((samples,index)=>index?[new Float32Array(4800),samples]:[samples])]));
  }
 }

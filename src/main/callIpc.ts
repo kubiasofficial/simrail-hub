@@ -9,6 +9,7 @@ import { normalizeSettings } from '../services/settingsSchema';
 import { MobileServer } from '../services/MobileServer';
 import {CloudAccount} from '../services/CloudAccount';
 import {LocalRecordings,encodeWav,gongSamples,type RecordingRequest} from '../services/localAudio';
+import {isServiceAnnouncementId} from '../services/serviceAnnouncements';
 import { MAX_TEXT } from '../services/TextToSpeechService';
 import { ModError } from '../services/ModManager';
 
@@ -49,7 +50,7 @@ export function registerCallIpc(ctx: AppContext, openDashboard: (server: string 
   on('audio:gong',()=>safe('audio',async()=>encodeWav(gongSamples())));
   on('recordings:status',()=>safe('audio',async()=>(await recordings()).status()));
   on('recordings:choose',()=>safe('audio',async()=>{const choice=await dialog.showOpenDialog({title:'Složka soukromých nahrávek',properties:['openDirectory'],defaultPath:join(app.getPath('desktop'),'simrail-hub','hlaseni')});if(choice.canceled||!choice.filePaths[0])return null;await settings.update({recordingsPath:choice.filePaths[0]});return (await recordings()).status();}));
-  on('recordings:render',(raw,gong)=>safe('audio',async()=>{if(!raw||typeof raw!=='object')throw Error('Neplatné hlášení.');const q=raw as RecordingRequest;if(!['next-station','approaching','arrived','terminal','delay'].includes(q.kind)||typeof q.isFreight!=='boolean'||(q.station!==null&&typeof q.station!=='string')||(q.trainNumber!==null&&typeof q.trainNumber!=='string'))throw Error('Neplatné hlášení.');return (await recordings()).render(q,gong===true);}));
+  on('recordings:render',(raw,gong)=>safe('audio',async()=>{if(!raw||typeof raw!=='object')throw Error('Neplatné hlášení.');const q=raw as RecordingRequest;if(q.service!==undefined&&!isServiceAnnouncementId(q.service))throw Error('Neplatná nahrávka.');if(!['next-station','approaching','arrived','terminal','delay'].includes(q.kind)||typeof q.isFreight!=='boolean'||(q.station!==null&&typeof q.station!=='string')||(q.trainNumber!==null&&typeof q.trainNumber!=='string'))throw Error('Neplatné hlášení.');return (await recordings()).render(q,gong===true);}));
 
   on('cloud:status',()=>cloud.status());
   on('cloud:login',(email,password,create)=>safe('cloud',()=>cloud.login(str(email,254,'e-mail'),str(password,256,'heslo'),create===true)));

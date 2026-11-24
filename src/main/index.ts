@@ -23,8 +23,9 @@ const WEB_PREFS = {
 } as const;
 
 function secureWindow(win: BrowserWindow): void {
-  appWindows.add(win.webContents.id);
-  win.on('closed', () => appWindows.delete(win.webContents.id));
+  const contentsId=win.webContents.id;
+  appWindows.add(contentsId);
+  win.on('closed', () => appWindows.delete(contentsId));
   win.webContents.setWindowOpenHandler(({ url }) => { if (url.startsWith('https://')) void shell.openExternal(url); return { action: 'deny' }; });
   win.webContents.on('will-navigate', (e, url) => {
     const allowed = isDev ? url.startsWith(DEV_URL) : url.startsWith('file://');

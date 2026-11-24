@@ -12,7 +12,7 @@ it('selects the phrase and exact playable station only for passenger trains 53xx
  expect(recordingNames({...request,trainNumber:'5301'})).toBeNull();
  expect(recordingNames({...request,station:'Zakopane'})).toBeNull();
  expect(recordingNames({...request,station:'../../outside'})).toBeNull();
- expect(recordingNames({...request,kind:'delay'})).toBeNull();
+ expect(recordingNames({...request,kind:'delay'})).toEqual(['zpozdeni.wav']);
 });
 it('synthesizes a bounded gong and encodes a playable PCM WAV',()=>{
  const samples=gongSamples();expect(samples.length).toBe(60000);

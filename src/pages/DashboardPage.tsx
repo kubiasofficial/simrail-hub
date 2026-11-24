@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import { ArrowDown, ExternalLink, Megaphone, Pause, Play, RotateCcw, SkipForward, Square, TrainFront, TriangleAlert, Wifi, WifiOff } from 'lucide-react';
+import {ServiceAnnouncementPanel} from '@/components/ServiceAnnouncementPanel';
 import { MobilePairing } from '@/components/MobilePairing';
 import { VehicleCard } from '@/components/VehicleCard';
 import { useTrainFeed, type FeedSource } from '@/hooks/useTrainFeed';
@@ -234,11 +235,13 @@ export function DashboardPage({ standalone = false, active = true }: { standalon
                 {auto && disabled.map((d, i) => <div key={i} className="mb-2 flex gap-2 rounded-lg border border-amber-500/30 bg-amber-500/10 p-2 text-[11px] text-amber-100"><TriangleAlert size={13} className="mt-0.5 shrink-0" />{d}</div>)}
                 <div className="grid grid-cols-2 gap-2 text-xs">
                   {([['next-station', 'Příští stanice'], ['approaching', 'Blížíme se'], ['arrived', 'Příjezd'], ['terminal', 'Konečná'], ['delay', 'Zpoždění']] as [AnnKind, string][]).map(([k, label]) => (
-                    <button key={k} onClick={() => manual(k)} disabled={(k === 'delay' && !m.delayMin) || ((k === 'next-station' || k === 'approaching') && !m.next) || (k === 'arrived' && !(m.current ?? m.next))}
+                    <button key={k} onClick={() => manual(k)} disabled={ ((k === 'next-station' || k === 'approaching') && !m.next) || (k === 'arrived' && !(m.current ?? m.next))}
                       className="rounded-lg border border-line px-2 py-1.5 text-slate-200 hover:bg-white/5 disabled:opacity-40">{label}</button>
                   ))}
                   <button onClick={() => ann.stop()} className="flex items-center justify-center gap-1 rounded-lg border border-line px-2 py-1.5 text-slate-300 hover:bg-white/5"><Square size={11} /> Zastavit</button>
                 </div>
+                <ServiceAnnouncementPanel freight={freight}/>
+                <div className="mt-3 text-[11px] text-sky-soft" role="status">{ann.lastSource==='recorded'?'Zdroj: vlastní nahrávka':ann.lastSource==='tts'?'Zdroj: syntetický hlas':''}</div>
                 <div className="mt-3 min-h-8 text-[11px] text-slate-400">{ann.pending > 0 && <span>Ve frontě: {ann.pending} · </span>}{ann.lastText ? `Naposledy: „${ann.lastText}“` : 'Zatím nic nebylo přehráno.'}</div>
                 {ann.lastError && <div role="alert" className="friendly-error"><strong>Hlášení se nepodařilo přehrát.</strong><p>Zkontrolujte hlas v Nastavení nebo vyzkoušejte systémový hlas.</p><button className="secondary-action" onClick={() => void navigator.clipboard.writeText(ann.lastError ?? '')}>Kopírovat chybu</button><details><summary>Technické podrobnosti</summary>{ann.lastError}</details></div>}
                 </>}

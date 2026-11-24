@@ -1,4 +1,4 @@
-# SimRail Hub 0.4.0
+# SimRail Hub 0.4.1
 
 Český komunitní launcher pro SimRail na Windows 10/11. Electron, React, TypeScript, Leaflet, SQLite a Piper. Neoficiální aplikace.
 
@@ -19,6 +19,12 @@ Vydání pro Windows obsahuje instalátor, jeho `.blockmap` a `latest.yml`. Work
 ## Běh na pozadí
 
 Minimalizace nepřeruší načítání vlaku ani přehrávání hlášení. Vybraný vlak se dál sleduje také při přepnutí na jinou stránku launcheru. Mobilní server běží v hlavním procesu. Zavření aplikace nebo uspání počítače běh ukončí či pozastaví.
+
+## Vlastní obecná hlášení
+
+Místní WAV nahrávky lze spustit z palubního počítače: uvítání, omluva za zpoždění, čekání na odjezd, pobyt na trati, zavazadla, volné uličky, vystupování/dveře, konečná a nevystupujte. Důvod zastavení ani pokyny k dveřím se neodvozují z rychlosti vlaku. Všechny tyto pokyny se spouštějí ručně. Stávající automatické události zpoždění a konečné mohou využít odpovídající místní nahrávku; chybějící obecná nahrávka ponechá syntetický hlas.
+
+Obecné nahrávky lze použít v osobních vlacích nezávisle na čísle. Nahrané názvy osmi stanic zůstávají omezené na řadu 53xxx. Nákladní vlaky nehlásí cestujícím. Zvukové soubory se nepřibalují do veřejného vydání a neposílají do cloudu.
 
 ## Novinky
 
