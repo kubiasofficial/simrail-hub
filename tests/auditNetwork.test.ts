@@ -32,3 +32,11 @@ it('simultaneous local updates do not overwrite unrelated preference changes',as
  const db=new Database(':memory:'),settings=new SettingsService(db);await Promise.all([settings.update({theme:'graphite'}),settings.update({appLanguage:'pl'}),settings.update({map:{followSelected:true}})]);expect(await settings.get()).toMatchObject({theme:'graphite',appLanguage:'pl',map:{followSelected:true}});db.close();
 });
 it('selects Czech and Polish models by segment language',()=>{expect(voiceForLanguage('pl','cs_CZ-jirka-medium')).toBe('pl_PL-darkman-medium');expect(voiceForLanguage('cs','pl_PL-darkman-medium')).toBe('cs_CZ-jirka-medium');});
+
+it('recognizes the real camel-case timetable endpoint without retaining a second long-lived JSON copy',async()=>{
+ const network=vi.fn(async()=>({ok:true,status:200,text:async()=>'[]'})),cache=new SharedApiFetch(network);
+ const url='https://api1.aws.simrail.eu:8082/api/getAllTimetables?serverCode=cz1';
+ await cache.fetch(url);await cache.fetch(url);expect(network).toHaveBeenCalledTimes(2);
+ vi.useFakeTimers();const stalled=new SharedApiFetch(async()=>new Promise(()=>{}));let rejected=false;const waiting=stalled.fetch(url).catch(()=>{rejected=true;});
+ await vi.advanceTimersByTimeAsync(10001);expect(rejected).toBe(false);await vi.advanceTimersByTimeAsync(10000);await waiting;expect(rejected).toBe(true);
+});

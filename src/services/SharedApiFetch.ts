@@ -19,13 +19,13 @@ export class SharedApiFetch {
  };
  private async load(url:string,init:Parameters<FetchLike>[1]):Promise<Reply>{
   const controller=new AbortController();let rejectTimeout!:(e:Error)=>void;
-  const deadline=new Promise<never>((_,reject)=>rejectTimeout=reject);const timer=setTimeout(()=>{controller.abort();rejectTimeout(Error('API neodpovědělo v časovém limitu.'));},url.includes('timetables')?20000:10000);
+  const deadline=new Promise<never>((_,reject)=>rejectTimeout=reject);const timer=setTimeout(()=>{controller.abort();rejectTimeout(Error('API neodpovědělo v časovém limitu.'));},url.toLowerCase().includes('timetables')?20000:10000);
   try{
    const response=await Promise.race([this.fetcher(url,{...init,signal:controller.signal}),deadline]);const body=await Promise.race([response.text(),deadline]);
    if(!response.ok)throw Error('API vrátilo HTTP '+response.status+'.');
    if(body.length>20*1024*1024)throw Error('Odpověď API je příliš velká.');
    JSON.parse(body);
-   const ttl=url.includes('stations-open')?30000:url.includes('timetables')?0:url.includes('servers-open')?10000:1500;
+   const ttl=url.includes('stations-open')?30000:url.toLowerCase().includes('timetables')?0:url.includes('servers-open')?10000:1500;
    this.cache.delete(url);if(ttl)this.cache.set(url,{until:this.now()+ttl,body,status:response.status});this.failures.delete(url);
    let bytes=0;for(const c of this.cache.values())bytes+=c.body.length*2;
    while(this.cache.size>128||bytes>32*1024*1024){const key=this.cache.keys().next().value!;bytes-=this.cache.get(key)!.body.length*2;this.cache.delete(key);}
