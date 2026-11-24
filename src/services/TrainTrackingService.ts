@@ -13,8 +13,8 @@ export class TrainTrackingService {
   private stations = new Map<string, Cached<StationCoord[]>>();
   private timetables = new Map<string, Cached<Timetable[]>>();
   private profiles: SteamProfiles;
-  private stationPending=new Map<string,Promise<StationCoord[]>>();
-  private timetablePending=new Map<string,Promise<Timetable[]|null>>();
+  private stationPending=new Map<string,Promise<{data:StationCoord[];notes:string[]}>>();
+  private timetablePending=new Map<string,Promise<{data:Timetable[]|null;notes:string[]}>>();
   private pendingTrains=new Map<string,Promise<TrainsResult>>();
   constructor(private fetchFn: FetchLike, private now: () => number = Date.now) { this.profiles = new SteamProfiles(fetchFn); }
 
@@ -40,8 +40,9 @@ export class TrainTrackingService {
   }
 
   async getStations(code:string,notes:string[]=[]):Promise<StationCoord[]>{
-    const pending=this.stationPending.get(code);if(pending)return pending;
-    const task=this.loadStations(code,notes).finally(()=>this.stationPending.delete(code));this.stationPending.set(code,task);return task;
+    let pending=this.stationPending.get(code);
+    if(!pending){const warnings:string[]=[];pending=this.loadStations(code,warnings).then(data=>({data,notes:warnings})).finally(()=>this.stationPending.delete(code));this.stationPending.set(code,pending);}
+    const result=await pending;notes.push(...result.notes);return result.data;
   }
   private async loadStations(code: string, notes: string[] = []): Promise<StationCoord[]> {
     for(const cache of [this.trains,this.stations])while(cache.size>32)cache.delete(cache.keys().next().value!);
@@ -64,8 +65,9 @@ export class TrainTrackingService {
       .sort((a,b) => ((clock(a.departure??a.arrival)-now+86400)%86400)-((clock(b.departure??b.arrival)-now+86400)%86400)).slice(0,12);
   }
   private async getTimetables(code:string,notes:string[]):Promise<Timetable[]|null>{
-    const pending=this.timetablePending.get(code);if(pending)return pending;
-    const task=this.loadTimetables(code,notes).finally(()=>this.timetablePending.delete(code));this.timetablePending.set(code,task);return task;
+    let pending=this.timetablePending.get(code);
+    if(!pending){const warnings:string[]=[];pending=this.loadTimetables(code,warnings).then(data=>({data,notes:warnings})).finally(()=>this.timetablePending.delete(code));this.timetablePending.set(code,pending);}
+    const result=await pending;notes.push(...result.notes);return result.data;
   }
   private async loadTimetables(code: string, notes: string[]): Promise<Timetable[] | null> {
     for(const cache of [this.trains,this.stations])while(cache.size>32)cache.delete(cache.keys().next().value!);

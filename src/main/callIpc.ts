@@ -65,7 +65,7 @@ export function registerCallIpc(ctx: AppContext, openDashboard: (server: string 
     return settings.update(patch as never);
   });
   on('stations:board', (code, name) => safe('stations', () => tracking.getStationBoard(serverCode(code),str(name,200,'stanice'))));
-  on('stations:list', (code) => safe('stations', () => tracking.getStations(serverCode(code))));
+  on('stations:list', (code) => safe('stations', async () => {const notes:string[]=[];const data=await tracking.getStations(serverCode(code),notes);if(notes.length)throw Error(notes.join(' '));return data;}));
   on('mobile:start', (code, train) => safe('mobile', () => mobile.start(serverCode(code), trainNumber(train))));
   on('mobile:stop', () => safe('mobile', async () => { mobile.stop(); return null; }));
   on('trains:list', (code) => tracking.getTrains(serverCode(code)));

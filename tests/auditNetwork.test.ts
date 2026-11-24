@@ -1,3 +1,4 @@
+import {TrainTrackingService} from '../src/services/TrainTrackingService';
 import {it,expect,vi,afterEach} from 'vitest';
 import {SharedApiFetch} from '../src/services/SharedApiFetch';
 import {fetchJson} from '../src/adapters/simrailApi';
@@ -39,4 +40,10 @@ it('recognizes the real camel-case timetable endpoint without retaining a second
  await cache.fetch(url);await cache.fetch(url);expect(network).toHaveBeenCalledTimes(2);
  vi.useFakeTimers();const stalled=new SharedApiFetch(async()=>new Promise(()=>{}));let rejected=false;const waiting=stalled.fetch(url).catch(()=>{rejected=true;});
  await vi.advanceTimersByTimeAsync(10001);expect(rejected).toBe(false);await vi.advanceTimersByTimeAsync(10000);await waiting;expect(rejected).toBe(true);
+});
+
+it('propagates stale-station warnings to every concurrent consumer',async()=>{
+ const tracking=new TrainTrackingService(async()=>{throw Error('offline');}),a:string[]=[],b:string[]=[];
+ await Promise.all([tracking.getStations('cz1',a),tracking.getStations('cz1',b)]);
+ expect(a.length).toBe(1);expect(b).toEqual(a);
 });
