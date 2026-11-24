@@ -1,0 +1,548 @@
+{
+  "vehicles": {
+    "eu07": {
+      "label": "EU07 / EP07",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/4E",
+      "image": "./assets/wiki/vehicles/eu07-005.png",
+      "variants": {
+        "ep07135": "https://wiki.simrail.eu/vehicle/ep07-135.png",
+        "ep07174": "https://wiki.simrail.eu/vehicle/ep07-174.png",
+        "eu07001": "https://wiki.simrail.eu/vehicle/eu07-001.png",
+        "eu07005": "./assets/wiki/vehicles/eu07-005.png",
+        "eu07068": "https://wiki.simrail.eu/vehicle/eu07-068.png",
+        "eu07070": "https://wiki.simrail.eu/vehicle/eu07-070.png",
+        "eu07085": "https://wiki.simrail.eu/vehicle/eu07-085.png",
+        "eu07092": "https://wiki.simrail.eu/vehicle/eu07-092.png",
+        "eu07096": "https://wiki.simrail.eu/vehicle/eu07-096.png",
+        "eu07153": "https://wiki.simrail.eu/vehicle/eu07-153.png",
+        "eu07193": "https://wiki.simrail.eu/vehicle/eu07-193.png",
+        "eu07241": "https://wiki.simrail.eu/vehicle/eu07-241.png"
+      }
+    },
+    "ep08": {
+      "label": "EP08",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/102E",
+      "image": "./assets/wiki/vehicles/ep08-001.png",
+      "variants": {
+        "ep08001": "./assets/wiki/vehicles/ep08-001.png",
+        "ep08008": "https://wiki.simrail.eu/vehicle/ep08-008.png",
+        "ep08013": "https://wiki.simrail.eu/vehicle/ep08-013.png"
+      }
+    },
+    "cd163": {
+      "label": "ČD 163",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/71E",
+      "image": "./assets/wiki/vehicles/163_021-9.png",
+      "variants": {
+        "1630219": "./assets/wiki/vehicles/163_021-9.png",
+        "1630292": "https://wiki.simrail.eu/vehicle/163_029-2.png",
+        "1630300": "https://wiki.simrail.eu/vehicle/163_030-0.png",
+        "1630342": "https://wiki.simrail.eu/vehicle/163_034-2.png",
+        "1630359": "https://wiki.simrail.eu/vehicle/163_035-9.png",
+        "1630409": "https://wiki.simrail.eu/vehicle/163_040-9.png",
+        "1630417": "https://wiki.simrail.eu/vehicle/163_041-7.png",
+        "1630425": "https://wiki.simrail.eu/vehicle/163_042-5.png",
+        "1630433": "https://wiki.simrail.eu/vehicle/163_043-3.png",
+        "1630458": "https://wiki.simrail.eu/vehicle/163_045-8.png",
+        "1630466": "https://wiki.simrail.eu/vehicle/163_046-6.png"
+      }
+    },
+    "et22": {
+      "label": "ET22",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/201E",
+      "image": "./assets/wiki/vehicles/et22-836.png",
+      "variants": {
+        "et221163": "https://wiki.simrail.eu/vehicle/et22-1163.png",
+        "et22243": "https://wiki.simrail.eu/vehicle/et22-243.png",
+        "et22256": "https://wiki.simrail.eu/vehicle/et22-256.png",
+        "et22644": "https://wiki.simrail.eu/vehicle/et22-644.png",
+        "et22836": "./assets/wiki/vehicles/et22-836.png",
+        "et22911": "https://wiki.simrail.eu/vehicle/et22-911.png"
+      }
+    },
+    "dragon": {
+      "label": "ET25 / Dragon 2",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/E6ACTa",
+      "image": "./assets/wiki/vehicles/e6acta-016.png",
+      "variants": {
+        "e6acta014": "https://wiki.simrail.eu/vehicle/e6acta-014.png",
+        "e6acta016": "./assets/wiki/vehicles/e6acta-016.png",
+        "e6actadb027": "https://wiki.simrail.eu/vehicle/e6actadb-027.png",
+        "et25002": "https://wiki.simrail.eu/vehicle/et25-002.png"
+      }
+    },
+    "traxx": {
+      "label": "E186 / TRAXX",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/E186",
+      "image": "./assets/wiki/vehicles/e186-134.png",
+      "variants": {
+        "e186133": "https://wiki.simrail.eu/vehicle/e186-133.png",
+        "e186134": "./assets/wiki/vehicles/e186-134.png",
+        "e186136": "https://wiki.simrail.eu/vehicle/e186-136.png",
+        "e186138": "https://wiki.simrail.eu/vehicle/e186-138.png",
+        "e186139": "https://wiki.simrail.eu/vehicle/e186-139.png",
+        "e186241": "https://wiki.simrail.eu/vehicle/e186-241.png",
+        "e186242": "https://wiki.simrail.eu/vehicle/e186-242.png",
+        "e186245": "https://wiki.simrail.eu/vehicle/e186-245.png",
+        "e186246": "https://wiki.simrail.eu/vehicle/e186-246.png",
+        "e186248": "https://wiki.simrail.eu/vehicle/e186-248.png",
+        "e186250": "https://wiki.simrail.eu/vehicle/e186-250.png",
+        "e186928": "https://wiki.simrail.eu/vehicle/e186-928.png",
+        "e186929": "https://wiki.simrail.eu/vehicle/e186-929.png",
+        "e186930": "https://wiki.simrail.eu/vehicle/e186-930.png",
+        "e186941": "https://wiki.simrail.eu/vehicle/e186-941.png",
+        "e186942": "https://wiki.simrail.eu/vehicle/e186-942.png",
+        "eu43001": "https://wiki.simrail.eu/vehicle/eu43-001.png",
+        "eu43002": "https://wiki.simrail.eu/vehicle/eu43-002.png",
+        "eu43003": "https://wiki.simrail.eu/vehicle/eu43-003.png",
+        "eu43004": "https://wiki.simrail.eu/vehicle/eu43-004.png",
+        "eu43005": "https://wiki.simrail.eu/vehicle/eu43-005.png"
+      }
+    },
+    "br285": {
+      "label": "BR285",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Diesel-locomotive/BR285",
+      "image": "./assets/wiki/vehicles/br285-125.png",
+      "variants": {
+        "br285121": "https://wiki.simrail.eu/vehicle/br285-121.png",
+        "br285122": "https://wiki.simrail.eu/vehicle/br285-122.png",
+        "br285123": "https://wiki.simrail.eu/vehicle/br285-123.png",
+        "br285124": "https://wiki.simrail.eu/vehicle/br285-124.png",
+        "br285125": "./assets/wiki/vehicles/br285-125.png",
+        "br285126": "https://wiki.simrail.eu/vehicle/br285-126.png",
+        "br285127": "https://wiki.simrail.eu/vehicle/br285-127.png",
+        "br285128": "https://wiki.simrail.eu/vehicle/br285-128.png",
+        "br285129": "https://wiki.simrail.eu/vehicle/br285-129.png",
+        "br285130": "https://wiki.simrail.eu/vehicle/br285-130.png"
+      }
+    },
+    "pendolino": {
+      "label": "ED250 Pendolino",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/Pendolino",
+      "image": "./assets/wiki/vehicles/ed250-018.png",
+      "variants": {
+        "ed250001": "https://wiki.simrail.eu/vehicle/ed250-001.png",
+        "ed250009": "https://wiki.simrail.eu/vehicle/ed250-009.png",
+        "ed250015": "https://wiki.simrail.eu/vehicle/ed250-015.png",
+        "ed250018": "./assets/wiki/vehicles/ed250-018.png"
+      }
+    },
+    "kibel": {
+      "label": "EN57 / EN71",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/Kibel",
+      "image": "./assets/wiki/vehicles/en57-1000.png",
+      "variants": {
+        "en57009": "https://wiki.simrail.eu/vehicle/en57-009.png",
+        "en57038": "https://wiki.simrail.eu/vehicle/en57-038.png",
+        "en57047": "https://wiki.simrail.eu/vehicle/en57-047.png",
+        "en571000": "./assets/wiki/vehicles/en57-1000.png",
+        "en571003": "https://wiki.simrail.eu/vehicle/en57-1003.png",
+        "en571051": "https://wiki.simrail.eu/vehicle/en57-1051.png",
+        "en571181": "https://wiki.simrail.eu/vehicle/en57-1181.png",
+        "en571219": "https://wiki.simrail.eu/vehicle/en57-1219.png",
+        "en571316": "https://wiki.simrail.eu/vehicle/en57-1316.png",
+        "en571331": "https://wiki.simrail.eu/vehicle/en57-1331.png",
+        "en571458": "https://wiki.simrail.eu/vehicle/en57-1458.png",
+        "en571567": "https://wiki.simrail.eu/vehicle/en57-1567.png",
+        "en571571": "https://wiki.simrail.eu/vehicle/en57-1571.png",
+        "en571752": "https://wiki.simrail.eu/vehicle/en57-1752.png",
+        "en571755": "https://wiki.simrail.eu/vehicle/en57-1755.png",
+        "en571796": "https://wiki.simrail.eu/vehicle/en57-1796.png",
+        "en571821": "https://wiki.simrail.eu/vehicle/en57-1821.png",
+        "en57206": "https://wiki.simrail.eu/vehicle/en57-206.png",
+        "en57612": "https://wiki.simrail.eu/vehicle/en57-612.png",
+        "en57614": "https://wiki.simrail.eu/vehicle/en57-614.png",
+        "en57650": "https://wiki.simrail.eu/vehicle/en57-650.png",
+        "en57919": "https://wiki.simrail.eu/vehicle/en57-919.png",
+        "en71002": "https://wiki.simrail.eu/vehicle/en71-002.png",
+        "en71004": "https://wiki.simrail.eu/vehicle/en71-004.png",
+        "en71005": "https://wiki.simrail.eu/vehicle/en71-005.png",
+        "en71011": "https://wiki.simrail.eu/vehicle/en71-011.png",
+        "en71015": "https://wiki.simrail.eu/vehicle/en71-015.png"
+      }
+    },
+    "elf": {
+      "label": "EN76 / EN96 ELF",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/Elf",
+      "image": "./assets/wiki/vehicles/en76-006.png",
+      "variants": {
+        "en76006": "./assets/wiki/vehicles/en76-006.png",
+        "en76022": "https://wiki.simrail.eu/vehicle/en76-022.png",
+        "en96001": "https://wiki.simrail.eu/vehicle/en96-001.png"
+      }
+    },
+    "impuls": {
+      "label": "36WEd Impuls 2",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/36WEd",
+      "image": "./assets/wiki/vehicles/36wed-001.png",
+      "variants": {
+        "36wed001": "./assets/wiki/vehicles/36wed-001.png",
+        "36wed002": "https://wiki.simrail.eu/vehicle/36wed-002.png",
+        "36wed003": "https://wiki.simrail.eu/vehicle/36wed-003.png",
+        "36wed004": "https://wiki.simrail.eu/vehicle/36wed-004.png",
+        "36wed005": "https://wiki.simrail.eu/vehicle/36wed-005.png",
+        "36wed006": "https://wiki.simrail.eu/vehicle/36wed-006.png",
+        "36wed007": "https://wiki.simrail.eu/vehicle/36wed-007.png",
+        "36wed008": "https://wiki.simrail.eu/vehicle/36wed-008.png",
+        "36wed009": "https://wiki.simrail.eu/vehicle/36wed-009.png",
+        "36wed010": "https://wiki.simrail.eu/vehicle/36wed-010.png",
+        "36wed011": "https://wiki.simrail.eu/vehicle/36wed-011.png",
+        "36wed012": "https://wiki.simrail.eu/vehicle/36wed-012.png",
+        "36wed013": "https://wiki.simrail.eu/vehicle/36wed-013.png",
+        "36wed014": "https://wiki.simrail.eu/vehicle/36wed-014.png"
+      }
+    },
+    "ty2": {
+      "label": "Ty2",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Steam-locomotive/Ty2",
+      "image": "./assets/wiki/vehicles/ty2-540.png",
+      "variants": {
+        "ty2347": "https://wiki.simrail.eu/vehicle/ty2-347.png",
+        "ty2477": "https://wiki.simrail.eu/vehicle/ty2-477.png",
+        "ty2540": "./assets/wiki/vehicles/ty2-540.png",
+        "ty270": "https://wiki.simrail.eu/vehicle/ty2-70.png"
+      }
+    }
+  },
+  "stations": {
+    "baby": {
+      "name": "Baby",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/baby/b_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Baby"
+    },
+    "bedzin": {
+      "name": "Będzin",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/bedzin/b_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Będzin"
+    },
+    "belchow": {
+      "name": "Bełchów",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/belchow/bl_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Bełchów"
+    },
+    "bukowno": {
+      "name": "Bukowno",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/bukowno/bo-signalbox1.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Bukowno"
+    },
+    "dabrowa gornicza": {
+      "name": "Dąbrowa Górnicza",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/dabrowa-gornicza/dg_signalbox1.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Dąbrowa-Górnicza"
+    },
+    "dabrowa gornicza huta katowice": {
+      "name": "Dąbrowa Górnicza Huta Katowice",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/dabrowa-gornicza-huta-katowice/dghk_signalbox1.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Dąbrowa-Górnicza-Huta-Katowice"
+    },
+    "dabrowa gornicza wschodnia": {
+      "name": "Dąbrowa Górnicza Wschodnia",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/dabrowa-gornicza-wschodnia/dw-signalbox-1.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Dąbrowa-Górnicza-Wschodnia"
+    },
+    "dabrowa gornicza zabkowice": {
+      "name": "Dąbrowa Górnicza Ząbkowice",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/dabrowa-gornicza-zabkowice/dz-signalbox-1.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Dąbrowa-Górnicza-Ząbkowice"
+    },
+    "dorota": {
+      "name": "Dorota",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/dorota/dra-signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Dorota"
+    },
+    "gajewniki": {
+      "name": "Gajewniki",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/gajewniki/ga_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Gajewniki"
+    },
+    "lcs galkowek": {
+      "name": "LCS Gałkówek",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/galkowek/g_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Gałkówek"
+    },
+    "lcs glinnik": {
+      "name": "LCS Glinnik",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/lcs-glinnik/gl_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/LCS-Glinnik"
+    },
+    "lcs glowno": {
+      "name": "LCS Głowno",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/lcs-glowno/gn_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/LCS-Głowno"
+    },
+    "gora wlodowska": {
+      "name": "Góra Włodowska",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/gora-wlodowska/gw-signalbox-1.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Góra-Włodowska"
+    },
+    "grodzisk mazowiecki": {
+      "name": "Grodzisk Mazowiecki",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/grodzisk-mazowiecki/gr_signalbox.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Grodzisk-Mazowiecki"
+    },
+    "idzikowice": {
+      "name": "Idzikowice",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/idzikowice/id-signalbox-2.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Idzikowice"
+    },
+    "juliusz": {
+      "name": "Juliusz",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/juliusz/ju-signalbox-2.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Juliusz"
+    },
+    "katowice": {
+      "name": "Katowice",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/katowice/ko-signalbox-2.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Katowice"
+    },
+    "katowice zawodzie": {
+      "name": "Katowice Zawodzie",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/katowice-zawodzie/kz-signalbox-2.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Katowice-Zawodzie"
+    },
+    "knapowka": {
+      "name": "Knapówka",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/knapowka/kn-signalbox-2.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Knapówka"
+    },
+    "koluszki": {
+      "name": "Koluszki",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/koluszki/kl_signalbox.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Koluszki"
+    },
+    "korytow": {
+      "name": "Korytów",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/korytow/kr-signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Korytów"
+    },
+    "kozlow": {
+      "name": "Kozłów",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/kozlow/kz-signalbox-1.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Kozłów"
+    },
+    "krakow batowice": {
+      "name": "Kraków Batowice",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/krakow-batowice/kb_signalbox.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Kraków-Batowice"
+    },
+    "krakow przedmiescie": {
+      "name": "Kraków Przedmieście",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/krakow-przedmiescie/kpm_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Kraków-Przedmieście"
+    },
+    "lask": {
+      "name": "Łask",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/lask/ls_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Łask"
+    },
+    "lazy la": {
+      "name": "Łazy Ła",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/lazy-la/la-signalbox-1.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Łazy-Ła"
+    },
+    "lazy": {
+      "name": "Łazy",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/lazy-lb/lb_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Łazy-Łb"
+    },
+    "lazy lc": {
+      "name": "Łazy Łc",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/lazy-lc/lc-signalbox-1.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Łazy-Łc"
+    },
+    "lodz chojny": {
+      "name": "Łódź Chojny",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/lodz-chojny/lch_signalbox.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Łódź-Chojny"
+    },
+    "lodz kaliska": {
+      "name": "Łódź Kaliska",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/lodz-kaliska/lk_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Łódź-Kaliska"
+    },
+    "lodz lublinek": {
+      "name": "Łódź Lublinek",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/lodz-lublinek/llb_signalbox.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Łódź-Lublinek"
+    },
+    "lcs lodz widzew": {
+      "name": "LCS Łódź Widzew",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/lodz-widzew/lw_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Łódź-Widzew"
+    },
+    "lowicz glowny": {
+      "name": "Łowicz Główny",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/lowicz-glowny/lg_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Łowicz-Główny"
+    },
+    "lowicz przedmiescie": {
+      "name": "Łowicz Przedmieście",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/lowicz-przedmiescie/lp_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Łowicz-Przedmieście"
+    },
+    "miechow": {
+      "name": "Miechów",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/miechow/mi_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Miechów"
+    },
+    "niedzwiedz": {
+      "name": "Niedźwiedź",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/niedzwiedz/nd_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Niedźwiedź"
+    },
+    "lcs olszamowice": {
+      "name": "LCS Olszamowice",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/lcs-olszamowice/ol_pi_signalbox.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/LCS-Olszamowice"
+    },
+    "opoczno poludnie": {
+      "name": "Opoczno Południe",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/opoczno-poludnie/op_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Opoczno-Południe"
+    },
+    "pabianice": {
+      "name": "Pabianice",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/pabianice/pc_signalbox.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Pabianice"
+    },
+    "plycwia": {
+      "name": "Płyćwia",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/plycwia/pl-signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Płyćwia"
+    },
+    "lcs pruszkow": {
+      "name": "LCS Pruszków",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/lcs-pruszkow/pr_signalbox.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/LCS-Pruszków"
+    },
+    "psary": {
+      "name": "Psary",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/psary/ps-signalbox-2.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Psary"
+    },
+    "raciborowice": {
+      "name": "Raciborowice",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/raciborowice/rc_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Raciborowice"
+    },
+    "retkinia": {
+      "name": "Retkinia",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/retkinia/rt_signalbox.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Retkinia"
+    },
+    "rogow": {
+      "name": "Rogów",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/rogow/rg_signalbox.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Rogów"
+    },
+    "rokiciny": {
+      "name": "Rokiciny",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/rokiciny/rk_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Rokiciny"
+    },
+    "skierniewice": {
+      "name": "Skierniewice",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/skierniewice/sk_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Skierniewice"
+    },
+    "slawkow": {
+      "name": "Sławków",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/slawkow/sl-signalbox-1.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Sławków"
+    },
+    "slomniki": {
+      "name": "Słomniki",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/slomniki/sm_signalbox.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Słomniki"
+    },
+    "sosnowiec glowny": {
+      "name": "Sosnowiec Główny",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/sosnowiec-glowny/sg-signalbox-1.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Sosnowiec-Główny"
+    },
+    "sosnowiec kazimierz": {
+      "name": "Sosnowiec Kazimierz",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/sosnowiec-kazimierz/skz_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Sosnowiec-Kazimierz"
+    },
+    "sosnowiec poludniowy": {
+      "name": "Sosnowiec Południowy",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/sosnowiec-poludniowy/spl-signalbox-2.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Sosnowiec-Południowy"
+    },
+    "lcs starzyny": {
+      "name": "LCS Starzyny",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/lcs-starzyny/str_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/LCS-Starzyny"
+    },
+    "lcs strzalki": {
+      "name": "LCS Strzałki",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/lcs-strzalki/st-br_signalbox.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/LCS-Strzałki"
+    },
+    "szeligi": {
+      "name": "Szeligi",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/szeligi/se-signalbox-2.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Szeligi"
+    },
+    "tunel": {
+      "name": "Tunel",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/tunel/tl_signalbox1.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Tunel"
+    },
+    "warszawa wlochy": {
+      "name": "Warszawa Włochy",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/warszawa-wlochy/wl_signalbox.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Warszawa-Włochy"
+    },
+    "lcs witonia": {
+      "name": "LCS Witonia",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/lcs-witonia/wi_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/LCS-Witonia"
+    },
+    "wloszczowa polnoc": {
+      "name": "Włoszczowa Północ",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/wloszczowa-polnoc/wp-signalbox-2.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Włoszczowa-Północ"
+    },
+    "lcs zakowice poludniowe": {
+      "name": "LCS Żakowice Południowe",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/zakowice-poludniowe/zp_signalbox.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Żakowice-Południowe"
+    },
+    "zastow": {
+      "name": "Zastów",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/zastow/zs_signalbox.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Zastów"
+    },
+    "zawiercie": {
+      "name": "Zawiercie",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/zawiercie/zw-signalbox-1.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Zawiercie"
+    },
+    "zdunska wola": {
+      "name": "Zduńska Wola",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/zdunska-wola/zw_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Zduńska-Wola"
+    },
+    "lcs zgierz": {
+      "name": "LCS Zgierz",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/zgierz/zg_signalbox.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/LCS-Zgierz"
+    },
+    "lcs zgierz polnoc": {
+      "name": "LCS Zgierz Północ",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/lcs-zgierz-polnoc/zp_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/LCS-Zgierz-Północ"
+    },
+    "lcs zyrardow": {
+      "name": "LCS Żyrardów",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/lcs-zyrardow/zr_signalbox.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/LCS-Żyrardów"
+    }
+  },
+  "hero": {
+    "image": "./assets/wiki/hero.jpg",
+    "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/4E"
+  }
+}

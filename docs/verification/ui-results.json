@@ -1,0 +1,10 @@
+{
+  "live": {
+    "servers": true,
+    "stations": 69,
+    "trains": 169,
+    "train": "32956"
+  },
+  "errors": [],
+  "qr": true
+}

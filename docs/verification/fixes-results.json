@@ -1,0 +1,18 @@
+{
+  "audio": {
+    "ended": true,
+    "duration": 4.463492,
+    "bytes": 196884
+  },
+  "mobile": {
+    "online": true,
+    "tokenRemoved": true,
+    "stable": true,
+    "cookie": true
+  },
+  "freight": {
+    "hiddenControls": true
+  },
+  "passengerControlsRestored": true,
+  "errors": []
+}

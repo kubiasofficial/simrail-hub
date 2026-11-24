@@ -1,0 +1,8 @@
+{
+  "registration": true,
+  "secondSessionLogin": true,
+  "settingsRoundtrip": true,
+  "localPathExcluded": true,
+  "anonymousDenied": true,
+  "crossUserDenied": true
+}

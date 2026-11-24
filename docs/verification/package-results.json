@@ -1,0 +1,14 @@
+{
+  "info": {
+    "version": "0.2.0",
+    "platform": "win32",
+    "electron": "45.4.1"
+  },
+  "servers": true,
+  "stations": 69,
+  "stationPlayers": 2,
+  "stationAvatars": 2,
+  "trainPlayers": 9,
+  "trainAvatars": 9,
+  "stationBoard": 12
+}

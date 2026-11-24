@@ -1,0 +1,136 @@
+import { haversineM } from './geo';
+import { parseSod } from '../adapters/trainsApi';
+import type { StationCoord, Timetable, TimetablePoint, Train } from '../types/trains';
+
+export type DelayClass = 'none' | 'ontime' | 'early' | 'late' | 'verylate';
+export type Connection = 'live' | 'stale' | 'lost' | 'demo';
+
+export const normName = (s: string) =>
+  s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/ł/g, 'l').replace(/Ł/g, 'L').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+
+export function findStation(name: string, stations: StationCoord[]): StationCoord | null {
+  const n = normName(name);
+  return stations.find((s) => normName(s.name) === n) ?? null;
+}
+
+const DAY = 86400;
+/** Rozdíl a−b v sekundách přes půlnoc, výsledek v intervalu (−12 h, +12 h]. */
+export function diffSod(a: number, b: number): number {
+  let d = (a - b) % DAY;
+  if (d > DAY / 2) d -= DAY;
+  if (d <= -DAY / 2) d += DAY;
+  return d;
+}
+export const fmtSod = (s: number) => { const x = ((Math.round(s) % DAY) + DAY) % DAY; return `${String(Math.floor(x / 3600)).padStart(2, '0')}:${String(Math.floor((x % 3600) / 60)).padStart(2, '0')}`; };
+
+const sched = (p: TimetablePoint, which: 'arrival' | 'departure') => parseSod(which === 'arrival' ? p.arrival ?? p.departure : p.departure ?? p.arrival);
+
+export function delayClass(min: number | null): DelayClass {
+  if (min === null) return 'none';
+  if (min < 0) return 'early';
+  if (min === 0) return 'ontime';
+  return min <= 15 ? 'late' : 'verylate';
+}
+
+/** Zaznamenává skutečné časy průjezdu bodů jízdního řádu (API skutečné příjezdy neposkytuje). */
+export class DelayTracker {
+  private run: string | null = null;
+  private lastIndex: number | null = null;
+  private observed: { index: number; delaySec: number } | null = null;
+
+  observe(runKey: string, index: number | null, nowSod: number | null, points: TimetablePoint[]): void {
+    if (runKey !== this.run) { this.run = runKey; this.lastIndex = null; this.observed = null; }
+    if (index === null) return;
+    if (this.lastIndex !== null && index > this.lastIndex && nowSod !== null) {
+      const p = points[index - 1];
+      const s = p ? sched(p, 'departure') : null;
+      if (s !== null) this.observed = { index: index - 1, delaySec: diffSod(nowSod, s) };
+    }
+    this.lastIndex = index;
+  }
+
+  /** Zpoždění v celých minutách + zdroj hodnoty (pozorováno / odhad). */
+  current(points: TimetablePoint[], index: number | null, nowSod: number | null): { min: number; kind: 'observed' | 'estimate' } | null {
+    if (this.observed) return { min: Math.round(this.observed.delaySec / 60), kind: 'observed' };
+    if (nowSod !== null && index !== null && points[index]) {
+      const s = sched(points[index], 'arrival');
+      // Bez pozorovaného průjezdu je to jen odhad: zpoždění vidíme, jakmile je vlak za plánovaným časem; jinak „zatím bez zpoždění“.
+      if (s !== null) { const late = diffSod(nowSod, s); return { min: late > 30 ? Math.ceil(late / 60) : 0, kind: 'estimate' }; }
+    }
+    return null;
+  }
+}
+
+export interface RowModel {
+  index: number; name: string; isStop: boolean | null;
+  arrival: string | null; departure: string | null; estimated: string | null;
+  status: 'passed' | 'target' | 'upcoming'; standing: boolean;
+}
+export interface OnboardModel {
+  trainNumber: string; trainName: string | null; start: string | null; end: string | null;
+  previous: string | null; current: string | null; next: string | null;
+  rows: RowModel[];
+  phase: 'standing' | 'moving' | 'standing-unknown' | 'unknown';
+  speedKmh: number | null; lat: number; lon: number;
+  delayMin: number | null; delayKind: 'observed' | 'estimate' | null; delayClass: DelayClass;
+  distanceToNextStopM: number | null;
+  distanceToFollowingStopM: number | null;
+  connection: Connection;
+  /** Je dost dat pro automatická hlášení (jízdní řád + index)? */
+  hasTimetable: boolean;
+}
+
+const hhmm = (s: string | null) => { const v = parseSod(s); return v === null ? null : fmtSod(v); };
+const AT_STATION_M = 300;
+
+export function computeOnboard(i: { train: Train; timetable: Timetable | null; stations: StationCoord[]; nowSod: number | null; tracker: DelayTracker; connection: Connection }): OnboardModel {
+  const { train, timetable, stations, nowSod, tracker, connection } = i;
+  const points = timetable?.points ?? [];
+  const idx = train.timetableIndex !== null && points.length ? Math.min(Math.max(train.timetableIndex, 0), points.length - 1) : null;
+  tracker.observe(train.runId ?? train.number, idx, nowSod, points);
+  const d = tracker.current(points, idx, nowSod);
+
+  // Cílový bod = první zastavovací (nebo neznámý) bod od aktuálního indexu.
+  const nextStopIdx = idx === null ? null : points.findIndex((p, k) => k >= idx && p.isStop !== false);
+  const nextStop = nextStopIdx !== null && nextStopIdx >= 0 ? points[nextStopIdx] : null;
+  const st = nextStop ? findStation(nextStop.name, stations) : null;
+  const dist = st ? haversineM(train.lat, train.lon, st.lat, st.lon) : null;
+
+  const speed = train.speedKmh;
+  let phase: OnboardModel['phase'] = 'unknown';
+  if (speed !== null) {
+    if (speed > 1) phase = 'moving';
+    else phase = dist !== null && dist <= AT_STATION_M ? 'standing' : 'standing-unknown';
+  }
+  const standingIdx = phase === 'standing' ? nextStopIdx : null;
+  const delaySec = d ? d.min * 60 : null;
+
+  const rows: RowModel[] = points.map((p, k) => {
+    const arr = sched(p, 'arrival');
+    return {
+      index: k, name: p.name, isStop: p.isStop,
+      arrival: hhmm(p.arrival), departure: hhmm(p.departure),
+      estimated: idx !== null && k >= idx && arr !== null && delaySec !== null ? fmtSod(arr + delaySec) : null,
+      status: idx === null ? 'upcoming' : k < idx ? 'passed' : k === idx ? 'target' : 'upcoming',
+      standing: standingIdx === k
+    };
+  });
+
+  const stops = points.filter((p) => p.isStop !== false);
+  const prevStop = idx === null ? null : [...stops].reverse().find((p) => p.index < (standingIdx ?? idx)) ?? null;
+  return {
+    trainNumber: train.number, trainName: train.name,
+    start: timetable?.startStation ?? train.startStation, end: timetable?.endStation ?? train.endStation,
+    previous: prevStop?.name ?? null,
+    current: standingIdx !== null ? points[standingIdx].name : null,
+    next: standingIdx !== null ? (stops.find((p) => p.index > standingIdx) ?? null)?.name ?? null : nextStop?.name ?? null,
+    rows, phase, speedKmh: speed, lat: train.lat, lon: train.lon,
+    delayMin: d?.min ?? null, delayKind: d?.kind ?? null, delayClass: delayClass(d?.min ?? null),
+    distanceToNextStopM: dist,
+    distanceToFollowingStopM: (() => {
+      const target = standingIdx !== null ? stops.find(p => p.index > standingIdx) : nextStop;
+      const coord = target ? findStation(target.name, stations) : null;
+      return coord ? haversineM(train.lat, train.lon, coord.lat, coord.lon) : null;
+    })(), connection, hasTimetable: points.length > 0 && idx !== null
+  };
+}

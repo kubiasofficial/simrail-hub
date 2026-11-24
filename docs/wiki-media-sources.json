@@ -1,0 +1,1694 @@
+{
+  "retrieved": "2026-11-24",
+  "source": "https://wiki.simrail.eu",
+  "rights": "Wiki siteConfig declares contentLicense=alr (all rights reserved). Images remain property of their respective authors and SimRail; no open licence is claimed.",
+  "images": [
+    {
+      "file": "assets/wiki/hero.jpg",
+      "image": "https://wiki.simrail.eu/vehicle/poland/trains/elec-loco/eu07/20241105175438_1.jpg",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/4E",
+      "label": "EU07 – snímek ze hry",
+      "sha256": "bd66f8df293c0d1253ab7bd20d718f4abee12082805e5195329be1247bb86678",
+      "bytes": 1155781,
+      "bundled": true
+    },
+    {
+      "file": "assets/wiki/stations/baby.png",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/baby/b_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Baby",
+      "label": "Baby",
+      "sha256": "367d9750c2c8b65e4d3e9ede77675458646dcac3e38c5bdfaf1217aaf300cfe2",
+      "bytes": 7191667,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/bedzin.png",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/bedzin/b_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Będzin",
+      "label": "Będzin",
+      "sha256": "1f79f0bf3950580ca453ae72eb586b8f6240bafbccbfdb730faba7acf0285a09",
+      "bytes": 6030397,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/belchow.png",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/belchow/bl_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Bełchów",
+      "label": "Bełchów",
+      "sha256": "0e51cb9b08988c1f862978c2a44283cfee7ecf305ab63958a60d042a6d503024",
+      "bytes": 6027123,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/bukowno.jpg",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/bukowno/bo-signalbox1.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Bukowno",
+      "label": "Bukowno",
+      "sha256": "63b37558531d9afa7b8735913aac0ede16abff5d4759a1b1b710ecea64f471c9",
+      "bytes": 1257437,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/dabrowa-gornicza-huta-katowice.jpg",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/dabrowa-gornicza-huta-katowice/dghk_signalbox1.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Dąbrowa-Górnicza-Huta-Katowice",
+      "label": "Dąbrowa Górnicza Huta Katowice",
+      "sha256": "6a5f341b147accab3b3bcb8e4e0346fc5058f636fdc43c2a7a1e57c0a8956bfc",
+      "bytes": 1100923,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/dabrowa-gornicza-wschodnia.png",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/dabrowa-gornicza-wschodnia/dw-signalbox-1.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Dąbrowa-Górnicza-Wschodnia",
+      "label": "Dąbrowa Górnicza Wschodnia",
+      "sha256": "da99547737ac0e9c9d53bdbcdea025e99624dde046fac980ed54af4b3af882e4",
+      "bytes": 6852432,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/dabrowa-gornicza-zabkowice.png",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/dabrowa-gornicza-zabkowice/dz-signalbox-1.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Dąbrowa-Górnicza-Ząbkowice",
+      "label": "Dąbrowa Górnicza Ząbkowice",
+      "sha256": "a8692fefb6a35f660a0095f15f24edab8b513fd74fed57abc4eb6ceeaf86810e",
+      "bytes": 6609898,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/dabrowa-gornicza.jpg",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/dabrowa-gornicza/dg_signalbox1.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Dąbrowa-Górnicza",
+      "label": "Dąbrowa Górnicza",
+      "sha256": "af81cfae06ec94caa25d6c55328ddaa655f0b812fa1f03631391b93c4dbc5eaf",
+      "bytes": 1084634,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/dorota.png",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/dorota/dra-signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Dorota",
+      "label": "Dorota",
+      "sha256": "868f81abf5c809edef142ea6cd85e280a8e72904a54da4abb1f4974a518608f6",
+      "bytes": 7889187,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/gajewniki.png",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/gajewniki/ga_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Gajewniki",
+      "label": "Gajewniki",
+      "sha256": "2793ffbefa1bdcfe7c6b6b88a0f0e08705fc979026711872f9a0bcbc17567cab",
+      "bytes": 7049630,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/gora-wlodowska.png",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/gora-wlodowska/gw-signalbox-1.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Góra-Włodowska",
+      "label": "Góra Włodowska",
+      "sha256": "9f2684be03b6b625eac598ecd5a11549132580ace3ac8d1f280f11e565f8f1de",
+      "bytes": 8256979,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/grodzisk-mazowiecki.jpg",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/grodzisk-mazowiecki/gr_signalbox.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Grodzisk-Mazowiecki",
+      "label": "Grodzisk Mazowiecki",
+      "sha256": "eafa8b6009a2418b6bd6bee447423340ba44c6ee4b5b425c692aafeabcc6ffa1",
+      "bytes": 692046,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/idzikowice.png",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/idzikowice/id-signalbox-2.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Idzikowice",
+      "label": "Idzikowice",
+      "sha256": "fabafe1850119a1a50477a2de7a7b72c80ee5aa9af603e989ddb7212f03cd51c",
+      "bytes": 5652153,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/juliusz.png",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/juliusz/ju-signalbox-2.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Juliusz",
+      "label": "Juliusz",
+      "sha256": "f2a5450448ce0acca8be4209c2996f8b384936ad8fc888574f25e5ec434ac10c",
+      "bytes": 5872484,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/katowice-zawodzie.png",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/katowice-zawodzie/kz-signalbox-2.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Katowice-Zawodzie",
+      "label": "Katowice Zawodzie",
+      "sha256": "69e763b8089dbd801361139732e81903e0261236543d1a64e2547a2c186900fe",
+      "bytes": 6329893,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/katowice.jpg",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/katowice/ko-signalbox-2.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Katowice",
+      "label": "Katowice",
+      "sha256": "84123cd5ce18a771346c6e86a926ffa373a54090b06ae1905695e48149cb8bc7",
+      "bytes": 1124863,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/knapowka.png",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/knapowka/kn-signalbox-2.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Knapówka",
+      "label": "Knapówka",
+      "sha256": "7a02b1509d42d925e8dc83ef1180674a0d64ca1a1ff37d9111299802449741f7",
+      "bytes": 7998767,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/koluszki.jpg",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/koluszki/kl_signalbox.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Koluszki",
+      "label": "Koluszki",
+      "sha256": "66552f2af90f358598c55b5e8ed29d8061ea910e19d1707f32c61cdad99404b2",
+      "bytes": 1096543,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/korytow.png",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/korytow/kr-signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Korytów",
+      "label": "Korytów",
+      "sha256": "535bc87f70907d5ea508e3e2f65e4da8368dfa05bd116c98a7c49d60625a07a2",
+      "bytes": 6913195,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/kozlow.jpg",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/kozlow/kz-signalbox-1.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Kozłów",
+      "label": "Kozłów",
+      "sha256": "fded3d8dfe546969e030ab34148735ff4187f0817c6bf4789e993b008a5af933",
+      "bytes": 1106500,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/krakow-batowice.jpg",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/krakow-batowice/kb_signalbox.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Kraków-Batowice",
+      "label": "Kraków Batowice",
+      "sha256": "c343fdac719a7c5fdc52630f6c1ec3d26a87db4a7944ea03014416195553df47",
+      "bytes": 984728,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/krakow-przedmiescie.png",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/krakow-przedmiescie/kpm_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Kraków-Przedmieście",
+      "label": "Kraków Przedmieście",
+      "sha256": "8262cc3211ce0401d272cc98fa172f4ae6e5bfa6a1d2959ee55f17aa1ff62e68",
+      "bytes": 7115820,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/lask.png",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/lask/ls_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Łask",
+      "label": "Łask",
+      "sha256": "c5590a566fa1c27a1422f3854171929408aacc80d1ee8ff8553f3475fb6875fe",
+      "bytes": 7057252,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/lazy-la.png",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/lazy-la/la-signalbox-1.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Łazy-Ła",
+      "label": "Łazy Ła",
+      "sha256": "7e00551533cd0aeeca0fcfeda943aa584fab988753db062e708bf53df7518060",
+      "bytes": 6769589,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/lazy-lc.png",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/lazy-lc/lc-signalbox-1.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Łazy-Łc",
+      "label": "Łazy Łc",
+      "sha256": "27e5c7ff9ab224e3e2ce8f818336596d1725a807f2dead5796ea232e1754f4d2",
+      "bytes": 6296047,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/lazy.png",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/lazy-lb/lb_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Łazy-Łb",
+      "label": "Łazy",
+      "sha256": "e38c175dc01ca28d831f131cea3f97925bcc2e73d164417ee073d5189b5fae24",
+      "bytes": 4846841,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/lcs-galkowek.png",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/galkowek/g_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Gałkówek",
+      "label": "LCS Gałkówek",
+      "sha256": "7743abc9775c5046dc6e8983ca8e5237ef660bdcefa6d73f15e24b970a261430",
+      "bytes": 7331466,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/lcs-glinnik.png",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/lcs-glinnik/gl_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/LCS-Glinnik",
+      "label": "LCS Glinnik",
+      "sha256": "47d6c79d7db4711c0576358c71ce3d90ad92e81e45b5fee95812a36a5f610ee8",
+      "bytes": 7042669,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/lcs-glowno.png",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/lcs-glowno/gn_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/LCS-Głowno",
+      "label": "LCS Głowno",
+      "sha256": "0a75db1bb7a320720558e7119f79ab9665fd70ab276847c3a24d0c3903443454",
+      "bytes": 6232706,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/lcs-lodz-widzew.png",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/lodz-widzew/lw_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Łódź-Widzew",
+      "label": "LCS Łódź Widzew",
+      "sha256": "25488793d3cfe461a7296b37a0ef8e873de079560a35417d5749e41354887ae1",
+      "bytes": 5847299,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/lcs-olszamowice.jpg",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/lcs-olszamowice/ol_pi_signalbox.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/LCS-Olszamowice",
+      "label": "LCS Olszamowice",
+      "sha256": "88ef866da9a46760f41659fddec623bf356e618e25433616047e7c9583b9d836",
+      "bytes": 1403147,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/lcs-pruszkow.jpg",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/lcs-pruszkow/pr_signalbox.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/LCS-Pruszków",
+      "label": "LCS Pruszków",
+      "sha256": "51e0d7dc4c8a87c528942d9aa38d17a04110a74313d107e632c7e9e3fc8a0256",
+      "bytes": 1219615,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/lcs-starzyny.png",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/lcs-starzyny/str_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/LCS-Starzyny",
+      "label": "LCS Starzyny",
+      "sha256": "a1492339ca72150f1d9ba2f2b708c617ebd1ca842009506959885de1ab5f7512",
+      "bytes": 5657103,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/lcs-strzalki.jpg",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/lcs-strzalki/st-br_signalbox.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/LCS-Strzałki",
+      "label": "LCS Strzałki",
+      "sha256": "19cec770be1ccb779726acfddc75882197c00cdcfe8abd7bf1a5f0fc0ec5ddec",
+      "bytes": 978204,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/lcs-witonia.png",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/lcs-witonia/wi_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/LCS-Witonia",
+      "label": "LCS Witonia",
+      "sha256": "c1dca509ec83871930b64362220dcf7f4ea3e3066aa17b335ab2ce1cf7632dcf",
+      "bytes": 6482419,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/lcs-zakowice-poludniowe.jpg",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/zakowice-poludniowe/zp_signalbox.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Żakowice-Południowe",
+      "label": "LCS Żakowice Południowe",
+      "sha256": "5fb69e3608daf996e8be304f703f63b3915c016f8fe27578bfd99df7d027223e",
+      "bytes": 1121763,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/lcs-zgierz-polnoc.png",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/lcs-zgierz-polnoc/zp_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/LCS-Zgierz-Północ",
+      "label": "LCS Zgierz Północ",
+      "sha256": "b8432d18d6da50584e4cce7878c5160ab2d7793f2c722a03620f8c192a49c329",
+      "bytes": 7330602,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/lcs-zgierz.jpg",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/zgierz/zg_signalbox.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/LCS-Zgierz",
+      "label": "LCS Zgierz",
+      "sha256": "5ca17997518a22cee4835628a540ac7022fdb6395bc34fed567e1d166dfd193d",
+      "bytes": 1141825,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/lcs-zyrardow.jpg",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/lcs-zyrardow/zr_signalbox.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/LCS-Żyrardów",
+      "label": "LCS Żyrardów",
+      "sha256": "57516b79bcb4cbb3dcf01bd5d7b18c7a4024d6617a90d0167aec6e1b03fa7230",
+      "bytes": 954487,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/lodz-chojny.jpg",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/lodz-chojny/lch_signalbox.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Łódź-Chojny",
+      "label": "Łódź Chojny",
+      "sha256": "591a3ba2e8343e60461534f104b2dff42f1dda9c244cb53160d27b05e6cf398c",
+      "bytes": 1007105,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/lodz-kaliska.png",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/lodz-kaliska/lk_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Łódź-Kaliska",
+      "label": "Łódź Kaliska",
+      "sha256": "9b94818564ff612a4b83003fad2bf914db08ded32f54d9b2aa1d98a57d09150a",
+      "bytes": 7120652,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/lodz-lublinek.jpg",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/lodz-lublinek/llb_signalbox.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Łódź-Lublinek",
+      "label": "Łódź Lublinek",
+      "sha256": "4ed46cb74937db2f8afdc81a3ae2ed480a8025c8606513d380d8361fcf4e9f53",
+      "bytes": 867756,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/lowicz-glowny.png",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/lowicz-glowny/lg_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Łowicz-Główny",
+      "label": "Łowicz Główny",
+      "sha256": "1ac72addc9ff8e131ed706c4ee38ca85cefeb7a2ff5b8ae797433d1990f9aefd",
+      "bytes": 6915253,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/lowicz-przedmiescie.png",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/lowicz-przedmiescie/lp_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Łowicz-Przedmieście",
+      "label": "Łowicz Przedmieście",
+      "sha256": "88fe57ba86f31c568adfaa1dfa269a21b6f4256381dfec2cfa0a79cdc4286424",
+      "bytes": 7214394,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/miechow.png",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/miechow/mi_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Miechów",
+      "label": "Miechów",
+      "sha256": "333970f3819770bbe54787889774137700663861b0119b6ecba1ec5c418f7557",
+      "bytes": 6525367,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/niedzwiedz.png",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/niedzwiedz/nd_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Niedźwiedź",
+      "label": "Niedźwiedź",
+      "sha256": "367928823865c6e7b5800e04da218185ed245fcb29a3e81ec7dcc1c602c3db85",
+      "bytes": 5904706,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/opoczno-poludnie.png",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/opoczno-poludnie/op_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Opoczno-Południe",
+      "label": "Opoczno Południe",
+      "sha256": "b04db2cb7a21ec8d98a005c0df62f4000946dfd36d585012fe2987b7bc300eb8",
+      "bytes": 6752598,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/pabianice.jpg",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/pabianice/pc_signalbox.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Pabianice",
+      "label": "Pabianice",
+      "sha256": "a5e6d9095992559d48889a5ff0ff42acf83dc188c27a0345041f514dc91453e7",
+      "bytes": 1093410,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/plycwia.png",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/plycwia/pl-signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Płyćwia",
+      "label": "Płyćwia",
+      "sha256": "3af8fc79dff904c53060835ecdecfc66ba0e0599bbe0eaa88d43fcf35398091f",
+      "bytes": 6955208,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/psary.png",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/psary/ps-signalbox-2.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Psary",
+      "label": "Psary",
+      "sha256": "1979ea5627ac7e29ec3ce1cd2912bac3d55630b668afb534e0be15cd43271322",
+      "bytes": 7251782,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/raciborowice.png",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/raciborowice/rc_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Raciborowice",
+      "label": "Raciborowice",
+      "sha256": "3d761e5ff651cd9a42cc0f5623a9a30806dd3ddbb26e77a76026fdd947ebb12e",
+      "bytes": 6424290,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/retkinia.jpg",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/retkinia/rt_signalbox.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Retkinia",
+      "label": "Retkinia",
+      "sha256": "6a9e14c1281f4ba0a81cbf4adf89ee38bcd3c925889591ac608fca650b080487",
+      "bytes": 1046992,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/rogow.jpg",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/rogow/rg_signalbox.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Rogów",
+      "label": "Rogów",
+      "sha256": "8d893cc426c78a1006547234208ded8ca89acf2edf6d10c520ae65d2f269ee82",
+      "bytes": 1133607,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/rokiciny.png",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/rokiciny/rk_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Rokiciny",
+      "label": "Rokiciny",
+      "sha256": "7ef049777448afd8fa517219e3b87e4a3e632b45d677e841c57c5a5c0a3770bb",
+      "bytes": 6710967,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/skierniewice.png",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/skierniewice/sk_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Skierniewice",
+      "label": "Skierniewice",
+      "sha256": "0e51cb9b08988c1f862978c2a44283cfee7ecf305ab63958a60d042a6d503024",
+      "bytes": 6027123,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/slawkow.png",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/slawkow/sl-signalbox-1.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Sławków",
+      "label": "Sławków",
+      "sha256": "3add97b11d120b11082bf214515dffba2adbb675f713b84fddeda3ac731fe4e6",
+      "bytes": 7124214,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/slomniki.jpg",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/slomniki/sm_signalbox.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Słomniki",
+      "label": "Słomniki",
+      "sha256": "8480f9a8032213e6044e1203a45f6d1bf3977495752bdf5b973873e1cdc0beaf",
+      "bytes": 1142083,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/sosnowiec-glowny.png",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/sosnowiec-glowny/sg-signalbox-1.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Sosnowiec-Główny",
+      "label": "Sosnowiec Główny",
+      "sha256": "f71f611a7a0f54876921832b198fc6ad19bcf7d3582f98b85bec725e5100bded",
+      "bytes": 6326219,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/sosnowiec-kazimierz.png",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/sosnowiec-kazimierz/skz_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Sosnowiec-Kazimierz",
+      "label": "Sosnowiec Kazimierz",
+      "sha256": "bec3632533fccdf10ade3ab239171aa0bf7eb3e06bcf7a261c064d3be029f697",
+      "bytes": 5650252,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/sosnowiec-poludniowy.png",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/sosnowiec-poludniowy/spl-signalbox-2.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Sosnowiec-Południowy",
+      "label": "Sosnowiec Południowy",
+      "sha256": "f6793263df9366a01cc298cfcdfbd4553c7de05fc7fdcdd744054780fea6cfed",
+      "bytes": 7110584,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/szeligi.png",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/szeligi/se-signalbox-2.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Szeligi",
+      "label": "Szeligi",
+      "sha256": "f2ec966f1fa153e4fe8fda49ceb5f44cdcbf52ba6137d472ef927e53e99d573d",
+      "bytes": 7634844,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/tunel.jpg",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/tunel/tl_signalbox1.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Tunel",
+      "label": "Tunel",
+      "sha256": "19a88603f1295ad21ab6815deaf667f124fbd395bbaa6e77c6c3b734259802bc",
+      "bytes": 1291417,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/warszawa-wlochy.jpg",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/warszawa-wlochy/wl_signalbox.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Warszawa-Włochy",
+      "label": "Warszawa Włochy",
+      "sha256": "966c956d151533b1938cc68b60127c844ee30dc188d43f0f4de914127f0b6045",
+      "bytes": 913429,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/wloszczowa-polnoc.png",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/wloszczowa-polnoc/wp-signalbox-2.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Włoszczowa-Północ",
+      "label": "Włoszczowa Północ",
+      "sha256": "2a0bc22f6da90319949f43adbc3b72e8830c4fb284f121d14d94d319534fda2b",
+      "bytes": 6790618,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/zastow.jpg",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/zastow/zs_signalbox.jpg",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Zastów",
+      "label": "Zastów",
+      "sha256": "bcedf7076bbc18a62e41e16a38826234732021db764e051aeb693ef43c9976fb",
+      "bytes": 1002428,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/zawiercie.png",
+      "image": "https://wiki.simrail.eu/stations/poland/relay/zawiercie/zw-signalbox-1.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Relay-interlocking/Zawiercie",
+      "label": "Zawiercie",
+      "sha256": "11771df186f7ce917b3e04a5ec23b03724b896d15e194618b15978fb76c3c900",
+      "bytes": 5675358,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/stations/zdunska-wola.png",
+      "image": "https://wiki.simrail.eu/stations/poland/electronical/zdunska-wola/zw_signalbox.png",
+      "page": "https://wiki.simrail.eu/en/Stations/Poland/Electronical-interlocking/Zduńska-Wola",
+      "label": "Zduńska Wola",
+      "sha256": "9b705e6bfe64f3fa320398c5e84b4620c78d2195d7dac7160bd1a61e75643948",
+      "bytes": 6844687,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/163_021-9.png",
+      "image": "https://wiki.simrail.eu/vehicle/163_021-9.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/71E",
+      "label": "ČD 163",
+      "sha256": "f624e519eb7b0b511d6864600c15ead203b84e28a5297c0fceae11fee6fdaddb",
+      "bytes": 1780778,
+      "bundled": true
+    },
+    {
+      "file": "assets/wiki/vehicles/163_029-2.png",
+      "image": "https://wiki.simrail.eu/vehicle/163_029-2.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/71E",
+      "label": "ČD 163",
+      "sha256": "9ced8f3809f2b4ceb2167079085f45aabfb3a8efd6a7633c8be281e11daaafc4",
+      "bytes": 1783603,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/163_030-0.png",
+      "image": "https://wiki.simrail.eu/vehicle/163_030-0.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/71E",
+      "label": "ČD 163",
+      "sha256": "2691cbddcefe04b1287a9b2fa107a7102fdc4b58243faf9e2e89592c89468961",
+      "bytes": 1804330,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/163_034-2.png",
+      "image": "https://wiki.simrail.eu/vehicle/163_034-2.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/71E",
+      "label": "ČD 163",
+      "sha256": "15318a4f0958b052c87a86a13e23887103a5ae6300b42377e6a21fd5049e4f7e",
+      "bytes": 1772989,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/163_035-9.png",
+      "image": "https://wiki.simrail.eu/vehicle/163_035-9.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/71E",
+      "label": "ČD 163",
+      "sha256": "3ad3586f1907d0885d536ff4a909b46a85f3a72c9d39d60f89c10cb29763e9fa",
+      "bytes": 1796588,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/163_040-9.png",
+      "image": "https://wiki.simrail.eu/vehicle/163_040-9.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/71E",
+      "label": "ČD 163",
+      "sha256": "0953d87cd60dd70b77e40e1549f6fcb4d9cac4371e49305a71c828628fe2076f",
+      "bytes": 1783583,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/163_041-7.png",
+      "image": "https://wiki.simrail.eu/vehicle/163_041-7.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/71E",
+      "label": "ČD 163",
+      "sha256": "8c4fdb3b4259e33b733453c9cc5858d5600e5b93851298ecd461966b4ca7bc22",
+      "bytes": 1805680,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/163_042-5.png",
+      "image": "https://wiki.simrail.eu/vehicle/163_042-5.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/71E",
+      "label": "ČD 163",
+      "sha256": "79b8e8737514821ddde8664a0fdf55f8cd4a15a66da149c1b13cbe8387436e83",
+      "bytes": 1781488,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/163_043-3.png",
+      "image": "https://wiki.simrail.eu/vehicle/163_043-3.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/71E",
+      "label": "ČD 163",
+      "sha256": "be23ab5579fffd8af9615db26b72a97f7e01811903541f9ee3ecc0a25ea26ade",
+      "bytes": 1756024,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/163_045-8.png",
+      "image": "https://wiki.simrail.eu/vehicle/163_045-8.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/71E",
+      "label": "ČD 163",
+      "sha256": "41f276656ac3a8927747ef16ff8ab0ea59e5d6ea87eb151d8c1cb4b7b53267f6",
+      "bytes": 1784289,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/163_046-6.png",
+      "image": "https://wiki.simrail.eu/vehicle/163_046-6.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/71E",
+      "label": "ČD 163",
+      "sha256": "30d8ee56d24cd7ec032583a3b63e117dcb8f23bb769a4f9345c297f401e6eb6b",
+      "bytes": 1767923,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/36wed-001.png",
+      "image": "https://wiki.simrail.eu/vehicle/36wed-001.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/36WEd",
+      "label": "36WEd Impuls 2",
+      "sha256": "05034fd068bc154b024d4febd6f2327175c1d9551defc44f67fe84998aacad6a",
+      "bytes": 1647551,
+      "bundled": true
+    },
+    {
+      "file": "assets/wiki/vehicles/36wed-002.png",
+      "image": "https://wiki.simrail.eu/vehicle/36wed-002.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/36WEd",
+      "label": "36WEd Impuls 2",
+      "sha256": "689f725d4dd339d522063a98e69702e7aca69e684f2415ca2fe678c44065289c",
+      "bytes": 1647494,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/36wed-003.png",
+      "image": "https://wiki.simrail.eu/vehicle/36wed-003.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/36WEd",
+      "label": "36WEd Impuls 2",
+      "sha256": "678b8938c3564aca46a3a07908da5d274b6c670f2a45b2c9b81b09b76c79533d",
+      "bytes": 1647504,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/36wed-004.png",
+      "image": "https://wiki.simrail.eu/vehicle/36wed-004.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/36WEd",
+      "label": "36WEd Impuls 2",
+      "sha256": "1cc6d043540954fa80cfd9be4626e7add88d275831c854ab8a8d8a479d4a0494",
+      "bytes": 1648758,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/36wed-005.png",
+      "image": "https://wiki.simrail.eu/vehicle/36wed-005.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/36WEd",
+      "label": "36WEd Impuls 2",
+      "sha256": "20296a404ef41a3993005f6e995731a60d34dbfdac9590291831d077494356ec",
+      "bytes": 1648878,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/36wed-006.png",
+      "image": "https://wiki.simrail.eu/vehicle/36wed-006.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/36WEd",
+      "label": "36WEd Impuls 2",
+      "sha256": "9aefd13de7a930c5a0e2882a95ff6b09e863bb2bf344c9a3511cae14cd46bdc3",
+      "bytes": 1648935,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/36wed-007.png",
+      "image": "https://wiki.simrail.eu/vehicle/36wed-007.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/36WEd",
+      "label": "36WEd Impuls 2",
+      "sha256": "5e34c9e4d4fbae3824abc957392197cbc5c757962246f3a45c1331ae874129bb",
+      "bytes": 1648729,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/36wed-008.png",
+      "image": "https://wiki.simrail.eu/vehicle/36wed-008.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/36WEd",
+      "label": "36WEd Impuls 2",
+      "sha256": "e0cece6a05b86dd8fb68c7743f5fa3de7fc42b017f35fd73dcb9f5c87fb01116",
+      "bytes": 1648437,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/36wed-009.png",
+      "image": "https://wiki.simrail.eu/vehicle/36wed-009.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/36WEd",
+      "label": "36WEd Impuls 2",
+      "sha256": "c0c9ca3786d3d4ec4625d8afa451331e52db5f90e7a15d45703263b51d0811b3",
+      "bytes": 1648866,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/36wed-010.png",
+      "image": "https://wiki.simrail.eu/vehicle/36wed-010.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/36WEd",
+      "label": "36WEd Impuls 2",
+      "sha256": "a1440103d8ac33b1248aa6ad5460453afb266952c34b814b1fa81cb2f21c64cb",
+      "bytes": 1648503,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/36wed-011.png",
+      "image": "https://wiki.simrail.eu/vehicle/36wed-011.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/36WEd",
+      "label": "36WEd Impuls 2",
+      "sha256": "8bf1e8a41a04e952855fb349ecc9a4bf12a8ef770ec77d03d7c643cfde9e6234",
+      "bytes": 1648097,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/36wed-012.png",
+      "image": "https://wiki.simrail.eu/vehicle/36wed-012.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/36WEd",
+      "label": "36WEd Impuls 2",
+      "sha256": "2195e2ef5f3e4579c2a82f8f1facedc4c71e771e8ea7767045918302e74d7d0f",
+      "bytes": 1648225,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/36wed-013.png",
+      "image": "https://wiki.simrail.eu/vehicle/36wed-013.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/36WEd",
+      "label": "36WEd Impuls 2",
+      "sha256": "5cdb80676381531150240d890bf2c90ac73746d62690155655bba8dc0480d8ac",
+      "bytes": 1648872,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/36wed-014.png",
+      "image": "https://wiki.simrail.eu/vehicle/36wed-014.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/36WEd",
+      "label": "36WEd Impuls 2",
+      "sha256": "204ce8779e3743ccc0a348c85bc78d4bbdeaebef3328067e6a3120851e0f4734",
+      "bytes": 1648547,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/br285-121.png",
+      "image": "https://wiki.simrail.eu/vehicle/br285-121.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Diesel-locomotive/BR285",
+      "label": "BR285",
+      "sha256": "53534b6b72ecf50a0dfc2f83eaae3669b6c9ff9e0803e51207e429848cb23709",
+      "bytes": 1769378,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/br285-122.png",
+      "image": "https://wiki.simrail.eu/vehicle/br285-122.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Diesel-locomotive/BR285",
+      "label": "BR285",
+      "sha256": "4ca08e2122f40841637cad2ec9aedaed1e31352c972d0d0070573b704f99299a",
+      "bytes": 1769435,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/br285-123.png",
+      "image": "https://wiki.simrail.eu/vehicle/br285-123.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Diesel-locomotive/BR285",
+      "label": "BR285",
+      "sha256": "5a566b9eceb71b18f05e451d3792d7b240958c828e26689085a574a5c4482974",
+      "bytes": 1769506,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/br285-124.png",
+      "image": "https://wiki.simrail.eu/vehicle/br285-124.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Diesel-locomotive/BR285",
+      "label": "BR285",
+      "sha256": "353d5fd03fa90cba63e3af6bcbe0d6e3d86c52bfad05d1954e15ab7a7a58a1a2",
+      "bytes": 1769435,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/br285-125.png",
+      "image": "https://wiki.simrail.eu/vehicle/br285-125.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Diesel-locomotive/BR285",
+      "label": "BR285",
+      "sha256": "7adfcec40b54234e561aa9abc5e3d29e77c6b42b584cb0541764304a037bda88",
+      "bytes": 1769651,
+      "bundled": true
+    },
+    {
+      "file": "assets/wiki/vehicles/br285-126.png",
+      "image": "https://wiki.simrail.eu/vehicle/br285-126.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Diesel-locomotive/BR285",
+      "label": "BR285",
+      "sha256": "6124632c99a31b278294c8f53a829a4c8e6970eb77094cc6d5cec26ed0bf3812",
+      "bytes": 1769483,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/br285-127.png",
+      "image": "https://wiki.simrail.eu/vehicle/br285-127.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Diesel-locomotive/BR285",
+      "label": "BR285",
+      "sha256": "82a7f4f167843ade197fef4202073bcf6a25788984de9e9abbde1f189ab3ca4f",
+      "bytes": 1769388,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/br285-128.png",
+      "image": "https://wiki.simrail.eu/vehicle/br285-128.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Diesel-locomotive/BR285",
+      "label": "BR285",
+      "sha256": "0216537958e2c5e5d5142feb5b9356b245e6264807071d0891374c7e2ea9b0ac",
+      "bytes": 1770370,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/br285-129.png",
+      "image": "https://wiki.simrail.eu/vehicle/br285-129.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Diesel-locomotive/BR285",
+      "label": "BR285",
+      "sha256": "cf7d30722da0cdeb27f3e348eb64c82f7ae8b4e94b3f9ab5bf5f09b0b4083be7",
+      "bytes": 1769773,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/br285-130.png",
+      "image": "https://wiki.simrail.eu/vehicle/br285-130.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Diesel-locomotive/BR285",
+      "label": "BR285",
+      "sha256": "3412c6237bab7f55d3aab11e8198179725833f254e423951bdd24f2c1b324846",
+      "bytes": 1769554,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/e186-133.png",
+      "image": "https://wiki.simrail.eu/vehicle/e186-133.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/E186",
+      "label": "E186 / TRAXX",
+      "sha256": "d5b733154a43a7b774586e830ec152597835fe9cf81ddcbb6b9379a06c5356b1",
+      "bytes": 1767916,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/e186-134.png",
+      "image": "https://wiki.simrail.eu/vehicle/e186-134.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/E186",
+      "label": "E186 / TRAXX",
+      "sha256": "2109b432798027b73335c1dfaa863451c66a86e0dad0f9e486b95367cae284b0",
+      "bytes": 1712613,
+      "bundled": true
+    },
+    {
+      "file": "assets/wiki/vehicles/e186-136.png",
+      "image": "https://wiki.simrail.eu/vehicle/e186-136.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/E186",
+      "label": "E186 / TRAXX",
+      "sha256": "e07a0c3f5ad5aa4b8c219f5dc62475c37ceb2a51acd98a594319af4432e65e15",
+      "bytes": 1713760,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/e186-138.png",
+      "image": "https://wiki.simrail.eu/vehicle/e186-138.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/E186",
+      "label": "E186 / TRAXX",
+      "sha256": "1c570e49ee44efa8665906d931d95154a38913b85316efec069361441191b7d4",
+      "bytes": 1733586,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/e186-139.png",
+      "image": "https://wiki.simrail.eu/vehicle/e186-139.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/E186",
+      "label": "E186 / TRAXX",
+      "sha256": "cd96f73d93675f6ec97387406160a7abf6844ae7830b2f66517a528e01914fc6",
+      "bytes": 1705319,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/e186-241.png",
+      "image": "https://wiki.simrail.eu/vehicle/e186-241.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/E186",
+      "label": "E186 / TRAXX",
+      "sha256": "1b923db17bfef2c0a5d1102ffcc64afacd10375c4be42239b8a92fe213ffecb3",
+      "bytes": 1785236,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/e186-242.png",
+      "image": "https://wiki.simrail.eu/vehicle/e186-242.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/E186",
+      "label": "E186 / TRAXX",
+      "sha256": "51f0069840999e4dd5a229992b2c1cdccee52fd8eedc8119ff7306e1035ee056",
+      "bytes": 1728649,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/e186-245.png",
+      "image": "https://wiki.simrail.eu/vehicle/e186-245.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/E186",
+      "label": "E186 / TRAXX",
+      "sha256": "281b1f2863cadf9aa618d2a29d5d6423accb45ab5882a7a3e4e7cc02d96f68ac",
+      "bytes": 1759899,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/e186-246.png",
+      "image": "https://wiki.simrail.eu/vehicle/e186-246.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/E186",
+      "label": "E186 / TRAXX",
+      "sha256": "b03c9ed22a7c2aa59cc2da007e4bd0238ed42b13026819b014f02ac0a110b59b",
+      "bytes": 1762184,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/e186-248.png",
+      "image": "https://wiki.simrail.eu/vehicle/e186-248.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/E186",
+      "label": "E186 / TRAXX",
+      "sha256": "92e5672e32116ada0947fb39cdf9b65a1a8fa97db59201ed88769570b455d587",
+      "bytes": 1729593,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/e186-250.png",
+      "image": "https://wiki.simrail.eu/vehicle/e186-250.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/E186",
+      "label": "E186 / TRAXX",
+      "sha256": "4d15b883d2c6bb67b402cd21e3bc9ffaee10d56c7b136031f83e4ca7fbdae375",
+      "bytes": 1806022,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/e186-928.png",
+      "image": "https://wiki.simrail.eu/vehicle/e186-928.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/E186",
+      "label": "E186 / TRAXX",
+      "sha256": "5d6e2946ff43f7c600d7a0e7da39849c54d63f1c3618d1b88f235073cca50115",
+      "bytes": 1644066,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/e186-929.png",
+      "image": "https://wiki.simrail.eu/vehicle/e186-929.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/E186",
+      "label": "E186 / TRAXX",
+      "sha256": "98cad4e19e1efa2c8b6cf3729d8ca3721eb993de5860ef398f395ce7de915d5f",
+      "bytes": 1627634,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/e186-930.png",
+      "image": "https://wiki.simrail.eu/vehicle/e186-930.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/E186",
+      "label": "E186 / TRAXX",
+      "sha256": "6faa0f6a0d4e81f097d02ada973fc0f09cca1602de9e9f9d78dfd9175e7c9609",
+      "bytes": 1631039,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/e186-941.png",
+      "image": "https://wiki.simrail.eu/vehicle/e186-941.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/E186",
+      "label": "E186 / TRAXX",
+      "sha256": "7c8be91eb67290930c084430b6bb8e8655edc60e11a4ddf87bc296eee0bf4df5",
+      "bytes": 1717027,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/e186-942.png",
+      "image": "https://wiki.simrail.eu/vehicle/e186-942.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/E186",
+      "label": "E186 / TRAXX",
+      "sha256": "7502491d620f86a68630734dbbdbcc86241474e8f0f3a3bfebc4c664aa141d04",
+      "bytes": 1728520,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/e6acta-014.png",
+      "image": "https://wiki.simrail.eu/vehicle/e6acta-014.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/E6ACTa",
+      "label": "ET25 / Dragon 2",
+      "sha256": "3952cc71bc09347b0f9c563b726668542479b93753f7a79b775fd09d839f972a",
+      "bytes": 1649185,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/e6acta-016.png",
+      "image": "https://wiki.simrail.eu/vehicle/e6acta-016.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/E6ACTa",
+      "label": "ET25 / Dragon 2",
+      "sha256": "a450e328b7e37dbc98262c8cc3ab9fab7e396c82107901c2803037cd3db839a7",
+      "bytes": 1596856,
+      "bundled": true
+    },
+    {
+      "file": "assets/wiki/vehicles/e6actadb-027.png",
+      "image": "https://wiki.simrail.eu/vehicle/e6actadb-027.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/E6ACTa",
+      "label": "ET25 / Dragon 2",
+      "sha256": "11d38af8a8d53396875180b76422976a7defbab0c8ab860c43530ee96e2d184d",
+      "bytes": 1672265,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/ed250-001.png",
+      "image": "https://wiki.simrail.eu/vehicle/ed250-001.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/Pendolino",
+      "label": "ED250 Pendolino",
+      "sha256": "a58da280047f3e545f7304eade171552535c021bbd82735af954a9955ffd0640",
+      "bytes": 1645662,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/ed250-009.png",
+      "image": "https://wiki.simrail.eu/vehicle/ed250-009.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/Pendolino",
+      "label": "ED250 Pendolino",
+      "sha256": "a58da280047f3e545f7304eade171552535c021bbd82735af954a9955ffd0640",
+      "bytes": 1645662,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/ed250-015.png",
+      "image": "https://wiki.simrail.eu/vehicle/ed250-015.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/Pendolino",
+      "label": "ED250 Pendolino",
+      "sha256": "a58da280047f3e545f7304eade171552535c021bbd82735af954a9955ffd0640",
+      "bytes": 1645662,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/ed250-018.png",
+      "image": "https://wiki.simrail.eu/vehicle/ed250-018.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/Pendolino",
+      "label": "ED250 Pendolino",
+      "sha256": "a58da280047f3e545f7304eade171552535c021bbd82735af954a9955ffd0640",
+      "bytes": 1645662,
+      "bundled": true
+    },
+    {
+      "file": "assets/wiki/vehicles/en57-009.png",
+      "image": "https://wiki.simrail.eu/vehicle/en57-009.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/Kibel",
+      "label": "EN57 / EN71",
+      "sha256": "88735958a07bcfab32378b53c1d11578d9a089680790b64c67fb1c99b54fed1e",
+      "bytes": 1804069,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/en57-038.png",
+      "image": "https://wiki.simrail.eu/vehicle/en57-038.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/Kibel",
+      "label": "EN57 / EN71",
+      "sha256": "d2336db2ae0b565bad76b340e82f9190e83e1a8b7fabedfe7cc7153c0963a6d8",
+      "bytes": 1672587,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/en57-047.png",
+      "image": "https://wiki.simrail.eu/vehicle/en57-047.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/Kibel",
+      "label": "EN57 / EN71",
+      "sha256": "8f3c561b7bf21ae4e566ecd6ea05cb8f919c7cd29ef24fdfb122ddc3ce867990",
+      "bytes": 1783284,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/en57-1000.png",
+      "image": "https://wiki.simrail.eu/vehicle/en57-1000.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/Kibel",
+      "label": "EN57 / EN71",
+      "sha256": "409f5f35c135ac43bc6342fcf3b2ba5f766a169f6d7bcbf0f5a197c69de5a52a",
+      "bytes": 1699245,
+      "bundled": true
+    },
+    {
+      "file": "assets/wiki/vehicles/en57-1003.png",
+      "image": "https://wiki.simrail.eu/vehicle/en57-1003.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/Kibel",
+      "label": "EN57 / EN71",
+      "sha256": "4c0dcd14e1b7949ebe51d40b76ac59c1b515f61998736e37aaf9e965e2eb73e6",
+      "bytes": 1802984,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/en57-1051.png",
+      "image": "https://wiki.simrail.eu/vehicle/en57-1051.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/Kibel",
+      "label": "EN57 / EN71",
+      "sha256": "6e11cc10ef962963e99bdb902e4fd73f2546670be871b385931204ebfbc12aa2",
+      "bytes": 1805013,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/en57-1181.png",
+      "image": "https://wiki.simrail.eu/vehicle/en57-1181.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/Kibel",
+      "label": "EN57 / EN71",
+      "sha256": "8c81300a892cd737a1f9d4572cf84b2a340c042b45b9b34143dc461e34713e25",
+      "bytes": 1794600,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/en57-1219.png",
+      "image": "https://wiki.simrail.eu/vehicle/en57-1219.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/Kibel",
+      "label": "EN57 / EN71",
+      "sha256": "21cf2483104e10c56c4a380ce9d0533372a0962902d285efc368224f0befa1e2",
+      "bytes": 1784833,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/en57-1316.png",
+      "image": "https://wiki.simrail.eu/vehicle/en57-1316.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/Kibel",
+      "label": "EN57 / EN71",
+      "sha256": "e0b3477e7fb4ad9a29c4a6aa4be35d08b7096ff9aae4a9c337e553760dc1e62d",
+      "bytes": 1785143,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/en57-1331.png",
+      "image": "https://wiki.simrail.eu/vehicle/en57-1331.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/Kibel",
+      "label": "EN57 / EN71",
+      "sha256": "fac702c8036076c6aec4ead7ada98a142eca66dbdbc8dd764a29e0b14ae418be",
+      "bytes": 1807526,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/en57-1458.png",
+      "image": "https://wiki.simrail.eu/vehicle/en57-1458.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/Kibel",
+      "label": "EN57 / EN71",
+      "sha256": "35112ee83ecaf83583f703a9a9c0a03e06f4a2733aedce5d1949ee7bb6e4cb80",
+      "bytes": 1795855,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/en57-1567.png",
+      "image": "https://wiki.simrail.eu/vehicle/en57-1567.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/Kibel",
+      "label": "EN57 / EN71",
+      "sha256": "bdf0a88aeec6c11177820b1d299e8fd5505b84c3c595da1b38a6405d68cfe6fb",
+      "bytes": 1780298,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/en57-1571.png",
+      "image": "https://wiki.simrail.eu/vehicle/en57-1571.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/Kibel",
+      "label": "EN57 / EN71",
+      "sha256": "8e25c40a251b6700628479dc2f75977bad4a0be30b4d318d6669dc9332ecb849",
+      "bytes": 1793043,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/en57-1752.png",
+      "image": "https://wiki.simrail.eu/vehicle/en57-1752.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/Kibel",
+      "label": "EN57 / EN71",
+      "sha256": "01bd5faa18b22dcf0645c21a40ec632bc9884b652f8e64b9fcc452b012f7e408",
+      "bytes": 1775724,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/en57-1755.png",
+      "image": "https://wiki.simrail.eu/vehicle/en57-1755.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/Kibel",
+      "label": "EN57 / EN71",
+      "sha256": "bb193a1e8117b1d91e1d2f1c9543976940ce47b6f0fc3d121befd7ed4e03f699",
+      "bytes": 1785878,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/en57-1796.png",
+      "image": "https://wiki.simrail.eu/vehicle/en57-1796.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/Kibel",
+      "label": "EN57 / EN71",
+      "sha256": "8bb89c9e9b246a1c9eec0e22622da75b04d3e3619a78ab2228c94b3bbf51cd01",
+      "bytes": 1703235,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/en57-1821.png",
+      "image": "https://wiki.simrail.eu/vehicle/en57-1821.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/Kibel",
+      "label": "EN57 / EN71",
+      "sha256": "2b3f3e10f2a635be1c02a0ad54c5588063b2299c0c9a17bc693971df059728b4",
+      "bytes": 1782112,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/en57-206.png",
+      "image": "https://wiki.simrail.eu/vehicle/en57-206.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/Kibel",
+      "label": "EN57 / EN71",
+      "sha256": "1fcc7cd393caa73dc83e5e24d08b9bd85156c14f2091ddfdfa60120ef4d14751",
+      "bytes": 1827547,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/en57-612.png",
+      "image": "https://wiki.simrail.eu/vehicle/en57-612.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/Kibel",
+      "label": "EN57 / EN71",
+      "sha256": "3f2373d7ea1d313c863ea441180bae3727f5833404e7b07f168f6c0c05849bbe",
+      "bytes": 1845328,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/en57-614.png",
+      "image": "https://wiki.simrail.eu/vehicle/en57-614.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/Kibel",
+      "label": "EN57 / EN71",
+      "sha256": "860f22799f5304f2359a404a248e6fd36475d42c92bab0b213ca7bdd15661407",
+      "bytes": 1803303,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/en57-650.png",
+      "image": "https://wiki.simrail.eu/vehicle/en57-650.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/Kibel",
+      "label": "EN57 / EN71",
+      "sha256": "6e04c711185ade0fa54079d04ecc2cf9c6338605bf1856a9c270dc48164d1d76",
+      "bytes": 1844964,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/en57-919.png",
+      "image": "https://wiki.simrail.eu/vehicle/en57-919.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/Kibel",
+      "label": "EN57 / EN71",
+      "sha256": "e31b8041eee195355d33475697735e4aa6b5cbe0b6d8d11e751a52608fce4ffe",
+      "bytes": 2075453,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/en71-002.png",
+      "image": "https://wiki.simrail.eu/vehicle/en71-002.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/Kibel",
+      "label": "EN57 / EN71",
+      "sha256": "fc07c02b34e33fbcfa4f39ef2ab108148eebc7db3c3d5f4f38977eaf02dcb6f8",
+      "bytes": 1844058,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/en71-004.png",
+      "image": "https://wiki.simrail.eu/vehicle/en71-004.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/Kibel",
+      "label": "EN57 / EN71",
+      "sha256": "3eb3695e6de542149c2e126ad5b39ed3b8e514a16116e5c1ae4b466d005aeeee",
+      "bytes": 1843523,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/en71-005.png",
+      "image": "https://wiki.simrail.eu/vehicle/en71-005.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/Kibel",
+      "label": "EN57 / EN71",
+      "sha256": "f3a660cac34f2edba4d6ccbc1bf2f6e20df673a9c805d86b4273ccd844298ed7",
+      "bytes": 1804538,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/en71-011.png",
+      "image": "https://wiki.simrail.eu/vehicle/en71-011.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/Kibel",
+      "label": "EN57 / EN71",
+      "sha256": "b1960cf7d50af8419aa79fa658b0b54663ba5dc7c0df2df03bbebdc41029320a",
+      "bytes": 1814203,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/en71-015.png",
+      "image": "https://wiki.simrail.eu/vehicle/en71-015.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/Kibel",
+      "label": "EN57 / EN71",
+      "sha256": "c3141330f554ed9ee0a1292f4bc67429190f92dad3b13c83f285041afdf416c0",
+      "bytes": 1842705,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/en76-006.png",
+      "image": "https://wiki.simrail.eu/vehicle/en76-006.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/Elf",
+      "label": "EN76 / EN96 ELF",
+      "sha256": "69d3d1f6d018e2dd0aa74d26668a02d074417106936c14b7770ec7eb839c6f56",
+      "bytes": 1573524,
+      "bundled": true
+    },
+    {
+      "file": "assets/wiki/vehicles/en76-022.png",
+      "image": "https://wiki.simrail.eu/vehicle/en76-022.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/Elf",
+      "label": "EN76 / EN96 ELF",
+      "sha256": "5ba548e20c18b07faa5443a9df0175273941930956f62fa29fa733fa5395b64f",
+      "bytes": 1592546,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/en96-001.png",
+      "image": "https://wiki.simrail.eu/vehicle/en96-001.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/EMU/Elf",
+      "label": "EN76 / EN96 ELF",
+      "sha256": "4af89610af2196b44b2287f63dc355d9e1228c8ac29ecf72c48b4981a26cfe43",
+      "bytes": 1576865,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/ep07-135.png",
+      "image": "https://wiki.simrail.eu/vehicle/ep07-135.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/4E",
+      "label": "EU07 / EP07",
+      "sha256": "cb076891d4a18de71f316a443b20d492ee41bba3b901920c192bbfb9d6226f9c",
+      "bytes": 1795738,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/ep07-174.png",
+      "image": "https://wiki.simrail.eu/vehicle/ep07-174.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/4E",
+      "label": "EU07 / EP07",
+      "sha256": "15864249985c22931a959871deebc0b9d27745a8b9e72e83a442465db12400f9",
+      "bytes": 1799283,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/ep08-001.png",
+      "image": "https://wiki.simrail.eu/vehicle/ep08-001.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/102E",
+      "label": "EP08",
+      "sha256": "07f5a9deb47483985158af58423d32c432984edd56102c6ded3adb17e0ecef30",
+      "bytes": 1810864,
+      "bundled": true
+    },
+    {
+      "file": "assets/wiki/vehicles/ep08-008.png",
+      "image": "https://wiki.simrail.eu/vehicle/ep08-008.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/102E",
+      "label": "EP08",
+      "sha256": "14d43a8d1f5c7931e82a92869c064bc463c8327cb4afb838abe99f8416c3250f",
+      "bytes": 1883473,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/ep08-013.png",
+      "image": "https://wiki.simrail.eu/vehicle/ep08-013.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/102E",
+      "label": "EP08",
+      "sha256": "956246318d540fa457be63bbf614f6855f3071e1f044cf3e297bb227d566fd42",
+      "bytes": 1892414,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/et22-1163.png",
+      "image": "https://wiki.simrail.eu/vehicle/et22-1163.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/201E",
+      "label": "ET22",
+      "sha256": "3b564c1e56ccc426caddd425a90f02955adc6e41164514966826982e5a730271",
+      "bytes": 1808548,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/et22-243.png",
+      "image": "https://wiki.simrail.eu/vehicle/et22-243.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/201E",
+      "label": "ET22",
+      "sha256": "0cb90e75c99f2b3a0bbd3f5395355e7b0da7638b74f95f7fe9001c196fa8d98e",
+      "bytes": 1834818,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/et22-256.png",
+      "image": "https://wiki.simrail.eu/vehicle/et22-256.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/201E",
+      "label": "ET22",
+      "sha256": "b6e241c7141e4fdcdb9ae36a563ca4e2f0e06eb89990cd6e28e79a78cbcbd8c3",
+      "bytes": 1833290,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/et22-644.png",
+      "image": "https://wiki.simrail.eu/vehicle/et22-644.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/201E",
+      "label": "ET22",
+      "sha256": "bca40bf6379a05f617ddb73880af250a09f564c34a6337e9f9e11ff79437979b",
+      "bytes": 1793536,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/et22-836.png",
+      "image": "https://wiki.simrail.eu/vehicle/et22-836.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/201E",
+      "label": "ET22",
+      "sha256": "52afa46f409afa55cb8c148743167a4265c39f6301853fd72559ffc28e964e24",
+      "bytes": 1749306,
+      "bundled": true
+    },
+    {
+      "file": "assets/wiki/vehicles/et22-911.png",
+      "image": "https://wiki.simrail.eu/vehicle/et22-911.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/201E",
+      "label": "ET22",
+      "sha256": "f96e4fa968a2029c1abb450a964d9161778d1497e464e607c233a57b69e24e99",
+      "bytes": 1799138,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/et25-002.png",
+      "image": "https://wiki.simrail.eu/vehicle/et25-002.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/E6ACTa",
+      "label": "ET25 / Dragon 2",
+      "sha256": "c3979d63b93453b964e69f065924591728aa6ae161e147ce5b5f9d608b027ff8",
+      "bytes": 1624885,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/eu07-001.png",
+      "image": "https://wiki.simrail.eu/vehicle/eu07-001.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/4E",
+      "label": "EU07 / EP07",
+      "sha256": "e0bf04fbc2db746797f4bcd0c7988dc7f793e9196fec4d223392c5479e2a896f",
+      "bytes": 1839176,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/eu07-005.png",
+      "image": "https://wiki.simrail.eu/vehicle/eu07-005.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/4E",
+      "label": "EU07 / EP07",
+      "sha256": "b0b29cebec8a1427f3e02facf215d9f909f8a7aa17766eb6cd36bc4c8bc50574",
+      "bytes": 1876107,
+      "bundled": true
+    },
+    {
+      "file": "assets/wiki/vehicles/eu07-068.png",
+      "image": "https://wiki.simrail.eu/vehicle/eu07-068.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/4E",
+      "label": "EU07 / EP07",
+      "sha256": "631c548fa8fd4c960b929de6565492a26e5d46216d9d9a3138dc1b57f5d1231f",
+      "bytes": 1761902,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/eu07-070.png",
+      "image": "https://wiki.simrail.eu/vehicle/eu07-070.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/4E",
+      "label": "EU07 / EP07",
+      "sha256": "1fd019d10062f3e9524397bd2b377c87ac9541e80603049b2189736c8b254c51",
+      "bytes": 1892134,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/eu07-085.png",
+      "image": "https://wiki.simrail.eu/vehicle/eu07-085.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/4E",
+      "label": "EU07 / EP07",
+      "sha256": "2b990548ef8f8cd10455ab1d9d4f4dfdf509ac73cdd3ce234f7702c0f19843b7",
+      "bytes": 1795272,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/eu07-092.png",
+      "image": "https://wiki.simrail.eu/vehicle/eu07-092.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/4E",
+      "label": "EU07 / EP07",
+      "sha256": "1dc99f3c7bdb6a6570fe2d25ab893ca3c0b3651bef869381ffeb986996587424",
+      "bytes": 1850863,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/eu07-096.png",
+      "image": "https://wiki.simrail.eu/vehicle/eu07-096.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/4E",
+      "label": "EU07 / EP07",
+      "sha256": "e93d41120a078ce58528ec4ff8881ac509c1b670fe8916660cc91a7aa433ec73",
+      "bytes": 1774768,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/eu07-153.png",
+      "image": "https://wiki.simrail.eu/vehicle/eu07-153.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/4E",
+      "label": "EU07 / EP07",
+      "sha256": "49c740f80d482834c5d73d439ff3e6409fa95ff2b9b63f9e1487635fcc1be3bf",
+      "bytes": 1890450,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/eu07-193.png",
+      "image": "https://wiki.simrail.eu/vehicle/eu07-193.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/4E",
+      "label": "EU07 / EP07",
+      "sha256": "e6aafa6897be610f2b0b5ebf33a03f816cdcc8688ac65f8cdde73b5e0482522a",
+      "bytes": 1907115,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/eu07-241.png",
+      "image": "https://wiki.simrail.eu/vehicle/eu07-241.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/4E",
+      "label": "EU07 / EP07",
+      "sha256": "444cb26e35b76afa66dcda567b5456cbcd8ebfade5a972741443b997810d02aa",
+      "bytes": 1806958,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/eu43-001.png",
+      "image": "https://wiki.simrail.eu/vehicle/eu43-001.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/E186",
+      "label": "E186 / TRAXX",
+      "sha256": "bfa32fd5e83dba41a6e03d60ec2e7fedfc263285590017d28bb6ec34ee7d4308",
+      "bytes": 1774149,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/eu43-002.png",
+      "image": "https://wiki.simrail.eu/vehicle/eu43-002.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/E186",
+      "label": "E186 / TRAXX",
+      "sha256": "69f4786ee73d4bab07b3e97a5c1f11018c2ee75438d86badd2c3ac9bac27843e",
+      "bytes": 1777676,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/eu43-003.png",
+      "image": "https://wiki.simrail.eu/vehicle/eu43-003.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/E186",
+      "label": "E186 / TRAXX",
+      "sha256": "1c4754e5a2bbf7dc28cf93b6bed355944872b606182850e39429300dd51ae2ff",
+      "bytes": 1818095,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/eu43-004.png",
+      "image": "https://wiki.simrail.eu/vehicle/eu43-004.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/E186",
+      "label": "E186 / TRAXX",
+      "sha256": "12aeed8b24e02bbe46d8c461990c5237f37bef07523668e27bd950d8d0b663ef",
+      "bytes": 1796912,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/eu43-005.png",
+      "image": "https://wiki.simrail.eu/vehicle/eu43-005.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Electric-locomotive/E186",
+      "label": "E186 / TRAXX",
+      "sha256": "54a11afa90a39ac32e86e4bcc0173b5b7f2c8502bea32086f64f6e94928f3491",
+      "bytes": 1800663,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/ty2-347.png",
+      "image": "https://wiki.simrail.eu/vehicle/ty2-347.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Steam-locomotive/Ty2",
+      "label": "Ty2",
+      "sha256": "379ed5577cabcb3a48bf8188933b424b582ca8979e32b120e20cda112985fbc3",
+      "bytes": 1784472,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/ty2-477.png",
+      "image": "https://wiki.simrail.eu/vehicle/ty2-477.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Steam-locomotive/Ty2",
+      "label": "Ty2",
+      "sha256": "08a489f01918d2f1a371add4454a844808330891c876bf47b1c1c292ede16821",
+      "bytes": 1784069,
+      "bundled": false
+    },
+    {
+      "file": "assets/wiki/vehicles/ty2-540.png",
+      "image": "https://wiki.simrail.eu/vehicle/ty2-540.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Steam-locomotive/Ty2",
+      "label": "Ty2",
+      "sha256": "25ce1b5740dfb605e27aa96452dd0cd3eada9b71a8d67363acac4014d7102b52",
+      "bytes": 1723950,
+      "bundled": true
+    },
+    {
+      "file": "assets/wiki/vehicles/ty2-70.png",
+      "image": "https://wiki.simrail.eu/vehicle/ty2-70.png",
+      "page": "https://wiki.simrail.eu/en/Vehicles/Poland/Trains/Steam-locomotive/Ty2",
+      "label": "Ty2",
+      "sha256": "715a60bc08b1e63c3dc92fd0c75bdffc189614bcc054a553e17626ddaea884e6",
+      "bytes": 1783989,
+      "bundled": false
+    }
+  ],
+  "errors": [
+    "LCS Jackowice: HTTP Error 404: Not Found",
+    "Stara Wieś: HTTP Error 404: Not Found"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "app": {
+    "version": "0.2.2",
+    "platform": "win32",
+    "electron": "45.4.1"
+  },
+  "ended": true,
+  "duration": 4.463492
+}

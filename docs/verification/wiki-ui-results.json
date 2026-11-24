@@ -1,0 +1,12 @@
+{
+  "station": {
+    "src": "https://wiki.simrail.eu/stations/poland/relay/katowice/ko-signalbox-2.jpg",
+    "width": 2560
+  },
+  "vehicle": {
+    "src": "https://wiki.simrail.eu/vehicle/eu07-193.png",
+    "width": 1699,
+    "alt": "Snímek ze hry: EU07 / EP07 · EU07-193"
+  },
+  "errors": []
+}
