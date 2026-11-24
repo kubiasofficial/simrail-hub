@@ -1,6 +1,7 @@
+import {UpdatePanel} from '@/components/UpdatePanel';
 import { useEffect, useState } from 'react';
 import { Play, FolderOpen, Users, Activity, RefreshCw, FolderSearch, Undo2 } from 'lucide-react';
-import type { AppInfo,UpdateInfoDto } from '@/types/ipc';
+import type { AppInfo } from '@/types/ipc';
 import { useGame } from '@/stores/game';
 import { useServers } from '@/stores/servers';
 import { useSelection } from '@/stores/selection';
@@ -22,12 +23,10 @@ function Stat({ icon, label, value, note, muted }: { icon: React.ReactNode; labe
 
 export function HomePage() {
   const [info, setInfo] = useState<AppInfo | null>(null);
-  const [updateInfo,setUpdateInfo]=useState<UpdateInfoDto|null>(null);
   const { result, loading, error, launching, detect, launch, pickFolder, clearManual } = useGame();
 
   useEffect(() => {
     void window.simrailHub?.getAppInfo().then(setInfo).catch(() => setInfo(null));
-    void window.simrailHub?.call('update:check').then(setUpdateInfo).catch(()=>undefined);
     void detect();
   }, [detect]);
 
@@ -42,7 +41,7 @@ export function HomePage() {
     <div className="mx-auto flex max-w-5xl flex-col gap-5">
       <section className="panel hero-banner relative overflow-hidden rounded-3xl p-8">
         <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-sky-brand/20 blur-3xl" />
-        <span className="eyebrow">VAŠE DALŠÍ JÍZDA ZAČÍNÁ TADY</span><h1 className="font-display text-4xl font-semibold tracking-tight text-white">SimRail</h1>
+        <span className="eyebrow">VAŠE DALŠÍ JÍZDA ZAČÍNÁ TADY</span><h1 className="font-display text-4xl font-semibold tracking-tight text-white">SimRail Hub<span className="hero-rail" aria-hidden="true"/></h1>
         <p className="mt-1 max-w-lg text-slate-400">Vyberte server, sledujte provoz a vydejte se na trať.</p>
         <div className="mt-6 flex flex-wrap items-center gap-3">
           <button
@@ -91,13 +90,7 @@ export function HomePage() {
         </section>
       )}
 
-      <section className="panel rounded-2xl p-5">
-        <div className="flex items-center gap-2 text-sm font-medium text-white"><RefreshCw size={15} className="text-sky-soft" /> Aktualizace launcheru</div>
-        <p className="mt-2 text-sm text-slate-400">
-          Nainstalovaná verze: {info ? info.version : NA}. {updateInfo?.message??'Kontroluji nové vydání na GitHubu…'}
-        </p>
-        {updateInfo?.status==='available'&&updateInfo.url?.startsWith('https://github.com/')&&<a className="secondary-action mt-3" href={updateInfo.url} target="_blank" rel="noreferrer">Stáhnout aktualizaci ↗</a>}
-      </section>
+      <UpdatePanel/>
     </div>
   );
 }

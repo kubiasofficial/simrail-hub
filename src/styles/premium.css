@@ -1,0 +1,75 @@
+
+/* SimRail Hub: railway control room, restrained motion, readable live data. */
+:root{--color-ink-950:#080c12;--color-ink-900:#0d121b;--color-ink-800:#151d29;--color-ink-700:#1c2938;--color-line:rgba(166,189,216,.12)}
+body{background:radial-gradient(ellipse at 90% 0,rgba(48,88,129,.12),transparent 55%),#0d121b}
+.panel{background:linear-gradient(135deg,rgba(27,38,53,.92),rgba(17,25,36,.97));border-color:var(--color-line);box-shadow:0 12px 38px -32px #000}
+main{scrollbar-gutter:stable}
+main>div:not([hidden]){animation:page-arrive .3s cubic-bezier(.2,.75,.25,1) both}
+[hidden]{display:none!important}
+nav[aria-label="Hlavní navigace"]{width:218px;background:linear-gradient(180deg,#0a1019,#0b1018);padding:24px 12px;gap:8px}
+nav[aria-label="Hlavní navigace"] button{min-height:48px;position:relative;border:1px solid transparent;transition:background .18s,border-color .18s,transform .18s}
+nav[aria-label="Hlavní navigace"] button[aria-current="page"]{background:linear-gradient(100deg,#20405b88,#1b2b3b88);border-color:#629bb73d;box-shadow:none}
+nav[aria-label="Hlavní navigace"] button[aria-current="page"]:before{content:"";position:absolute;left:-6px;width:3px;height:22px;background:#7bc7f3;border-radius:4px;box-shadow:0 0 16px #56b9ff55}
+nav[aria-label="Hlavní navigace"] button:hover{transform:translateX(2px)}
+.sidebar-brand{padding:4px 16px 24px;font-size:10px;letter-spacing:.23em;color:#7293ad}
+.hero-banner{min-height:340px!important;border-radius:24px!important;display:flex;flex-direction:column;justify-content:center;padding:44px!important;isolation:isolate;background-position:center 48%!important}
+.hero-banner h1{font-size:clamp(48px,5vw,76px)!important;line-height:1.06;font-weight:650;letter-spacing:-.055em;margin:16px 0 10px}
+.hero-banner .eyebrow{color:#bdd9ed;letter-spacing:.19em;font-size:10px}
+.hero-banner>p{max-width:360px!important;color:#c0cedd!important;line-height:1.7}
+.hero-banner:before{animation:hero-reveal 1s ease-out both}
+.hero-rail{position:absolute;left:44px;bottom:30px;width:180px;height:2px;background:#b9d9ef33;overflow:hidden;border-radius:2px}
+.hero-rail:after{content:"";position:absolute;width:60px;height:2px;background:#9bdeff;animation:rail-intro 1.3s .15s ease-out both;box-shadow:0 0 16px #9bdeff}
+.quick-links>a,.quick-links>button{position:relative;overflow:hidden;background:linear-gradient(120deg,#1d2d3e,#15202e);border-color:#89b0ce22;transition:transform .2s,border-color .2s,box-shadow .2s}
+.quick-links>a:hover,.quick-links>button:hover{transform:translateY(-3px);border-color:#79b7dc66;box-shadow:0 14px 40px -25px #61c5ff66}
+button,a.secondary-action,a.primary-action{transition:background-color .18s,border-color .18s,box-shadow .18s,transform .18s}
+button:active:not(:disabled),a.primary-action:active{transform:translateY(1px)}
+button:disabled{cursor:default}
+.primary-action{box-shadow:0 8px 30px -16px #72baffaa}
+.resume-card{border-left:3px solid #72baff66!important}
+.update-panel{padding:22px 24px;border-radius:18px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between}
+.update-heading{display:flex;gap:14px;align-items:center;flex:1;min-width:220px}
+.update-heading h3{font-size:14px;font-weight:600;color:#ebf3fc}
+.update-heading p{font-size:12px;color:#9bb0c7;line-height:1.6;margin-top:4px;max-width:620px}
+.update-orb{width:40px;height:40px;border-radius:12px;background:#75baff12;border:1px solid #75baff25;display:grid;place-items:center;color:#8ecaff;flex-shrink:0}
+.update-actions{display:flex;gap:10px;font-size:12px}
+.update-banner{background:#132a35;border-bottom:1px solid #73d8ff33;display:flex;gap:16px;padding:10px 24px;align-items:center;flex-wrap:wrap;z-index:1100}
+.update-banner .update-heading p{margin:0}
+.update-panel progress,.update-banner progress{height:4px;accent-color:#87ceff;width:100%;border:0}
+.settings-layout{max-width:1050px!important}
+.settings-tabs{display:flex;gap:6px;padding:6px;background:#090f17;border:1px solid #ffffff0c;border-radius:14px;position:sticky;top:0;z-index:4;flex-wrap:wrap}
+.settings-tabs button{padding:10px 20px;border-radius:9px;font-size:13px;color:#94a8bf;flex:1}
+.settings-tabs button[aria-pressed="true"]{background:#223345;color:#e4f2ff;box-shadow:inset 0 1px #ffffff0a}
+.settings-layout section{animation:page-arrive .22s ease-out}
+.settings-advanced{display:flex;flex-direction:column;gap:20px}
+.journey-overview{grid-template-columns:minmax(260px,.8fr) minmax(320px,1.35fr)!important;gap:20px!important}
+.next-stop-card{padding:30px!important;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+.next-stop-card:after{content:"";position:absolute;right:-40px;bottom:-60px;width:200px;height:200px;border:1px solid #76baff14;border-radius:50%;box-shadow:0 0 0 30px #76baff04,0 0 0 60px #76baff03;pointer-events:none}
+.next-stop-card h1{font-size:clamp(28px,3vw,46px)!important;letter-spacing:-.03em;line-height:1.2}
+.next-stop-card .metric-pair strong{font-variant-numeric:tabular-nums;font-size:38px}
+.journey-overview .vehicle-card{border-radius:18px;overflow:hidden}
+.journey-overview .vehicle-card>img{height:220px;object-fit:cover}
+.map-detail{width:350px!important;border-radius:20px!important;padding:20px!important;background:linear-gradient(150deg,#182430f5,#101923f5)!important;box-shadow:0 20px 80px #0008;animation:panel-arrive .24s ease-out;max-height:calc(100% - 34px);overflow-y:auto}
+.map-detail h2{font-size:25px;letter-spacing:-.025em}
+.map-detail .vehicle-card{margin:-20px -20px 20px;width:calc(100% + 40px);border-radius:20px 20px 0 0}
+.map-detail .detail-close{z-index:3;background:#0b1525dd;border-radius:50%;padding:7px}
+.map-theme-osm-dark{filter:none!important}
+.map-theme-light{filter:none!important}
+.station-symbol{background:#293e4d!important;border:1.5px solid #bfd7e9!important;border-radius:2px!important;box-shadow:0 2px 8px #0007}
+.station-symbol.occupied{border-color:#82efb3!important;background:#245445!important}
+.station-label{background:#111d2ce6!important;color:#d7e5f2!important;border:1px solid #63819a55!important;box-shadow:none!important;font-size:10px!important}
+.rail-train .train-body{background:linear-gradient(145deg,#3479ac,#1b4265);border-color:#d4e8f5;box-shadow:0 2px 10px #0008}
+.rail-train.player .train-body{background:linear-gradient(145deg,#3d9f79,#225b48)}
+.leaflet-marker-icon.moving-train{transition:transform 4.8s linear;will-change:transform}
+.leaflet-zoom-anim .leaflet-marker-icon.moving-train{transition:none}
+.rail-train.chosen .train-body{box-shadow:0 0 0 5px #7bcaff22,0 0 25px #7bcaff33}
+.map-legend,.map-search{background:#111b29f0!important;border-color:#789bb433!important}
+main[data-page="servers"] table tbody tr{transition:background .15s}
+main[data-page="servers"] table tbody tr:hover{background:#75baff08}
+main[data-page="servers"] table th{letter-spacing:.05em;font-size:10px;text-transform:uppercase}
+@keyframes page-arrive{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes panel-arrive{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+@keyframes hero-reveal{from{opacity:.6;transform:scale(1.025)}to{opacity:1;transform:scale(1)}}
+@keyframes rail-intro{from{transform:translateX(-70px)}to{transform:translateX(190px)}}
+@media(max-width:1100px){nav[aria-label="Hlavní navigace"]{width:190px}.hero-banner{padding:30px!important;min-height:310px!important}.map-detail{width:300px!important}.journey-overview{grid-template-columns:1fr 1.2fr!important}.settings-tabs button{padding:10px 12px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+html[data-animations="off"] *,html[data-animations="off"] *:before,html[data-animations="off"] *:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}

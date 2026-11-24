@@ -1,3 +1,5 @@
+import { autoUpdater } from 'electron-updater';
+import { AutomaticUpdates } from '../services/AutomaticUpdates';
 import { app, dialog, ipcMain, BrowserWindow } from 'electron';
 import { readFile, stat, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
@@ -21,6 +23,14 @@ export function registerCallIpc(ctx: AppContext, openDashboard: (server: string 
   const { settings, tracking, tts, mods, log } = ctx;
   const mobile = new MobileServer(tracking, join(__dirname, '../../dist'));
   const cloud=new CloudAccount();
+  const automaticUpdates=new AutomaticUpdates(autoUpdater,app.isPackaged&&!process.env.PORTABLE_EXECUTABLE_FILE);
+  const updateTimer=setTimeout(()=>void automaticUpdates.check(),15000);
+  const updateInterval=setInterval(()=>void automaticUpdates.check(),6*60*60*1000);
+  app.on('before-quit',()=>{clearTimeout(updateTimer);clearInterval(updateInterval);});
+  ipcMain.handle('update:status',e=>{if(!isTrusted(e))throw Error('Nepovolený odesílatel');return automaticUpdates.status();});
+  ipcMain.handle('update:auto-check',e=>{if(!isTrusted(e))throw Error('Nepovolený odesílatel');return automaticUpdates.check();});
+  ipcMain.handle('update:install',e=>{if(!isTrusted(e))throw Error('Nepovolený odesílatel');return automaticUpdates.install();});
+
   app.on('before-quit', () => mobile.stop());
   const ok = <T>(data: T, message?: string): Res<T> => ({ ok: true, data, message });
   /** Obalí službu: chyby se zalogují a vrátí se srozumitelně v češtině, nikdy nespadne hlavní proces. */

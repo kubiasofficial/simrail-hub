@@ -1,2 +1,14 @@
-// One public document read per visit. Downloads stay on GitHub Releases.
-(async()=>{try{const r=await fetch('https://firestore.googleapis.com/v1/projects/simrail-hub-kubias/databases/(default)/documents/public/release',{signal:AbortSignal.timeout(5000)});if(!r.ok)return;const d=(await r.json()).fields;const version=d.version?.stringValue;if(!version)return;document.getElementById('release-title').textContent='SimRail Hub '+version;document.getElementById('version').textContent='Verze '+version+' · Windows 10/11 · zdarma';if(d.notes?.stringValue)document.getElementById('release-notes').textContent=d.notes.stringValue;const url=d.downloadUrl?.stringValue;if(url&&/^https:\/\/github\.com\/kubiasofficial\/simrail-hub\/releases\//.test(url))document.getElementById('download').href=url;}catch{/* Bundled release information remains available offline. */}})();
+// GitHub Releases is the source of truth for downloadable application versions.
+(async()=>{
+ try{
+  const r=await fetch('https://api.github.com/repos/kubiasofficial/simrail-hub/releases/latest',{headers:{Accept:'application/vnd.github+json'},signal:AbortSignal.timeout(5000)});
+  if(!r.ok)return;
+  const release=await r.json();
+  if(typeof release.tag_name!=='string')return;
+  const version=release.tag_name.replace(/^v/,'');
+  document.getElementById('release-title').textContent='SimRail Hub '+version;
+  document.getElementById('version').textContent='Verze '+version+' · Windows 10/11 · zdarma';
+  const setup=release.assets?.find(a=>/^SimRail-Hub-Setup-.*\.exe$/.test(a.name));
+  if(setup&&/^https:\/\/github\.com\/kubiasofficial\/simrail-hub\/releases\/download\//.test(setup.browser_download_url))document.getElementById('download').href=setup.browser_download_url;
+ }catch{/* The bundled release link remains available. */}
+})();

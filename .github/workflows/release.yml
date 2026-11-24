@@ -33,6 +33,10 @@ jobs:
           $tag = "v$version"
           Get-ChildItem release/*.exe | Get-FileHash -Algorithm SHA256 | ForEach-Object { '{0}  {1}' -f $_.Hash.ToLower(),[IO.Path]::GetFileName($_.Path) } | Set-Content release/SHA256SUMS.txt
           gh release view $tag --repo $env:GITHUB_REPOSITORY *> $null
-          if ($LASTEXITCODE -ne 0) { gh release create $tag --repo $env:GITHUB_REPOSITORY --title "SimRail Hub $version" --generate-notes }
-          gh release upload $tag release/SimRail-Hub-Portable-$version.exe release/SimRail-Hub-Setup-$version.exe release/SHA256SUMS.txt --clobber --repo $env:GITHUB_REPOSITORY
+          if ($LASTEXITCODE -ne 0) { gh release create $tag --repo $env:GITHUB_REPOSITORY --title "SimRail Hub $version" --generate-notes --draft }
+          $assets = @("release/SimRail-Hub-Portable-$version.exe", "release/SimRail-Hub-Setup-$version.exe", "release/SHA256SUMS.txt", "release/latest.yml")
+          $assets += @(Get-ChildItem release/*.blockmap | ForEach-Object { $_.FullName })
+          gh release upload $tag @assets --clobber --repo $env:GITHUB_REPOSITORY
           if ($LASTEXITCODE -ne 0) { throw 'Nahrání vydání selhalo' }
+          gh release edit $tag --draft=false --latest --repo $env:GITHUB_REPOSITORY
+          if ($LASTEXITCODE -ne 0) { throw 'Zveřejnění vydání selhalo' }

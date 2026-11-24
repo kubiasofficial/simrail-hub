@@ -1,4 +1,4 @@
-# SimRail Hub 0.3.1
+# SimRail Hub 0.4.0
 
 Český komunitní launcher pro SimRail na Windows 10/11. Electron, React, TypeScript, Leaflet, SQLite a Piper. Neoficiální aplikace.
 
@@ -8,12 +8,26 @@
 
 ## Spuštění
 
-V `release` je portable EXE bez instalace a instalátor Setup. Uživatelská data zůstávají v `%APPDATA%/simrail-hub`. Aplikace není digitálně podepsaná.
+V `release` je portable EXE bez instalace a instalátor Setup. Uživatelská data zůstávají v `%APPDATA%/SimRail Hub`. Aplikace není digitálně podepsaná.
+
+## Automatické aktualizace
+
+Pro automatické aktualizace jednou nainstalujte **Setup**. Přenosná varianta se sama nenahrazuje. Instalovaná aplikace kontroluje GitHub Releases po spuštění a každých šest hodin, novou verzi stahuje na pozadí a nainstaluje ji až po kliknutí na „Restartovat a aktualizovat“. Zavření aplikace samo aktualizaci nespustí. Při výpadku lze kontrolu zopakovat.
+
+Vydání pro Windows obsahuje instalátor, jeho `.blockmap` a `latest.yml`. Workflow nejprve nahraje všechny soubory do konceptu vydání, teprve potom vydání zveřejní. Žádný uživatelský GitHub token není součástí launcheru.
+
+## Běh na pozadí
+
+Minimalizace nepřeruší načítání vlaku ani přehrávání hlášení. Vybraný vlak se dál sleduje také při přepnutí na jinou stránku launcheru. Mobilní server běží v hlavním procesu. Zavření aplikace nebo uspání počítače běh ukončí či pozastaví.
 
 ## Novinky
 
+- Sjednocený vzhled, krátké přechody, animovaný detail mapy a vypínatelné animace.
+- Nastavení rozdělené do kategorií Obecné, Mapa, Hlášení, Účet a Aktualizace.
+- Pro cestující se vybírají pouze PH (CommercialStop), technické pobyty se neohlašují.
+
 - Nová hlavní obrazovka, sjednocené karty, čitelnější palubní počítač a přehlednější nastavení.
-- Mapa: klasický OpenStreetMap, tmavý a světlý vzhled. Vzhledy používají podklad OSM bez dalšího API klíče. Železniční vrstva je samostatná.
+- Mapa: klasický OpenStreetMap, tmavý a světlý vzhled. Tmavý a světlý podklad používají CARTO s uvedením zdroje; bez API klíče. Železniční vrstva je samostatná.
 - Vlaky jako ikony se šipkou před ikonou. Směr se odvozuje ze změny souřadnic; dokud nejsou vhodná data, šipka se nezobrazuje. Při oddálení se vlaky seskupují.
 - Stanice jako čtverce, hledání vlaků i stanic, fotografie a plánované příjezdy/odjezdy v detailu stanice.
 - Steam avatary hráčů ve vlacích a na obsluhovaných stanicích, pokud je veřejný profil zpřístupní. Bez Steam API klíče; nedostupný avatar má náhradní ikonu.

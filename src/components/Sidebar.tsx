@@ -14,6 +14,7 @@ export function Sidebar() {
   const { page, setPage } = useNavigation();
   return (
     <nav className="flex w-60 shrink-0 flex-col gap-1 border-r border-line bg-ink-950/50 p-3" aria-label="Hlavní navigace">
+      <div className="sidebar-brand">SIMRAIL / HUB</div>
       {items.map(({ id, label, icon: Icon }) => {
         const active = page === id;
         return (

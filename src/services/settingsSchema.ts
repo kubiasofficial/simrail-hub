@@ -22,6 +22,7 @@ export function normalizeSettings(raw: unknown): Settings {
     recordingsPath: strOrNull(r.recordingsPath),
     launchViaSteam: true,
     appLanguage: 'cs',
+    animations: bool(r.animations,d.animations),
     theme: oneOf(r.theme, ['blue', 'graphite'] as const, d.theme),
     dataRefreshSeconds: clamp(r.dataRefreshSeconds, 15, 300, d.dataRefreshSeconds),
     selectedServer: strOrNull(r.selectedServer, 50),

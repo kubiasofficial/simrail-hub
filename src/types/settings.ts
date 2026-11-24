@@ -8,6 +8,7 @@ export interface Settings {
   /** Spouštění je vždy přes Steam URI (jiná cesta není podporována). */
   launchViaSteam: true;
   appLanguage: 'cs';
+  animations:boolean;
   theme: 'blue' | 'graphite';
   dataRefreshSeconds: number;
   selectedServer: string | null;
@@ -33,6 +34,7 @@ export const DEFAULT_SETTINGS: Settings = {
   recordingsPath: null,
   launchViaSteam: true,
   appLanguage: 'cs',
+  animations:true,
   theme: 'blue',
   dataRefreshSeconds: 30,
   selectedServer: null,

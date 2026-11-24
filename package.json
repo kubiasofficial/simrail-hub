@@ -1,7 +1,7 @@
 {
   "name": "simrail-hub",
   "productName": "SimRail Hub",
-  "version": "0.3.3",
+  "version": "0.4.0",
   "description": "Komunitní launcher pro SimRail: The Railway Simulator",
   "author": "SimRail Hub",
   "license": "MIT",
@@ -23,6 +23,7 @@
     "predist": "node node_modules/electron/install.js"
   },
   "dependencies": {
+    "electron-updater": "^6.8.11",
     "fflate": "^0.8.3",
     "qrcode": "^1.5.4"
   },
@@ -97,7 +98,15 @@
       "artifactName": "SimRail-Hub-Portable-${version}.${ext}"
     },
     "compression": "normal",
-    "electronDist": "node_modules/electron/dist"
+    "electronDist": "node_modules/electron/dist",
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "kubiasofficial",
+        "repo": "simrail-hub",
+        "releaseType": "release"
+      }
+    ]
   },
   "repository": {
     "type": "git",

@@ -21,14 +21,16 @@ export function useTrainFeed(src: FeedSource): Feed {
 
   useEffect(() => {
     if (src.mode !== 'live' || !src.server || !src.train) return;
-    let alive = true;
+    let alive = true, busy = false;
     const run = async () => {
-      if (document.hidden) return;
+      if (busy) return;
+      busy = true;
       try {
         const r = await window.simrailHub!.call('trains:detail', src.server!, src.train!);
         if (!alive) return;
         if (r.ok) { setDetail(r.data); setError(null); setLastOk(Date.now()); } else setError(r.error);
       } catch (e) { if (alive) setError((e as Error).message); }
+      finally { busy = false; }
     };
     void run(); const id = setInterval(run, LIVE_POLL_MS);
     return () => { alive = false; clearInterval(id); };

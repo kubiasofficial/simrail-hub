@@ -1,4 +1,6 @@
 import { useEffect } from 'react';
+import { UpdatePanel } from '@/components/UpdatePanel';
+import { useAutomaticUpdates } from '@/stores/automaticUpdates';
 import { TitleBar } from '@/components/TitleBar';
 import { Sidebar } from '@/components/Sidebar';
 import { HomePage } from '@/pages/HomePage';
@@ -14,8 +16,12 @@ const isStandaloneDashboard = () => location.hash.startsWith('#dashboard');
 
 export function App() {
   const page = useNavigation((s) => s.page);
+  const animations = useSettings(s=>s.settings.animations);
+  useEffect(()=>{document.documentElement.dataset.animations=animations?'on':'off';},[animations]);
   const load = useSettings((s) => s.load);
   useEffect(() => { void load(); }, [load]);
+
+  useEffect(()=>{if(isStandaloneDashboard())return;void useAutomaticUpdates.getState().refresh();const id=setInterval(()=>void useAutomaticUpdates.getState().refresh(),2000);return()=>clearInterval(id);},[]);
 
   if (isStandaloneDashboard()) {
     return <div className="h-full overflow-y-auto"><DashboardPage standalone /></div>;
@@ -23,13 +29,14 @@ export function App() {
   return (
     <div className="flex h-full flex-col">
       <TitleBar />
+      <UpdatePanel compact/>
       <div className="flex min-h-0 flex-1">
         <Sidebar />
-        <main className={`min-w-0 flex-1 ${page === 'map' ? 'overflow-hidden' : 'overflow-y-auto p-8'}`}>
+        <main data-page={page} className={`min-w-0 flex-1 ${page === 'map' ? 'overflow-hidden' : 'overflow-y-auto p-8'}`}>
           {page === 'home' && <HomePage />}
           {page === 'servers' && <ServersPage />}
           {page === 'map' && <MapPage />}
-          {page === 'dashboard' && <DashboardPage />}
+          <div hidden={page !== 'dashboard'} className={page==='dashboard'?'page-enter':''}><DashboardPage active={page==='dashboard'}/></div>
           {page === 'mods' && <ModsPage />}
           {page === 'settings' && <SettingsPage />}
         </main>

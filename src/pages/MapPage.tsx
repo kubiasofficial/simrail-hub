@@ -16,8 +16,8 @@ import type { Train, StationCoord } from '@/types/trains';
 
 const BASES = {
   osm: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png', '© OpenStreetMap'],
-  'osm-dark': ['https://tile.openstreetmap.org/{z}/{x}/{y}.png', '© OpenStreetMap'],
-  light: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png', '© OpenStreetMap']
+  'osm-dark': ['https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', '© OpenStreetMap © CARTO'],
+  light: ['https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', '© OpenStreetMap © CARTO']
 } as const;
 const railUrl = 'https://{s}.tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png';
 function StationBoard({server,name}:{server:string|null;name:string}) {
@@ -37,6 +37,7 @@ export function MapPage() {
   const [trains, setTrains] = useState<Train[]>([]); const [stations, setStations] = useState<StationCoord[]>([]); const [error, setError] = useState(''); const [stationError, setStationError] = useState('');
   const [demoOn, setDemoOn] = useState(false); const [showStations, setShowStations] = useState(true); const [showTrains, setShowTrains] = useState(true); const [query, setQuery] = useState('');
   const [selectedId, setSelectedId] = useState<string | null>(sel.train); const [station, setStation] = useState<StationCoord | null>(null); const [updated, setUpdated] = useState(0); const [clock, setClock] = useState(Date.now()); const [view, setView] = useState(0);
+  const trainMarkers=useRef(new Map<string,L.Marker>());
   const el = useRef<HTMLDivElement>(null); const map = useRef<L.Map | null>(null); const layer = useRef<L.LayerGroup | null>(null); const previous = useRef(new Map<string, {lat:number;lon:number;bearing:number|null}>()); const fitted = useRef(false);
   useEffect(() => { void refresh(false); const id = setInterval(() => setClock(Date.now()), 1000); return () => clearInterval(id); }, [refresh]);
   useEffect(() => { if (!el.current) return; const m = L.map(el.current, { center:[51.2,19.6], zoom:7, preferCanvas:true }); map.current = m; layer.current = L.layerGroup().addTo(m); const redraw = () => setView(v=>v+1); m.on('zoomend moveend',redraw); return () => {m.remove();map.current=null;}; }, []);
@@ -54,7 +55,7 @@ export function MapPage() {
   useEffect(()=>{if(!demoOn)return;const id=setInterval(()=>useDemo.getState().tick(.25),250);return()=>clearInterval(id);},[demoOn]);
   const d=useMemo(()=>demoOn?demo.sim.snapshot(demo.t):null,[demoOn,demo.sim,demo.t]); const visible=d?[d.train]:trains; const points=d?d.stations:stations;
   const selected=visible.find(t=>t.id===selectedId||t.number===selectedId)??null;
-  useEffect(()=>{const m=map.current;if(!m)return;const l=layer.current!;l.clearLayers();
+  useEffect(()=>{const m=map.current;if(!m)return;const l=layer.current!;l.clearLayers();const liveMarkerIds=new Set<string>();
     if(showStations)for(const s of points){const root=document.createElement('div');root.className='station-symbol'+((s.dispatchers?.length??0)>0?' occupied':'');root.textContent='';root.classList.toggle('compact',m.getZoom()<9);avatar(s.dispatchers?.[0]?.avatarUrl,root);root.title=s.name+((s.dispatchers?.length??0)>0?' · dispečer online':'');
       const marker=L.marker([s.lat,s.lon],{icon:L.divIcon({className:'station-marker',html:root,iconSize:[24,24],iconAnchor:[12,12]}),zIndexOffset:100}).addTo(l);marker.on('click',()=>{setStation(s);setSelectedId(null);}); if(m.getZoom()>=10)marker.bindTooltip(s.name,{permanent:true,direction:'bottom',className:'station-label'});}
     const groups=new Map<string,Train[]>();
@@ -65,8 +66,9 @@ export function MapPage() {
       const old=previous.current.get(t.id);let bearing=old?.bearing??null;if(old&&haversineM(old.lat,old.lon,t.lat,t.lon)>=5)bearing=bearingDeg(old.lat,old.lon,t.lat,t.lon);if(!old||haversineM(old.lat,old.lon,t.lat,t.lon)>=5)previous.current.set(t.id,{lat:t.lat,lon:t.lon,bearing});
       if(bearing!==null){const direction=document.createElement('span');direction.className='train-direction';direction.style.transform=`rotate(${bearing}deg)`;const arrow=document.createElement('span');arrow.className='ahead-arrow';direction.append(arrow);root.append(direction);}
       avatar(t.avatarUrl,root);const label=document.createElement('span');label.className='train-number';label.textContent=t.number;if(m.getZoom()>=9||selected?.id===t.id||sel.train===t.number)root.append(label);
-      const mk=L.marker([t.lat,t.lon],{icon:L.divIcon({className:'',html:root,iconSize:[30,30],iconAnchor:[15,15]}),zIndexOffset:500,alt:`Vlak ${t.number}`}).addTo(l);mk.on('click',()=>{setSelectedId(t.id);setStation(null);});
+      let mk=trainMarkers.current.get(t.id);if(mk){mk.setLatLng([t.lat,t.lon]);mk.getElement()?.replaceChildren(root);}else{mk=L.marker([t.lat,t.lon],{icon:L.divIcon({className:'moving-train',html:root,iconSize:[30,30],iconAnchor:[15,15]}),zIndexOffset:500,alt:`Vlak ${t.number}`}).addTo(m);trainMarkers.current.set(t.id,mk);}liveMarkerIds.add(t.id);mk.off('click').on('click',()=>{setSelectedId(t.id);setStation(null);});
     }
+    for(const [id,marker] of trainMarkers.current)if(!liveMarkerIds.has(id)){marker.remove();trainMarkers.current.delete(id);}
     if(!fitted.current&&visible.length){m.fitBounds(L.latLngBounds(visible.map(t=>[t.lat,t.lon] as [number,number])),{padding:[60,60],maxZoom:9});fitted.current=true;}
   },[visible,points,showTrains,showStations,view,selectedId,selected?.id,sel.train]);
   useEffect(()=>{if(selected&&settings.map.followSelected)map.current?.panTo([selected.lat,selected.lon]);},[selected,settings.map.followSelected]);

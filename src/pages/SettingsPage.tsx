@@ -1,18 +1,23 @@
-import { useEffect, useState, useCallback, type ReactNode } from 'react';
+import { useEffect, useState, useCallback, createContext, useContext, type ReactNode } from 'react';
 import { Download, FileDown, FolderSearch, Loader2, RefreshCw, Trash2, Volume2, Undo2 } from 'lucide-react';
 import { useSettings } from '@/stores/settings';
 import { useGame } from '@/stores/game';
 import { useServers } from '@/stores/servers';
 import { useAnnouncer } from '@/stores/announcer';
+import {UpdatePanel} from '@/components/UpdatePanel';
 import {CloudAccountPanel} from '@/components/CloudAccountPanel';
 import {RecordingPanel} from '@/components/RecordingPanel';
-import type { DiagInfo, TtsStatusDto, UpdateInfoDto, TtsProgressDto } from '@/types/ipc';
+import type { DiagInfo, TtsStatusDto, TtsProgressDto } from '@/types/ipc';
 
 const NA = 'Nedostupné';
 const field = 'rounded-lg border border-line bg-ink-800 px-3 py-1.5 text-sm text-slate-200 outline-none focus:border-sky-brand';
 const btn = 'flex items-center gap-1.5 rounded-lg border border-line px-3 py-1.5 text-sm text-slate-200 hover:bg-white/5 disabled:opacity-40';
 
+type SettingsTab='Obecné'|'Mapa'|'Hlášení'|'Účet'|'Aktualizace';
+const SettingsTabContext=createContext<SettingsTab>('Obecné');
+const SECTION_TABS:Record<string,SettingsTab>={'Hra':'Obecné','Aplikace':'Obecné','Data a servery':'Obecné','Mapa':'Mapa','Hlášení a hlas':'Hlášení','Editor výslovnosti':'Hlášení','Mezipaměť hlášení':'Hlášení','Diagnostika':'Obecné'};
 function Section({ title, children }: { title: string; children: ReactNode }) {
+  const tab=useContext(SettingsTabContext);if(SECTION_TABS[title]!==tab)return null;
   return <section className="panel rounded-2xl p-5"><h3 className="mb-4 font-medium text-white">{title}</h3><div className="flex flex-col gap-3.5">{children}</div></section>;
 }
 function Row({ label, hint, children }: { label: string; hint?: string; children: ReactNode }) {
@@ -33,8 +38,7 @@ export function SettingsPage() {
   const [dict, setDict] = useState<{ word: string; spoken: string }[]>([]);
   const [nw, setNw] = useState(''); const [ns, setNs] = useState('');
   const [diag, setDiag] = useState<DiagInfo | null>(null);
-  const [upd, setUpd] = useState<UpdateInfoDto | null>(null);
-  const [repo, setRepo] = useState(s.updates.repo ?? '');
+  const [tab,setTab]=useState<SettingsTab>('Obecné');
   const [diagMsg, setDiagMsg] = useState<string | null>(null);
 
   const reloadTts = useCallback(async () => {
@@ -47,7 +51,6 @@ export function SettingsPage() {
     return api.onTtsProgress(setProgress);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  useEffect(() => setRepo(s.updates.repo ?? ''), [s.updates.repo]);
 
   const doTts = async (fn: () => Promise<{ ok: boolean; error?: string }>, okText: string) => {
     setBusy(true); setTtsMsg(null);
@@ -58,9 +61,11 @@ export function SettingsPage() {
   const install = game.result?.install ?? null;
 
   return (
-    <div className="mx-auto flex max-w-3xl flex-col gap-5 pb-10">
+    <SettingsTabContext.Provider value={tab}><div className="settings-layout mx-auto flex max-w-3xl flex-col gap-5 pb-10">
       <h2 className="text-xl font-semibold text-white">Nastavení</h2>
-      <CloudAccountPanel/>
+      <div className="settings-tabs" aria-label="Kategorie nastavení">{(['Obecné','Mapa','Hlášení','Účet','Aktualizace'] as SettingsTab[]).map((t)=><button key={t} aria-pressed={tab===t} onClick={()=>setTab(t)}>{t}</button>)}</div>
+      {tab==='Účet'&&<CloudAccountPanel/>}
+      {tab==='Aktualizace'&&<UpdatePanel/>}
       {error && <div role="alert" className="rounded-xl border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-200">{error}</div>}
 
       <Section title="Hra">
@@ -74,6 +79,7 @@ export function SettingsPage() {
       </Section>
 
       <Section title="Aplikace">
+        <Row label="Animace rozhraní" hint="Jemné přechody a plynulý pohyb značek na mapě"><input type="checkbox" checked={s.animations} onChange={e=>void update({animations:e.target.checked})}/></Row>
         <Row label="Jazyk aplikace" hint="Zatím je k dispozici pouze čeština"><select className={field} disabled value="cs"><option value="cs">Čeština</option></select></Row>
         <Row label="Motiv"><select className={field} value={s.theme} onChange={(e) => void update({ theme: e.target.value as 'blue' | 'graphite' })}><option value="blue">Tmavě modrý</option><option value="graphite">Antracitový</option></select></Row>
       </Section>
@@ -96,7 +102,7 @@ export function SettingsPage() {
         <Row label="Sledovat vybraný vlak"><input type="checkbox" checked={s.map.followSelected} onChange={(e) => void update({ map: { followSelected: e.target.checked } })} /></Row>
       </Section>
 
-      <RecordingPanel/>
+      {tab==='Hlášení'&&<RecordingPanel/>}
       <Section title="Hlášení a hlas">
         <Row label="Automatická hlášení" hint="Podle jízdního řádu, polohy a rychlosti"><input type="checkbox" checked={s.announcements.auto} onChange={(e) => void update({ announcements: { auto: e.target.checked } })} /></Row>
         <Row label="Jazyk hlášení"><select className={field} value={s.announcements.language} onChange={(e) => void update({ announcements: { language: e.target.value as 'cs' | 'pl' | 'cs-pl' } })}><option value="cs">Česky</option><option value="pl">Polsky</option><option value="cs-pl">Česky + polsky</option></select></Row>
@@ -131,7 +137,7 @@ export function SettingsPage() {
         {ann.lastError && <div role="alert" className="rounded-lg border border-red-500/30 bg-red-500/10 p-2 text-xs text-red-200">{ann.lastError}</div>}
       </Section>
 
-      <details className="settings-advanced"><summary>Pokročilé: výslovnost, mezipaměť a diagnostika</summary><Section title="Editor výslovnosti">
+      <div className="settings-advanced"><Section title="Editor výslovnosti">
         <div className="text-xs text-slate-500">Slovo nebo název stanice se před syntézou nahradí zadaným zněním (bez ohledu na velikost písmen a diakritiku). Výchozí české tvary (Katowice → Katovice, Kraków Główny → Krakov hlavní) jsou už zabudované.</div>
         <div className="flex gap-2">
           <input className={`${field} flex-1`} placeholder="Slovo / stanice" value={nw} onChange={(e) => setNw(e.target.value)} aria-label="Slovo" />
@@ -156,15 +162,7 @@ export function SettingsPage() {
         </Row>
       </Section>
 
-      <Section title="Aktualizace launcheru">
-        <Row label="Repozitář s vydáními (GitHub)" hint="Ve tvaru vlastník/repozitář; bez něj kontrola není možná">
-          <input className={`${field} w-56`} placeholder="vlastnik/repozitar" value={repo} onChange={(e) => setRepo(e.target.value)} onBlur={() => void update({ updates: { repo: repo.trim() || null } })} />
-          <button className={btn} onClick={async () => { await update({ updates: { repo: repo.trim() || null } }); setUpd(await api.call('update:check')); }}><RefreshCw size={14} /> Zkontrolovat</button>
-        </Row>
-        {upd && <div className={`text-xs ${upd.status === 'error' ? 'text-red-300' : upd.status === 'available' ? 'text-emerald-300' : 'text-slate-400'}`}>{upd.message}{upd.url ? ` ${upd.url}` : ''}</div>}
-      </Section>
-
-      <Section title="Diagnostika">
+<Section title="Diagnostika">
         {diag ? (
           <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-xs">
             {([['Verze aplikace', diag.appVersion], ['Electron / Chrome / Node', `${diag.electron} / ${diag.chrome} / ${diag.node}`], ['Systém', `${diag.platform} ${diag.arch}`], ['Data aplikace', diag.userData], ['Databáze', diag.dbFile], ['Složka modifikací', diag.modsDir], ['Log', diag.logFile]] as [string, string][]).map(([k, v]) => (
@@ -179,6 +177,6 @@ export function SettingsPage() {
           {diagMsg && <span className="text-xs text-slate-400">{diagMsg}</span>}
         </div>
       </Section>
-    </details></div>
+    </div></div></SettingsTabContext.Provider>
   );
 }

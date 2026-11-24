@@ -40,7 +40,7 @@ function Station({ label, value, tone }: { label: string; value: string | null; 
   );
 }
 
-export function DashboardPage({ standalone = false }: { standalone?: boolean }) {
+export function DashboardPage({ standalone = false, active = true }: { standalone?: boolean; active?:boolean }) {
   const sel = useSelection();
   const { snapshot, refresh } = useServers();
   const settings = useSettings((s) => s.settings);
@@ -81,7 +81,7 @@ export function DashboardPage({ standalone = false }: { standalone?: boolean }) 
   const m = feed.model;
   const isDemo = sel.mode === 'demo';
   const currentIndex = m?.rows.find(r => r.status === 'target')?.index;
-  useEffect(() => { activeRow.current?.scrollIntoView({ block:'nearest', behavior:'smooth' }); }, [currentIndex]);
+  useEffect(() => { if(!active)return; activeRow.current?.scrollIntoView({ block:'nearest', behavior:'smooth' }); }, [currentIndex,active]);
 
   // automatická hlášení
   const trigger = useRef(new AnnouncementTrigger());
@@ -92,7 +92,7 @@ export function DashboardPage({ standalone = false }: { standalone?: boolean }) 
   const freight = !isDemo && isFreightTrain(detail?.train);
   useEffect(() => { ann.stop(); }, [sel.mode,server,sel.train,freight]); // stop queued speech when switching to freight
   useEffect(() => {
-    if (!auto || freight || !m || !detail?.train) { setDisabled([]); return; }
+    if (standalone || !auto || freight || !m || !detail?.train) { setDisabled([]); return; }
     const runKey = `${isDemo ? 'demo' : server}:${detail.train.runId ?? detail.train.number}`;
     const r = trigger.current.update({ runKey, index: detail.train.timetableIndex, speedKmh: detail.train.speedKmh, distToNextStopM: m.distanceToNextStopM, points: detail.timetable?.points ?? [], delayMin: m.delayMin });
     setDisabled(r.disabled);

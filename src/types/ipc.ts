@@ -98,11 +98,14 @@ export interface IpcMap {
   'dashboard:open': { args: [string | null, string | null]; result: Res<null> };
   'diag:info': { args: []; result: DiagInfo };
   'diag:export-logs': { args: []; result: Res<string | null> };
+  'update:status': {args:[];result:import('../services/AutomaticUpdates').AutomaticUpdateState};
+  'update:auto-check': {args:[];result:import('../services/AutomaticUpdates').AutomaticUpdateState};
+  'update:install': {args:[];result:boolean};
   'update:check': { args: []; result: UpdateInfoDto };
 }
 export type CallChannel = keyof IpcMap;
 export const CALL_CHANNELS: readonly CallChannel[] = [
-  'audio:gong','recordings:status','recordings:choose','recordings:render',
+  'update:status','update:auto-check','update:install','audio:gong','recordings:status','recordings:choose','recordings:render',
   'cloud:status','cloud:login','cloud:logout','cloud:save','cloud:load','cloud:reset','cloud:delete',
   'stations:board', 'stations:list', 'mobile:start', 'mobile:stop', 'settings:get', 'settings:update', 'trains:list', 'trains:detail', 'tts:status', 'tts:install-piper', 'tts:install-voice', 'tts:synthesize',
   'tts:clear-cache', 'dict:list', 'dict:set', 'dict:delete', 'mods:list', 'mods:import', 'mods:set-enabled', 'mods:uninstall', 'mods:backup',
