@@ -5,6 +5,7 @@ import { useGame } from '@/stores/game';
 import { useServers } from '@/stores/servers';
 import { useAnnouncer } from '@/stores/announcer';
 import {CloudAccountPanel} from '@/components/CloudAccountPanel';
+import {RecordingPanel} from '@/components/RecordingPanel';
 import type { DiagInfo, TtsStatusDto, UpdateInfoDto, TtsProgressDto } from '@/types/ipc';
 
 const NA = 'Nedostupné';
@@ -95,6 +96,7 @@ export function SettingsPage() {
         <Row label="Sledovat vybraný vlak"><input type="checkbox" checked={s.map.followSelected} onChange={(e) => void update({ map: { followSelected: e.target.checked } })} /></Row>
       </Section>
 
+      <RecordingPanel/>
       <Section title="Hlášení a hlas">
         <Row label="Automatická hlášení" hint="Podle jízdního řádu, polohy a rychlosti"><input type="checkbox" checked={s.announcements.auto} onChange={(e) => void update({ announcements: { auto: e.target.checked } })} /></Row>
         <Row label="Jazyk hlášení"><select className={field} value={s.announcements.language} onChange={(e) => void update({ announcements: { language: e.target.value as 'cs' | 'pl' | 'cs-pl' } })}><option value="cs">Česky</option><option value="pl">Polsky</option><option value="cs-pl">Česky + polsky</option></select></Row>

@@ -19,6 +19,7 @@ export function normalizeSettings(raw: unknown): Settings {
   return {
     autoDetectGame: bool(r.autoDetectGame, d.autoDetectGame),
     manualGamePath: strOrNull(r.manualGamePath),
+    recordingsPath: strOrNull(r.recordingsPath),
     launchViaSteam: true,
     appLanguage: 'cs',
     theme: oneOf(r.theme, ['blue', 'graphite'] as const, d.theme),
@@ -31,6 +32,8 @@ export function normalizeSettings(raw: unknown): Settings {
     },
     announcements: {
       auto: bool(an.auto, d.announcements.auto),
+      gong: bool(an.gong,d.announcements.gong),
+      recorded: bool(an.recorded,d.announcements.recorded),
       language: oneOf(an.language, ['cs', 'pl', 'cs-pl'] as const, d.announcements.language),
       engine: oneOf(an.engine, ['piper', 'system'] as const, d.announcements.engine),
       voiceId: strOrNull(an.voiceId, 100) ?? d.announcements.voiceId,

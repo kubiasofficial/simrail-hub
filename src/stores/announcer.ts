@@ -7,8 +7,9 @@ interface AnnouncerState {
   pending: number; playing: boolean; lastText: string | null; lastError: string | null;
   pron: PronEntry[]; templates: TemplateOverrides;
   reloadContent: () => Promise<void>;
-  announce: (key: string, kind: AnnKind, params: { station?: string | null; delayMin?: number }) => boolean;
+  announce: (key: string, kind: AnnKind, params: { station?: string | null; delayMin?: number;trainNumber?:string;isFreight?:boolean }) => boolean;
   speakText: (seg: Segment) => Promise<void>;
+  speakGong: () => Promise<void>;
   stop: () => void;
 }
 
@@ -17,21 +18,29 @@ let cancelCurrent:(()=>void)|null=null;
 let playbackGeneration=0;
 const api = () => window.simrailHub!;
 
-/** Přehraje jeden segment vybraným enginem (Piper offline / systémový hlas). Chyby vyhazuje s českým popisem. */
-async function playSegment(seg: Segment): Promise<void> {
-  const generation=playbackGeneration;
-  const { engine, voiceId, rate, volume } = useSettings.getState().settings.announcements;
-  if (engine === 'piper') {
-    const r = await api().call('tts:synthesize', seg.text, voiceId, rate);
-    if(generation!==playbackGeneration)throw new DOMException('Přehrávání zastaveno','AbortError');
-    if (!r.ok) throw new Error(r.error);
-    const url = URL.createObjectURL(new Blob([r.data as BlobPart], { type: 'audio/wav' }));
+async function playBytes(bytes:Uint8Array):Promise<void> {
+    const url = URL.createObjectURL(new Blob([bytes as BlobPart], { type: 'audio/wav' }));
     await new Promise<void>((resolve, reject) => {
-      const a = new Audio(url); current = a; a.volume = volume;
+      const a = new Audio(url); current = a; a.volume = useSettings.getState().settings.announcements.volume;
       cancelCurrent=()=>{a.pause();reject(new DOMException('Přehrávání zastaveno','AbortError'));};
       a.onended = () => resolve(); a.onerror = () => reject(new Error('Přehrání zvuku selhalo.'));
       void a.play().catch(reject);
     }).finally(() => { URL.revokeObjectURL(url); current = null;cancelCurrent=null; });
+
+}
+
+/** Přehraje jeden segment vybraným enginem (Piper offline / systémový hlas). Chyby vyhazuje s českým popisem. */
+async function playSegment(seg: Segment): Promise<void> {
+  const generation=playbackGeneration;
+  const { engine, voiceId, rate, volume, gong, recorded } = useSettings.getState().settings.announcements;
+  if(seg.recording&&recorded){const r=await api().call('recordings:render',seg.recording,!!seg.intro&&gong);if(generation!==playbackGeneration)throw new DOMException('Přehrávání zastaveno','AbortError');if(!r.ok)throw Error(r.error);if(r.data){await playBytes(r.data);return;}}
+  if(seg.intro&&gong){const r=await api().call('audio:gong');if(generation!==playbackGeneration)throw new DOMException('Přehrávání zastaveno','AbortError');if(!r.ok)throw Error(r.error);await playBytes(r.data);}
+  if(generation!==playbackGeneration)throw new DOMException('Přehrávání zastaveno','AbortError');
+  if (engine === 'piper') {
+    const r = await api().call('tts:synthesize', seg.text, voiceId, rate);
+    if(generation!==playbackGeneration)throw new DOMException('Přehrávání zastaveno','AbortError');
+    if (!r.ok) throw new Error(r.error);
+    await playBytes(r.data);
     return;
   }
   const lang = seg.lang === 'cs' ? 'cs-CZ' : 'pl-PL';
@@ -40,7 +49,7 @@ async function playSegment(seg: Segment): Promise<void> {
   if (!voice) throw new Error(`V systému není nainstalovaný hlas pro jazyk ${seg.lang === 'cs' ? 'česky' : 'polsky'}. Nainstalujte jazykový balíček Windows nebo použijte Piper.`);
   await new Promise<void>((resolve, reject) => {
     const u = new SpeechSynthesisUtterance(seg.text); u.voice = voice; u.lang = lang; u.rate = rate; u.volume = volume;
-    u.onend = () => resolve(); u.onerror = () => reject(new Error('Systémový hlas selhal.'));
+    u.onend = () => resolve(); u.onerror = () => reject(generation!==playbackGeneration?new DOMException('Přehrávání zastaveno','AbortError'):new Error('Systémový hlas selhal.'));
     speechSynthesis.speak(u);
   });
 }
@@ -61,9 +70,13 @@ export const useAnnouncer = create<AnnouncerState>((set, get) => {
     announce: (key, kind, params) => {
       const { language } = useSettings.getState().settings.announcements;
       const segments = buildSegments(kind, params, language, get().pron, get().templates);
+      if(params.isFreight)return false;
+      if(segments[0])segments[0].intro=true;
+      for(const segment of segments)if(segment.lang==='cs'&&params.trainNumber)segment.recording={kind,station:params.station??null,trainNumber:params.trainNumber,isFreight:false};
       return queue.enqueue({ key, kind, segments });
     },
-    speakText: async (seg) => { set({ lastText: seg.text }); try { await playSegment(seg); set({ lastError: null }); } catch (e) { set({ lastError: (e as Error).message }); } },
+    speakText: async (seg) => { get().stop();set({ lastText: seg.text }); try { await playSegment({...seg,intro:true}); set({ lastError: null }); } catch (e) { if((e as Error).name!=='AbortError')set({ lastError: (e as Error).message }); } },
+    speakGong: async()=>{get().stop();const generation=playbackGeneration;try{const r=await api().call('audio:gong');if(generation!==playbackGeneration)throw new DOMException('Přehrávání zastaveno','AbortError');if(!r.ok)throw Error(r.error);await playBytes(r.data);set({lastError:null});}catch(e){if((e as Error).name!=='AbortError')set({lastError:(e as Error).message});}},
     stop: () => { playbackGeneration++;queue.clear();cancelCurrent?.();current?.pause();speechSynthesis.cancel();set({playing:false}); }
   };
 });

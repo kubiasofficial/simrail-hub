@@ -60,6 +60,10 @@ export interface UpdateInfoDto { status: 'unconfigured' | 'current' | 'available
 
 /** Typované „volací“ kanály (kromě specializovaných metod výše). Preload pustí jen kanály z CALL_CHANNELS. */
 export interface IpcMap {
+  'audio:gong':{args:[];result:Res<Uint8Array>};
+  'recordings:status':{args:[];result:Res<import('../services/localAudio').RecordingStatus>};
+  'recordings:choose':{args:[];result:Res<import('../services/localAudio').RecordingStatus|null>};
+  'recordings:render':{args:[import('../services/localAudio').RecordingRequest,boolean];result:Res<Uint8Array|null>};
   'cloud:status': {args:[];result:import('../services/CloudAccount').AccountStatus|null};
   'cloud:login': {args:[string,string,boolean];result:Res<import('../services/CloudAccount').AccountStatus>};
   'cloud:logout': {args:[];result:Res<null>};
@@ -98,6 +102,7 @@ export interface IpcMap {
 }
 export type CallChannel = keyof IpcMap;
 export const CALL_CHANNELS: readonly CallChannel[] = [
+  'audio:gong','recordings:status','recordings:choose','recordings:render',
   'cloud:status','cloud:login','cloud:logout','cloud:save','cloud:load','cloud:reset','cloud:delete',
   'stations:board', 'stations:list', 'mobile:start', 'mobile:stop', 'settings:get', 'settings:update', 'trains:list', 'trains:detail', 'tts:status', 'tts:install-piper', 'tts:install-voice', 'tts:synthesize',
   'tts:clear-cache', 'dict:list', 'dict:set', 'dict:delete', 'mods:list', 'mods:import', 'mods:set-enabled', 'mods:uninstall', 'mods:backup',

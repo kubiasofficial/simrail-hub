@@ -96,14 +96,14 @@ export function DashboardPage({ standalone = false }: { standalone?: boolean }) 
     const runKey = `${isDemo ? 'demo' : server}:${detail.train.runId ?? detail.train.number}`;
     const r = trigger.current.update({ runKey, index: detail.train.timetableIndex, speedKmh: detail.train.speedKmh, distToNextStopM: m.distanceToNextStopM, points: detail.timetable?.points ?? [], delayMin: m.delayMin });
     setDisabled(r.disabled);
-    for (const e of r.events) ann.announce(`${runKey}:${e.key}`, e.kind, { station: e.station, delayMin: e.delayMin });
+    for (const e of r.events) ann.announce(`${runKey}:${e.key}`, e.kind, { station: e.station, delayMin: e.delayMin, trainNumber:detail.train.number,isFreight:freight });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [m, auto, freight]);
 
   const manual = useCallback((kind: AnnKind) => {
     if (!m || freight) return;
     const station = kind === 'arrived' ? m.current ?? m.next : m.next;
-    ann.announce(`manual:${Date.now()}`, kind, { station, delayMin: m.delayMin ?? undefined });
+    ann.announce(`manual:${Date.now()}`, kind, { station, delayMin: m.delayMin ?? undefined,trainNumber:m.trainNumber,isFreight:freight });
   }, [m, ann, freight]);
 
   const field = 'rounded-lg border border-line bg-ink-800 px-3 py-1.5 text-sm text-slate-200 outline-none focus:border-sky-brand';

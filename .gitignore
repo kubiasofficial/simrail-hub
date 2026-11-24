@@ -25,3 +25,8 @@ scripts/prepare-recording.py
 scripts/create-recording-pack.py
 scripts/create-full-recording-pack.py
 scripts/create-53xxx-pack.py
+
+# Private local announcement audio
+hlaseni/
+*.wav
+*.m4a
