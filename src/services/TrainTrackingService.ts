@@ -13,6 +13,8 @@ export class TrainTrackingService {
   private stations = new Map<string, Cached<StationCoord[]>>();
   private timetables = new Map<string, Cached<Timetable[]>>();
   private profiles: SteamProfiles;
+  private stationPending=new Map<string,Promise<StationCoord[]>>();
+  private timetablePending=new Map<string,Promise<Timetable[]|null>>();
   private pendingTrains=new Map<string,Promise<TrainsResult>>();
   constructor(private fetchFn: FetchLike, private now: () => number = Date.now) { this.profiles = new SteamProfiles(fetchFn); }
 
@@ -24,6 +26,8 @@ export class TrainTrackingService {
     this.pendingTrains.set(code,work);return work;
   }
   private async loadTrains(code: string, force = false): Promise<TrainsResult> {
+    for(const cache of [this.trains,this.stations])while(cache.size>32)cache.delete(cache.keys().next().value!);
+    while(this.timetables.size>3)this.timetables.delete(this.timetables.keys().next().value!);
     const hit = this.fresh(this.trains.get(code), force ? 1_500 : 3_000);
     if (hit) return { ok: true, data: hit };
     try {
@@ -35,7 +39,13 @@ export class TrainTrackingService {
     } catch (e) { return { ok: false, error: `Polohy vlaků se nepodařilo načíst: ${(e as Error).message}` }; }
   }
 
-  async getStations(code: string, notes: string[] = []): Promise<StationCoord[]> {
+  async getStations(code:string,notes:string[]=[]):Promise<StationCoord[]>{
+    const pending=this.stationPending.get(code);if(pending)return pending;
+    const task=this.loadStations(code,notes).finally(()=>this.stationPending.delete(code));this.stationPending.set(code,task);return task;
+  }
+  private async loadStations(code: string, notes: string[] = []): Promise<StationCoord[]> {
+    for(const cache of [this.trains,this.stations])while(cache.size>32)cache.delete(cache.keys().next().value!);
+    while(this.timetables.size>3)this.timetables.delete(this.timetables.keys().next().value!);
     const hit = this.fresh(this.stations.get(code), 30_000);
     if (hit) return hit;
     try { const v = parseStations(await fetchJson(this.fetchFn, stationsUrl(code))); await Promise.all(v.flatMap(s => (s.dispatchers ?? []).map(async d => { d.avatarUrl = await this.profiles.avatar(d.steamId); }))); this.stations.set(code, { at: this.now(), value: v }); return v; }
@@ -53,7 +63,13 @@ export class TrainTrackingService {
     return schedules.flatMap(t => t.points.filter(p => norm(p.name) === norm(name) && isPassengerStop(p)).map(p => ({ number:t.trainNumber,arrival:p.arrival,departure:p.departure,destination:t.endStation })))
       .sort((a,b) => ((clock(a.departure??a.arrival)-now+86400)%86400)-((clock(b.departure??b.arrival)-now+86400)%86400)).slice(0,12);
   }
-  private async getTimetables(code: string, notes: string[]): Promise<Timetable[] | null> {
+  private async getTimetables(code:string,notes:string[]):Promise<Timetable[]|null>{
+    const pending=this.timetablePending.get(code);if(pending)return pending;
+    const task=this.loadTimetables(code,notes).finally(()=>this.timetablePending.delete(code));this.timetablePending.set(code,task);return task;
+  }
+  private async loadTimetables(code: string, notes: string[]): Promise<Timetable[] | null> {
+    for(const cache of [this.trains,this.stations])while(cache.size>32)cache.delete(cache.keys().next().value!);
+    while(this.timetables.size>3)this.timetables.delete(this.timetables.keys().next().value!);
     const hit = this.fresh(this.timetables.get(code), 300_000);
     if (hit) return hit;
     try { const v = parseTimetables(await fetchJson(this.fetchFn, timetablesUrl(code), 20_000)); this.timetables.set(code, { at: this.now(), value: v }); return v; }
@@ -72,6 +88,6 @@ export class TrainTrackingService {
     let serverSod: number | null = null;
     try { serverSod = serverTimeToSod(await fetchJson(this.fetchFn, timeUrl(code))); if (serverSod === null) notes.push('Čas serveru se nepodařilo zpracovat – zpoždění nelze určit.'); }
     catch (e) { notes.push(`Čas serveru není dostupný: ${e instanceof ApiError ? e.message : (e as Error).message}`); }
-    return { ok: true, data: { train, timetable, stations, serverSod, fetchedAt: this.now(), notes } };
+    return { ok: true, data: { train, timetable, stations, serverSod, fetchedAt: tr.data.fetchedAt, notes } };
   }
 }

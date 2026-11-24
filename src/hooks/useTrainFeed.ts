@@ -28,7 +28,7 @@ export function useTrainFeed(src: FeedSource): Feed {
       try {
         const r = await window.simrailHub!.call('trains:detail', src.server!, src.train!);
         if (!alive) return;
-        if (r.ok) { setDetail(r.data); setError(null); setLastOk(Date.now()); } else setError(r.error);
+        if (r.ok) { setDetail(r.data); setError(null); setLastOk(r.data.fetchedAt); } else setError(r.error);
       } catch (e) { if (alive) setError((e as Error).message); }
       finally { busy = false; }
     };
@@ -36,7 +36,7 @@ export function useTrainFeed(src: FeedSource): Feed {
     return () => { alive = false; clearInterval(id); };
   }, [src.mode, src.server, src.train]);
 
-  useEffect(() => { const id = setInterval(() => setNow(Date.now()), 1000); return () => clearInterval(id); }, []);
+  useEffect(() => { const id = setInterval(() => setNow(Date.now()), 5000); return () => clearInterval(id); }, []);
   useEffect(() => {
     if (src.mode !== 'demo') return;
     const id = setInterval(() => useDemo.getState().tick(0.25), 250);

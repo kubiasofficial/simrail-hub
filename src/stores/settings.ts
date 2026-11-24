@@ -11,15 +11,15 @@ interface SettingsState {
 
 export function applyTheme(theme: Settings['theme']) { document.documentElement.dataset.theme = theme; }
 
-export const useSettings = create<SettingsState>((set, get) => ({
+let revision=0;
+export const useSettings = create<SettingsState>((set) => ({
   settings: DEFAULT_SETTINGS, loaded: false, error: null,
-  load: async () => {
-    try { const s = await window.simrailHub!.call('settings:get'); applyTheme(s.theme); set({ settings: s, loaded: true, error: null }); }
+  load: async () => {const current=revision;
+    try { const s = await window.simrailHub!.call('settings:get');if(current!==revision)return; applyTheme(s.theme); set({ settings: s, loaded: true, error: null }); }
     catch (e) { set({ loaded: true, error: `Nastavení se nepodařilo načíst: ${(e as Error).message}` }); }
   },
-  update: async (patch) => {
-    try { const s = await window.simrailHub!.call('settings:update', patch); applyTheme(s.theme); set({ settings: s, error: null }); }
+  update: async (patch) => {const current=++revision;
+    try { const s = await window.simrailHub!.call('settings:update', patch);if(current!==revision)return; applyTheme(s.theme); set({ settings: s, error: null }); }
     catch (e) { set({ error: `Nastavení se nepodařilo uložit: ${(e as Error).message}` }); }
-    void get;
   }
 }));

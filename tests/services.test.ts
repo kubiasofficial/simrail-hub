@@ -3,7 +3,7 @@ import { join } from 'node:path';
 import { mkdir, writeFile, readFile } from 'node:fs/promises';
 import { zipSync, strToU8 } from 'fflate';
 import { ModManager, readModArchive, isSafeEntryName } from '../src/services/ModManager';
-import { TextToSpeechService, PIPER_PACKAGE, type TtsDeps } from '../src/services/TextToSpeechService';
+import { TextToSpeechService, PIPER_PACKAGE, VOICES, type TtsDeps } from '../src/services/TextToSpeechService';
 import { TrainTrackingService } from '../src/services/TrainTrackingService';
 import { AnnouncementQueue } from '../src/services/announcementQueue';
 import { Database } from '../src/services/Database';
@@ -80,7 +80,7 @@ describe('TextToSpeechService (s falešnými závislostmi)', () => {
     const d = await tmp();
     const deps: TtsDeps = {
       platform: 'win32',
-      downloadFile: vi.fn(async (_u, dest) => { await mkdir(join(dest, '..'), { recursive: true }); await writeFile(dest, dest.endsWith('.json.part') ? '{"audio":{"sample_rate":22050}}' : Buffer.alloc(2_000_000)); return { sha256: PIPER_PACKAGE.sha256, bytes: 2_000_000 }; }),
+      downloadFile: vi.fn(async (_u, dest) => { await mkdir(join(dest, '..'), { recursive: true }); await writeFile(dest, dest.endsWith('.json.part') ? '{"audio":{"sample_rate":22050}}' : Buffer.alloc(2_000_000)); return { sha256: VOICES.find(v=>v.onnxUrl===_u)?.sha256??VOICES.find(v=>v.jsonUrl===_u)?.configSha256??PIPER_PACKAGE.sha256, bytes: 2_000_000 }; }),
       extractZip: vi.fn(async (_z, dest) => { await mkdir(join(dest, 'piper'), { recursive: true }); await writeFile(join(dest, 'piper', 'piper.exe'), 'x'); }),
       runPiper: vi.fn(async (_e, args) => { await writeFile(args[args.indexOf('--output_file') + 1], 'RIFFfake'); }),
       ...over

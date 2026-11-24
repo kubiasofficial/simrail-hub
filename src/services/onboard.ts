@@ -30,17 +30,21 @@ export function delayClass(min: number | null): DelayClass {
   if (min === null) return 'none';
   if (min < 0) return 'early';
   if (min === 0) return 'ontime';
-  return min <= 15 ? 'late' : 'verylate';
+  return min <= 20 ? 'late' : 'verylate';
 }
 
 /** Zaznamenává skutečné časy průjezdu bodů jízdního řádu (API skutečné příjezdy neposkytuje). */
 export class DelayTracker {
   private run: string | null = null;
   private lastIndex: number | null = null;
+  private lastTime:number|null=null;
   private observed: { index: number; delaySec: number } | null = null;
 
   observe(runKey: string, index: number | null, nowSod: number | null, points: TimetablePoint[]): void {
     if (runKey !== this.run) { this.run = runKey; this.lastIndex = null; this.observed = null; }
+    if(nowSod===null){this.observed=null;this.lastTime=null;return;}
+    if((this.lastTime!==null&&Math.abs(diffSod(nowSod,this.lastTime))>120)||(index!==null&&this.lastIndex!==null&&index<this.lastIndex)){this.observed=null;this.lastIndex=null;}
+    this.lastTime=nowSod;
     if (index === null) return;
     if (this.lastIndex !== null && index > this.lastIndex && nowSod !== null) {
       const p = points[index - 1];
@@ -52,6 +56,7 @@ export class DelayTracker {
 
   /** Zpoždění v celých minutách + zdroj hodnoty (pozorováno / odhad). */
   current(points: TimetablePoint[], index: number | null, nowSod: number | null): { min: number; kind: 'observed' | 'estimate' } | null {
+    if(nowSod===null||index===null)return null;
     if (this.observed) return { min: Math.round(this.observed.delaySec / 60), kind: 'observed' };
     if (nowSod !== null && index !== null && points[index]) {
       const s = sched(points[index], 'arrival');

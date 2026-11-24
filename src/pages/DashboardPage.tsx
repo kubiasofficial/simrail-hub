@@ -1,3 +1,4 @@
+import {useVisualActivity} from '@/hooks/useVisualActivity';
 import {delaySeverity} from '@/services/delayPresentation';
 import { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import { ArrowDown, ExternalLink, Megaphone, Pause, Play, RotateCcw, SkipForward, Square, TrainFront, TriangleAlert, Wifi, WifiOff } from 'lucide-react';
@@ -50,8 +51,9 @@ export function DashboardPage({ standalone = false, active = true }: { standalon
   const demo = useDemo();
   const ann = useAnnouncer();
   const [showPassed, setShowPassed] = useState(false);
+  const visual=useVisualActivity();
   const [now,setNow]=useState(Date.now());
-  useEffect(()=>{const id=setInterval(()=>setNow(Date.now()),1000);return()=>clearInterval(id);},[]);
+  useEffect(()=>{if(!active||!visual)return;setNow(Date.now());const id=setInterval(()=>setNow(Date.now()),1000);return()=>clearInterval(id);},[active,visual]);
   const activeRow = useRef<HTMLLIElement>(null);
   const [trains, setTrains] = useState<Train[]>([]);
   const [listError, setListError] = useState<string | null>(null);
@@ -85,7 +87,7 @@ export function DashboardPage({ standalone = false, active = true }: { standalon
   const m = feed.model;
   const isDemo = sel.mode === 'demo';
   const currentIndex = m?.rows.find(r => r.status === 'target')?.index;
-  useEffect(() => { if(!active)return; activeRow.current?.scrollIntoView({ block:'nearest', behavior:'smooth' }); }, [currentIndex,active]);
+  useEffect(() => { if(!active||!visual)return; activeRow.current?.scrollIntoView({ block:'nearest', behavior:'smooth' }); }, [currentIndex,active,visual]);
 
   // automatická hlášení
   const trigger = useRef(new AnnouncementTrigger());
@@ -93,12 +95,14 @@ export function DashboardPage({ standalone = false, active = true }: { standalon
   useEffect(() => { trigger.current.reset(); }, [sel.mode, server, sel.train]);
   const auto = settings.announcements.auto;
   useEffect(()=>{if(!auto)useAnnouncer.getState().stop();},[auto]);
+  useEffect(()=>{if(m?.connection==='lost'||m?.connection==='stale')useAnnouncer.getState().stop();},[m?.connection]);
   const detail = feed.detail;
   const freight = !isDemo && isFreightTrain(detail?.train);
-  useEffect(() => { ann.stop(); }, [sel.mode,server,sel.train,freight]); // stop queued speech when switching to freight
+  useEffect(() => { ann.resetRun(); }, [sel.mode,server,sel.train,freight]); // stop queued speech when switching to freight
   useEffect(() => {
-    if (standalone || !auto || freight || !m || !detail?.train) { setDisabled([]); return; }
+    if (standalone || !auto || freight || !m || m.connection==='stale'||m.connection==='lost'||!detail?.train) { setDisabled([]); return; }
     const runKey = `${isDemo ? 'demo' : server}:${detail.train.runId ?? detail.train.number}`;
+    ann.reconcile(m.current??m.next,m.delayMin);
     const r = trigger.current.update({ runKey, index: detail.train.timetableIndex, speedKmh: detail.train.speedKmh, distToNextStopM: m.distanceToNextStopM, points: detail.timetable?.points ?? [], delayMin: m.delayMin });
     setDisabled(r.disabled);
     for (const e of r.events) ann.announce(`${runKey}:${e.key}`, e.kind, { station: e.station, delayMin: e.delayMin, trainNumber:detail.train.number,isFreight:freight,automatic:true });

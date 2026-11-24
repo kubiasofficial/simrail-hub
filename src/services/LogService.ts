@@ -14,7 +14,8 @@ export class LogService {
   log(level: LogLevel, scope: string, message: string, err?: unknown): void {
     try {
       const detail = err instanceof Error ? ` | ${err.name}: ${err.message}` : err ? ` | ${String(err)}` : '';
-      appendFileSync(this.file, `${new Date().toISOString()} [${level.toUpperCase()}] ${scope}: ${message}${detail}\n`);
+      const redacted=(message+detail).replace(/([?&](?:pair|token|key)=)[^\s&]+/gi,'$1[redacted]').replace(/(Bearer\s+)[\w.\-]+/gi,'$1[redacted]').replace(/(hub=)[a-f0-9]+/gi,'$1[redacted]');
+      appendFileSync(this.file,new Date().toISOString()+' ['+level.toUpperCase()+'] '+scope+': '+redacted+'\n');
       if (statSync(this.file).size > MAX_BYTES) renameSync(this.file, join(this.dir, 'app.old.log'));
     } catch { /* logování nesmí shodit aplikaci */ }
   }

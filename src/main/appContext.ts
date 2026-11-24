@@ -1,9 +1,12 @@
+import {Readable,Transform} from 'node:stream';
+import {pipeline} from 'node:stream/promises';
+import {SharedApiFetch} from '../services/SharedApiFetch';
 import { app, net, BrowserWindow } from 'electron';
 import { join } from 'node:path';
 import { createHash } from 'node:crypto';
 import { createWriteStream } from 'node:fs';
 import { mkdir } from 'node:fs/promises';
-import { execFile, spawn } from 'node:child_process';
+import { execFile, spawn,type ChildProcess } from 'node:child_process';
 import { Database } from '../services/Database';
 import { SettingsService } from '../services/SettingsService';
 import { LogService } from '../services/LogService';
@@ -34,34 +37,30 @@ export function createContext(): AppContext {
     const r = await net.fetch(url, init);
     return { ok: r.ok, status: r.status, text: () => r.text() };
   };
-  const fetchFn: FetchLike = fixtures ? fixtureFetch : netFetch;
+  const fetchFn: FetchLike = new SharedApiFetch(fixtures ? fixtureFetch : netFetch).fetch;
   const modsDir = join(userData, 'mods');
   const mods = new ModManager(modsDir, join(userData, 'backups'), app.getVersion());
 
+  const children=new Set<ChildProcess>();
+  app.once('before-quit',()=>{for(const child of children)child.kill();children.clear();});
   const deps: TtsDeps = {
     platform: fixtures ? 'win32' : process.platform, // v ukázkovém režimu jen kvůli zobrazení průvodce na snímcích
     async downloadFile(url, dest, onProgress) {
       await mkdir(join(dest, '..'), { recursive: true });
-      const res = await net.fetch(url);
-      if (!res.ok || !res.body) throw new Error(`Stahování selhalo (HTTP ${res.status}).`);
-      const total = Number(res.headers.get('content-length')) || 0;
-      const hash = createHash('sha256'); const out = createWriteStream(dest); let bytes = 0;
-      const reader = res.body.getReader();
-      try {
-        for (;;) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          hash.update(value); bytes += value.length;
-          if (!out.write(value)) await new Promise((r) => out.once('drain', r));
-          onProgress(total ? bytes / total : null);
-        }
-      } finally { await new Promise<void>((r) => out.end(r)); }
+      const signal=AbortSignal.timeout(120000),res=await net.fetch(url,{signal});
+      if(!res.ok||!res.body)throw Error('Stahování selhalo (HTTP '+res.status+').');
+      const total=Number(res.headers.get('content-length'))||0,hash=createHash('sha256');let bytes=0;
+      const meter=new Transform({transform(chunk:Buffer,_encoding,done){bytes+=chunk.length;
+        if(bytes>(url.endsWith('.json')?1024*1024:200*1024*1024)){done(Error('Stažený soubor překročil povolenou velikost.'));return;}
+        hash.update(chunk);onProgress(total?bytes/total:null);done(null,chunk);
+      }});
+      await pipeline(Readable.fromWeb(res.body as never),meter,createWriteStream(dest),{signal});
       return { sha256: hash.digest('hex'), bytes };
     },
     extractZip: (zip, dest) => new Promise((resolve, reject) =>
       execFile('tar', ['-xf', zip, '-C', dest], { windowsHide: true }, (e) => (e ? reject(new Error(`Rozbalení selhalo: ${e.message}`)) : resolve()))),
     runPiper: (exe, args, text, cwd) => new Promise((resolve, reject) => {
-      const p = spawn(exe, args, { cwd, windowsHide: true });
+      const p = spawn(exe, args, { cwd, windowsHide: true });children.add(p);p.once('close',()=>children.delete(p));p.stdin.on('error',()=>undefined);
       let err = '';
       const timer = setTimeout(() => { p.kill(); reject(new Error('Piper neodpověděl do 30 s.')); }, 30_000);
       p.stderr.on('data', (d) => { err = (err + String(d)).slice(-300); });

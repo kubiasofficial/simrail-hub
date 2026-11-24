@@ -20,6 +20,6 @@ export class SteamProfiles {
         if (raw) { const u = new URL(raw); if (/^(avatars\.(steamstatic\.com|cloudflare\.steamstatic\.com|akamai\.steamstatic\.com|fastly\.steamstatic\.com)|steamcdn-a\.akamaihd\.net)$/.test(u.hostname)) avatar = u.href; }
       }
     } catch { /* missing avatar must not interrupt live telemetry */ }
-    this.cache.set(id, { at: Date.now(), avatar }); return avatar;
+    this.cache.set(id, { at: Date.now(), avatar });while(this.cache.size>500)this.cache.delete(this.cache.keys().next().value!); return avatar;
   }
 }

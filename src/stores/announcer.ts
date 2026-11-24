@@ -1,3 +1,4 @@
+import {voiceForLanguage} from '@/services/voiceCatalog';
 import {SERVICE_ANNOUNCEMENTS,type ServiceAnnouncementId} from '@/services/serviceAnnouncements';
 import { create } from 'zustand';
 import { AnnouncementQueue } from '@/services/announcementQueue';
@@ -5,6 +6,7 @@ import { buildSegments, type AnnKind, type Segment, type PronEntry, type Templat
 import { useSettings } from './settings';
 
 interface AnnouncerState {
+  resetRun:()=>void;reconcile:(station:string|null,delayMin:number|null)=>void;
   pending: number; playing: boolean; nextAllowedAt:number; lastText: string | null; lastError: string | null;
   pron: PronEntry[]; templates: TemplateOverrides;
   reloadContent: () => Promise<void>;
@@ -22,13 +24,14 @@ let playbackGeneration=0;
 const api = () => window.simrailHub!;
 
 async function playBytes(bytes:Uint8Array):Promise<void> {
+    let audio:HTMLAudioElement|null=null;
     const url = URL.createObjectURL(new Blob([bytes as BlobPart], { type: 'audio/wav' }));
     await new Promise<void>((resolve, reject) => {
-      const a = new Audio(url); current = a; a.volume = useSettings.getState().settings.announcements.volume;
+      const a = new Audio(url);audio=a; current = a; a.volume = useSettings.getState().settings.announcements.volume;
       cancelCurrent=()=>{a.pause();reject(new DOMException('Přehrávání zastaveno','AbortError'));};
       a.onended = () => resolve(); a.onerror = () => reject(new Error('Přehrání zvuku selhalo.'));
       void a.play().catch(reject);
-    }).finally(() => { URL.revokeObjectURL(url); current = null;cancelCurrent=null; });
+    }).finally(() => { if(audio){audio.onended=null;audio.onerror=null;audio.pause();audio.removeAttribute('src');audio.load();}URL.revokeObjectURL(url); current = null;cancelCurrent=null; });
 
 }
 
@@ -41,7 +44,7 @@ async function playSegment(seg: Segment): Promise<void> {
   if(seg.intro&&gong){const r=await api().call('audio:gong');if(generation!==playbackGeneration)throw new DOMException('Přehrávání zastaveno','AbortError');if(!r.ok)throw Error(r.error);await playBytes(r.data);}
   if(generation!==playbackGeneration)throw new DOMException('Přehrávání zastaveno','AbortError');
   if (engine === 'piper') {
-    const r = await api().call('tts:synthesize', seg.text, voiceId, rate);
+    const r = await api().call('tts:synthesize', seg.text, voiceForLanguage(seg.lang,voiceId), rate);
     if(generation!==playbackGeneration)throw new DOMException('Přehrávání zastaveno','AbortError');
     if (!r.ok) throw new Error(r.error);
     await playBytes(r.data);
@@ -53,7 +56,8 @@ async function playSegment(seg: Segment): Promise<void> {
   if (!voice) throw new Error(`V systému není nainstalovaný hlas pro jazyk ${seg.lang === 'cs' ? 'česky' : 'polsky'}. Nainstalujte jazykový balíček Windows nebo použijte Piper.`);
   await new Promise<void>((resolve, reject) => {
     const u = new SpeechSynthesisUtterance(seg.text); u.voice = voice; u.lang = lang; u.rate = rate; u.volume = volume;
-    u.onend = () => resolve(); u.onerror = () => reject(generation!==playbackGeneration?new DOMException('Přehrávání zastaveno','AbortError'):new Error('Systémový hlas selhal.'));
+    const cancel=()=>reject(new DOMException('Přehrávání zastaveno','AbortError'));cancelCurrent=cancel;
+    u.onend = () => {cancelCurrent=null;resolve();}; u.onerror = () => {cancelCurrent=null;reject(generation!==playbackGeneration?new DOMException('Přehrávání zastaveno','AbortError'):new Error('Systémový hlas selhal.'));};
     speechSynthesis.speak(u);
   });
 }
@@ -66,6 +70,8 @@ export const useAnnouncer = create<AnnouncerState>((set, get) => {
     finally { set({ playing:false }); }
   }, Date.now, (pending) => set({ pending }),{gapMs:()=>useSettings.getState().settings.announcements.gapSeconds*1000,onCooldown:nextAllowedAt=>set({nextAllowedAt})});
   return {
+    resetRun:()=>{get().stop();queue.resetHistory();},
+    reconcile:(station,delayMin)=>queue.discard(item=>!!item.automatic&&(item.kind==='delay'?(delayMin===null||delayMin<=0):!!item.station&&item.station!==station)),
     pending: 0, playing: false, nextAllowedAt:0, lastText: null, lastError: null, lastSource:null, pron: [], templates: {},
     reloadContent: async () => {
       const [d, m] = await Promise.all([api().call('dict:list'), api().call('mods:active')]);

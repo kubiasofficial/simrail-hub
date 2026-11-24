@@ -43,7 +43,7 @@ describe('parsování vlaků a jízdních řádů', () => {
 
 describe('zpoždění', () => {
   it('třídy podle zadání', () => {
-    expect([null, -2, 0, 1, 15, 16].map(delayClass)).toEqual(['none', 'early', 'ontime', 'late', 'late', 'verylate']);
+    expect([null, -2, 0, 1, 20, 21].map(delayClass)).toEqual(['none', 'early', 'ontime', 'late', 'late', 'verylate']);
   });
   it('rozdíl přes půlnoc', () => { expect(diffSod(60, 86400 - 120)).toBe(180); expect(diffSod(86400 - 60, 120)).toBe(-180); });
 });

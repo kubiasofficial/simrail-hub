@@ -4,6 +4,7 @@ import type { ServerRow, ServersResult } from '../types/servers';
 const MIN_INTERVAL_MS = 10_000;
 
 export class ServerService {
+  private pending:Promise<ServersResult>|null=null;
   private cache: { at: number; result: ServersResult } | null = null;
   constructor(private fetchFn: FetchLike, private now: () => number = Date.now) {}
 
@@ -14,7 +15,9 @@ export class ServerService {
       // Ruční obnovení smí obejít cache až po 3 s, automatické až po 10 s.
       if (age < (force ? 3_000 : MIN_INTERVAL_MS)) return this.cache.result;
     }
-    const result = await this.load();
+    if(this.pending)return this.pending;
+    const task=this.load().then(result=>{this.cache={at:this.now(),result};return result;}).finally(()=>this.pending=null);this.pending=task;
+    const result = await task;
     this.cache = { at: this.now(), result };
     return result;
   }

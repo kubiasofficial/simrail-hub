@@ -20,11 +20,13 @@ export async function fetchJson(fetchFn: FetchLike, url: string, timeoutMs = 10_
   if (!ALLOWED_ORIGINS.has(origin)) throw new ApiError(`Adresa ${origin} není na seznamu povolených zdrojů.`, 'blocked');
 
   const ctrl = new AbortController();
-  const timer = setTimeout(() => ctrl.abort(), timeoutMs);
+  let rejectTimeout!:(reason:Error)=>void;
+  const deadline=new Promise<never>((_,reject)=>{rejectTimeout=reject;});
+  const timer = setTimeout(() => {ctrl.abort();rejectTimeout(new ApiError('API neodpovědělo do '+timeoutMs/1000+' s.','timeout'));}, timeoutMs);
   try {
-    const res = await fetchFn(url, { signal: ctrl.signal, headers: { Accept: 'application/json' } });
+    const res = await Promise.race([fetchFn(url, { signal: ctrl.signal, headers: { Accept: 'application/json' } }),deadline]);
     if (!res.ok) throw new ApiError(`API vrátilo chybu HTTP ${res.status}.`, 'http');
-    const body = await res.text();
+    const body = await Promise.race([res.text(),deadline]);
     try { return JSON.parse(body); }
     catch { throw new ApiError('API nevrátilo platný JSON.', 'format'); }
   } catch (e) {

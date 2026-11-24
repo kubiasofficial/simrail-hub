@@ -6,13 +6,13 @@ import type { DetectionResult, PickFolderResult } from '../types/game';
 import { GameDetectionService } from '../services/GameDetectionService';
 import { SteamService, windowsSteamPath } from '../services/SteamService';
 
-export function registerGameIpc(getWindow: () => BrowserWindow | null, settings: SettingsService): void {
+export function registerGameIpc(getWindow: () => BrowserWindow | null, settings: SettingsService,validFrame:(e:Electron.IpcMainInvokeEvent)=>boolean): void {
   const detection = new GameDetectionService(
     { readFile: (p) => readFile(p, 'utf8'), exists: (p) => access(p).then(() => true, () => false) },
     windowsSteamPath
   );
   const steam = new SteamService((url) => shell.openExternal(url));
-  const trusted = (e: Electron.IpcMainInvokeEvent) => !!getWindow() && e.sender === getWindow()!.webContents;
+  const trusted = (e: Electron.IpcMainInvokeEvent) => validFrame(e)&&!!getWindow() && e.sender === getWindow()!.webContents;
 
   async function detectAll(): Promise<DetectionResult> {
     const { manualGamePath, autoDetectGame } = await settings.get();

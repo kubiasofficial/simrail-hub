@@ -7,6 +7,7 @@ export class AnnouncementQueue {
  private items:QueueItem[]=[];private seen=new Set<string>();private busy=false;private generation=0;private nextAutomaticAt=0;private wake:(()=>void)|null=null;
  constructor(private play:(seg:Segment)=>Promise<void>,private now:()=>number=Date.now,private onChange?:(pending:number)=>void,private options:QueueOptions={}){}
  get pending(){return this.items.length;}
+ discard(predicate:(item:QueueItem)=>boolean){this.items=this.items.filter(item=>!predicate(item));this.onChange?.(this.pending);this.wake?.();}
  enqueue(item:Omit<QueueItem,'enqueuedAt'>):boolean{
   if(this.seen.has(item.key))return false;this.seen.add(item.key);
   if(item.automatic&&item.station)this.items=this.items.filter(old=>!old.automatic||old.station!==item.station||old.kind==='delay'||PRIORITY[old.kind]<=PRIORITY[item.kind]);

@@ -1,3 +1,4 @@
+import {useVisualActivity} from '@/hooks/useVisualActivity';
 import {useEffect,useMemo,useRef,useState} from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -22,13 +23,14 @@ function StationBoard({server,name}:{server:string|null;name:string}) {
   return <section className="station-board"><h3>Plánované příjezdy a odjezdy</h3>{loading?<p>Načítám jízdní řády…</p>:error?<p role="alert">{error}</p>:rows.length?rows.map((r,i)=><article key={r.number+':'+i}><strong>{r.number} · {r.destination??'—'}</strong><small>Příjezd {time(r.arrival)} · odjezd {time(r.departure)}</small></article>):<p>Pro tuto stanici nejsou v dostupných jízdních řádech zastávky.</p>}<p className="muted">Plán podle API. Nejde o skutečné příjezdy ani úplný přehled všech spojů.</p></section>;
 }
 export function MapPage(){
+ const visual=useVisualActivity();
  const {snapshot,refresh}=useServers(),settings=useSettings(s=>s.settings),update=useSettings(s=>s.update),selection=useSelection(),demo=useDemo();
  const server=selection.server??pickDefaultServer((snapshot?.servers??[]).filter(s=>s.active),settings.selectedServer);
  const [trains,setTrains]=useState<Train[]>([]),[stations,setStations]=useState<StationCoord[]>([]),[error,setError]=useState(''),[updated,setUpdated]=useState(0);
  const [selectedTrain,setSelectedTrain]=useState<string|null>(selection.train),[selectedStation,setSelectedStation]=useState<StationCoord|null>(null);
  const [query,setQuery]=useState(''),[showTrains,setShowTrains]=useState(true),[showStations,setShowStations]=useState(true),[layers,setLayers]=useState(false),[demoOn,setDemoOn]=useState(false),[view,setView]=useState(0),[now,setNow]=useState(Date.now());
  const canvas=useRef<HTMLDivElement>(null),map=useRef<L.Map|null>(null),markers=useRef<MapMarkers|null>(null),fitted=useRef(false);
- useEffect(()=>{void refresh(false);const id=setInterval(()=>setNow(Date.now()),1000);return()=>clearInterval(id);},[refresh]);
+ useEffect(()=>{void refresh(false);const id=setInterval(()=>{if(visual)setNow(Date.now());},1000);return()=>clearInterval(id);},[refresh,visual]);
  useEffect(()=>{
   if(!canvas.current)return;
   const m=L.map(canvas.current,{center:[51.2,19.6],zoom:7,preferCanvas:true,zoomControl:false});map.current=m;L.control.zoom({position:'bottomright'}).addTo(m);
@@ -48,8 +50,8 @@ export function MapPage(){
  const simulated=useMemo(()=>demoOn?demo.sim.snapshot(demo.t):null,[demoOn,demo.sim,demo.t]);
  const visible=simulated?[simulated.train]:trains,points=simulated?simulated.stations:stations;
  const selected=visible.find(t=>t.number===selectedTrain)??null;
- useEffect(()=>{const m=map.current;if(!m)return;if(!fitted.current&&visible.length){m.fitBounds(L.latLngBounds(visible.map(t=>[t.lat,t.lon] as [number,number])),{padding:[55,55],maxZoom:9});fitted.current=true;}markers.current?.sync(visible,points,{train:selectedTrain,station:selectedStation?.name??null,trains:showTrains,stations:showStations});},[visible,points,selectedTrain,selectedStation,showTrains,showStations,view]);
- useEffect(()=>{if(selected&&settings.map.followSelected)map.current?.panTo([selected.lat,selected.lon],{animate:true,duration:.7});},[selected?.lat,selected?.lon,settings.map.followSelected]);
+ useEffect(()=>{const m=map.current;if(!m)return;if(!fitted.current&&visible.length){m.fitBounds(L.latLngBounds(visible.map(t=>[t.lat,t.lon] as [number,number])),{padding:[55,55],maxZoom:9});fitted.current=true;}if(!visual)return;markers.current?.sync(visible,points,{train:selectedTrain,station:selectedStation?.name??null,trains:showTrains,stations:showStations});},[visible,points,selectedTrain,selectedStation,showTrains,showStations,view,visual]);
+ useEffect(()=>{if(visual&&selected&&settings.map.followSelected)map.current?.panTo([selected.lat,selected.lon],{animate:true,duration:.7});},[selected?.lat,selected?.lon,settings.map.followSelected,visual]);
  const q=normName(query),matches=q?[...visible.filter(t=>normName(t.number+' '+t.name).includes(q)).slice(0,5).map(t=>({name:'Vlak '+t.number,lat:t.lat,lon:t.lon,train:t,station:null})),...points.filter(s=>normName(s.name).includes(q)).slice(0,5).map(s=>({name:s.name,lat:s.lat,lon:s.lon,train:null,station:s}))]:[];
  const age=updated?Math.max(0,Math.floor((now-updated)/1000)):null;
  return <div className="live-map"><header className="live-map-toolbar"><div><h1>Živá mapa</h1><p className={age!==null&&age>15?'stale':''}>{demoOn?'DEMO · simulovaný provoz':visible.length+' vlaků · '+points.length+' stanic · '+(age===null?'čekám na data':age>30?'data zastaralá':'před '+age+' s')}</p></div><select aria-label="Server mapy" value={server??''} onChange={e=>{selection.set({server:e.target.value,train:null});setSelectedTrain(null);}}>{(snapshot?.servers??[]).filter(s=>s.active).map(s=><option key={s.code} value={s.code}>{s.name}</option>)}</select><div className="map-search-v2"><Search size={17}/><input aria-label="Vyhledat vlak nebo stanici" placeholder="Číslo vlaku nebo stanice…" value={query} onChange={e=>setQuery(e.target.value)}/>{query&&<button aria-label="Vymazat hledání" onClick={()=>setQuery('')}><X size={14}/></button>}{matches.length>0&&<div className="search-results">{matches.map(r=><button key={r.name} onClick={()=>{map.current?.setView([r.lat,r.lon],13);setSelectedTrain(r.train?.number??null);setSelectedStation(r.station);setQuery('');}}>{r.name}</button>)}</div>}</div><label className="map-demo"><input type="checkbox" checked={demoOn} onChange={e=>setDemoOn(e.target.checked)}/>DEMO</label></header>
