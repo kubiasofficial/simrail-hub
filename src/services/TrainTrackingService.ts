@@ -1,3 +1,4 @@
+import { isPassengerStop } from './passengerStops';
 import { ApiError, fetchJson, stationsUrl, trainsUrl, type FetchLike } from '../adapters/simrailApi';
 import { parseStations, parseTimetables, parseTrains, serverTimeToSod, timeUrl, timetablesUrl } from '../adapters/trainsApi';
 import type { StationCoord, Timetable, TrainDetailResult, TrainsResult, TrainsPayload } from '../types/trains';
@@ -43,7 +44,7 @@ export class TrainTrackingService {
     let now = 0;
     try { now = serverTimeToSod(await fetchJson(this.fetchFn,timeUrl(code))) ?? 0; } catch { /* planned board remains available */ }
     const clock = (s:string|null) => { const match = /(?:^|[ T])(\d{2}):(\d{2})(?::(\d{2}))?/.exec(s ?? ''); return match ? +match[1]*3600 + +match[2]*60 + +(match[3]??0) : 0; };
-    return schedules.flatMap(t => t.points.filter(p => norm(p.name) === norm(name) && p.isStop !== false).map(p => ({ number:t.trainNumber,arrival:p.arrival,departure:p.departure,destination:t.endStation })))
+    return schedules.flatMap(t => t.points.filter(p => norm(p.name) === norm(name) && isPassengerStop(p)).map(p => ({ number:t.trainNumber,arrival:p.arrival,departure:p.departure,destination:t.endStation })))
       .sort((a,b) => ((clock(a.departure??a.arrival)-now+86400)%86400)-((clock(b.departure??b.arrival)-now+86400)%86400)).slice(0,12);
   }
   private async getTimetables(code: string, notes: string[]): Promise<Timetable[] | null> {

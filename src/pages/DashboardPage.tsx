@@ -194,10 +194,12 @@ export function DashboardPage({ standalone = false }: { standalone?: boolean }) 
                       {r.status === 'target' && m.phase === 'moving' && (
                         <span className="absolute -top-1 left-[3px] z-10 text-sky-soft" aria-hidden><ArrowDown size={16} className="flow-arrow" /></span>
                       )}
-                      <span className={`absolute left-1.5 top-3.5 z-0 rounded-full ${r.isStop === false ? 'h-2 w-2 translate-x-[3px] border border-slate-500 bg-ink-900' : `h-3 w-3 translate-x-[1px] ${r.status === 'passed' ? 'bg-slate-600' : r.standing ? 'bg-emerald-400' : 'bg-sky-brand'}`}`} />
+                      <span className={`absolute left-1.5 top-3.5 z-0 rounded-full ${!r.passengerStop ? 'h-2 w-2 translate-x-[3px] border border-slate-500 bg-ink-900' : `h-3 w-3 translate-x-[1px] ${r.status === 'passed' ? 'bg-slate-600' : r.standing ? 'bg-emerald-400' : 'bg-sky-brand'}`}`} />
                       <div className={`my-0.5 flex items-center gap-3 rounded-xl border px-3 py-2 ${r.standing ? 'border-emerald-400/70 bg-emerald-400/5 shadow-[0_0_0_1px_rgba(52,211,153,.25)]' : r.status === 'target' ? 'border-sky-brand/40 bg-sky-brand/5' : 'border-transparent'}`}>
                         <div className="min-w-0 flex-1">
-                          <div className={`truncate ${r.isStop === false ? 'text-sm text-slate-500' : r.status === 'passed' ? 'text-slate-500' : 'font-medium text-white'}`}>{r.name}</div>
+                          <div className={`truncate ${!r.passengerStop ? 'text-sm text-slate-500' : r.status === 'passed' ? 'text-slate-500' : 'font-medium text-white'}`}>{r.name}</div>
+                          {r.passengerStop && <div className="text-[10px] text-slate-400">PH · zastávka pro cestující</div>}
+                          {r.isStop === true && !r.passengerStop && <div className="text-[10px] text-slate-500">Technický pobyt · bez hlášení</div>}
                           {r.isStop === false && <div className="text-[10px] text-slate-600">průjezd</div>}
                           {r.isStop === null && <div className="text-[10px] text-slate-600">typ zastavení neznámý</div>}
                         </div>

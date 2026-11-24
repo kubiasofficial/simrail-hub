@@ -1,3 +1,4 @@
+import { isPassengerStop } from './passengerStops';
 import { czechMinutes, polishMinutes } from './czech';
 import { normName } from './onboard';
 import type { AnnouncementLang } from '../types/settings';
@@ -92,7 +93,7 @@ export class AnnouncementTrigger {
     const moving = inp.speedKmh >= this.cfg.movingKmh;
     const stopped = inp.speedKmh <= this.cfg.stoppedKmh;
     const idx = Math.min(Math.max(inp.index, 0), inp.points.length - 1);
-    const si = inp.points.findIndex((p, k) => k >= idx && p.isStop !== false);
+    const si = inp.points.findIndex((p, k) => k >= idx && isPassengerStop(p));
     const stop = si >= 0 ? inp.points[si] : null;
 
     if (stop) {

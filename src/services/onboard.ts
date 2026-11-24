@@ -1,3 +1,4 @@
+import { isPassengerStop } from './passengerStops';
 import { haversineM } from './geo';
 import { parseSod } from '../adapters/trainsApi';
 import type { StationCoord, Timetable, TimetablePoint, Train } from '../types/trains';
@@ -62,7 +63,7 @@ export class DelayTracker {
 }
 
 export interface RowModel {
-  index: number; name: string; isStop: boolean | null;
+  index: number; name: string; isStop: boolean | null; passengerStop: boolean;
   arrival: string | null; departure: string | null; estimated: string | null;
   status: 'passed' | 'target' | 'upcoming'; standing: boolean;
 }
@@ -90,8 +91,8 @@ export function computeOnboard(i: { train: Train; timetable: Timetable | null; s
   tracker.observe(train.runId ?? train.number, idx, nowSod, points);
   const d = tracker.current(points, idx, nowSod);
 
-  // Cílový bod = první zastavovací (nebo neznámý) bod od aktuálního indexu.
-  const nextStopIdx = idx === null ? null : points.findIndex((p, k) => k >= idx && p.isStop !== false);
+  // Cílový bod pro cestující = pouze potvrzený PH od aktuálního indexu.
+  const nextStopIdx = idx === null ? null : points.findIndex((p, k) => k >= idx && isPassengerStop(p));
   const nextStop = nextStopIdx !== null && nextStopIdx >= 0 ? points[nextStopIdx] : null;
   const st = nextStop ? findStation(nextStop.name, stations) : null;
   const dist = st ? haversineM(train.lat, train.lon, st.lat, st.lon) : null;
@@ -108,7 +109,7 @@ export function computeOnboard(i: { train: Train; timetable: Timetable | null; s
   const rows: RowModel[] = points.map((p, k) => {
     const arr = sched(p, 'arrival');
     return {
-      index: k, name: p.name, isStop: p.isStop,
+      index: k, name: p.name, isStop: p.isStop, passengerStop: isPassengerStop(p),
       arrival: hhmm(p.arrival), departure: hhmm(p.departure),
       estimated: idx !== null && k >= idx && arr !== null && delaySec !== null ? fmtSod(arr + delaySec) : null,
       status: idx === null ? 'upcoming' : k < idx ? 'passed' : k === idx ? 'target' : 'upcoming',
@@ -116,7 +117,7 @@ export function computeOnboard(i: { train: Train; timetable: Timetable | null; s
     };
   });
 
-  const stops = points.filter((p) => p.isStop !== false);
+  const stops = points.filter((p) => isPassengerStop(p));
   const prevStop = idx === null ? null : [...stops].reverse().find((p) => p.index < (standingIdx ?? idx)) ?? null;
   return {
     trainNumber: train.number, trainName: train.name,
