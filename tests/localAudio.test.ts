@@ -3,8 +3,6 @@ import {writeFile} from 'node:fs/promises';
 import {join} from 'node:path';
 import {tmp} from './helpers';
 import {LocalRecordings,recordingNames,encodeWav,decodeWav,trimSilence,gongSamples} from '../src/services/localAudio';
-import {portableSettings} from '../src/services/CloudAccount';
-import {DEFAULT_SETTINGS} from '../src/types/settings';
 it('selects the phrase and exact playable station only for passenger trains 53xxx',()=>{
  const request={kind:'next-station' as const,station:'Kraków Główny',trainNumber:'53103',isFreight:false};
  expect(recordingNames(request)).toEqual(['pristi_stanice.wav','krakow_glowny.wav']);
@@ -33,7 +31,4 @@ it('renders gong, phrase, pause and station as a single cancellable sound; missi
  const plain=decodeWav((await service.render(request,false))!);const withGong=decodeWav((await service.render(request,true))!);
  expect(withGong.length-plain.length).toBe(64800);
  expect((await service.status()).missing).toHaveLength(9);
-});
-it('does not put local recording folders into cloud settings',()=>{
- expect(portableSettings({...DEFAULT_SETTINGS,recordingsPath:'C:/private/voice'})).not.toHaveProperty('recordingsPath');
 });

@@ -7,7 +7,7 @@ root = Path(__file__).resolve().parent.parent
 version=json.loads((root/'package.json').read_text(encoding='utf8'))['version']
 target = root / 'release' / f'SimRail-Hub-Zdroje-{version}.zip'
 directories = {'src', 'tests', 'public', 'build', '.github', 'docs', 'scripts', 'site'}
-files = {'package.json', 'package-lock.json', 'README.md', 'LICENSE', '.gitignore', '.firebaserc', 'firebase.json', 'firestore.rules', 'firestore.indexes.json', 'tsconfig.json', 'tsconfig.node.json', 'vite.config.mts', 'vitest.config.mts'}
+files = {'package.json', 'package-lock.json', 'README.md', 'LICENSE', '.gitignore', '.firebaserc', 'firebase.json', 'tsconfig.json', 'tsconfig.node.json', 'vite.config.mts', 'vitest.config.mts'}
 scripts = {'bundle-preload.mjs', 'prepare-assets.mjs', 'verify-ui.mjs', 'verify-mobile.mjs', 'verify-package.mjs', 'verify-tts.py', 'package-source.py', 'wiki-assets.py', 'import-wiki-media.py', 'verify-wiki-ui.mjs', 'verify-fixes.mjs', 'verify-release-audio.mjs'}
 target.parent.mkdir(exist_ok=True)
 with ZipFile(target, 'w', ZIP_DEFLATED, compresslevel=6) as archive:

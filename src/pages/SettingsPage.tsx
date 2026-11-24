@@ -6,7 +6,6 @@ import { useGame } from '@/stores/game';
 import { useServers } from '@/stores/servers';
 import { useAnnouncer } from '@/stores/announcer';
 import {UpdatePanel} from '@/components/UpdatePanel';
-import {CloudAccountPanel} from '@/components/CloudAccountPanel';
 import {RecordingPanel} from '@/components/RecordingPanel';
 import type { DiagInfo, TtsStatusDto, TtsProgressDto } from '@/types/ipc';
 
@@ -14,7 +13,7 @@ const NA = 'Nedostupné';
 const field = 'rounded-lg border border-line bg-ink-800 px-3 py-1.5 text-sm text-slate-200 outline-none focus:border-sky-brand';
 const btn = 'flex items-center gap-1.5 rounded-lg border border-line px-3 py-1.5 text-sm text-slate-200 hover:bg-white/5 disabled:opacity-40';
 
-type SettingsTab='Obecné'|'Mapa'|'Hlášení'|'Účet'|'Aktualizace';
+type SettingsTab='Obecné'|'Mapa'|'Hlášení'|'Aktualizace';
 const SettingsTabContext=createContext<SettingsTab>('Obecné');
 const SECTION_TABS:Record<string,SettingsTab>={'Hra':'Obecné','Aplikace':'Obecné','Data a servery':'Obecné','Mapa':'Mapa','Hlášení a hlas':'Hlášení','Editor výslovnosti':'Hlášení','Mezipaměť hlášení':'Hlášení','Diagnostika':'Obecné'};
 function Section({ title, children }: { title: string; children: ReactNode }) {
@@ -64,8 +63,7 @@ export function SettingsPage() {
   return (
     <SettingsTabContext.Provider value={tab}><div className="settings-layout mx-auto flex max-w-3xl flex-col gap-5 pb-10">
       <h2 className="text-xl font-semibold text-white">Nastavení</h2>
-      <div className="settings-tabs" aria-label="Kategorie nastavení">{(['Obecné','Mapa','Hlášení','Účet','Aktualizace'] as SettingsTab[]).map((t)=><button key={t} aria-pressed={tab===t} onClick={()=>setTab(t)}>{t}</button>)}</div>
-      {tab==='Účet'&&<CloudAccountPanel/>}
+      <div className="settings-tabs" aria-label="Kategorie nastavení">{(['Obecné','Mapa','Hlášení','Aktualizace'] as SettingsTab[]).map((t)=><button key={t} aria-pressed={tab===t} onClick={()=>setTab(t)}>{t}</button>)}</div>
       {tab==='Aktualizace'&&<UpdatePanel/>}
       {error && <div role="alert" className="rounded-xl border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-200">{error}</div>}
 

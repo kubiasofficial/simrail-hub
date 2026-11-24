@@ -2,14 +2,13 @@ import {net} from 'electron';
 import {DlcService} from '../services/DlcService';
 import { autoUpdater } from 'electron-updater';
 import { AutomaticUpdates } from '../services/AutomaticUpdates';
-import { app, dialog, ipcMain, BrowserWindow } from 'electron';
+import { app, dialog, ipcMain, BrowserWindow, powerMonitor } from 'electron';
 import { readFile, stat, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import type { AppContext } from './appContext';
 import type { CallChannel, IpcMap, Res } from '../types/ipc';
 import { normalizeSettings } from '../services/settingsSchema';
 import { MobileServer } from '../services/MobileServer';
-import {CloudAccount} from '../services/CloudAccount';
 import {LocalRecordings,encodeWav,gongSamples,type RecordingRequest} from '../services/localAudio';
 import {isServiceAnnouncementId} from '../services/serviceAnnouncements';
 import { MAX_TEXT } from '../services/TextToSpeechService';
@@ -21,11 +20,12 @@ const str = (v: unknown, max: number, what: string): string => {
   if (typeof v !== 'string' || v.length === 0 || v.length > max) throw new Error(`Neplatný argument „${what}“.`);
   return v;
 };
+const serverCode=(v:unknown)=>{const s=str(v,40,'server');if(!/^[\w-]+$/.test(s))throw Error('Neplatný server.');return s;};
+const trainNumber=(v:unknown)=>{const s=str(v,12,'vlak');if(!/^\d+$/.test(s))throw Error('Neplatné číslo vlaku.');return s;};
 
 export function registerCallIpc(ctx: AppContext, openDashboard: (server: string | null, train: string | null) => void, isTrusted: (e: Electron.IpcMainInvokeEvent) => boolean): void {
   const { settings, tracking, tts, mods, log } = ctx;
   const mobile = new MobileServer(tracking, join(__dirname, '../../dist'));
-  const cloud=new CloudAccount();
   const dlc=new DlcService(async(url,init)=>{const r=await net.fetch(url,init);return {ok:r.ok,status:r.status,text:()=>r.text()};});
 
   const automaticUpdates=new AutomaticUpdates(autoUpdater,app.isPackaged&&!process.env.PORTABLE_EXECUTABLE_FILE);
@@ -37,6 +37,7 @@ export function registerCallIpc(ctx: AppContext, openDashboard: (server: string 
   ipcMain.handle('update:install',e=>{if(!isTrusted(e))throw Error('Nepovolený odesílatel');return automaticUpdates.install();});
 
   app.on('before-quit', () => mobile.stop());
+  powerMonitor.on('suspend',()=>mobile.stop());
   const ok = <T>(data: T, message?: string): Res<T> => ({ ok: true, data, message });
   /** Obalí službu: chyby se zalogují a vrátí se srozumitelně v češtině, nikdy nespadne hlavní proces. */
   const safe = async <T>(scope: string, fn: () => Promise<T>): Promise<Res<T>> => {
@@ -57,30 +58,23 @@ export function registerCallIpc(ctx: AppContext, openDashboard: (server: string 
   on('recordings:choose',()=>safe('audio',async()=>{const choice=await dialog.showOpenDialog({title:'Složka soukromých nahrávek',properties:['openDirectory'],defaultPath:join(app.getPath('desktop'),'simrail-hub','hlaseni')});if(choice.canceled||!choice.filePaths[0])return null;await settings.update({recordingsPath:choice.filePaths[0]});return (await recordings()).status();}));
   on('recordings:render',(raw,gong)=>safe('audio',async()=>{if(!raw||typeof raw!=='object')throw Error('Neplatné hlášení.');const q=raw as RecordingRequest;if(q.service!==undefined&&!isServiceAnnouncementId(q.service))throw Error('Neplatná nahrávka.');if(!['next-station','approaching','arrived','terminal','delay'].includes(q.kind)||typeof q.isFreight!=='boolean'||(q.station!==null&&typeof q.station!=='string')||(q.trainNumber!==null&&typeof q.trainNumber!=='string'))throw Error('Neplatné hlášení.');return (await recordings()).render(q,gong===true);}));
 
-  on('cloud:status',()=>cloud.status());
-  on('cloud:login',(email,password,create)=>safe('cloud',()=>cloud.login(str(email,254,'e-mail'),str(password,256,'heslo'),create===true)));
-  on('cloud:logout',()=>safe('cloud',async()=>{cloud.logout();return null;}));
-  on('cloud:save',()=>safe('cloud',async()=>cloud.save(await settings.get())));
-  on('cloud:load',()=>safe('cloud',async()=>settings.update(await cloud.load())));
-  on('cloud:reset',email=>safe('cloud',()=>cloud.reset(str(email,254,'e-mail'))));
-  on('cloud:delete',()=>safe('cloud',()=>cloud.remove()));
 
   on('settings:get', () => settings.get());
   on('settings:update', async (patch) => {
     if (typeof patch !== 'object' || patch === null) throw new Error('Neplatná nastavení.');
     return settings.update(patch as never);
   });
-  on('stations:board', (code, name) => safe('stations', () => tracking.getStationBoard(str(code,40,'server'),str(name,200,'stanice'))));
-  on('stations:list', (code) => safe('stations', () => tracking.getStations(str(code, 40, 'server'))));
-  on('mobile:start', (code, train) => safe('mobile', () => mobile.start(str(code, 40, 'server'), str(train, 40, 'vlak'))));
+  on('stations:board', (code, name) => safe('stations', () => tracking.getStationBoard(serverCode(code),str(name,200,'stanice'))));
+  on('stations:list', (code) => safe('stations', () => tracking.getStations(serverCode(code))));
+  on('mobile:start', (code, train) => safe('mobile', () => mobile.start(serverCode(code), trainNumber(train))));
   on('mobile:stop', () => safe('mobile', async () => { mobile.stop(); return null; }));
-  on('trains:list', (code) => tracking.getTrains(str(code, 40, 'server')));
-  on('trains:detail', (code, num) => tracking.getDetail(str(code, 40, 'server'), str(num, 40, 'vlak')));
+  on('trains:list', (code) => tracking.getTrains(serverCode(code)));
+  on('trains:detail', (code, num) => tracking.getDetail(serverCode(code), trainNumber(num)));
 
   on('tts:status', () => safe('tts', () => tts.status()));
   on('tts:install-piper', () => safe('tts', async () => { await tts.installPiper(ctx.broadcastProgress); return null; }));
   on('tts:install-voice', (id) => safe('tts', async () => { await tts.installVoice(str(id, 60, 'hlas'), ctx.broadcastProgress); return null; }));
-  on('tts:synthesize', (text, voice, rate) => safe('tts', () => tts.synthesize(str(text, MAX_TEXT, 'text'), str(voice, 60, 'hlas'), typeof rate === 'number' ? rate : 1)));
+  on('tts:synthesize', (text, voice, rate) => safe('tts', () => tts.synthesize(str(text, MAX_TEXT, 'text'), str(voice, 60, 'hlas'), typeof rate === 'number'&&Number.isFinite(rate) ? rate : 1)));
   on('tts:clear-cache', () => safe('tts', () => tts.clearCache()));
   on('dict:list', () => safe('dict', async () => tts.listPronunciations()));
   on('dict:set', (w, s) => safe('dict', async () => { tts.setPronunciation(str(w, 80, 'slovo'), str(s, 80, 'výslovnost')); return null; }));
@@ -102,7 +96,7 @@ export function registerCallIpc(ctx: AppContext, openDashboard: (server: string 
   on('mods:restore', (name) => safe('mods', () => mods.restore(str(name, 80, 'záloha'))));
   on('mods:active', () => safe('mods', () => mods.active()));
 
-  on('dashboard:open', (server, train) => safe('okno', async () => { openDashboard(typeof server === 'string' ? server : null, typeof train === 'string' ? train : null); return null; }));
+  on('dashboard:open', (server, train) => safe('okno', async () => { openDashboard(server===null?null:serverCode(server),train===null?null:trainNumber(train)); return null; }));
 
   on('diag:info', () => ({
     appVersion: app.getVersion(), electron: process.versions.electron, chrome: process.versions.chrome, node: process.versions.node,
