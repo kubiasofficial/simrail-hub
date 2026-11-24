@@ -28,5 +28,5 @@ export class AutomaticUpdates {
   this.checking=true;try{await this.engine.checkForUpdates();}catch{this.fail();}finally{this.checking=false;}
   return this.status();
  }
- install():boolean{if(!this.engine||this.state.status!=='ready')return false;this.engine.quitAndInstall(false,true);return true;}
+ install():boolean{if(!this.engine||this.state.status!=='ready')return false;this.engine.quitAndInstall(true,true);return true;}
 }

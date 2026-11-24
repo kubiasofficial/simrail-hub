@@ -17,7 +17,7 @@ describe('automatic update lifecycle',()=>{
   expect(service.status()).toMatchObject({status:'ready',version:'0.4.1',percent:100});
   expect(engine.quitAndInstall).not.toHaveBeenCalled();
   await service.check();expect(engine.checkForUpdates).toHaveBeenCalledTimes(1);
-  expect(service.install()).toBe(true);expect(engine.quitAndInstall).toHaveBeenCalledWith(false,true);
+  expect(service.install()).toBe(true);expect(engine.quitAndInstall).toHaveBeenCalledWith(true,true);
  });
  it('handles interrupted download and allows a retry without installing a partial file',async()=>{
   const engine=new Fake();engine.downloadUpdate.mockRejectedValueOnce(new Error('offline'));
