@@ -1,0 +1,13 @@
+{
+  "app": {
+    "version": "0.3.1",
+    "platform": "win32",
+    "electron": "45.4.1"
+  },
+  "account": null,
+  "update": {
+    "status": "current",
+    "latest": "v0.3.1",
+    "message": "Používáte nejnovější verzi."
+  }
+}
