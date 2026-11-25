@@ -1,0 +1,30 @@
+{
+  "at": "2026-11-25T15:59:55.891Z",
+  "version": "0.6.0",
+  "channel": "stable",
+  "privateAudioBundled": false,
+  "removedCloudCodeBundled": false,
+  "updaterSHA512Valid": true,
+  "setupSHA256": "3d871e6429465385875a4e7463a1115ecac3c6318b681afe265f2c8ef1cf17ed",
+  "info": {
+    "version": "0.6.0",
+    "platform": "win32",
+    "electron": "45.4.1",
+    "channel": "stable",
+    "buildId": null
+  },
+  "recordings": [
+    {
+      "number": "35104",
+      "bytes": 612524
+    },
+    {
+      "number": "53103",
+      "bytes": 697004
+    }
+  ],
+  "updateStatus": {
+    "status": "manual",
+    "message": "Pro automatické aktualizace jednou nainstalujte instalační verzi SimRail Hub."
+  }
+}

@@ -1,4 +1,4 @@
-import { Home, Server, Map, Gauge, Package, Settings, type LucideIcon } from 'lucide-react';
+import { Clock, Home, Server, Map, Gauge, Package, Settings, type LucideIcon } from 'lucide-react';
 import { useNavigation, type PageId } from '@/stores/navigation';
 
 const items: { id: PageId; label: string; icon: LucideIcon }[] = [
@@ -6,6 +6,7 @@ const items: { id: PageId; label: string; icon: LucideIcon }[] = [
   { id: 'servers', label: 'Online servery', icon: Server },
   { id: 'map', label: 'Živá mapa', icon: Map },
   { id: 'dashboard', label: 'Palubní počítač', icon: Gauge },
+  { id: 'history', label: 'Historie a oblíbené', icon: Clock },
   { id: 'mods', label: 'Rozšíření', icon: Package },
   { id: 'settings', label: 'Nastavení', icon: Settings }
 ];

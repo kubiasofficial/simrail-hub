@@ -1,0 +1,288 @@
+{
+  "label": "release060-final",
+  "requestedLifetimeSec": 600,
+  "startedAt": "2026-11-25T15:44:59.925Z",
+  "startupMs": 711,
+  "phases": [
+    {
+      "name": "home-idle",
+      "elapsedSec": 30.866,
+      "seconds": 30,
+      "samples": [
+        {
+          "workingSetMiB": 425.38671875,
+          "cpu": 1.2030069672432906,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 421.41015625,
+          "cpu": 0.04290799587991648,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 425.73828125,
+          "cpu": 0.12808034921728892,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 426.83203125,
+          "cpu": 0.05976715964666069,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 428.96484375,
+          "cpu": 0.0627234004944522,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 403.984375,
+          "cpu": 0.10331562998375103,
+          "processes": 4,
+          "windows": 1
+        }
+      ],
+      "requests": 37,
+      "apiPerMinute": 74
+    },
+    {
+      "name": "map",
+      "elapsedSec": 93.122,
+      "seconds": 60,
+      "samples": [
+        {
+          "workingSetMiB": 479.65625,
+          "cpu": 1.5329425124454452,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 469.1328125,
+          "cpu": 0.21587374879394755,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 469.359375,
+          "cpu": 0.17088415982233734,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 476.9453125,
+          "cpu": 0.24130339051854643,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 477.2578125,
+          "cpu": 0.1246605751094227,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 462.75,
+          "cpu": 0.2157129866868503,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 463.3359375,
+          "cpu": 0.15123996193616465,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 468.48828125,
+          "cpu": 0.21046005168072768,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 449.04296875,
+          "cpu": 0.16036677714566244,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 450.58984375,
+          "cpu": 0.21367736154245054,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 446.03125,
+          "cpu": 0.16075143916887935,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 445.96484375,
+          "cpu": 0.1901570782829649,
+          "processes": 4,
+          "windows": 1
+        }
+      ],
+      "requests": 47,
+      "apiPerMinute": 47
+    },
+    {
+      "name": "dashboard",
+      "elapsedSec": 131.656,
+      "seconds": 30,
+      "samples": [
+        {
+          "workingSetMiB": 594.3203125,
+          "cpu": 0.4510333262823929,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 594.546875,
+          "cpu": 0.18472639880315955,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 473.5,
+          "cpu": 0.25708222173607936,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 464.078125,
+          "cpu": 0.2840283231348578,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 466.4453125,
+          "cpu": 0.20226611844011705,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 456.87890625,
+          "cpu": 0.17169207961891858,
+          "processes": 4,
+          "windows": 1
+        }
+      ],
+      "requests": 12,
+      "apiPerMinute": 24
+    },
+    {
+      "name": "minimized",
+      "elapsedSec": 161.75,
+      "seconds": 30,
+      "samples": [
+        {
+          "workingSetMiB": 456.984375,
+          "cpu": 0.43161376765670056,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 457.5,
+          "cpu": 0.08491025160139429,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 457.359375,
+          "cpu": 0.085430908853951,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 459.734375,
+          "cpu": 0.17135655428387947,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 460.87109375,
+          "cpu": 0.08679471011351324,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 459.5,
+          "cpu": 0.12908161812144808,
+          "processes": 4,
+          "windows": 1
+        }
+      ],
+      "requests": 13,
+      "apiPerMinute": 26
+    },
+    {
+      "name": "long-run-end",
+      "elapsedSec": 612.123,
+      "seconds": 10,
+      "samples": [
+        {
+          "workingSetMiB": 464.13671875,
+          "cpu": 0.0936989184409579,
+          "processes": 4,
+          "windows": 1
+        },
+        {
+          "workingSetMiB": 463.9609375,
+          "cpu": 0.07116345361175005,
+          "processes": 4,
+          "windows": 1
+        }
+      ],
+      "requests": 4,
+      "apiPerMinute": 24
+    }
+  ],
+  "errors": [],
+  "minuteSamples": [
+    {
+      "elapsedSec": 181.77,
+      "workingSetMiB": 455.8359375
+    },
+    {
+      "elapsedSec": 241.816,
+      "workingSetMiB": 454.88671875
+    },
+    {
+      "elapsedSec": 301.857,
+      "workingSetMiB": 457.87890625
+    },
+    {
+      "elapsedSec": 361.908,
+      "workingSetMiB": 455.890625
+    },
+    {
+      "elapsedSec": 421.948,
+      "workingSetMiB": 578.5859375
+    },
+    {
+      "elapsedSec": 481.979,
+      "workingSetMiB": 455.3984375
+    },
+    {
+      "elapsedSec": 542.029,
+      "workingSetMiB": 471.6484375
+    },
+    {
+      "elapsedSec": 602.088,
+      "workingSetMiB": 464.32421875
+    }
+  ],
+  "completed": true,
+  "initialAutomaticAnnouncements": false,
+  "dashboardMs": 6535,
+  "processExit": {
+    "code": 0,
+    "signal": null,
+    "at": "2026-11-25T15:55:11.699Z"
+  }
+}

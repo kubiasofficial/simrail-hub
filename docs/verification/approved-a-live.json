@@ -1,7 +1,7 @@
 {
-  "at": "2026-11-25T15:03:29.894Z",
+  "at": "2026-11-25T15:41:02.545Z",
   "errors": [],
-  "trainCount": 154,
+  "trainCount": 161,
   "routes": [
     {
       "number": "1411",
@@ -13,19 +13,19 @@
       "matched": 23,
       "total": 34,
       "gaps": 0,
-      "elapsedMs": 1806
+      "elapsedMs": 1881
     },
     {
-      "number": "11511",
+      "number": "11524",
       "name": "ROJ - Ł",
       "sections": 5,
       "coordinates": 146,
-      "first": "Skierniewice",
-      "last": "Łódź Widzew",
+      "first": "Łódź Widzew",
+      "last": "Skierniewice",
       "matched": 6,
       "total": 23,
       "gaps": 0,
-      "elapsedMs": 6
+      "elapsedMs": 5
     },
     {
       "number": "16113",
@@ -41,7 +41,7 @@
     }
   ],
   "dashboard": {
-    "next": "Následující\nZawiercie\nDo zastávky přibližně 10.0 km · vzdušně",
+    "next": "Následující\nBielsko-Biała Główna",
     "delay": "Zpoždění · odhad\nZatím bez zpoždění\nČekám na první průjezd · předběžný údaj",
     "imageLoaded": true
   },

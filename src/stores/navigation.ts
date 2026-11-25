@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-export type PageId = 'home' | 'servers' | 'map' | 'dashboard' | 'mods' | 'settings';
+export type PageId = 'home' | 'servers' | 'map' | 'dashboard' | 'mods' | 'settings' | 'history';
 
 interface NavState {
   page: PageId;
@@ -9,7 +9,7 @@ interface NavState {
 
 const initial = (): PageId => {
   const m = /page=(\w+)/.exec(location.hash);
-  const ids: PageId[] = ['home', 'servers', 'map', 'dashboard', 'mods', 'settings'];
+  const ids: PageId[] = ['home', 'servers', 'map', 'dashboard', 'mods', 'settings', 'history'];
   return (ids as string[]).includes(m?.[1] ?? '') ? (m![1] as PageId) : 'home';
 };
 

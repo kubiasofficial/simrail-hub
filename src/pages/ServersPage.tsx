@@ -20,9 +20,10 @@ function ago(ts: number, now: number) {
 export function ServersPage() {
   const { snapshot, error, loading, refresh } = useServers();
   const [favorites,setFavorites]=useState<string[]>(()=>{try{const v=JSON.parse(localStorage.getItem('simrail:favorites:v1')??'[]');return Array.isArray(v)?v.filter(x=>typeof x==='string').slice(0,50):[];}catch{return [];}});
-  const toggleFavorite=useCallback((code:string)=>setFavorites(current=>{const next=current.includes(code)?current.filter(x=>x!==code):[...current,code];localStorage.setItem('simrail:favorites:v1',JSON.stringify(next));return next;}),[]);
+  const toggleFavorite=useCallback((code:string)=>setFavorites(current=>{const next=current.includes(code)?current.filter(x=>x!==code):[...current,code];try{localStorage.setItem('simrail:favorites:v1',JSON.stringify(next));}catch{}return next;}),[]);
   const [query, setQuery] = useState('');
   const [filter, setFilter] = useState<Filter>('all');
+  const [onlyFavorites,setOnlyFavorites]=useState(false);
   const [region, setRegion] = useState('all');
   const [now, setNow] = useState(Date.now());
   const [auto, setAuto] = useState(true);
@@ -39,10 +40,11 @@ export function ServersPage() {
   const rows = useMemo(() => {
     const q = query.trim().toLowerCase();
     return sortServers(snapshot?.servers ?? []).filter((s: ServerRow) =>
+      (!onlyFavorites||favorites.includes(s.code)) &&
       (filter === 'all' || (filter === 'active') === s.active) &&
       (region === 'all' || s.region === region) &&
       (!q || `${s.name} ${s.code} ${s.region ?? ''} ${s.language ?? ''}`.toLowerCase().includes(q)));
-  }, [snapshot, query, filter, region]);
+  }, [snapshot, query, filter, region,onlyFavorites,favorites]);
   const favoriteRows=[...rows].sort((a,b)=>Number(favorites.includes(b.code))-Number(favorites.includes(a.code)));
 
   const field = 'rounded-lg border border-line bg-ink-800 px-3 py-2 text-sm text-slate-200 outline-none focus:border-sky-brand';
@@ -62,6 +64,7 @@ export function ServersPage() {
           <option value="all">Všechny regiony</option>
           {regions.map((r) => <option key={r} value={r}>{r}</option>)}
         </select>
+        <label className="flex items-center gap-2 text-xs text-slate-400"><input type="checkbox" checked={onlyFavorites} onChange={e=>setOnlyFavorites(e.target.checked)}/>Jen oblíbené servery</label>
         <label className="flex items-center gap-2 text-xs text-slate-400">
           <input type="checkbox" checked={auto} onChange={(e) => setAuto(e.target.checked)} /> Automaticky ({refreshSeconds} s)
         </label>

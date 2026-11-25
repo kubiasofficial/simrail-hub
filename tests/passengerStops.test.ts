@@ -28,3 +28,17 @@ describe('PH passenger announcements',()=>{
   expect(recordingNames({...events[0],trainNumber:'53103',isFreight:false})).toEqual(['pristi_stanice.wav','krakow_glowny.wav']);
  });
 });
+
+it('35104 uses its own northbound PH order and the existing Miechow recording',()=>{
+ const timetable=parseTimetables([{trainNoLocal:'35104',timetable:[
+ {nameOfPoint:'Kraków Główny',stopType:'CommercialStop'},
+ {nameOfPoint:'Kraków Batowice',stopType:'NoncommercialStop'},
+ {nameOfPoint:'Miechów',stopType:'CommercialStop'},
+ {nameOfPoint:'Kozłów',stopType:'CommercialStop'}]}])[0];
+ const train={...new DemoSim(0).snapshot(0).train,number:'35104',timetableIndex:1,speedKmh:100};
+ const model=computeOnboard({train,timetable,stations:[],nowSod:null,tracker:new DelayTracker(),connection:'live'});
+ expect(model.next).toBe('Miechów');expect(model.previous).toBe('Kraków Główny');
+ const events=new AnnouncementTrigger().update({runKey:'35104',index:1,speedKmh:100,distToNextStopM:null,points:timetable.points,delayMin:null}).events;
+ expect(events).toEqual([{key:'next:2',kind:'next-station',station:'Miechów'}]);
+ expect(recordingNames({...events[0],trainNumber:'35104',isFreight:false})).toEqual(['pristi_stanice.wav','miechow.wav']);
+});

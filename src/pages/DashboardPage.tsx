@@ -1,3 +1,4 @@
+import {useJourneyLibrary} from '@/stores/journeyLibrary';
 import {TrainPicker} from '@/components/TrainPicker';
 import {JourneyPanel} from '@/components/JourneyPanel';
 import {useVisualActivity} from '@/hooks/useVisualActivity';
@@ -92,6 +93,8 @@ export function DashboardPage({ standalone = false, active = true }: { standalon
   useEffect(()=>{if(!auto)useAnnouncer.getState().stop();},[auto]);
   useEffect(()=>{if(m?.connection==='lost'||m?.connection==='stale')useAnnouncer.getState().stop();},[m?.connection]);
   const detail = feed.detail;
+  useEffect(()=>{if(!standalone&&!isDemo&&server&&m&&detail?.train)useJourneyLibrary.getState().observe(server,detail.train,m);},[standalone,isDemo,server,m,detail]);
+  useEffect(()=>{if(standalone)return;return()=>useJourneyLibrary.getState().finish();},[standalone,server,sel.train,sel.mode]);
   const freight = !isDemo && isFreightTrain(detail?.train);
   useEffect(() => { ann.resetRun(); }, [sel.mode,server,sel.train,freight]); // stop queued speech when switching to freight
   useEffect(() => {

@@ -3,6 +3,7 @@
 @import "./refinements.css";
 @import "./premium.css";
 @import "./release050.css";
+@import "./release060.css";
 @source "../";
 
 @theme {

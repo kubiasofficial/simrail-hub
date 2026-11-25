@@ -1,3 +1,4 @@
+import {HistoryPage} from '@/pages/HistoryPage';
 import {Localization} from '@/components/Localization';
 import { useEffect } from 'react';
 import { UpdatePanel } from '@/components/UpdatePanel';
@@ -38,6 +39,7 @@ export function App() {
           {page === 'servers' && <ServersPage />}
           {page === 'map' && <MapPage />}
           <div hidden={page !== 'dashboard'} className={page==='dashboard'?'page-enter':''}><DashboardPage active={page==='dashboard'}/></div>
+          {page === 'history' && <HistoryPage />}
           {page === 'mods' && <ModsPage />}
           {page === 'settings' && <SettingsPage />}
         </main>

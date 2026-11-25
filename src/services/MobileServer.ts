@@ -1,3 +1,5 @@
+import {trainCategory} from './trainCategory';
+import type {TrainRoute} from '../types/route';
 import {createServer,type Server} from 'node:http';
 import {networkInterfaces} from 'node:os';
 import {randomBytes,timingSafeEqual} from 'node:crypto';
@@ -15,7 +17,7 @@ export class MobileServer{
  private server:Server|null=null;private token='';private expiresAt=0;private code='';private train='';private tracker=new DelayTracker();
  private cached:{at:number;value:unknown}|null=null;private pending:Promise<unknown>|null=null;private generation=0;
  private urls:string[]=[];private network='';private starting:Promise<{urls:string[];expiresAt:number}>|null=null;
- constructor(private tracking:TrainTrackingService,private staticDir:string,private interfaces:typeof networkInterfaces=networkInterfaces,private now:()=>number=Date.now){}
+ constructor(private tracking:TrainTrackingService,private staticDir:string,private interfaces:typeof networkInterfaces=networkInterfaces,private now:()=>number=Date.now,private routeProvider?:(code:string,train:string)=>Promise<TrainRoute>){}
  stop(){this.generation++;this.pending=null;this.server?.closeAllConnections();this.server?.close();this.server=null;this.token='';this.cached=null;this.urls=[];}
  private valid(value:string){const a=Buffer.from(value),b=Buffer.from(this.token);return a.length===b.length&&a.length>0&&timingSafeEqual(a,b)&&this.now()<this.expiresAt;}
  private async state(){
@@ -23,7 +25,7 @@ export class MobileServer{
   const generation=this.generation,tracker=this.tracker;
   const task=(async()=>{const r=await this.tracking.getDetail(this.code,this.train);if(!r.ok)throw Error(r.error);if(generation!==this.generation)throw Error('Párování bylo změněno.');
    const age=this.now()-r.data.fetchedAt;const connection=age>=30000?'lost':age>=15000?'stale':'live';
-   const value={...r.data,model:r.data.train?computeOnboard({train:r.data.train,timetable:r.data.timetable,stations:r.data.stations,nowSod:r.data.serverSod,tracker,connection}):null};
+   const value={...r.data,category:r.data.train?trainCategory(r.data.train):null,model:r.data.train?computeOnboard({train:r.data.train,timetable:r.data.timetable,stations:r.data.stations,nowSod:r.data.serverSod,tracker,connection}):null};
    this.cached={at:this.now(),value};return value;
   })().finally(()=>{if(this.pending===task)this.pending=null;});this.pending=task;return task;
  }
@@ -59,6 +61,7 @@ export class MobileServer{
    const cookie=/(?:^|;\s*)hub=([a-f0-9]+)/.exec(req.headers.cookie??'')?.[1]??'';
    if(!this.valid(cookie)){deny(401,'Připojení vypršelo. Načtěte nový QR kód v launcheru.');return;}
    try{
+    if(url.pathname==='/api/route'){if(!this.routeProvider){deny(503);return;}const generation=this.generation,value=await this.routeProvider(this.code,this.train);if(generation!==this.generation){deny(401);return;}res.setHeader('Content-Type','application/json');res.end(JSON.stringify(value));return;}
     if(url.pathname==='/api/state'){res.setHeader('Content-Type','application/json');res.end(JSON.stringify(await this.state()));return;}
     const asset=Object.hasOwn(assets,url.pathname)?assets[url.pathname]:null;if(!asset){deny(404);return;}res.setHeader('Content-Type',asset[1]);res.end(await readFile(join(this.staticDir,asset[0])));
    }catch{if(!res.destroyed){res.writeHead(503,{'Content-Type':'application/json'});res.end(JSON.stringify({error:'Data se nepodařilo načíst. Připojení zkusíme znovu.'}));}}

@@ -3,9 +3,12 @@ import {writeFile} from 'node:fs/promises';
 import {join} from 'node:path';
 import {tmp} from './helpers';
 import {LocalRecordings,recordingNames,encodeWav,decodeWav,trimSilence,gongSamples} from '../src/services/localAudio';
-it('selects the phrase and exact playable station only for passenger trains 53xxx',()=>{
+it('selects the phrase and exact playable station only for passenger trains 35xxx and 53xxx',()=>{
  const request={kind:'next-station' as const,station:'Kraków Główny',trainNumber:'53103',isFreight:false};
  expect(recordingNames(request)).toEqual(['pristi_stanice.wav','krakow_glowny.wav']);
+ expect(recordingNames({...request,trainNumber:'35104'})).toEqual(['pristi_stanice.wav','krakow_glowny.wav']);
+ expect(recordingNames({...request,trainNumber:'35104',isFreight:true})).toBeNull();
+ expect(recordingNames({...request,trainNumber:'3502'})).toBeNull();
  expect(recordingNames({...request,isFreight:true})).toBeNull();
  expect(recordingNames({...request,trainNumber:'5301'})).toBeNull();
  expect(recordingNames({...request,station:'Zakopane'})).toBeNull();

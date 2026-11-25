@@ -1,0 +1,23 @@
+{
+  "at": "2026-11-25T15:51:15.525Z",
+  "errors": [],
+  "history": {
+    "records": 1,
+    "favorites": 1
+  },
+  "filteredCategories": [
+    "IC"
+  ],
+  "mobile": {
+    "lazyMap": true,
+    "portraitOverflow": false,
+    "phOnly": true,
+    "technicalToggle": true,
+    "stationBuildings": 4,
+    "landscapeOverflow": false,
+    "staleLabel": "Spojení ztraceno",
+    "expiry": "Připojení vypršelo. Načtěte nový QR kód v launcheru.",
+    "noAudio": true,
+    "leafletRequests": 1
+  }
+}

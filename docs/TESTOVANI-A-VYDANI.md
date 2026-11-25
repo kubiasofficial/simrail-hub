@@ -25,7 +25,7 @@ Vývojové spuštění bez zabalení aplikace je také TEST, aby neotevíralo ve
 ## Sestavení
 - npm run dist:test: sestaví samostatný portable TEST do .deployment/test-launcher/SimRail-Hub-TEST.exe. Konfigurace build/test.config.cjs obsahuje jiný appId, název, sestavení s datem, výstupní složku a publish=null. CLI navíc používá --publish never.
 - npm run dist: připraví stabilní instalační a portable balíčky do release, samo nepublikuje.
-- Veřejný GitHub workflow pro vydání se v tomto úkolu nespouštěl a žádný tag ani veřejné vydání nevzniklo.
+- Veřejné vydání se připravuje samostatně po ověření TESTu. Verze 0.6.0 je výslovně schválená k veřejnému vydání; průběh a výsledky jsou v docs/RELEASE-0.6.0.md a docs/verification/release060-*.json.
 - TEST se nepřidává do veřejného latest.yml ani na web jako veřejný instalační soubor.
 
 ## Ověření oddělení

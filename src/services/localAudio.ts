@@ -14,7 +14,7 @@ export function recordingNames(request:RecordingRequest):string[]|null {
  if(request.isFreight)return null;
  if(request.service!==undefined)return isServiceAnnouncementId(request.service)?[SERVICE_ANNOUNCEMENTS[request.service].file]:null;
  if(request.kind==='delay'||request.kind==='terminal')return [SERVICE_ANNOUNCEMENTS[request.kind].file];
- if(!/^53\d{3}$/.test(request.trainNumber??''))return null;
+ if(!/^(?:35|53)\d{3}$/.test(request.trainNumber??''))return null;
  const phrase=PHRASES[request.kind],station=STATIONS[norm(request.station??'')];
  return phrase&&station?[phrase+'.wav',station+'.wav']:null;
 }

@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-25T14:57:29.379Z",
+  "at": "2026-11-25T15:37:12.322Z",
   "errors": [],
   "initialNext": "Následující\nTrzebinia\nDo zastávky přibližně 19.5 km · vzdušně",
   "stopped": {
@@ -17,6 +17,7 @@
       "IC",
       "freight",
       "R",
+      "TLK",
       "EIC"
     ],
     "routePaths": 3,
