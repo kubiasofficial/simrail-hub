@@ -5,6 +5,8 @@ import type { InstalledMod, ActiveModContent } from './mods';
 import type { DetectionResult, LaunchResult, PickFolderResult } from './game';
 
 export interface AppInfo {
+  channel: import('../services/releaseChannel').ReleaseChannel;
+  buildId: string | null;
   version: string;
   platform: string;
   electron: string;

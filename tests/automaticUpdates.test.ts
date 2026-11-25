@@ -40,3 +40,15 @@ describe('automatic update lifecycle',()=>{
   engine.emit('download-progress',{percent:42});expect(service.status()).toMatchObject({status:'downloading',percent:42});complete();
  });
 });
+
+it('an isolated test channel cannot download or install a public update',async()=>{
+ const engine=new Fake(),message='Testovací verze má vlastní data.';
+ const service=new AutomaticUpdates(engine as unknown as AppUpdater,false,message);
+ engine.emit('update-available',{version:'99.0.0'});
+ await service.check();
+ expect(service.status()).toEqual({status:'manual',message});
+ expect(service.install()).toBe(false);
+ expect(engine.checkForUpdates).not.toHaveBeenCalled();
+ expect(engine.downloadUpdate).not.toHaveBeenCalled();
+ expect(engine.quitAndInstall).not.toHaveBeenCalled();
+});

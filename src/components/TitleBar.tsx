@@ -5,10 +5,12 @@ import { Minus, Square, Copy, X, TrainFront } from 'lucide-react';
 export function TitleBar() {
   const [maximized, setMaximized] = useState(false);
   const [fixtures, setFixtures] = useState(false);
+  const [testChannel,setTestChannel]=useState(false);
 
   useEffect(() => {
     const api = window.simrailHub;
     if (!api) return;
+    void api.getAppInfo().then(info=>setTestChannel(info.channel==='test')).catch(()=>undefined);
     void api.call('diag:info').then((d) => setFixtures(d.fixtures)).catch(() => undefined);
     void api.getWindowState().then((s) => setMaximized(s.maximized));
     return api.onWindowStateChanged((s) => setMaximized(s.maximized));
@@ -20,7 +22,7 @@ export function TitleBar() {
     <header className="release-titlebar drag flex h-9 items-center justify-between border-b border-line bg-ink-950/80">
       <div className="flex items-center gap-2 pl-3 text-[13px] text-slate-300">
         <TrainFront size={15} className="text-sky-brand" />
-        <span className="font-medium">SimRail Hub</span>
+        <span className="font-medium">SimRail Hub{testChannel?' TEST':''}</span>{testChannel&&<span className="test-channel-badge">TESTOVACÍ VERZE</span>}
         {fixtures && <span className="ml-3 rounded bg-fuchsia-500/90 px-2 py-0.5 text-[11px] font-bold text-white">UKÁZKOVÁ DATA – ne živý provoz</span>}
       </div>
       <div className="flex items-center"><LanguageMenu/>

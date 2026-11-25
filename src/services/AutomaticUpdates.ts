@@ -6,8 +6,8 @@ export interface AutomaticUpdateState {
 export class AutomaticUpdates {
  private state:AutomaticUpdateState;
  private checking=false; private downloading=false;
- constructor(private engine:AppUpdater|null, supported:boolean) {
-  this.state=supported&&engine?{status:'idle',message:'Aktualizace se stahují automaticky na pozadí.'}:{status:'manual',message:'Pro automatické aktualizace jednou nainstalujte instalační verzi SimRail Hub.'};
+ constructor(private engine:AppUpdater|null, supported:boolean, manualMessage='Pro automatické aktualizace jednou nainstalujte instalační verzi SimRail Hub.') {
+  this.state=supported&&engine?{status:'idle',message:'Aktualizace se stahují automaticky na pozadí.'}:{status:'manual',message:manualMessage};
   if(!supported||!engine){this.engine=null;return;}
   engine.autoDownload=false; engine.autoInstallOnAppQuit=false; engine.allowPrerelease=false; engine.allowDowngrade=false;
   engine.on('checking-for-update',()=>{if(!this.downloading)this.state={status:'checking',message:'Hledám novou verzi…'};});

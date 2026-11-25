@@ -147,3 +147,11 @@ Vlastník upozornil, že po výběru stále vidí „Nedostupné“. Čekání n
 Vše zůstává lokální na stejné pracovní větvi, verze 0.5.0. Bez instalace, push a publikace.
 
 Výsledný TEST-SimRail-Hub-zpozdeni.exe byl rovněž spuštěn a ověřen v izolovaném profilu na vlaku 71560: [portable důkaz](verification/delay-portable-preview.json). SHA-256: 1690F34953AFE842F53DD10E13C9FE368C8EA5CB4384D06FF8972956998E1543.
+
+
+## K. Oddělený TEST a veřejný launcher — 25. 11. 2026
+Na přání vlastníka je nově jediným trvalým místem pro zkoušení SimRail Hub TEST.exe v nadřazené projektové složce, se zástupcem SimRail Hub TEST na ploše. Předchozí jednotlivé testovací kandidáty nahrazuje tento launcher.
+
+TEST má samostatnou identitu, profil a zřetelné označení v titulku i přehledu verze. Veřejné aktualizace do něj nelze instalovat. Veřejný launcher ani jeho existující zástupce nejsou nahrazené a nic nebylo publikováno. Základní číslo verze se v tomto kroku nezměnilo.
+
+[Pravidla testování a vydání](TESTOVANI-A-VYDANI.md), [ověření souběžného běhu](verification/test-channel-isolation.json).

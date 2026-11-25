@@ -1,3 +1,4 @@
+import {runtimeIdentity} from './runtimeIdentity';
 import {net} from 'electron';
 import {DlcService} from '../services/DlcService';
 import { autoUpdater } from 'electron-updater';
@@ -28,7 +29,9 @@ export function registerCallIpc(ctx: AppContext, openDashboard: (server: string 
   const mobile = new MobileServer(tracking, join(__dirname, '../../dist'));
   const dlc=new DlcService(async(url,init)=>{const r=await net.fetch(url,init);return {ok:r.ok,status:r.status,text:()=>r.text()};});
 
-  const automaticUpdates=new AutomaticUpdates(autoUpdater,app.isPackaged&&!process.env.PORTABLE_EXECUTABLE_FILE);
+  const testChannel=runtimeIdentity.channel==='test';
+  const testUpdateMessage='Testovací verze má vlastní data. Nové testovací sestavení připravujeme samostatně; veřejné aktualizace sem neinstalujeme.';
+  const automaticUpdates=new AutomaticUpdates(testChannel?null:autoUpdater,!testChannel&&app.isPackaged&&!process.env.PORTABLE_EXECUTABLE_FILE,testChannel?testUpdateMessage:undefined);
   const updateTimer=setTimeout(()=>void automaticUpdates.check(),15000);
   const updateInterval=setInterval(()=>void automaticUpdates.check(),6*60*60*1000);
   app.on('before-quit',()=>{clearTimeout(updateTimer);clearInterval(updateInterval);});
@@ -111,5 +114,5 @@ export function registerCallIpc(ctx: AppContext, openDashboard: (server: string 
     await writeFile(r.filePath, header + log.read());
     return r.filePath;
   }));
-  on('update:check', async () => ctx.updates.check((await settings.get()).updates.repo));
+  on('update:check', async () => testChannel?{status:'unconfigured',message:testUpdateMessage}:ctx.updates.check((await settings.get()).updates.repo));
 }

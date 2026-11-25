@@ -20,7 +20,8 @@
     "test:watch": "vitest",
     "prebuild:renderer": "node scripts/prepare-assets.mjs",
     "verify:ui": "node scripts/verify-ui.mjs",
-    "predist": "node node_modules/electron/install.js"
+    "predist": "node node_modules/electron/install.js",
+    "dist:test": "npm run build && electron-builder --config build/test.config.cjs --win portable --x64 --publish never"
   },
   "dependencies": {
     "electron-updater": "^6.8.11",

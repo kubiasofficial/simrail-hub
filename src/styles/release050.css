@@ -142,3 +142,6 @@ html[data-animations="off"] *,html[data-animations="off"] *:before,html[data-ani
 
 .delay-indicator[data-severity="unknown"]{color:#c6d9e6;background:#24323d;border-color:#405260;animation:none}
 .delay-indicator[data-severity="unknown"] strong{font-size:18px}
+
+.test-channel-badge{color:#ffcf94;background:#62411f66;border:1px solid #a5763d88;border-radius:4px;padding:2px 7px;font-size:10px;font-weight:700;letter-spacing:.06em}
+.test-build-info{display:flex;flex-direction:column;gap:9px;color:#acc6d7;font-size:12px;line-height:1.5}.test-build-info small{color:#e9bd83}

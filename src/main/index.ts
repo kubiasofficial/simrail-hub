@@ -1,3 +1,4 @@
+import {runtimeIdentity} from './runtimeIdentity';
 import {pathToFileURL} from 'node:url';
 import {appDocument,externalHttps} from '../services/windowSecurity';
 import { app, BrowserWindow, ipcMain, shell, session,dialog } from 'electron';
@@ -7,6 +8,14 @@ import { createContext } from './appContext';
 import { registerCallIpc } from './callIpc';
 import { registerServerIpc } from './serverIpc';
 import { IPC, type AppInfo, type WindowState } from '../types/ipc';
+
+// Resolve identity before acquiring the lock, creating SQLite or Chromium sessions.
+app.setName(runtimeIdentity.name);
+if(runtimeIdentity.channel==='test') {
+ if(!app.commandLine.hasSwitch('user-data-dir'))app.setPath('userData',join(app.getPath('appData'),runtimeIdentity.profileName));
+ app.setPath('sessionData',app.getPath('userData'));
+}
+if(process.platform==='win32')app.setAppUserModelId(runtimeIdentity.appId);
 
 const isDev = !app.isPackaged && process.argv.includes('--dev');
 const DEV_URL = 'http://localhost:5173';
@@ -28,6 +37,7 @@ const WEB_PREFS = {
 } as const;
 
 function secureWindow(win: BrowserWindow): void {
+  if(runtimeIdentity.channel==='test')win.on('page-title-updated',event=>event.preventDefault());
   const contentsId=win.webContents.id;
   appWindows.add(contentsId);
   win.on('closed', () => appWindows.delete(contentsId));
@@ -45,7 +55,7 @@ function secureWindow(win: BrowserWindow): void {
 /** Samostatné okno palubního počítače (druhý monitor / OBS – klasický rám, aby šlo zachytit okno). */
 function openDashboardWindow(server: string | null, train: string | null): void {
   const previous=dashboardWindow&&!dashboardWindow.isDestroyed()?dashboardWindow:null;
-  const win = previous??new BrowserWindow({ width: 1100, height: 720, minWidth: 700, minHeight: 480, backgroundColor: '#0b1220', title: 'SimRail Hub – Palubní počítač', autoHideMenuBar: true, webPreferences: WEB_PREFS });
+  const win = previous??new BrowserWindow({ width: 1100, height: 720, minWidth: 700, minHeight: 480, backgroundColor: '#0b1220', title: runtimeIdentity.name+' – Palubní počítač', autoHideMenuBar: true, webPreferences: WEB_PREFS });
   dashboardWindow=win;if(!previous){win.once('closed',()=>{if(dashboardWindow===win)dashboardWindow=null;});secureWindow(win);}
   const q = new URLSearchParams({ ...(server ? { server } : {}), ...(train ? { train } : {}) }).toString();
   const hash = `dashboard${q ? `?${q}` : ''}`;
@@ -64,7 +74,7 @@ function createWindow(): void {
     frame: false,
     backgroundColor: '#0b1220',
     show: false,
-    title: 'SimRail Hub',
+    title: runtimeIdentity.name,
     icon: join(__dirname, '../../build/icon.png'),
     webPreferences: WEB_PREFS
   });
@@ -82,7 +92,7 @@ function createWindow(): void {
 function registerIpc(): void {
   ipcMain.handle(IPC.appInfo, (e): AppInfo => {
     if (!trustedFrame(e)) throw new Error('Nepovolený odesílatel IPC');
-    return { version: app.getVersion(), platform: process.platform, electron: process.versions.electron };
+    return { version: app.getVersion(), platform: process.platform, electron: process.versions.electron, channel:runtimeIdentity.channel, buildId:runtimeIdentity.buildId };
   });
   ipcMain.handle(IPC.winMinimize, (e) => { if (senderIsMain(e)) mainWindow?.minimize(); });
   ipcMain.handle(IPC.winToggleMaximize, (e): WindowState => {
