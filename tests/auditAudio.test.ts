@@ -36,7 +36,7 @@ it('removes obsolete delayed speech and can announce a revisited run after reset
 it('invalidates observed delay on clock loss or rollback',()=>{
  const points=new DemoSim(0).timetable.points,tracker=new DelayTracker();tracker.observe('run',0,28800,points);tracker.observe('run',1,28830,points);
  expect(tracker.current(points,1,28830)).not.toBeNull();tracker.observe('run',1,null,points);expect(tracker.current(points,1,null)).toBeNull();
- tracker.observe('run',0,100,points);expect(tracker.current(points,0,100)).toBeNull();
+ tracker.observe('run',0,100,points);expect(tracker.current(points,0,100)?.kind).toBe('estimate');
 });
 it('preserves raw damaged settings before saving repaired defaults',async()=>{
  const db=new Database(':memory:');db.setKv('settings','{broken');const svc=new SettingsService(db);await svc.get();await svc.update({theme:'graphite'});expect(db.getKv('settings.corrupt.backup')).toBe('{broken');expect(JSON.parse(db.getKv('settings')!).theme).toBe('graphite');db.close();

@@ -26,18 +26,18 @@ it('server epoch clock stays aligned with timetable in winter, summer and over m
 const points=[0,1,2,3].map(index=>({index,pointId:null,km:null,platform:null,track:null,name:'Point '+index,arrival:'12:00:00',departure:'12:00:00',isStop:false,stopType:'NoStopOver',maxSpeed:null}));
 it('first selection cannot claim that an upcoming point proves delay',()=>{
  const tracker=new DelayTracker();tracker.observe('a',1,13*3600,points);
- expect(tracker.current(points,1,13*3600)).toBeNull();
+ expect(tracker.current(points,1,13*3600)).toEqual({min:60,kind:'estimate'});
 });
 it('observes only consecutive passages, resets after jumps, clock loss, stale data and another run',()=>{
  const tracker=new DelayTracker(),time=12*3600+300;
  tracker.observe('a',0,time,points);tracker.observe('a',1,time+5,points);
  expect(tracker.current(points,1,time+5)).toEqual({min:5,kind:'observed'});
- tracker.observe('a',3,time+10,points);expect(tracker.current(points,3,time+10)).toBeNull();
+ tracker.observe('a',3,time+10,points);expect(tracker.current(points,3,time+10)?.kind).toBe('estimate');
  tracker.observe('a',2,time+15,points);tracker.observe('a',3,time+20,points);
  expect(tracker.current(points,3,time+20)?.min).toBe(5);
- tracker.observe('b',1,time+25,points);expect(tracker.current(points,1,time+25)).toBeNull();
+ tracker.observe('b',1,time+25,points);expect(tracker.current(points,1,time+25)?.kind).toBe('estimate');
  tracker.observe('b',2,null,points);tracker.observe('b',3,time+30,points);
- expect(tracker.current(points,3,time+30)).toBeNull();
+ expect(tracker.current(points,3,time+30)?.kind).toBe('estimate');
 });
 it('does not clamp an invalid API index into the last station',()=>{
  const sim=new DemoSim(0).snapshot(0),tracker=new DelayTracker();
@@ -64,4 +64,13 @@ it('measures a passage through midnight without adding a day or a timezone',()=>
  const route=points.map(p=>({...p,arrival:'23:59:00',departure:'23:59:00'}));
  const tracker=new DelayTracker();tracker.observe('night',0,86390,route);tracker.observe('night',1,60,route);
  expect(tracker.current(route,1,60)).toEqual({min:2,kind:'observed'});
+});
+
+it('does not count a planned station dwell as delay before the first passage',()=>{
+ const tracker=new DelayTracker();
+ const route=[{...points[0],arrival:'14:47:00',departure:'14:48:00',isStop:true,stopType:'CommercialStop'}];
+ tracker.observe('71560',0,14*3600+47*60+30,route);
+ expect(tracker.current(route,0,14*3600+47*60+30)).toEqual({min:0,kind:'estimate'});
+ expect(tracker.current(route,0,14*3600+50*60+15)).toEqual({min:2,kind:'estimate'});
+ expect(tracker.current(route,0,null)).toBeNull();
 });

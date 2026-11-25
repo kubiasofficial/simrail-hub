@@ -139,3 +139,6 @@ html[data-animations="off"] *,html[data-animations="off"] *:before,html[data-ani
 .map-station-name{top:21px;background:#282a28f2;color:#fff1ce;border-color:#c0aa7355}
 .map-entity .train-cluster,.map-entity.cluster-entity>div{border-radius:50%;background:#14446a;border:2px solid #91c8ec;box-shadow:0 0 0 4px #153e6277}
 .map-legend-v2 .legend-square{background:#f2e7cd;border:1px solid #fff1cf;box-shadow:inset 0 0 0 2px #283641;border-radius:0}
+
+.delay-indicator[data-severity="unknown"]{color:#c6d9e6;background:#24323d;border-color:#405260;animation:none}
+.delay-indicator[data-severity="unknown"] strong{font-size:18px}

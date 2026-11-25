@@ -26,7 +26,11 @@ const DELAY_STYLE: Record<DelayClass, string> = {
   verylate: 'border-red-500/50 bg-red-500/15 text-red-300'
 };
 const DELAY_TEXT: Record<DelayClass, string> = { none: 'text-slate-400', ontime: 'text-slate-200', early: 'text-emerald-300', late: 'text-amber-300', verylate: 'text-red-300' };
-const fmtDelay = (m: OnboardModel) => (m.delayMin === null ? NA : m.delayMin === 0 ? 'Podle jízdního řádu' : `${m.delayMin > 0 ? '+' : '−'}${Math.abs(m.delayMin)} min`);
+const fmtDelay = (m: OnboardModel) => {
+  if(m.delayMin === null) return 'Nelze určit';
+  if(m.delayKind === 'estimate') return m.delayMin > 0 ? '≥ +' + m.delayMin + ' min' : 'Zatím bez zpoždění';
+  return m.delayMin === 0 ? 'Podle jízdního řádu' : (m.delayMin > 0 ? '+' : '−') + Math.abs(m.delayMin) + ' min';
+};
 
 function Conn({ c }: { c: OnboardModel['connection'] }) {
   const map = { live: ['Online', 'text-emerald-300', Wifi], stale: ['Zastaralá data', 'text-amber-300', WifiOff], lost: ['Spojení ztraceno', 'text-red-300', WifiOff], demo: ['DEMO', 'text-amber-300', Wifi] } as const;
@@ -167,7 +171,7 @@ export function DashboardPage({ standalone = false, active = true }: { standalon
 
           <section className="journey-overview journey-summary"><div className="train-compact"><VehicleCard vehicles={feed.detail?.train?.vehicles??[]} number={m.trainNumber}/><p>{m.start??'—'} → {m.end??'—'}</p><Conn c={m.connection}/></div>
           <div className="journey-station-panel"><div className="journey-stations"><div><span>Předchozí</span><strong key={'previous:'+m.previous}>{m.previous??'—'}</strong></div><div className="current-station"><span>Aktuální</span><strong key={'current:'+m.current}>{m.current??(m.phase==='moving'?'Mezi stanicemi':m.phase==='standing-unknown'?'Stojí mimo potvrzenou stanici':'—')}</strong></div><div><span>Následující</span><strong key={'next:'+m.next}>{m.next??'—'}</strong></div></div>
-          <div className="journey-metrics"><div className="journey-speed"><strong>{m.speedKmh===null?'—':Math.round(m.speedKmh)}</strong><span>km/h</span></div><div className="delay-indicator" data-severity={delaySeverity(m.delayMin)} key={delaySeverity(m.delayMin)} role="status"><span>Zpoždění{m.delayKind==='estimate'?' · odhad':''}</span><strong>{fmtDelay(m)}</strong>{(m.delayMin??0)>20&&<small>Výrazné zpoždění</small>}</div></div>
+          <div className="journey-metrics"><div className="journey-speed"><strong>{m.speedKmh===null?'—':Math.round(m.speedKmh)}</strong><span>km/h</span></div><div className="delay-indicator" data-severity={m.delayKind==='estimate'?'unknown':delaySeverity(m.delayMin)} key={m.delayKind+':'+delaySeverity(m.delayMin)} role="status"><span>Zpoždění{m.delayKind==='estimate'?' · odhad':''}</span><strong>{fmtDelay(m)}</strong>{m.delayKind==='estimate'?<small>Čekám na první průjezd · předběžný údaj</small>:m.delayKind==='observed'?<small>{(m.delayMin??0)>20?'Výrazné zpoždění · poslední průjezd':'Podle posledního průjezdu'}</small>:<small>Chybí aktuální čas nebo jízdní řád</small>}</div></div>
           <small className="journey-updated">{feed.updatedAt?'Poslední data '+new Date(feed.updatedAt).toLocaleTimeString('cs-CZ'):'Čekám na data'}</small></div></section>
           <div className="grid grid-cols-[1fr_20rem] gap-4">
             {/* seznam stanic */}

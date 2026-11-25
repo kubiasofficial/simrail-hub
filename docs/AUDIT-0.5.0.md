@@ -75,7 +75,7 @@ Dlouhé měřicí běhy se ukončily uzavřením testovacích oken před závěr
 Dodatečně byl ověřen samotný reprodukovatelný skript nad finálním balíčkem krátkým během (167 s, completed=true, požadovaný krátký interval 60 s). Tento výsledek není třicetiminutovým měřením. home-idle: 438.6 MiB / 0.203 % CPU; map: 463.2 MiB / 0.254 % CPU; dashboard: 477.4 MiB / 0.462 % CPU; minimized: 476.1 MiB / 0.243 % CPU; long-run-end: 478.5 MiB / 0.087 % CPU. Rozdílná paměť oproti dřívějším vzorkům dále ukazuje, že obecné snížení RAM nebylo prokázané. [Výsledek krátkého běhu](verification/audit-perf-manual-short.json).
 
 ## E. Testování
-- Původní auditní běh: 143 úspěšných testů, 0 neúspěšných, 20 testovacích souborů. Po opravě regresí 25. 11. 2026: 151 úspěšných testů ve 21 souborech. Výchozí veřejná verze měla 122 testů; odstranily se 4 cloudově specifické testy a přibylo 25 regresních případů.
+- Původní auditní běh: 143 úspěšných testů, 0 neúspěšných, 20 testovacích souborů. Po doplnění předběžného zpoždění 25. 11. 2026: 152 úspěšných testů ve 21 souborech. Výchozí veřejná verze měla 122 testů; odstranily se 4 cloudově specifické testy a přibylo 25 regresních případů.
 - npm run typecheck a npm run build prošly. Vite hlásí hlavní JS chunk přibližně 586 kB; nerozděloval se naslepo bez měření přínosu.
 - Electron UI: bez chyb rendereru; chybí karta účtu, cloudové IPC je odmítnuté. Během minimalizace bylo 0 mutací markerové vrstvy při současném pokračování dat. Lokální WAV dohrál i při minimalizaci. Opakované otevření druhého okna zachovalo jeho ID.
 - Skutečný Piper: český model vytvořil 3,79 s WAV, polský model 2,86 s WAV. Oba modely i konfigurace prošly SHA-256 kontrolou a čerstvá syntéza vytvořila nenulový výstup. Soukromé uživatelské soubory se nezměnily.
@@ -111,7 +111,7 @@ Pracovní větev je připravená k vlastníkově kontrole a lokálnímu vyzkouš
 
 Nové číslo verze, merge do produkční větve, push, publikace GitHub Release, instalace a deployment webu jsou samostatná rozhodnutí vlastníka. V tomto úkolu neproběhla.
 
-Původní .deployment/audit-complete obsahuje později nahlášené regrese. Pro další kontrolu použijte novou portable aplikaci z .deployment/oprava-k-overeni (kopie TEST-SimRail-Hub-opravy.exe v nadřazené projektové složce). Nejde o veřejné vydání a instalátor nebyl spuštěný.
+Původní .deployment/audit-complete obsahuje později nahlášené regrese. Pro další kontrolu použijte nejnovější portable aplikaci z .deployment/oprava-zpozdeni (kopie TEST-SimRail-Hub-zpozdeni.exe v nadřazené projektové složce). Nejde o veřejné vydání a instalátor nebyl spuštěný.
 
 Podklady: [integrita distribuce](verification/audit-distribution.json), [balíčky](verification/audit-packaged.json), [portable](verification/audit-portable.json), [UI](verification/audit-ui.json), [Piper](verification/audit-tts.json), [inventura](verification/audit-cloud-inventory.json), [migrace](CLOUD-MIGRATION.md), [měřicí postup](PERFORMANCE.md).
 
@@ -122,7 +122,7 @@ Předchozí ověření serverového seznamu nezachytilo chybu skutečných jízd
 - **Jazykové okno:** dialog byl potomkem titulku Electronu s app-region:drag. Je nyní portálem přímo v body a celý dialog i potomci mají no-drag. Prošly X, Escape, pozadí, změna jazyka i skutečné Win32 kliky.
 - **Jízdní řády:** živá odpověď CZ1 měla 21 234 384 znaků, nad chybným limitem 20 MiB. GetAllTimetables má nyní samostatný limit 64 MiB; ostatní odpovědi 20 MiB. Síťový adaptér počítá skutečné bajty během čtení a nadlimitní proud ruší. Velký JSON se neparsuje dvakrát a neukládá se jeho další dlouhodobá kopie.
 - **Falešné zpoždění:** getTime vracel epochu s UTC poli odpovídajícími herním časům jízdního řádu. Převod Europe/Warsaw přidával v zimě hodinu (v létě by přidal dvě). Oprava používá UTC pole, nikoli časové pásmo počítače. Porovnání na šesti živých jízdách CZ1 je uložené bez osobních údajů.
-- **Jistota zpoždění:** po prvním výběru se ukazuje neznámá hodnota, dokud není pozorován navazující průjezd. Skok více bodů, obrácení indexu, ztráta času, stará data nebo jiná jízda ruší pozorování. API index se nepřisazuje k poslední stanici. Známé runId musí přesně odpovídat jízdnímu řádu; samotné shodné číslo nestačí. Automatická omluva se spouští jen z pozorovaného zpoždění, interval 15 minut zůstává.
+- **Jistota zpoždění:** v prvním opravném buildu se po výběru ukazovala neznámá hodnota do navazujícího průjezdu. To následně nahrazuje předběžný údaj z části J. Skok více bodů, obrácení indexu, ztráta času, stará data nebo jiná jízda ruší pozorování. API index se nepřisazuje k poslední stanici. Známé runId musí přesně odpovídat jízdnímu řádu; samotné shodné číslo nestačí. Automatická omluva se spouští jen z pozorovaného zpoždění, interval 15 minut zůstává.
 - **Skutečný průjezd:** 25. 11. 2026 ve 14:40:38 pražského času prošel vlak 3730 z indexu 9 na 10. Plán průjezdního bodu Łazy Łc 14:41:06, serverový čas 14:40:35, výsledek −1 minuta, nikoli falešných přibližně +59. Nejde o nezávislé měření uvnitř hry.
 - **Mapa:** modrá protáhlá silueta vlaku s šipkou před ním, zelený hráčský bod/avatar; slonovinový čtverec stanice, zlatá obsazená stanice s avatarem vedle symbolu, kruhové skupiny. Textové značky sdílí mřížku pro omezení překryvů. Pohyb aktualizuje existující markery.
 - **Skutečný portable EXE:** spuštěn v izolovaném profilu bez instalace. Načetl jízdní řád 34 bodů, 69 stanic, mapové dlaždice HTTP 200, nové tvary i směrovou šipku. Zabalená aplikace zvlášť ověřila šest živých jízdních řádů a mobilní párování → cookie → /api/state se skutečným jízdním řádem.
@@ -132,3 +132,18 @@ Předchozí ověření serverového seznamu nezachytilo chybu skutečných jízd
 Opakování: npm run test; npm run typecheck; npm run build. UI po sestavení: node scripts/verify-stability-ui.mjs. Pro již připravenou distribuci: node scripts/verify-stability-packaged.mjs .deployment/oprava-k-overeni. Skripty používají oddělené testovací profily, automatická hlášení vypínají a vlastní okna zavírají.
 
 Důkazy: [UI](verification/regression-ui.json), [nativní myš](verification/regression-native-input.json), [živá zabalená aplikace](verification/regression-packaged-live.json), [skutečný portable](verification/regression-portable.json), [pozorovaný průjezd](verification/regression-live-passage.json).
+
+
+## J. Předběžný údaj bez čekání na průjezd — 25. 11. 2026
+Vlastník upozornil, že po výběru stále vidí „Nedostupné“. Čekání na první pozorovaný průjezd bylo v předchozí opravě příliš přísné pro běžné použití.
+
+- Platný čas, index a jízdní řád nyní umožní okamžitý předběžný údaj. U dosud neprojetého bodu po plánovaném odjezdu jde o spodní mez, zobrazenou např. „≥ +2 min“. Před tímto časem aplikace zatím žádné zpoždění nepotvrzuje; to neprokazuje přesný příjezd včas.
+- Plánovaný pobyt mezi příjezdem a odjezdem se nepočítá jako zpoždění. Předběžný údaj je neutrální, označený jako odhad a vysvětluje čekání na první průjezd. Nemá kritickou animaci ani automatickou omluvu.
+- Pozorování navazujícího průjezdu nahradí odhad pozorovanou hodnotou. Při chybě času nebo starých datech zůstává hodnota neznámá, s popisem příčiny.
+- Stejný předběžný údaj dostává mobilní displej.
+- Zabalená aplikace ověřena přímo na CZ1 / 71560: 43 bodů, bez varování API, okamžitě „Zpoždění · odhad / Zatím bez zpoždění / Čekám na první průjezd · předběžný údaj“. Mobil v prvním načtení delayKind=estimate, delayMin=0.
+- 152 testů ve 21 souborech, typecheck a build prošly. [Výsledek konkrétního vlaku](verification/delay-initial-preview.json).
+
+Vše zůstává lokální na stejné pracovní větvi, verze 0.5.0. Bez instalace, push a publikace.
+
+Výsledný TEST-SimRail-Hub-zpozdeni.exe byl rovněž spuštěn a ověřen v izolovaném profilu na vlaku 71560: [portable důkaz](verification/delay-portable-preview.json). SHA-256: 1690F34953AFE842F53DD10E13C9FE368C8EA5CB4384D06FF8972956998E1543.

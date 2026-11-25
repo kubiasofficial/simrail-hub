@@ -57,11 +57,14 @@ export class DelayTracker {
 
   /** Zpoždění v celých minutách + zdroj hodnoty (pozorováno / odhad). */
   current(points: TimetablePoint[], index: number | null, nowSod: number | null): { min: number; kind: 'observed' | 'estimate' } | null {
-    if(nowSod===null||index===null)return null;
+    if(nowSod===null||index===null||!Number.isInteger(index)||index<0||index>=points.length)return null;
     if (this.observed) return { min: Math.round(this.observed.delaySec / 60), kind: 'observed' };
-    // The upcoming point cannot prove an actual delay on first selection.
-    // Wait for a continuously observed index transition; never invent "on time".
-    return null;
+    // Before the first passage, expose only a lower bound: the target has not
+    // been passed yet. Use departure at a scheduled stop so dwell is not delay.
+    // Zero means no delay is proved yet, not a confirmed on-time arrival.
+    const scheduled = sched(points[index], 'departure');
+    if (scheduled === null) return null;
+    return { min: Math.max(0, Math.floor(diffSod(nowSod, scheduled) / 60)), kind: 'estimate' };
   }
 }
 
@@ -91,8 +94,9 @@ export function computeOnboard(i: { train: Train; timetable: Timetable | null; s
   const { train, timetable, stations, nowSod, tracker, connection } = i;
   const points = timetable?.points ?? [];
   const idx = train.timetableIndex !== null && Number.isInteger(train.timetableIndex) && train.timetableIndex >= 0 && train.timetableIndex < points.length ? train.timetableIndex : null;
-  tracker.observe(train.runId ?? train.number, idx, connection === 'live' || connection === 'demo' ? nowSod : null, points);
-  const d = tracker.current(points, idx, nowSod);
+  const clock = connection === 'live' || connection === 'demo' ? nowSod : null;
+  tracker.observe(train.runId ?? train.number, idx, clock, points);
+  const d = tracker.current(points, idx, clock);
 
   // Cílový bod pro cestující = pouze potvrzený PH od aktuálního indexu.
   const nextStopIdx = idx === null ? null : points.findIndex((p, k) => k >= idx && isPassengerStop(p));

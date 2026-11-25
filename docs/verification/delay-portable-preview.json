@@ -1,0 +1,14 @@
+{
+  "at": "2026-11-25T13:55:41.167Z",
+  "actualPortable": true,
+  "errors": [],
+  "number": "71560",
+  "points": 43,
+  "notes": [],
+  "firstDelay": "Zpoždění · odhad\nZatím bez zpoždění\nČekám na první průjezd · předběžný údaj",
+  "severity": "unknown",
+  "mobileDelay": {
+    "min": 0,
+    "kind": "estimate"
+  }
+}
