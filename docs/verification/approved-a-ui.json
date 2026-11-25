@@ -1,0 +1,30 @@
+{
+  "at": "2026-11-25T14:57:29.379Z",
+  "errors": [],
+  "initialNext": "Následující\nTrzebinia\nDo zastávky přibližně 19.5 km · vzdušně",
+  "stopped": {
+    "mainCleared": true,
+    "standaloneCleared": true,
+    "savedSelection": null,
+    "mobileRevoked": true
+  },
+  "map": {
+    "trainRadius": "50%",
+    "stationGlyphs": 4,
+    "stationCallouts": 4,
+    "stationTrainOverlaps": 0,
+    "categories": [
+      "IC",
+      "freight",
+      "R",
+      "EIC"
+    ],
+    "routePaths": 3,
+    "routeCoordinates": [
+      4,
+      112,
+      192
+    ]
+  },
+  "routeHideSurvivesRestore": true
+}

@@ -1,0 +1,57 @@
+{
+  "at": "2026-11-25T15:03:29.894Z",
+  "errors": [],
+  "trainCount": 154,
+  "routes": [
+    {
+      "number": "1411",
+      "name": "EIJ - EIP",
+      "sections": 22,
+      "coordinates": 596,
+      "first": "Warszawa Włochy",
+      "last": "Katowice",
+      "matched": 23,
+      "total": 34,
+      "gaps": 0,
+      "elapsedMs": 1806
+    },
+    {
+      "number": "11511",
+      "name": "ROJ - Ł",
+      "sections": 5,
+      "coordinates": 146,
+      "first": "Skierniewice",
+      "last": "Łódź Widzew",
+      "matched": 6,
+      "total": 23,
+      "gaps": 0,
+      "elapsedMs": 6
+    },
+    {
+      "number": "16113",
+      "name": "MPE - TLK",
+      "sections": 16,
+      "coordinates": 372,
+      "first": "Warszawa Włochy",
+      "last": "Zduńska Wola",
+      "matched": 17,
+      "total": 41,
+      "gaps": 0,
+      "elapsedMs": 10
+    }
+  ],
+  "dashboard": {
+    "next": "Následující\nZawiercie\nDo zastávky přibližně 10.0 km · vzdušně",
+    "delay": "Zpoždění · odhad\nZatím bez zpoždění\nČekám na první průjezd · předběžný údaj",
+    "imageLoaded": true
+  },
+  "map": {
+    "selectedCategory": "EIP",
+    "selectedColor": "rgb(117, 66, 183)",
+    "stations": 69,
+    "stationBuildings": 69,
+    "stationCallouts": 69,
+    "routePaths": 22,
+    "loadedTiles": 24
+  }
+}

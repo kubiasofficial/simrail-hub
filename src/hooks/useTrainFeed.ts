@@ -49,11 +49,11 @@ export function useTrainFeed(src: FeedSource): Feed {
       const model = computeOnboard({ train: s.train, timetable: s.timetable, stations: s.stations, nowSod: s.nowSod, tracker: tracker.current, connection: 'demo' });
       return { model, notes: ['DEMO – simulovaná data, nejde o skutečný vlak.'], error: null, detail: { train: s.train, timetable: s.timetable, stations: s.stations, serverSod: s.nowSod, fetchedAt: Date.now(), notes: [] }, updatedAt: Date.now() };
     }
-    if (!detail?.train) return { model: null, notes: detail?.notes ?? [], error, detail, updatedAt: lastOk };
+    if (!src.train || detail?.train?.number!==src.train || detail.train.serverCode!==src.server) return { model: null, notes: detail?.notes ?? [], error, detail, updatedAt: lastOk };
     const age = lastOk ? now - lastOk : Infinity;
     const connection: Connection = age >= 30_000 ? 'lost' : error || age >= 15_000 ? 'stale' : 'live';
     const model = computeOnboard({ train: detail.train, timetable: detail.timetable, stations: detail.stations, nowSod: detail.serverSod, tracker: tracker.current, connection });
     return { model, notes: detail.notes, error, detail, updatedAt: lastOk };
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [src.mode, demo.t, demo.sim, detail, error, lastOk, Math.floor(now / 5000)]);
+  }, [src.mode, src.server, src.train, demo.t, demo.sim, detail, error, lastOk, Math.floor(now / 5000)]);
 }

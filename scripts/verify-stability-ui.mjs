@@ -23,9 +23,9 @@ try{
  await p.getByRole('button',{name:'Živá mapa',exact:true}).click();await p.waitForSelector('.station-entity');await p.waitForSelector('.train-entity');
  result.icons=await p.evaluate(()=>{
  const a=document.querySelector('.map-station-symbol'),b=document.querySelector('.train-body'),c=document.querySelector('.train-cluster');
- return {stations:document.querySelectorAll('.station-entity').length,trains:document.querySelectorAll('.train-entity').length,stationColor:getComputedStyle(a).backgroundColor,stationRadius:getComputedStyle(a).borderRadius,trainHeight:getComputedStyle(b).height,trainRadius:getComputedStyle(b).borderRadius,clusterRadius:c?getComputedStyle(c).borderRadius:null};
+ return {stationGlyphs:document.querySelectorAll('.map-station-symbol>svg').length,stations:document.querySelectorAll('.station-entity').length,trains:document.querySelectorAll('.train-entity').length,stationColor:getComputedStyle(a).backgroundColor,stationRadius:getComputedStyle(a).borderRadius,trainHeight:getComputedStyle(b).height,trainRadius:getComputedStyle(b).borderRadius,clusterRadius:c?getComputedStyle(c).borderRadius:null};
  });
- if(result.icons.stationRadius!=='0px'||result.icons.trainHeight!=='34px')throw Error('New map icons missing');
+ if(!result.icons.stationGlyphs||result.icons.trainRadius!=='50%')throw Error('New map icons missing');
  await p.screenshot({path:'.deployment/regression-map.png'});
  await writeFile('docs/verification/regression-ui.json',JSON.stringify(result,null,2)+'\n');
  console.log(JSON.stringify(result,null,2));if(result.errors.length)throw Error(result.errors.join(';'));

@@ -155,3 +155,7 @@ Na přání vlastníka je nově jediným trvalým místem pro zkoušení SimRail
 TEST má samostatnou identitu, profil a zřetelné označení v titulku i přehledu verze. Veřejné aktualizace do něj nelze instalovat. Veřejný launcher ani jeho existující zástupce nejsou nahrazené a nic nebylo publikováno. Základní číslo verze se v tomto kroku nezměnilo.
 
 [Pravidla testování a vydání](TESTOVANI-A-VYDANI.md), [ověření souběžného běhu](verification/test-channel-isolation.json).
+
+
+## L. Schválená mapa A a palubní počítač — 25. 11. 2026
+Nové schválené funkce jsou pouze v trvalém SimRail Hub TEST.exe. Varianta A s barvami kategorií, lokální traťové trasy po kliknutí, ruční číslo vlaku a úplné zastavení sledování včetně OBS/mobilu, výraznější animovaný panel stanic a zpoždění. 162 testů, ověřena živá data i skutečný portable. Podrobnosti a limity: [mapa A a palubní počítač](MAPA-A-PALUBNI-PC-TEST.md). Žádná veřejná publikace, instalace, verze ani placená služba nepřibyly.

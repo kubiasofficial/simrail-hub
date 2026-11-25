@@ -75,6 +75,8 @@ export interface IpcMap {
   'mobile:start': { args: [string, string]; result: Res<{ urls: string[]; expiresAt: number }> };
   'mobile:stop': { args: []; result: Res<null> };
   'trains:list': { args: [string]; result: TrainsResult };
+  'trains:route': { args:[string,string];result:Res<import('./route').TrainRoute> };
+  'dashboard:stop': {args:[];result:Res<null>};
   'trains:detail': { args: [string, string]; result: TrainDetailResult };
   'tts:status': { args: []; result: Res<TtsStatusDto> };
   'tts:install-piper': { args: []; result: Res<null> };
@@ -103,7 +105,7 @@ export interface IpcMap {
 export type CallChannel = keyof IpcMap;
 export const CALL_CHANNELS: readonly CallChannel[] = [
   'dlc:list','update:status','update:auto-check','update:install','audio:gong','recordings:status','recordings:choose','recordings:render',
-  'stations:board', 'stations:list', 'mobile:start', 'mobile:stop', 'settings:get', 'settings:update', 'trains:list', 'trains:detail', 'tts:status', 'tts:install-piper', 'tts:install-voice', 'tts:synthesize',
+  'stations:board', 'stations:list', 'mobile:start', 'mobile:stop', 'settings:get', 'settings:update', 'trains:list', 'trains:detail', 'trains:route','dashboard:stop', 'tts:status', 'tts:install-piper', 'tts:install-voice', 'tts:synthesize',
   'tts:clear-cache', 'dict:list', 'dict:set', 'dict:delete', 'mods:list', 'mods:import', 'mods:set-enabled', 'mods:uninstall', 'mods:backup',
   'mods:backups', 'mods:restore', 'mods:active', 'dashboard:open', 'diag:info', 'diag:export-logs', 'update:check'
 ];

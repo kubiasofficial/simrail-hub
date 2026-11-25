@@ -145,3 +145,89 @@ html[data-animations="off"] *,html[data-animations="off"] *:before,html[data-ani
 
 .test-channel-badge{color:#ffcf94;background:#62411f66;border:1px solid #a5763d88;border-radius:4px;padding:2px 7px;font-size:10px;font-weight:700;letter-spacing:.06em}
 .test-build-info{display:flex;flex-direction:column;gap:9px;color:#acc6d7;font-size:12px;line-height:1.5}.test-build-info small{color:#e9bd83}
+
+/* Approved A icon language: round train, architectural square station. */
+.map-entity .rail-train.variant-a{width:28px;height:28px;transform:none;opacity:1;transition:opacity .2s}
+.map-entity .rail-train.variant-a.is-muted{opacity:.46}
+.map-entity .variant-a .train-body{position:relative;width:28px;height:28px;border-radius:50%;border:1.5px solid #f2f7ff;background:var(--category-color,#2265af);box-shadow:0 2px 6px #0008}
+.map-entity .variant-a .train-body svg{width:21px;height:21px;stroke-width:1.9}
+.map-entity .variant-a.chosen .train-body{box-shadow:0 0 0 4px #cceaff35,0 3px 8px #0008}
+.map-entity .variant-a.player .train-body:after{content:'';position:absolute;top:auto;bottom:-2px;right:-2px;width:7px;height:7px;border:1.5px solid #f3fff9;background:#39d996;border-radius:50%}
+.map-entity .variant-a .train-direction{inset:0}
+.map-entity .variant-a .ahead-arrow{left:9px;top:-13px;border-bottom-color:#fff}
+.map-entity .variant-a .train-number{left:34px;top:4px;background:#15232cf5;border-color:var(--category-color);font-size:10px;padding:2px 5px;letter-spacing:.02em}
+.map-entity .variant-a>.steam-avatar{top:-9px;right:-7px;bottom:auto;width:15px;height:15px;border:1px solid #d7ffe9;border-radius:50%}
+.map-station-symbol.variant-a{--station-tile:#f1e7cf;width:20px;height:20px;margin:4px;background:var(--station-tile);color:#283640;border:1px solid #fffaeb;border-radius:3px;box-shadow:0 2px 5px #000a;display:grid;place-items:center}
+.map-station-symbol.variant-a>svg{width:17px;height:17px;fill:currentColor;stroke:none}
+.map-station-symbol.variant-a .station-door{fill:var(--station-tile)}
+.map-station-symbol.variant-a.occupied{--station-tile:#f0c76c;border:2px solid #f7b336;box-shadow:0 2px 5px #0009}
+.map-station-symbol.variant-a.occupied:after{background:#39d996;border-color:#f0fff5}
+.map-station-symbol.variant-a .steam-avatar{top:-6px;left:23px;width:15px;height:15px;border-radius:50%;border:1px solid #ffdb94}
+.map-station-symbol.variant-a.selected,.map-station-symbol.variant-a.route-stop{box-shadow:0 0 0 3px #d6e9f244,0 2px 5px #0009}
+.map-station-symbol.variant-a .map-station-name{top:23px}
+.map-class-legend{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding-bottom:12px;border-bottom:1px solid #405467}
+.map-class-legend strong{grid-column:1/-1;font-size:11px;color:#dfedf5}
+.map-class-legend span{display:flex;align-items:center;gap:5px;font-size:10px;color:#ccdde8}.map-class-legend i{width:9px;height:9px;border-radius:50%;outline:1px solid #e6f5ff88}
+.map-route-status{position:absolute;z-index:800;bottom:62px;left:16px;width:300px;max-width:calc(100% - 75px);padding:13px 14px;border:1px solid #57788e;background:#13232ef5;border-radius:9px;box-shadow:0 8px 24px #0004;display:flex;flex-direction:column;gap:6px;font-size:12px}
+.map-route-status strong{color:#e1f1fa}.map-route-status span{color:#bcd4e4;font-size:11px}.map-route-status small,.map-route-status a{font-size:10px;color:#8eabbf}
+.map-route-status>div{display:flex;gap:7px;margin-top:3px}.map-route-status button{border:1px solid #496b84;padding:5px 8px;border-radius:5px;font-size:10px;color:#d6eaf8;background:#243c4d}.map-route-status button:hover{background:#36566d}
+.map-route-status a{text-decoration:underline;text-underline-offset:2px}.route-follow-button{width:100%;margin:14px 0 8px}
+.live-map-detail h2 .train-category-chip{font-size:11px;vertical-align:middle;margin-left:10px}
+.rail-route-future{animation:rail-route-reveal .35s ease-out}
+@keyframes rail-route-reveal{from{stroke-opacity:.15}to{stroke-opacity:1}}
+/* Onboard controls: selection is explicit and can be stopped immediately. */
+.dashboard-toolbar{display:flex;flex-direction:column;gap:12px}
+.dashboard-source{display:flex;align-items:center;gap:14px;flex-wrap:wrap}.dashboard-source h2{font-size:21px;color:#f1f7fc;font-weight:650;margin-right:auto}
+.dashboard-source>select{min-width:200px;max-width:350px}
+.source-switch{display:flex;border:1px solid #344b5a;border-radius:7px;overflow:hidden}.source-switch button{padding:7px 12px;font-size:12px;color:#91adbf}.source-switch button[aria-pressed=true]{background:#2c4657;color:#f0f8ff}
+.dashboard-controls{display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap}
+.train-picker{position:relative;flex:1;min-width:240px;max-width:420px}.train-picker form{display:flex;align-items:center;border:1px solid #57778e;border-radius:8px;background:#122431;min-height:40px;overflow:hidden}.train-picker svg{margin-left:12px;color:#96b9d0;flex-shrink:0}.train-picker input{min-width:0;width:100%;background:transparent;padding:10px;font-size:13px;color:#e9f3fc;outline:none}.train-picker:focus-within form{border-color:#a8dfff;box-shadow:0 0 0 2px #93d9ff22}.train-picker button{align-self:stretch;background:#2f5772;color:#eff9ff;padding:0 13px;font-size:12px;font-weight:600}.train-picker button:disabled{opacity:.5;cursor:default}.train-picker p{font-size:11px;color:#ffd2a9;padding-top:5px;line-height:1.4}
+.stop-watching{display:flex;gap:7px;align-items:center;min-height:40px;padding:8px 11px;border-radius:7px;border:1px solid #7a5754;color:#efc9c3;background:#48303344;font-size:12px}.stop-watching:hover:enabled{background:#6a3d4355}.stop-watching:disabled{opacity:.4;cursor:default}
+.dashboard-controls .secondary-action{min-height:40px;font-size:12px}.standalone-button{margin-left:auto}
+/* A quieter previous stop and an unmistakable next stop. */
+.journey-station-panel.journey-panel-v2{padding:22px 26px 18px;display:flex;flex-direction:column;min-height:350px;border:1px solid #456478;background:linear-gradient(130deg,#1b303d,#172731 70%);border-radius:16px}
+.journey-panel-heading{display:flex;align-items:center;gap:9px;padding-bottom:10px;font-size:10px;font-weight:600;letter-spacing:.13em;color:#90b1c8}
+.train-category-chip{display:inline-flex;align-items:center;line-height:1.2;border:1px solid;padding:3px 7px;border-radius:5px;color:#e0edf7;font-size:10px;letter-spacing:.04em;background:#0c1b2970;font-weight:650}.journey-train-number{margin-left:auto;color:#adc8da;font-variant-numeric:tabular-nums;letter-spacing:.05em}
+.journey-panel-v2 .journey-stations{position:relative;padding-left:22px;gap:0}
+.journey-panel-v2 .journey-stations:before{content:'';position:absolute;left:4px;top:17px;bottom:29px;width:1px;background:linear-gradient(#476177,#a6cde6)}
+.journey-panel-v2 .journey-stations>div{position:relative;grid-template-columns:83px minmax(0,1fr);gap:12px;padding:10px 0;min-height:43px}
+.journey-panel-v2 .journey-stations>div:before{content:'';position:absolute;left:-22px;top:18px;width:9px;height:9px;border-radius:50%;background:#567184;border:2px solid #233947}
+.journey-panel-v2 .journey-stations span{font-size:11px;color:#8cabbf}
+.journey-panel-v2 .journey-stations strong{display:block;animation:journey-station-enter .4s ease-out;overflow-wrap:anywhere}
+.journey-panel-v2 .previous-station strong{font-size:15px;color:#93aebe}
+.journey-panel-v2 .journey-stations .current-station{border-top:1px solid #3d566655;border-bottom:1px solid #3d566655;padding:13px 0}
+.journey-panel-v2 .current-station strong{font-size:21px;color:#d4e7f4;font-weight:550;letter-spacing:-.3px}
+.journey-panel-v2 .current-station.at-station strong{color:#92e5c5}
+.journey-panel-v2 .current-station.at-station:before{background:#77dcaf}
+.journey-panel-v2 .journey-stations .next-station{padding:17px 0 13px}
+.journey-panel-v2 .next-station:before{width:13px;height:13px;left:-24px;top:25px;background:#b9e6ff;border-color:#487493;box-shadow:0 0 0 4px #9ed8ff17}
+.journey-panel-v2 .next-station strong{font-size:29px;font-weight:650;line-height:1.15;letter-spacing:-.6px;color:#edf8ff}
+.journey-panel-v2 .next-station small{display:block;margin-top:7px;font-size:11px;color:#a9c5d8}.journey-panel-v2 .next-station small b{font-weight:600;color:#d4e7f4}.journey-panel-v2 .next-station small span{color:#748fa3;font-size:10px}
+.journey-panel-v2 .journey-metrics{margin-top:auto;align-items:flex-end;gap:18px;padding-top:15px;border-top:1px solid #3f5a6c88}
+.journey-panel-v2 .journey-speed{display:flex;flex-direction:column;gap:2px;align-items:flex-start}.journey-panel-v2 .journey-speed>span{font-size:10px;color:#89a9bf;letter-spacing:.05em}.journey-panel-v2 .journey-speed>div{display:flex;gap:7px;align-items:baseline}.journey-panel-v2 .journey-speed strong{font-size:42px;line-height:1.1;font-weight:600;letter-spacing:-1px;font-variant-numeric:tabular-nums}.journey-panel-v2 .journey-speed>div>span{font-size:12px;color:#9db9ce}
+.journey-panel-v2 .delay-indicator{min-width:185px;max-width:65%;padding:10px 14px;border-left-width:3px;align-items:flex-end;animation:delay-value-enter .4s ease-out}
+.journey-panel-v2 .delay-indicator strong{font-size:20px;letter-spacing:-.3px}.journey-panel-v2 .delay-indicator strong.delay-number{font-size:33px;line-height:1.1;font-variant-numeric:tabular-nums}
+.journey-panel-v2 .delay-indicator[data-severity=unknown] strong{font-size:17px}
+.journey-panel-v2 .delay-indicator[data-severity=critical]{border-color:#f17278;background:#77313a70;animation:delay-entrance .5s ease-out,delay-breathe 5s .5s ease-in-out infinite}
+.journey-panel-v2 .delay-indicator small{font-size:9px;text-align:right;line-height:1.4}
+.journey-panel-v2 .journey-updated{margin-top:10px;color:#7797ac;font-size:9px}
+.schedule-row>div{transition:background .25s,border-color .25s,box-shadow .25s}
+.schedule-row.target>div{border-color:#80bbde;background:#26495d66;box-shadow:inset 3px 0 #9bdbff}
+.schedule-row.next-stop>div{border-color:#749db5;background:#23425455}.schedule-row.next-stop>div>div:first-child>div:first-child{font-size:16px;font-weight:650;color:#e4f4ff}
+.schedule-row.standing>div{border-color:#6bceac;background:#204e3d55;box-shadow:inset 3px 0 #81e0bb}
+.schedule-row.passed{opacity:.58}
+.schedule-estimated{position:relative;font-variant-numeric:tabular-nums;font-size:17px!important}.schedule-estimated span{display:inline-block;animation:delay-value-enter .4s ease-out}.schedule-estimated:has(span:not(:empty)):before{content:'→';position:absolute;left:-12px;color:#718ea3;font-size:13px}
+@keyframes journey-station-enter{from{opacity:.35;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+@keyframes delay-value-enter{from{opacity:.6;transform:translateY(3px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:1100px){.journey-station-panel.journey-panel-v2{padding:18px}.journey-panel-v2 .next-station strong{font-size:25px}.journey-panel-v2 .journey-stations>div{grid-template-columns:72px minmax(0,1fr);gap:8px}.journey-panel-v2 .delay-indicator{min-width:165px}.dashboard-source>select{max-width:300px}.dashboard-controls .standalone-button{margin-left:0}.journey-panel-v2 .delay-indicator strong.delay-number{font-size:29px}}
+@media(max-width:850px){.journey-overview.journey-summary{grid-template-columns:170px minmax(0,1fr)!important}.journey-panel-v2 .journey-metrics{flex-wrap:wrap}.journey-panel-v2 .delay-indicator{max-width:100%;margin-left:auto}.journey-panel-v2 .next-station strong{font-size:22px}}
+
+
+.journey-panel-v2 .journey-stations>.next-station:before{width:13px;height:13px;left:-24px;top:25px;background:#b9e6ff;border-color:#487493;box-shadow:0 0 0 4px #9ed8ff17}
+
+.map-station-symbol.variant-a.station-callout{transform:translate(var(--station-dx),var(--station-dy))}
+.map-station-symbol.variant-a.station-callout:before{content:'';position:absolute;left:10px;top:10px;width:var(--leader-length);height:1px;background:#eadcbaaa;transform:rotate(var(--leader-angle));transform-origin:left center;z-index:-1;pointer-events:none}
+.map-station-symbol.variant-a.station-callout.label-above .map-station-name{top:-20px}
+
+.map-entity .train-cluster.is-muted{opacity:.36}.map-station-symbol.variant-a.is-muted{opacity:.42}
+.map-route-status{width:260px}.map-route-status .route-state-legend{display:flex;gap:15px;margin:1px 0}.route-state-legend span{display:flex;align-items:center;gap:5px;font-size:10px}.route-state-legend i{display:inline-block;width:17px;height:3px;background:#899da9;border-radius:2px}

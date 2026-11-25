@@ -53,13 +53,13 @@ function secureWindow(win: BrowserWindow): void {
 }
 
 /** Samostatné okno palubního počítače (druhý monitor / OBS – klasický rám, aby šlo zachytit okno). */
-function openDashboardWindow(server: string | null, train: string | null): void {
+function openDashboardWindow(server: string | null, train: string | null, activate=true): void {
   const previous=dashboardWindow&&!dashboardWindow.isDestroyed()?dashboardWindow:null;
   const win = previous??new BrowserWindow({ width: 1100, height: 720, minWidth: 700, minHeight: 480, backgroundColor: '#0b1220', title: runtimeIdentity.name+' – Palubní počítač', autoHideMenuBar: true, webPreferences: WEB_PREFS });
   dashboardWindow=win;if(!previous){win.once('closed',()=>{if(dashboardWindow===win)dashboardWindow=null;});secureWindow(win);}
   const q = new URLSearchParams({ ...(server ? { server } : {}), ...(train ? { train } : {}) }).toString();
   const hash = `dashboard${q ? `?${q}` : ''}`;
-  if(previous){if(win.isMinimized())win.restore();win.show();win.focus();}
+  if(previous&&activate){if(win.isMinimized())win.restore();win.show();win.focus();}
   if (isDev) void win.loadURL(`${DEV_URL}/#${hash}`);
   else void win.loadFile(join(__dirname, '../../dist/index.html'), { hash });
 }
@@ -123,7 +123,12 @@ if (!app.requestSingleInstanceLock()) {
     process.on('unhandledRejection', (e) => ctx.log.error('main', 'neošetřené odmítnutí', e));
     ctx.log.info('main', `SimRail Hub ${app.getVersion()} spuštěn`);
     registerGameIpc(() => mainWindow, ctx.settings, trustedFrame);
-    registerCallIpc(ctx, openDashboardWindow, trustedFrame);
+    registerCallIpc(ctx, openDashboardWindow, trustedFrame,()=>{
+      if(dashboardWindow&&!dashboardWindow.isDestroyed()){
+        const q=new URLSearchParams(dashboardWindow.webContents.getURL().split('?')[1]??'');
+        const code=q.get('server');openDashboardWindow(code==='demo'?null:code,null,false);
+      }
+    });
     registerServerIpc(() => mainWindow, ctx.fetchFn, trustedFrame);
     createWindow();
   }).catch(()=>{dialog.showErrorBox('SimRail Hub nelze spustit','Místní data se nepodařilo otevřít. Původní soubory zůstaly zachované. Zálohujte složku aplikace v AppData a kontaktujte podporu.');app.quit();});

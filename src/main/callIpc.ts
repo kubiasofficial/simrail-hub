@@ -1,3 +1,4 @@
+import {TrainRouteService} from '../services/TrainRouteService';
 import {runtimeIdentity} from './runtimeIdentity';
 import {net} from 'electron';
 import {DlcService} from '../services/DlcService';
@@ -24,8 +25,9 @@ const str = (v: unknown, max: number, what: string): string => {
 const serverCode=(v:unknown)=>{const s=str(v,40,'server');if(!/^[\w-]+$/.test(s))throw Error('Neplatný server.');return s;};
 const trainNumber=(v:unknown)=>{const s=str(v,12,'vlak');if(!/^\d+$/.test(s))throw Error('Neplatné číslo vlaku.');return s;};
 
-export function registerCallIpc(ctx: AppContext, openDashboard: (server: string | null, train: string | null) => void, isTrusted: (e: Electron.IpcMainInvokeEvent) => boolean): void {
+export function registerCallIpc(ctx: AppContext, openDashboard: (server: string | null, train: string | null) => void, isTrusted: (e: Electron.IpcMainInvokeEvent) => boolean,stopDashboard:()=>void=()=>{}): void {
   const { settings, tracking, tts, mods, log } = ctx;
+  const routes = new TrainRouteService(tracking,join(__dirname,'../../dist/data/rail-network.json'));
   const mobile = new MobileServer(tracking, join(__dirname, '../../dist'));
   const dlc=new DlcService(async(url,init)=>{const r=await net.fetch(url,init);return {ok:r.ok,status:r.status,text:()=>r.text()};});
 
@@ -72,6 +74,8 @@ export function registerCallIpc(ctx: AppContext, openDashboard: (server: string 
   on('mobile:start', (code, train) => safe('mobile', () => mobile.start(serverCode(code), trainNumber(train))));
   on('mobile:stop', () => safe('mobile', async () => { mobile.stop(); return null; }));
   on('trains:list', (code) => tracking.getTrains(serverCode(code)));
+  on('trains:route',(code,num)=>safe('trasa',()=>routes.get(serverCode(code),trainNumber(num))));
+  on('dashboard:stop',()=>safe('okno',async()=>{stopDashboard();return null;}));
   on('trains:detail', (code, num) => tracking.getDetail(serverCode(code), trainNumber(num)));
 
   on('tts:status', () => safe('tts', () => tts.status()));

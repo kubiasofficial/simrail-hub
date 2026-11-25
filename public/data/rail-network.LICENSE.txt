@@ -1,0 +1,9 @@
+Rail-network dataset: copyright OpenStreetMap contributors.
+Data licensed under the Open Database License 1.0 (ODbL):
+https://opendatacommons.org/licenses/odbl/1-0/
+Attribution and original source: https://www.openstreetmap.org/copyright
+Derived railway graph, simplified to 7 metres, largest connected component.
+Bounding box and original OSM timestamp are embedded in rail-network.json.
+Prepared with scripts/prepare-rail-network.py from the Overpass API railway=rail extract.
+This data licence is independent of the application's source-code licence.
+Routing is an approximate railway path between known timetable points, not official SimRail track-level routing.

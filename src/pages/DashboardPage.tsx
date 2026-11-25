@@ -1,5 +1,6 @@
+import {TrainPicker} from '@/components/TrainPicker';
+import {JourneyPanel} from '@/components/JourneyPanel';
 import {useVisualActivity} from '@/hooks/useVisualActivity';
-import {delaySeverity} from '@/services/delayPresentation';
 import { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import { ArrowDown, ExternalLink, Megaphone, Pause, Play, RotateCcw, SkipForward, Square, TrainFront, TriangleAlert, Wifi, WifiOff } from 'lucide-react';
 import {ServiceAnnouncementPanel} from '@/components/ServiceAnnouncementPanel';
@@ -18,19 +19,7 @@ import type { Train } from '@/types/trains';
 import { isFreightTrain } from '@/services/trainPurpose';
 
 const NA = 'Nedostupné';
-const DELAY_STYLE: Record<DelayClass, string> = {
-  none: 'border-slate-600/50 bg-slate-500/10 text-slate-300',
-  ontime: 'border-slate-500/50 bg-slate-500/15 text-slate-200',
-  early: 'border-emerald-500/50 bg-emerald-500/15 text-emerald-300',
-  late: 'border-amber-400/50 bg-amber-400/15 text-amber-300',
-  verylate: 'border-red-500/50 bg-red-500/15 text-red-300'
-};
 const DELAY_TEXT: Record<DelayClass, string> = { none: 'text-slate-400', ontime: 'text-slate-200', early: 'text-emerald-300', late: 'text-amber-300', verylate: 'text-red-300' };
-const fmtDelay = (m: OnboardModel) => {
-  if(m.delayMin === null) return 'Nelze určit';
-  if(m.delayKind === 'estimate') return m.delayMin > 0 ? '≥ +' + m.delayMin + ' min' : 'Zatím bez zpoždění';
-  return m.delayMin === 0 ? 'Podle jízdního řádu' : (m.delayMin > 0 ? '+' : '−') + Math.abs(m.delayMin) + ' min';
-};
 
 function Conn({ c }: { c: OnboardModel['connection'] }) {
   const map = { live: ['Online', 'text-emerald-300', Wifi], stale: ['Zastaralá data', 'text-amber-300', WifiOff], lost: ['Spojení ztraceno', 'text-red-300', WifiOff], demo: ['DEMO', 'text-amber-300', Wifi] } as const;
@@ -62,13 +51,15 @@ export function DashboardPage({ standalone = false, active = true }: { standalon
   const [trains, setTrains] = useState<Train[]>([]);
   const [listError, setListError] = useState<string | null>(null);
 
-  // v samostatném okně se zdroj čte z adresy (#dashboard?server=…&train=…)
+  // Reused OBS windows receive a new hash without necessarily remounting React.
   useEffect(() => {
     if (!standalone) return;
-    const q = new URLSearchParams(location.hash.split('?')[1] ?? '');
-    const server = q.get('server');
-    sel.set(server === 'demo' ? { mode: 'demo' } : { mode: 'live', server, train: q.get('train') });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    const readSource=()=>{
+      const q=new URLSearchParams(location.hash.split('?')[1]??''),server=q.get('server');
+      useSelection.getState().set(server==='demo'?{mode:'demo',train:null}:{mode:'live',server,train:q.get('train')});
+    };
+    readSource();window.addEventListener('hashchange',readSource);
+    return()=>window.removeEventListener('hashchange',readSource);
   }, [standalone]);
 
   useEffect(() => { void refresh(false); void ann.reloadContent(); }, [refresh]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -119,41 +110,30 @@ export function DashboardPage({ standalone = false, active = true }: { standalon
     ann.announce(`manual:${Date.now()}`, kind, { station, delayMin: m.delayMin ?? undefined,trainNumber:m.trainNumber,isFreight:freight });
   }, [m, ann, freight]);
 
+  const stopWatching=()=>{
+    ann.stop();ann.resetRun();trigger.current.reset();demo.setRunning(false);
+    sel.set({mode:'live',train:null});
+    void window.simrailHub!.call('mobile:stop').catch(()=>undefined);
+    void window.simrailHub!.call('dashboard:stop').catch(()=>undefined);
+  };
+
   const field = 'rounded-lg border border-line bg-ink-800 px-3 py-1.5 text-sm text-slate-200 outline-none focus:border-sky-brand';
 
   return (
     <div className={`mx-auto flex max-w-6xl flex-col gap-4 ${standalone ? 'p-5' : ''}`}>
       {/* zdroj dat */}
-      {!standalone && (
-        <div className="flex flex-wrap items-center gap-3">
-          <h2 className="mr-2 text-xl font-semibold text-white">Palubní počítač</h2>
-          <div className="flex overflow-hidden rounded-lg border border-line text-sm">
-            <button onClick={() => sel.set({ mode: 'live' })} className={`px-3 py-1.5 ${!isDemo ? 'bg-sky-brand/20 text-white' : 'text-slate-400'}`}>Živá data</button>
-            <button onClick={() => { sel.set({ mode: 'demo' }); demo.restart(); }} className={`px-3 py-1.5 ${isDemo ? 'bg-amber-500/25 text-amber-200' : 'text-slate-400'}`}>DEMO</button>
-          </div>
-          {!isDemo && (
-            <>
-              <select className={field} aria-label="Server" value={server ?? ''} onChange={(e) => sel.set({ server: e.target.value, train: null })}>
-                {servers.length === 0 && <option value="">Servery nejsou dostupné</option>}
-                {servers.map((s) => <option key={s.code} value={s.code}>{s.name}</option>)}
-              </select>
-              <select className={`${field} min-w-56`} aria-label="Vlak" value={sel.train ?? ''} onChange={(e) => sel.set({ train: e.target.value || null })}>
-                <option value="">{trains.length ? 'Vyberte vlak ručně…' : listError ? NA : 'Žádné vlaky'}</option>
-                {[...trains].sort((a, b) => (a.type === 'user' ? 0 : 1) - (b.type === 'user' ? 0 : 1) || a.number.localeCompare(b.number)).map((t) => (
-                  <option key={t.id} value={t.number}>{t.number}{t.name ? ` – ${t.name}` : ''}{t.type === 'user' ? ' (hráč)' : ''}</option>
-                ))}
-              </select>
-            </>
-          )}
-          {!isDemo && <MobilePairing server={server} train={sel.train}/>}
-          <button
-            onClick={() => void window.simrailHub!.call('dashboard:open', isDemo ? 'demo' : server, isDemo ? null : sel.train)}
-            disabled={!isDemo && !sel.train}
-            title="Otevře palubní počítač v samostatném okně (druhý monitor, OBS)"
-            className="ml-auto flex items-center gap-2 rounded-lg border border-line px-3 py-1.5 text-sm text-slate-200 hover:bg-white/5 disabled:opacity-40"
-          ><ExternalLink size={14} /> Samostatné okno</button>
-        </div>
-      )}
+      {!standalone && <div className="dashboard-toolbar">
+        <div className="dashboard-source"><h2>Palubní počítač</h2><div className="source-switch">
+        <button onClick={()=>sel.set({mode:'live'})} aria-pressed={!isDemo}>Živá data</button>
+        <button onClick={()=>{sel.set({mode:'demo'});demo.restart();demo.setRunning(true);}} aria-pressed={isDemo}>DEMO</button></div>
+        {!isDemo&&<select className={field} aria-label="Server" value={server??''} onChange={e=>{ann.stop();sel.set({server:e.target.value,train:null});}}>
+        {!servers.length&&<option value="">Servery nejsou dostupné</option>}{servers.map(s=><option key={s.code} value={s.code}>{s.name}</option>)}</select>}</div>
+        <div className="dashboard-controls">
+        {!isDemo&&<TrainPicker server={server} trains={trains} selected={sel.train} onSelect={train=>{ann.stop();sel.set({train});}}/>}
+        <button className="stop-watching" onClick={stopWatching} disabled={!isDemo&&!sel.train}><Square size={14}/>Přestat sledovat</button>
+        {!isDemo&&<MobilePairing server={server} train={sel.train}/>}
+        <button className="secondary-action standalone-button" onClick={()=>void window.simrailHub!.call('dashboard:open',isDemo?'demo':server,isDemo?null:sel.train)} disabled={!isDemo&&!sel.train}><ExternalLink size={14}/>Samostatné okno</button>
+        </div></div>}
 
       {listError && !isDemo && <div role="alert" className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-3 text-sm text-amber-100">{listError}</div>}
 
@@ -170,9 +150,7 @@ export function DashboardPage({ standalone = false, active = true }: { standalon
           {isDemo && <div className="rounded-xl bg-amber-500/90 px-4 py-1.5 text-center text-sm font-bold text-ink-950">DEMO – simulovaná data, nejde o skutečný vlak</div>}
 
           <section className="journey-overview journey-summary"><div className="train-compact"><VehicleCard vehicles={feed.detail?.train?.vehicles??[]} number={m.trainNumber}/><p>{m.start??'—'} → {m.end??'—'}</p><Conn c={m.connection}/></div>
-          <div className="journey-station-panel"><div className="journey-stations"><div><span>Předchozí</span><strong key={'previous:'+m.previous}>{m.previous??'—'}</strong></div><div className="current-station"><span>Aktuální</span><strong key={'current:'+m.current}>{m.current??(m.phase==='moving'?'Mezi stanicemi':m.phase==='standing-unknown'?'Stojí mimo potvrzenou stanici':'—')}</strong></div><div><span>Následující</span><strong key={'next:'+m.next}>{m.next??'—'}</strong></div></div>
-          <div className="journey-metrics"><div className="journey-speed"><strong>{m.speedKmh===null?'—':Math.round(m.speedKmh)}</strong><span>km/h</span></div><div className="delay-indicator" data-severity={m.delayKind==='estimate'?'unknown':delaySeverity(m.delayMin)} key={m.delayKind+':'+delaySeverity(m.delayMin)} role="status"><span>Zpoždění{m.delayKind==='estimate'?' · odhad':''}</span><strong>{fmtDelay(m)}</strong>{m.delayKind==='estimate'?<small>Čekám na první průjezd · předběžný údaj</small>:m.delayKind==='observed'?<small>{(m.delayMin??0)>20?'Výrazné zpoždění · poslední průjezd':'Podle posledního průjezdu'}</small>:<small>Chybí aktuální čas nebo jízdní řád</small>}</div></div>
-          <small className="journey-updated">{feed.updatedAt?'Poslední data '+new Date(feed.updatedAt).toLocaleTimeString('cs-CZ'):'Čekám na data'}</small></div></section>
+          <JourneyPanel model={m} train={feed.detail?.train??null} updatedAt={feed.updatedAt}/></section>
           <div className="grid grid-cols-[1fr_20rem] gap-4">
             {/* seznam stanic */}
             <div className="panel rounded-2xl p-4">
@@ -181,7 +159,7 @@ export function DashboardPage({ standalone = false, active = true }: { standalon
               ) : (
                 <><div className="schedule-heading"><strong>Jízdní řád</strong><button className="secondary-action" onClick={() => setShowPassed(!showPassed)}>{showPassed ? 'Skrýt projeté stanice' : 'Zobrazit projeté stanice'}</button><button className="secondary-action" onClick={() => activeRow.current?.scrollIntoView({block:'center',behavior:'smooth'})}>Aktuální poloha</button></div><div className="schedule-columns"><span>Stanice</span><span>Plán</span><span>Odhad</span></div><ol className="relative">
                   {m.rows.filter(r => showPassed || r.status !== 'passed').map((r) => (
-                    <li ref={r.status === 'target' ? activeRow : undefined} key={r.index} className="relative pl-8">
+                    <li ref={r.status === 'target' ? activeRow : undefined} key={r.index} className={'relative pl-8 schedule-row '+r.status+(r.standing?' standing':'')+(r.passengerStop&&r.name===m.next?' next-stop':'')}>
                       <span className="absolute bottom-0 left-[11px] top-0 w-px bg-line" />
                       {r.status === 'target' && m.phase === 'moving' && (
                         <span className="absolute -top-1 left-[3px] z-10 text-sky-soft" aria-hidden><ArrowDown size={16} className="flow-arrow" /></span>
@@ -196,7 +174,7 @@ export function DashboardPage({ standalone = false, active = true }: { standalon
                           {r.isStop === null && <div className="text-[10px] text-slate-600">typ zastavení neznámý</div>}
                         </div>
                         <div className="w-24 text-right text-xs text-slate-400">{r.arrival ? <div>příj. {r.arrival}</div> : null}{r.departure ? <div>odj. {r.departure}</div> : null}</div>
-                        <div className={`w-20 text-right text-sm font-medium ${r.estimated ? DELAY_TEXT[m.delayClass] : 'text-slate-600'}`}>{r.status !== 'passed' && r.estimated ? r.estimated : ''}</div>
+                        <div className={`schedule-estimated w-20 text-right text-sm font-medium ${r.estimated ? DELAY_TEXT[m.delayClass] : 'text-slate-600'}`}><span key={r.estimated}>{r.status !== 'passed' && r.estimated ? r.estimated : ''}</span></div>
                       </div>
                     </li>
                   ))}
