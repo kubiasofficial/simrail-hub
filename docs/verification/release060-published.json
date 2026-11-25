@@ -1,0 +1,18 @@
+{
+  "verifiedAt": "2026-11-25T16:23:11.506897+00:00",
+  "version": "0.6.0",
+  "releaseCommit": "6ba70e51172546408dca3b9c761ffa9ab2e17abc",
+  "release": "https://github.com/kubiasofficial/simrail-hub/releases/tag/v0.6.0",
+  "publishedAt": "2026-11-25T16:21:15Z",
+  "latest": true,
+  "publicAssetDigestsMatch": true,
+  "publicUpdateManifestMatches": true,
+  "hosting": "https://simrail-hub-kubias.web.app",
+  "hostingVersionVerified": "0.6.0",
+  "testsPassed": 167,
+  "mobileVerifiedInBrowser": true,
+  "physicalPhoneVerified": false,
+  "privateAudioBundled": false,
+  "testChannelSeparate": true,
+  "releaseWorkflow": "Types, tests and build passed. GitHub API failed during release creation; recovered using the verified local distribution and bounded idempotent publication. All remote file digests were verified before publication."
+}
