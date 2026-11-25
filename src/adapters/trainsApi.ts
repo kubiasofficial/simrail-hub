@@ -103,8 +103,9 @@ export function parseSod(s: string | null): number | null {
 }
 
 /**
- * Čas serveru → sekundy od půlnoci. Formát odpovědi getTime jsme z veřejné dokumentace neověřili,
- * proto přijímáme epoch (s/ms) i text s časem; epoch převádíme do času Europe/Warsaw (PŘEDPOKLAD).
+ * getTime encodes the simulated wall clock as an epoch value. Its UTC clock
+ * fields match timetable wall times (verified against live CZ1 runs 2026-11-25).
+ * Applying the computer/Warsaw timezone introduces a false +60/+120 min delay.
  */
 export function serverTimeToSod(json: unknown): number | null {
   let v: unknown = json;
@@ -113,9 +114,9 @@ export function serverTimeToSod(json: unknown): number | null {
   if (typeof v === 'number' && Number.isFinite(v)) {
     const ms = v > 1e11 ? v : v > 1e9 ? v * 1000 : null;
     if (ms === null) return null;
-    const parts = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Warsaw', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23' }).formatToParts(new Date(ms));
-    const g = (t: string) => Number(parts.find((p) => p.type === t)?.value);
-    return g('hour') * 3600 + g('minute') * 60 + g('second');
+    const date = new Date(ms);
+    if (!Number.isFinite(date.getTime())) return null;
+    return date.getUTCHours() * 3600 + date.getUTCMinutes() * 60 + date.getUTCSeconds();
   }
   return typeof v === 'string' ? parseSod(v) : null;
 }

@@ -1,0 +1,120 @@
+{
+  "at": "2026-11-25T13:37:35.527Z",
+  "errors": [],
+  "tileResponses": [
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200
+  ],
+  "version": "0.5.0",
+  "fixtures": false,
+  "trainCount": 151,
+  "samples": [
+    {
+      "number": "1307",
+      "runMatches": true,
+      "points": 34,
+      "stations": 69,
+      "serverSod": 52655,
+      "index": 19,
+      "target": "Starzyny",
+      "arrival": "2026-11-25 14:42:48",
+      "notes": []
+    },
+    {
+      "number": "1409",
+      "runMatches": true,
+      "points": 34,
+      "stations": 69,
+      "serverSod": 52655,
+      "index": 30,
+      "target": "Katowice Zawodzie",
+      "arrival": "2026-11-25 14:36:36",
+      "notes": []
+    },
+    {
+      "number": "1411",
+      "runMatches": true,
+      "points": 34,
+      "stations": 69,
+      "serverSod": 52655,
+      "index": 7,
+      "target": "Grodzisk Mazowiecki",
+      "arrival": "2026-11-25 14:41:18",
+      "notes": []
+    },
+    {
+      "number": "1609",
+      "runMatches": true,
+      "points": 21,
+      "stations": 69,
+      "serverSod": 52655,
+      "index": 13,
+      "target": "Opoczno Południe",
+      "arrival": "2026-11-25 14:41:42",
+      "notes": []
+    },
+    {
+      "number": "1663",
+      "runMatches": true,
+      "points": 25,
+      "stations": 69,
+      "serverSod": 52655,
+      "index": 1,
+      "target": "Warszawa Wschodnia",
+      "arrival": "2026-11-25 14:32:00",
+      "notes": []
+    },
+    {
+      "number": "1937",
+      "runMatches": true,
+      "points": 23,
+      "stations": 69,
+      "serverSod": 52655,
+      "index": 9,
+      "target": "Radziwiłłów Mazowiecki",
+      "arrival": "2026-11-25 14:37:30",
+      "notes": []
+    }
+  ],
+  "initialDelay": "SNÍMEK ZE HRY · VARIANTA\nED250 Pendolino · 1307\nED250-001\nZdroj: SimRail Wiki ↗\n\nWarszawa Grochów → Kraków Płaszów\n\nOnline\nPředchozí\nWarszawa Zachodnia\nAktuální\nMezi stanicemi\nNásledující\nKraków Główny\n100\nkm/h\nZpoždění\nNedostupné\nPoslední data 14:37:36",
+  "packagedLanguageClosed": true,
+  "mobile": {
+    "paired": true,
+    "status": 200,
+    "points": 34,
+    "hasTimetable": true,
+    "delayMin": null
+  },
+  "map": {
+    "stations": 69,
+    "trains": 3,
+    "loadedTiles": 24,
+    "stationShape": "0px",
+    "trainHeight": "34px"
+  },
+  "privateAudioBundled": false,
+  "versionUnchanged": true,
+  "published": false
+}

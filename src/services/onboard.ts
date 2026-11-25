@@ -41,16 +41,17 @@ export class DelayTracker {
   private observed: { index: number; delaySec: number } | null = null;
 
   observe(runKey: string, index: number | null, nowSod: number | null, points: TimetablePoint[]): void {
-    if (runKey !== this.run) { this.run = runKey; this.lastIndex = null; this.observed = null; }
-    if(nowSod===null){this.observed=null;this.lastTime=null;return;}
+    if (runKey !== this.run) { this.run = runKey; this.lastIndex = null; this.lastTime = null; this.observed = null; }
+    if(nowSod===null||index===null||!Number.isInteger(index)||index<0||index>=points.length){this.observed=null;this.lastTime=null;this.lastIndex=null;return;}
     if((this.lastTime!==null&&Math.abs(diffSod(nowSod,this.lastTime))>120)||(index!==null&&this.lastIndex!==null&&index<this.lastIndex)){this.observed=null;this.lastIndex=null;}
     this.lastTime=nowSod;
     if (index === null) return;
-    if (this.lastIndex !== null && index > this.lastIndex && nowSod !== null) {
+    if (this.lastIndex !== null && index === this.lastIndex + 1 && nowSod !== null) {
       const p = points[index - 1];
       const s = p ? sched(p, 'departure') : null;
       if (s !== null) this.observed = { index: index - 1, delaySec: diffSod(nowSod, s) };
     }
+    if(this.lastIndex!==null&&index>this.lastIndex+1)this.observed=null;
     this.lastIndex = index;
   }
 
@@ -58,11 +59,8 @@ export class DelayTracker {
   current(points: TimetablePoint[], index: number | null, nowSod: number | null): { min: number; kind: 'observed' | 'estimate' } | null {
     if(nowSod===null||index===null)return null;
     if (this.observed) return { min: Math.round(this.observed.delaySec / 60), kind: 'observed' };
-    if (nowSod !== null && index !== null && points[index]) {
-      const s = sched(points[index], 'arrival');
-      // Bez pozorovaného průjezdu je to jen odhad: zpoždění vidíme, jakmile je vlak za plánovaným časem; jinak „zatím bez zpoždění“.
-      if (s !== null) { const late = diffSod(nowSod, s); return { min: late > 30 ? Math.ceil(late / 60) : 0, kind: 'estimate' }; }
-    }
+    // The upcoming point cannot prove an actual delay on first selection.
+    // Wait for a continuously observed index transition; never invent "on time".
     return null;
   }
 }
@@ -92,8 +90,8 @@ const AT_STATION_M = 300;
 export function computeOnboard(i: { train: Train; timetable: Timetable | null; stations: StationCoord[]; nowSod: number | null; tracker: DelayTracker; connection: Connection }): OnboardModel {
   const { train, timetable, stations, nowSod, tracker, connection } = i;
   const points = timetable?.points ?? [];
-  const idx = train.timetableIndex !== null && points.length ? Math.min(Math.max(train.timetableIndex, 0), points.length - 1) : null;
-  tracker.observe(train.runId ?? train.number, idx, nowSod, points);
+  const idx = train.timetableIndex !== null && Number.isInteger(train.timetableIndex) && train.timetableIndex >= 0 && train.timetableIndex < points.length ? train.timetableIndex : null;
+  tracker.observe(train.runId ?? train.number, idx, connection === 'live' || connection === 'demo' ? nowSod : null, points);
   const d = tracker.current(points, idx, nowSod);
 
   // Cílový bod pro cestující = pouze potvrzený PH od aktuálního indexu.

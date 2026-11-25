@@ -1,0 +1,21 @@
+{
+  "at": "2026-11-25T13:39:29.924Z",
+  "realPortable": true,
+  "errors": [],
+  "version": "0.5.0",
+  "updateMode": "manual",
+  "number": "1307",
+  "points": 34,
+  "stations": 69,
+  "serverSod": 52769,
+  "notes": [],
+  "languageClosed": true,
+  "map": {
+    "stationRadius": "0px",
+    "trainHeight": "34px",
+    "directionArrows": 1,
+    "tiles": 24
+  },
+  "installed": false,
+  "published": false
+}

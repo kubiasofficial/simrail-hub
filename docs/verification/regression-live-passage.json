@@ -1,0 +1,14 @@
+{
+  "observed": {
+    "at": "2026-11-25T13:40:38.481Z",
+    "server": "cz1",
+    "number": "3730",
+    "initialIndex": 9,
+    "currentIndex": 10,
+    "delayMin": -1,
+    "kind": "observed",
+    "sourceDeparture": "2026-11-25 14:41:06",
+    "serverSod": 52835
+  },
+  "watched": 12
+}

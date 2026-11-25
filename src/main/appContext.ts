@@ -1,6 +1,6 @@
 import {Readable,Transform} from 'node:stream';
 import {pipeline} from 'node:stream/promises';
-import {SharedApiFetch} from '../services/SharedApiFetch';
+import {apiBodyLimit,SharedApiFetch} from '../services/SharedApiFetch';
 import { app, net, BrowserWindow } from 'electron';
 import { join } from 'node:path';
 import { createHash } from 'node:crypto';
@@ -35,7 +35,15 @@ export function createContext(): AppContext {
   const fixtures = !app.isPackaged && process.argv.includes('--docs-fixtures');
   const netFetch: FetchLike = async (url, init) => {
     const r = await net.fetch(url, init);
-    return { ok: r.ok, status: r.status, text: () => r.text() };
+    return { ok: r.ok, status: r.status, text: async () => {
+      const reader=r.body?.getReader(); if(!reader)return '';
+      const decoder=new TextDecoder(),chunks:string[]=[];let bytes=0;
+      try { for(;;){const part=await reader.read();if(part.done)break;
+        bytes+=part.value.byteLength;if(bytes>apiBodyLimit(url)){await reader.cancel();throw Error('Odpověď API je příliš velká.');}
+        chunks.push(decoder.decode(part.value,{stream:true}));
+      }chunks.push(decoder.decode());return chunks.join('');}
+      finally{reader.releaseLock();}
+    } };
   };
   const fetchFn: FetchLike = new SharedApiFetch(fixtures ? fixtureFetch : netFetch).fetch;
   const modsDir = join(userData, 'mods');

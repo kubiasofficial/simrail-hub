@@ -1,6 +1,6 @@
 # Audit a stabilizace SimRail Hub 0.5.0
 24. 11. 2026, pracovní větev audit/local-only-stabilization. Výchozí veřejný commit be75540.
-Číslo verze se nezměnilo. Neproběhl push, vydání, instalace této pracovní verze ani deployment. Vzhled launcheru zůstal zachovaný.
+Číslo verze se nezměnilo. Neproběhl push, vydání, instalace této pracovní verze ani deployment. Původní audit zachoval vzhled; následná oprava na žádost vlastníka odlišuje mapové značky vlaků a stanic.
 
 ## A. Co bylo odstraněno
 - CloudAccount, cloudConfig, CloudAccountPanel, karta Účet, přihlášení/registrace/reset hesla a všechny cloudové IPC kanály z main, typů i preload whitelistu.
@@ -75,7 +75,7 @@ Dlouhé měřicí běhy se ukončily uzavřením testovacích oken před závěr
 Dodatečně byl ověřen samotný reprodukovatelný skript nad finálním balíčkem krátkým během (167 s, completed=true, požadovaný krátký interval 60 s). Tento výsledek není třicetiminutovým měřením. home-idle: 438.6 MiB / 0.203 % CPU; map: 463.2 MiB / 0.254 % CPU; dashboard: 477.4 MiB / 0.462 % CPU; minimized: 476.1 MiB / 0.243 % CPU; long-run-end: 478.5 MiB / 0.087 % CPU. Rozdílná paměť oproti dřívějším vzorkům dále ukazuje, že obecné snížení RAM nebylo prokázané. [Výsledek krátkého běhu](verification/audit-perf-manual-short.json).
 
 ## E. Testování
-- Poslední dokončený běh: 143 úspěšných testů, 0 neúspěšných, 20 testovacích souborů. Výchozí veřejná verze měla 122 testů; odstranily se 4 cloudově specifické testy a přibylo 25 regresních případů.
+- Původní auditní běh: 143 úspěšných testů, 0 neúspěšných, 20 testovacích souborů. Po opravě regresí 25. 11. 2026: 151 úspěšných testů ve 21 souborech. Výchozí veřejná verze měla 122 testů; odstranily se 4 cloudově specifické testy a přibylo 25 regresních případů.
 - npm run typecheck a npm run build prošly. Vite hlásí hlavní JS chunk přibližně 586 kB; nerozděloval se naslepo bez měření přínosu.
 - Electron UI: bez chyb rendereru; chybí karta účtu, cloudové IPC je odmítnuté. Během minimalizace bylo 0 mutací markerové vrstvy při současném pokračování dat. Lokální WAV dohrál i při minimalizaci. Opakované otevření druhého okna zachovalo jeho ID.
 - Skutečný Piper: český model vytvořil 3,79 s WAV, polský model 2,86 s WAV. Oba modely i konfigurace prošly SHA-256 kontrolou a čerstvá syntéza vytvořila nenulový výstup. Soukromé uživatelské soubory se nezměnily.
@@ -111,6 +111,24 @@ Pracovní větev je připravená k vlastníkově kontrole a lokálnímu vyzkouš
 
 Nové číslo verze, merge do produkční větve, push, publikace GitHub Release, instalace a deployment webu jsou samostatná rozhodnutí vlastníka. V tomto úkolu neproběhla.
 
-Lokální soubory pro vlastníkovu kontrolu jsou v .deployment/audit-complete. Nejsou veřejným vydáním a instalátor nebyl spuštěný.
+Původní .deployment/audit-complete obsahuje později nahlášené regrese. Pro další kontrolu použijte novou portable aplikaci z .deployment/oprava-k-overeni (kopie TEST-SimRail-Hub-opravy.exe v nadřazené projektové složce). Nejde o veřejné vydání a instalátor nebyl spuštěný.
 
 Podklady: [integrita distribuce](verification/audit-distribution.json), [balíčky](verification/audit-packaged.json), [portable](verification/audit-portable.json), [UI](verification/audit-ui.json), [Piper](verification/audit-tts.json), [inventura](verification/audit-cloud-inventory.json), [migrace](CLOUD-MIGRATION.md), [měřicí postup](PERFORMANCE.md).
+
+
+## I. Oprava nahlášených regresí — 25. 11. 2026
+Předchozí ověření serverového seznamu nezachytilo chybu skutečných jízdních řádů ani nativní přetahovací oblasti v jazykovém dialogu. Tato část doplňuje a opravuje původní závěry.
+
+- **Jazykové okno:** dialog byl potomkem titulku Electronu s app-region:drag. Je nyní portálem přímo v body a celý dialog i potomci mají no-drag. Prošly X, Escape, pozadí, změna jazyka i skutečné Win32 kliky.
+- **Jízdní řády:** živá odpověď CZ1 měla 21 234 384 znaků, nad chybným limitem 20 MiB. GetAllTimetables má nyní samostatný limit 64 MiB; ostatní odpovědi 20 MiB. Síťový adaptér počítá skutečné bajty během čtení a nadlimitní proud ruší. Velký JSON se neparsuje dvakrát a neukládá se jeho další dlouhodobá kopie.
+- **Falešné zpoždění:** getTime vracel epochu s UTC poli odpovídajícími herním časům jízdního řádu. Převod Europe/Warsaw přidával v zimě hodinu (v létě by přidal dvě). Oprava používá UTC pole, nikoli časové pásmo počítače. Porovnání na šesti živých jízdách CZ1 je uložené bez osobních údajů.
+- **Jistota zpoždění:** po prvním výběru se ukazuje neznámá hodnota, dokud není pozorován navazující průjezd. Skok více bodů, obrácení indexu, ztráta času, stará data nebo jiná jízda ruší pozorování. API index se nepřisazuje k poslední stanici. Známé runId musí přesně odpovídat jízdnímu řádu; samotné shodné číslo nestačí. Automatická omluva se spouští jen z pozorovaného zpoždění, interval 15 minut zůstává.
+- **Skutečný průjezd:** 25. 11. 2026 ve 14:40:38 pražského času prošel vlak 3730 z indexu 9 na 10. Plán průjezdního bodu Łazy Łc 14:41:06, serverový čas 14:40:35, výsledek −1 minuta, nikoli falešných přibližně +59. Nejde o nezávislé měření uvnitř hry.
+- **Mapa:** modrá protáhlá silueta vlaku s šipkou před ním, zelený hráčský bod/avatar; slonovinový čtverec stanice, zlatá obsazená stanice s avatarem vedle symbolu, kruhové skupiny. Textové značky sdílí mřížku pro omezení překryvů. Pohyb aktualizuje existující markery.
+- **Skutečný portable EXE:** spuštěn v izolovaném profilu bez instalace. Načetl jízdní řád 34 bodů, 69 stanic, mapové dlaždice HTTP 200, nové tvary i směrovou šipku. Zabalená aplikace zvlášť ověřila šest živých jízdních řádů a mobilní párování → cookie → /api/state se skutečným jízdním řádem.
+- **Další kontroly:** typy a sestavení prošly, zvuk dohrál při minimalizaci, vizuální mapa při minimalizaci nemutovala DOM a data se přitom aktualizovala. Kontrola ASAR nepotvrdila soukromé WAV/M4A ani odstraněný cloudový kód.
+- **Limity ověření:** fyzický telefon na Wi-Fi, dlouhodobý běh s hrou a OBS zůstávají k ověření. Budoucí tratě nejsou domýšlené ani přidané bez ověřené geometrie. Nepřibyly placené služby.
+
+Opakování: npm run test; npm run typecheck; npm run build. UI po sestavení: node scripts/verify-stability-ui.mjs. Pro již připravenou distribuci: node scripts/verify-stability-packaged.mjs .deployment/oprava-k-overeni. Skripty používají oddělené testovací profily, automatická hlášení vypínají a vlastní okna zavírají.
+
+Důkazy: [UI](verification/regression-ui.json), [nativní myš](verification/regression-native-input.json), [živá zabalená aplikace](verification/regression-packaged-live.json), [skutečný portable](verification/regression-portable.json), [pozorovaný průjezd](verification/regression-live-passage.json).

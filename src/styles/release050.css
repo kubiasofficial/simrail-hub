@@ -119,3 +119,23 @@ html[data-animations="off"] *,html[data-animations="off"] *:before,html[data-ani
 .map-base-osm-dark{filter:grayscale(1) invert(.92) brightness(.72) contrast(.93)}
 .map-base-light{filter:grayscale(.94) brightness(1.06) contrast(.86)}
 .live-map-detail .vehicle-card{border-radius:0}
+
+
+/* Dialogs must never inherit Electron's native titlebar drag region. */
+.language-panel,.language-panel *,.language-panel::backdrop{-webkit-app-region:no-drag}
+
+/* Distinct silhouettes: blue train capsule, ivory square station, round cluster. */
+.map-entity .rail-train{width:26px;height:34px;transform:translateY(-4px)}
+.map-entity .train-body{width:26px;height:34px;border:1.5px solid #d2efff;border-radius:12px 12px 7px 7px;background:linear-gradient(#318bca,#155285);box-shadow:0 3px 8px #0009}
+.map-entity .player .train-body{background:linear-gradient(#318bca,#155285);border-color:#b9f7df}
+.map-entity .player .train-body::after{content:'';position:absolute;right:-2px;top:-2px;width:7px;height:7px;border-radius:50%;background:#63e6ad;border:1px solid #12372c}
+.map-entity .train-direction{inset:0 0 8px}
+.map-entity .ahead-arrow{top:-13px;left:8px}
+.map-entity .train-number{top:8px;left:32px;background:#102c40f2;border-color:#5b9fc9}
+.map-station-symbol{width:18px;height:18px;margin:4px;border:2px solid #fff1cf;border-radius:0;background:#f2e7cd;box-shadow:0 2px 5px #000b,inset 0 0 0 4px #283641}
+.map-station-symbol.occupied{background:#f5c46a;border-color:#ffe4a0;box-shadow:0 2px 5px #000b,inset 0 0 0 4px #443825}
+.map-station-symbol.occupied::after{content:'';position:absolute;right:-5px;top:-5px;width:6px;height:6px;border-radius:50%;background:#64e4ab;border:1px solid #14392b}
+.map-station-symbol .steam-avatar{left:20px;top:-5px;width:18px;height:18px;border-radius:4px;border:1px solid #e8c884}
+.map-station-name{top:21px;background:#282a28f2;color:#fff1ce;border-color:#c0aa7355}
+.map-entity .train-cluster,.map-entity.cluster-entity>div{border-radius:50%;background:#14446a;border:2px solid #91c8ec;box-shadow:0 0 0 4px #153e6277}
+.map-legend-v2 .legend-square{background:#f2e7cd;border:1px solid #fff1cf;box-shadow:inset 0 0 0 2px #283641;border-radius:0}

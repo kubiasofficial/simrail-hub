@@ -1,5 +1,6 @@
 import type {FetchLike} from '../adapters/simrailApi';
 type Reply=Awaited<ReturnType<FetchLike>>;
+export const apiBodyLimit = (url:string) => new URL(url).pathname.toLowerCase().endsWith('/getalltimetables') ? 64*1024*1024 : 20*1024*1024;
 const ORIGINS=new Set(['https://panel.simrail.eu:8084','https://api1.aws.simrail.eu:8082']);
 /** Process-wide JSON cache: shares raw responses between map, server tiles and mobile display.
  * A failed request is never returned as fresh data. Backoff is 2s..30s per URL. */
@@ -23,8 +24,9 @@ export class SharedApiFetch {
   try{
    const response=await Promise.race([this.fetcher(url,{...init,signal:controller.signal}),deadline]);const body=await Promise.race([response.text(),deadline]);
    if(!response.ok)throw Error('API vrátilo HTTP '+response.status+'.');
-   if(body.length>20*1024*1024)throw Error('Odpověď API je příliš velká.');
-   JSON.parse(body);
+   if(body.length>apiBodyLimit(url))throw Error('Odpověď API je příliš velká.');
+   // Timetables are parsed by fetchJson once; do not allocate a second huge tree.
+   if(!new URL(url).pathname.toLowerCase().endsWith('/getalltimetables'))JSON.parse(body);
    const ttl=url.includes('stations-open')?30000:url.toLowerCase().includes('timetables')?0:url.includes('servers-open')?10000:1500;
    this.cache.delete(url);if(ttl)this.cache.set(url,{until:this.now()+ttl,body,status:response.status});this.failures.delete(url);
    let bytes=0;for(const c of this.cache.values())bytes+=c.body.length*2;

@@ -103,7 +103,7 @@ export function DashboardPage({ standalone = false, active = true }: { standalon
     if (standalone || !auto || freight || !m || m.connection==='stale'||m.connection==='lost'||!detail?.train) { setDisabled([]); return; }
     const runKey = `${isDemo ? 'demo' : server}:${detail.train.runId ?? detail.train.number}`;
     ann.reconcile(m.current??m.next,m.delayMin);
-    const r = trigger.current.update({ runKey, index: detail.train.timetableIndex, speedKmh: detail.train.speedKmh, distToNextStopM: m.distanceToNextStopM, points: detail.timetable?.points ?? [], delayMin: m.delayMin });
+    const r = trigger.current.update({ runKey, index: detail.train.timetableIndex, speedKmh: detail.train.speedKmh, distToNextStopM: m.distanceToNextStopM, points: detail.timetable?.points ?? [], delayMin: m.delayKind === 'observed' ? m.delayMin : null });
     setDisabled(r.disabled);
     for (const e of r.events) ann.announce(`${runKey}:${e.key}`, e.kind, { station: e.station, delayMin: e.delayMin, trainNumber:detail.train.number,isFreight:freight,automatic:true });
   // eslint-disable-next-line react-hooks/exhaustive-deps

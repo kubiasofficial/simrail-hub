@@ -93,7 +93,7 @@ Důležité:
 
 1. `VDDelayedTimetableIndex` = index bodu jízdního řádu, ke kterému vlak právě míří / u kterého stojí.
 2. `stopType = NoStopOver` znamená průjezd; ostatní hodnoty znamenají zastavení.
-3. Čas serveru z `getTime` se převádí do času **Europe/Warsaw** a porovnává s časy jízdního řádu.
+3. Čas serveru z getTime se čte z UTC polí epochy, která představují herní čas jízdního řádu. Další převod do Europe/Warsaw by přidal falešných 60/120 minut (oprava ověřena na živém CZ1 dne 25. 11. 2026).
 4. Skutečné příjezdy API neposkytuje – **zpoždění se odvozuje z pozorovaného průjezdu bodů** a před prvním pozorováním je jen odhadem (označeno „odhad“).
 5. Stanice mají souřadnice jen pokud jsou v `stations-open` (a názvem odpovídají bodu jízdního řádu). Bez souřadnic se hlášení „blížíme se“ a „příjezd“ **automaticky nespouštějí** a aplikace nabídne ruční režim.
 

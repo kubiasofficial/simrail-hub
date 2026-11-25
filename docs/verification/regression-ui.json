@@ -1,0 +1,21 @@
+{
+  "errors": [],
+  "dialog": {
+    "parent": "BODY",
+    "drag": "no-drag",
+    "buttons": true
+  },
+  "closeButton": true,
+  "escape": true,
+  "backdrop": true,
+  "selectedGerman": true,
+  "icons": {
+    "stations": 4,
+    "trains": 2,
+    "stationColor": "rgb(242, 231, 205)",
+    "stationRadius": "0px",
+    "trainHeight": "34px",
+    "trainRadius": "12px 12px 7px 7px",
+    "clusterRadius": "50%"
+  }
+}

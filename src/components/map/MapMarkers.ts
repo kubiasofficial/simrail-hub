@@ -13,7 +13,7 @@ export class MapMarkers{
  }
  private upsert(key:string,lat:number,lon:number,signature:string,root:HTMLElement,kind:string,title:string,click:()=>void){
   let entry=this.entries.get(key);
-  if(!entry){const marker=L.marker([lat,lon],{icon:L.divIcon({className:'map-entity '+kind,html:root,iconSize:[26,26],iconAnchor:[13,13]}),alt:title,title,zIndexOffset:kind==='station-entity'?100:500}).addTo(this.map);entry={marker,signature};this.entries.set(key,entry);this.operations.created++;}
+  if(!entry){const marker=L.marker([lat,lon],{icon:L.divIcon({className:'map-entity '+kind,html:root,iconSize:kind==='cluster-entity'?[32,32]:[26,26],iconAnchor:kind==='cluster-entity'?[16,16]:[13,13]}),alt:title,title,zIndexOffset:kind==='station-entity'?100:500}).addTo(this.map);entry={marker,signature};this.entries.set(key,entry);this.operations.created++;}
   else{const previous=entry.marker.getLatLng();if(previous.lat!==lat||previous.lng!==lon){entry.marker.setLatLng([lat,lon]);this.operations.moved++;}if(entry.signature!==signature){entry.marker.getElement()?.replaceChildren(root);entry.signature=signature;this.operations.icons++;}}
   entry.marker.off('click').on('click',click);
  }
@@ -43,7 +43,9 @@ export class MapMarkers{
    root.className='rail-train'+(train.type==='user'?' player':'')+(selected?' chosen':'');
    const body=document.createElement('span');body.className='train-body';body.innerHTML=trainSvg;root.append(body);
    if(bearing!==null){const direction=document.createElement('span');direction.className='train-direction';direction.style.transform='rotate('+bearing+'deg)';const arrow=document.createElement('span');arrow.className='ahead-arrow';direction.append(arrow);root.append(direction);}
-   this.avatar(train.avatarUrl,root);const label=zoom>=10||selected;if(label){const text=document.createElement('span');text.className='train-number';text.textContent=train.number;root.append(text);}
+   this.avatar(train.avatarUrl,root);
+   const pixel=this.map.latLngToContainerPoint([train.lat,train.lon]),cell=Math.floor(pixel.x/110)+':'+Math.floor(pixel.y/30);
+   const label=selected||(zoom>=10&&!labelCells.has(cell));if(label)labelCells.add(cell);if(label){const text=document.createElement('span');text.className='train-number';text.textContent=train.number;root.append(text);}
    this.upsert(key,train.lat,train.lon,[train.type,selected,train.avatarUrl,label,bearing].join('|'),root,'train-entity', 'Vlak '+train.number,()=>this.selectTrain(train));
   }
   for(const [key,entry] of this.entries)if(!live.has(key)){entry.marker.remove();this.entries.delete(key);this.operations.removed++;}

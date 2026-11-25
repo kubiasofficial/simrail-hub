@@ -85,7 +85,7 @@ export class TrainTrackingService {
     const notes: string[] = [];
     if (!train) notes.push(`Vlak ${trainNumber} není na serveru ${code} právě k dispozici.`);
     const [stations, tts] = await Promise.all([this.getStations(code, notes), this.getTimetables(code, notes)]);
-    const timetable = tts?.find((t) => (train?.runId && t.runId === train.runId) || t.trainNumber === trainNumber) ?? null;
+    const timetable = (train?.runId ? tts?.find(t => t.runId === train.runId) : tts?.find(t => t.trainNumber === trainNumber)) ?? null;
     if (tts && !timetable) notes.push(`Pro vlak ${trainNumber} nebyl nalezen jízdní řád.`);
     let serverSod: number | null = null;
     try { serverSod = serverTimeToSod(await fetchJson(this.fetchFn, timeUrl(code))); if (serverSod === null) notes.push('Čas serveru se nepodařilo zpracovat – zpoždění nelze určit.'); }
