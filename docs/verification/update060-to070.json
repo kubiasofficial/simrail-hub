@@ -1,0 +1,14 @@
+{
+  "at": "2026-11-26T09:39:57.629Z",
+  "baseline": "0.6.0",
+  "target": "0.7.0",
+  "status": "ready",
+  "isolatedProfile": true,
+  "isolatedCache": true,
+  "autoInstallOnAppQuit": false,
+  "installationTriggered": false,
+  "downloadedInstaller": {
+    "bytes": 150890731,
+    "sha256": "83cbe5f1a498d7bc15f672364a4cfac1697df9729034692e7577ec90095efe20"
+  }
+}

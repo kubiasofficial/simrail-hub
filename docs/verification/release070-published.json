@@ -1,0 +1,70 @@
+{
+  "at": "2026-11-26T09:41:24.944Z",
+  "version": "0.7.0",
+  "release": {
+    "at": "2026-11-26T09:37:43.734Z",
+    "version": "0.7.0",
+    "commit": "c7ef2a7d6a147fc7fd1f532daf07dba587addf64",
+    "url": "https://github.com/kubiasofficial/simrail-hub/releases/tag/v0.7.0",
+    "id": 459202032,
+    "latest": true,
+    "assets": [
+      {
+        "name": "SimRail-Hub-Portable-0.7.0.exe",
+        "size": 137027826,
+        "sha256": "586ec9c72e763437ced6c0c35c11750f584877b7f888c601a9eaa6a249f82636"
+      },
+      {
+        "name": "SimRail-Hub-Setup-0.7.0.exe",
+        "size": 150890731,
+        "sha256": "83cbe5f1a498d7bc15f672364a4cfac1697df9729034692e7577ec90095efe20"
+      },
+      {
+        "name": "SimRail-Hub-Setup-0.7.0.exe.blockmap",
+        "size": 158927,
+        "sha256": "6d569537fde8bc7fb33e8bfb89d3d00916a6c61b4c180c8c76b249db41b562cb"
+      },
+      {
+        "name": "latest.yml",
+        "size": 351,
+        "sha256": "7a232ecdddaf6e6a1b251cfead81b81dcd7f65fe42fc7155e04c0fd6c3b36e9a"
+      },
+      {
+        "name": "SimRail-Hub-0.7.0-banner.png",
+        "size": 2396084,
+        "sha256": "1c9e0d635c3a4ada904ea7ad2fb0422b8d56a369e98611cf0c7d6e5cfb6efd55"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 466,
+        "sha256": "4f888f898515cff884c165e467ba834dd4e5d1f75bc72fbebbc61c0a6560511d"
+      }
+    ],
+    "updaterManifestVerified": true
+  },
+  "hosting": {
+    "at": "2026-11-26T09:40:19.117Z",
+    "url": "https://simrail-hub-kubias.web.app",
+    "version": "0.7.0",
+    "htmlVerified": true,
+    "bannerSha256": "1c9e0d635c3a4ada904ea7ad2fb0422b8d56a369e98611cf0c7d6e5cfb6efd55"
+  },
+  "updater": {
+    "at": "2026-11-26T09:39:57.629Z",
+    "baseline": "0.6.0",
+    "target": "0.7.0",
+    "status": "ready",
+    "isolatedProfile": true,
+    "isolatedCache": true,
+    "autoInstallOnAppQuit": false,
+    "installationTriggered": false,
+    "downloadedInstaller": {
+      "bytes": 150890731,
+      "sha256": "83cbe5f1a498d7bc15f672364a4cfac1697df9729034692e7577ec90095efe20"
+    }
+  },
+  "discord": {
+    "sent": true,
+    "bannerVerified": true
+  }
+}
