@@ -4,6 +4,7 @@
 @import "./premium.css";
 @import "./release050.css";
 @import "./release060.css";
+@import "./dispatcher.css";
 @source "../";
 
 @theme {

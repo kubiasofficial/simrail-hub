@@ -16,6 +16,7 @@ export function normalizeSettings(raw: unknown): Settings {
   const map = rec(r.map);
   const an = rec(r.announcements);
   const up = rec(r.updates);
+  const dispatch=rec(r.dispatcher);
   const ob = rec(r.onboarding);
   return {
     autoDetectGame: bool(r.autoDetectGame, d.autoDetectGame),
@@ -37,6 +38,8 @@ export function normalizeSettings(raw: unknown): Settings {
       auto: bool(an.auto, d.announcements.auto),
       gapSeconds:clamp(an.gapSeconds,10,60,d.announcements.gapSeconds),
       gong: bool(an.gong,d.announcements.gong),
+      gongEnd:bool(an.gongEnd,bool(an.gong,d.announcements.gongEnd)),
+      gongVolume:clamp(an.gongVolume,0,1,clamp(an.volume,0,1,d.announcements.gongVolume)),
       recorded: bool(an.recorded,d.announcements.recorded),
       language: oneOf(an.language, ['cs', 'pl', 'cs-pl'] as const, d.announcements.language),
       engine: oneOf(an.engine, ['piper', 'system'] as const, d.announcements.engine),
@@ -44,6 +47,7 @@ export function normalizeSettings(raw: unknown): Settings {
       volume: clamp(an.volume, 0, 1, d.announcements.volume),
       rate: clamp(an.rate, 0.5, 2, d.announcements.rate)
     },
+    dispatcher:{enabled:bool(dispatch.enabled,false),audio:bool(dispatch.audio,false),rangeKm:[2,5,10].includes(Number(dispatch.rangeKm))?Number(dispatch.rangeKm):5,volume:clamp(dispatch.volume,0,1,0.8),radioVolume:clamp(dispatch.radioVolume,0,1,0.65)},
     updates: { repo: typeof up.repo === 'string' && /^[\w.-]+\/[\w.-]+$/.test(up.repo) ? up.repo : d.updates.repo },
     onboarding: { dismissed: bool(ob.dismissed, false) }
   };

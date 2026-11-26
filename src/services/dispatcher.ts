@@ -1,0 +1,75 @@
+import type {Train,StationCoord} from '../types/trains';
+import type {TrainRoute,RailCoord} from '../types/route';
+import {haversineM} from './geo';
+import {normName} from './onboard';
+export interface TrafficAlert {key:string;kind:'slow'|'density'|'station'|'clear';text:string;lat:number;lon:number;distanceM:number;count:number;severity:number;trainIds:string[]}
+interface Span {from:string;to:string;fromIndex:number;toIndex:number;points:RailCoord[];offset:number;length:number;group:number}
+interface Projection {span:Span;along:number;cross:number;point:RailCoord}
+const distance=(a:RailCoord,b:RailCoord)=>haversineM(a[0],a[1],b[0],b[1]);
+export function routeSpans(route:TrainRoute):Span[]{
+ let offset=0,group=0,last:TrainRoute['sections'][number]|undefined;
+ return route.sections.map(s=>{if(last&&(s.fromIndex!==last.toIndex||distance(last.coordinates.at(-1)!,s.coordinates[0])>100)){offset=0;group++;}
+ const length=s.coordinates.reduce((sum,p,i)=>sum+(i?distance(s.coordinates[i-1],p):0),0),span={from:route.stops.find(p=>p.index===s.fromIndex)?.name??'',to:route.stops.find(p=>p.index===s.toIndex)?.name??'',fromIndex:s.fromIndex,toIndex:s.toIndex,points:s.coordinates,offset,length,group};offset+=length;last=s;return span;});
+}
+function project(at:RailCoord,spans:Span[]):Projection|null{
+ let best:Projection|null=null;
+ for(const span of spans){let along=0;for(let i=1;i<span.points.length;i++){const a=span.points[i-1],b=span.points[i],scale=Math.cos(at[0]*Math.PI/180),x=(b[1]-a[1])*scale*111320,y=(b[0]-a[0])*111320,px=(at[1]-a[1])*scale*111320,py=(at[0]-a[0])*111320,len=distance(a,b),t=x*x+y*y?Math.max(0,Math.min(1,(px*x+py*y)/(x*x+y*y))):0,cross=Math.hypot(px-x*t,py-y*t);
+ if(!best||cross<best.cross)best={span,along:span.offset+along+len*t,cross,point:[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t]};along+=len;}}
+ return best;
+}
+export interface TrafficInput {own:Train;route:TrainRoute;trains:Train[];routes:Map<string,TrainRoute>;stations:StationCoord[];rangeM:number}
+export function detectTraffic(input:TrafficInput):TrafficAlert|null{
+ const {own,route,trains,routes,stations,rangeM}=input,idx=own.timetableIndex;
+ if(idx===null||route.runId!==own.runId||!route.sections.length)return null;
+ const spans=routeSpans(route),self=project([own.lat,own.lon],spans.filter(s=>idx>=s.fromIndex&&idx<=s.toIndex));if(!self||self.cross>80)return null;
+ const ahead=spans.filter(s=>s.group===self.span.group&&s.offset+s.length>=self.along&&s.offset<=self.along+rangeM);
+ const matches:{train:Train;p:Projection;dist:number}[]=[];
+ for(const train of trains){if(train.number===own.number||train.serverCode!==own.serverCode||train.speedKmh===null||haversineM(own.lat,own.lon,train.lat,train.lon)>rangeM+200)continue;
+ const p=project([train.lat,train.lon],ahead);if(!p||p.cross>35)continue;const dist=p.along-self.along;if(dist<100||dist>rangeM)continue;
+ const other=routes.get(train.number);if(!other||other.runId!==train.runId||train.timetableIndex===null)continue;
+ const compatible=routeSpans(other).filter(s=>s.from&&s.to&&normName(s.from)===normName(p.span.from)&&normName(s.to)===normName(p.span.to)&&train.timetableIndex!>=s.fromIndex&&train.timetableIndex!<=s.toIndex);
+ const onOther=project([train.lat,train.lon],compatible);if(!onOther||onOther.cross>35)continue;
+ matches.push({train,p,dist});
+ }
+ matches.sort((a,b)=>a.dist-b.dist);
+ const stationAlerts:TrafficAlert[]=[];
+ for(const stop of route.stops){const span=ahead.find(s=>s.toIndex===stop.index);if(!span)continue;const dist=span.offset+span.length-self.along;if(dist<=100||dist>rangeM)continue;const coord=stations.find(s=>normName(s.name)===normName(stop.name));if(!coord)continue;
+ const stopped=matches.filter(m=>m.train.speedKmh!<=1&&haversineM(m.train.lat,m.train.lon,coord.lat,coord.lon)<=200);
+ if(stopped.length>=3)stationAlerts.push({key:'station:'+normName(stop.name),kind:'station',text:'Ve stanici '+stop.name+' stojí několik vlaků v navazujícím směru. Při příjezdu může dojít ke zdržení.',lat:coord.lat,lon:coord.lon,distanceM:dist,count:stopped.length,severity:stopped.length>=5?3:2,trainIds:stopped.map(m=>m.train.number)});
+ }
+ if(stationAlerts.length)return stationAlerts.sort((a,b)=>a.distanceM-b.distanceM)[0];
+ const slow=matches.filter(m=>m.train.speedKmh!<=Math.min(40,(own.speedKmh??0)-15));
+ const groups=new Map<string,typeof slow>();for(const item of slow){const key=item.p.span.from+':'+item.p.span.to;const group=groups.get(key)??[];group.push(item);groups.set(key,group);}
+ const dense=[...groups.values()].find(group=>group.length>=3);
+ if(dense){const first=dense[0];return {key:'density:'+normName(first.p.span.from)+':'+normName(first.p.span.to),kind:'density',text:'Mezi stanicemi '+first.p.span.from+' a '+first.p.span.to+' je zvýšený provoz pomalu jedoucích vlaků. Může dojít ke zpomalení.',lat:first.train.lat,lon:first.train.lon,distanceM:first.dist,count:dense.length,severity:2,trainIds:dense.map(m=>m.train.number)};}
+ if(slow.length){const first=slow[0];return {key:'slow:'+first.train.number,kind:'slow',text:'Ve vzdálenosti přibližně '+Math.round(first.dist/100)*100+' metrů před vámi se nachází '+(first.train.speedKmh!<=1?'stojící':'pomalu jedoucí')+' vlak. Sledujte návěstidla.',lat:first.train.lat,lon:first.train.lon,distanceM:first.dist,count:1,severity:first.dist<1000?2:1,trainIds:[first.train.number]};}
+ return null;
+}
+
+/** Cheap geographic prefilter; null means the selected train cannot be placed reliably. */
+export function routeCandidateTrains(own:Train,route:TrainRoute,trains:Train[],rangeM:number):Train[]|null {
+ const idx=own.timetableIndex;if(idx===null||own.runId!==route.runId)return null;const spans=routeSpans(route),self=project([own.lat,own.lon],spans.filter(s=>idx>=s.fromIndex&&idx<=s.toIndex));if(!self||self.cross>80)return null;
+ const ahead=spans.filter(s=>s.group===self.span.group&&s.offset+s.length>=self.along&&s.offset<=self.along+rangeM);
+ return trains.filter(t=>{if(t.number===own.number||t.serverCode!==own.serverCode||t.speedKmh===null||haversineM(own.lat,own.lon,t.lat,t.lon)>rangeM+200)return false;const p=project([t.lat,t.lon],ahead);return !!p&&p.cross<=35&&p.along-self.along>=100&&p.along-self.along<=rangeM;});
+}
+
+export class TrafficMonitor {
+ private key='';private first=0;private samples=0;private sampleAt=0;private lastNow=0;private announced:TrafficAlert|null=null;private lastSpoken=0;private clearSince=0;private clearSamples=0;
+ current:TrafficAlert|null=null;
+ reset(){this.key='';this.first=0;this.samples=0;this.sampleAt=0;this.lastNow=0;this.announced=null;this.lastSpoken=0;this.clearSince=0;this.clearSamples=0;this.current=null;}
+ update(alert:TrafficAlert|null,sampleAt:number,now:number,fresh:boolean):{current:TrafficAlert|null;event:TrafficAlert|null}{
+ if(!fresh||now-sampleAt>15000||sampleAt>now+1000||this.lastNow&&now-this.lastNow>20000){this.reset();if(!fresh)return {current:null,event:null};}
+ this.lastNow=now;if(!fresh||now-sampleAt>15000||sampleAt>now+1000)return {current:null,event:null};
+ if(sampleAt===this.sampleAt)return {current:this.current,event:null};this.sampleAt=sampleAt;
+ if(alert){this.clearSince=0;this.clearSamples=0;if(alert.key!==this.key){this.key=alert.key;this.first=now;this.samples=1;this.current=null;}else this.samples++;
+ if(now-this.first<20000||this.samples<3)return {current:this.current,event:null};this.current=alert;
+ const worse=this.announced&&this.announced.key===alert.key&&(alert.severity>this.announced.severity||alert.count>=this.announced.count+2);
+ if(!this.announced||now-this.lastSpoken>=300000||(worse||this.announced.key!==alert.key)&&now-this.lastSpoken>=60000){this.announced=alert;this.lastSpoken=now;return {current:alert,event:alert};}
+ return {current:alert,event:null};
+ }
+ this.key='';this.first=0;this.samples=0;this.current=null;
+ if(this.announced){if(!this.clearSince)this.clearSince=now;this.clearSamples++;
+ if(now-this.clearSince>=60000&&this.clearSamples>=3){const previous=this.announced;this.announced=null;this.lastSpoken=now;return {current:null,event:{...previous,key:'clear:'+previous.key,kind:'clear',text:'Provoz v dříve hlášeném úseku se uvolnil.',severity:0}};}}
+ return {current:null,event:null};
+ }
+}

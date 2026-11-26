@@ -1,3 +1,5 @@
+import {useDispatcherState} from '@/stores/dispatcher';
+import {useTrafficPulse} from '@/hooks/useTrafficPulse';
 import {Star} from 'lucide-react';
 import {TrainFilters} from '@/components/TrainFilters';
 import {useJourneyLibrary} from '@/stores/journeyLibrary';
@@ -47,6 +49,8 @@ export function MapPage(){
   return()=>{clearTimeout(timer);observer.disconnect();markers.current?.clear();m.remove();map.current=null;};
  },[]);
  useEffect(()=>{const m=map.current;if(!m)return;const source=BASES[settings.map.basemap];const layer=L.tileLayer(source[0],{attribution:source[1],className:'map-base map-base-'+settings.map.basemap,maxZoom:19,keepBuffer:1,updateWhenIdle:true}).addTo(m);layer.bringToBack();return()=>{layer.remove();};},[settings.map.basemap]);
+ const traffic=useDispatcherState();
+ useTrafficPulse(map.current,traffic.server===server?traffic.alert:null,mapActive);
  const detailZoom=map.current?.getZoom()??7;
  useEffect(()=>{const m=map.current;if(!m||!settings.map.railwayOverlay||detailZoom<11)return;const layer=L.tileLayer('https://{s}.tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png',{subdomains:'abc',attribution:'© OpenRailwayMap (CC-BY-SA)',opacity:.4,maxZoom:19}).addTo(m);return()=>{layer.remove();};},[settings.map.railwayOverlay,detailZoom]);
  useEffect(()=>{fitted.current=false;markers.current?.clear();setTrains([]);setStations([]);setSelectedStation(null);setError('');setUpdated(0);if(demoOn||!server)return;

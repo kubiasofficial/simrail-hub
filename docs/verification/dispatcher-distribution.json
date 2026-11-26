@@ -1,0 +1,10 @@
+{
+  "at": "2026-11-26T06:08:15.466Z",
+  "version": "0.7.0",
+  "channel": "test",
+  "buildId": "2026-11-26T06:06:07.099Z",
+  "privateAudioBundled": false,
+  "cloudCodeBundled": false,
+  "rendererMatchesFinalBuild": true,
+  "audioIpcMatchesFinalBuild": true
+}

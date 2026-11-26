@@ -1,3 +1,9 @@
+import {useOnboardRoute} from '@/hooks/useOnboardRoute';
+import {useDispatcher} from '@/hooks/useDispatcher';
+import {useDispatcherState} from '@/stores/dispatcher';
+import {OnboardMap} from '@/components/OnboardMap';
+import {DispatcherPanel} from '@/components/DispatcherPanel';
+import {ScheduleDialog} from '@/components/ScheduleDialog';
 import {useJourneyLibrary} from '@/stores/journeyLibrary';
 import {TrainPicker} from '@/components/TrainPicker';
 import {JourneyPanel} from '@/components/JourneyPanel';
@@ -44,6 +50,10 @@ export function DashboardPage({ standalone = false, active = true }: { standalon
   const updateSettings = useSettings((s) => s.update);
   const demo = useDemo();
   const ann = useAnnouncer();
+  const [showSchedule,setShowSchedule]=useState(false);
+  const closeSchedule=useCallback(()=>setShowSchedule(false),[]);
+  const dispatch=useDispatcherState();
+  const [trainsAt,setTrainsAt]=useState(0);
   const [showPassed, setShowPassed] = useState(false);
   const visual=useVisualActivity();
   const [now,setNow]=useState(Date.now());
@@ -71,7 +81,7 @@ export function DashboardPage({ standalone = false, active = true }: { standalon
     if (sel.mode !== 'live' || !server || standalone) return;
     let alive = true;
     const run = async () => {
-      try { const r = await window.simrailHub!.call('trains:list', server); if (!alive) return; if (r.ok) { setTrains(r.data.trains); setListError(null); } else setListError(r.error); }
+      try { const r = await window.simrailHub!.call('trains:list', server); if (!alive) return; if (r.ok) { setTrains(r.data.trains);setTrainsAt(r.data.fetchedAt); setListError(null); } else setListError(r.error); }
       catch (e) { if (alive) setListError((e as Error).message); }
     };
     void run(); const id = setInterval(run, 10_000);
@@ -83,16 +93,19 @@ export function DashboardPage({ standalone = false, active = true }: { standalon
   const m = feed.model;
   const isDemo = sel.mode === 'demo';
   const currentIndex = m?.rows.find(r => r.status === 'target')?.index;
-  useEffect(() => { if(!active||!visual)return; activeRow.current?.scrollIntoView({ block:'nearest', behavior:'smooth' }); }, [currentIndex,active,visual]);
+  const scrollSchedule=useCallback(()=>{const row=activeRow.current,dialog=row?.closest('dialog');if(row&&dialog)dialog.scrollTo({top:dialog.scrollTop+row.getBoundingClientRect().top-dialog.getBoundingClientRect().top-dialog.clientHeight/2,behavior:'smooth'});},[]);
+  useEffect(() => { if(active&&visual&&showSchedule)scrollSchedule(); }, [currentIndex,active,visual,showSchedule,scrollSchedule]);
 
   // automatická hlášení
   const trigger = useRef(new AnnouncementTrigger());
   const [disabled, setDisabled] = useState<string[]>([]);
   useEffect(() => { trigger.current.reset(); }, [sel.mode, server, sel.train]);
   const auto = settings.announcements.auto;
-  useEffect(()=>{if(!auto)useAnnouncer.getState().stop();},[auto]);
+  useEffect(()=>{if(!auto)useAnnouncer.getState().suspendPassengers();},[auto]);
   useEffect(()=>{if(m?.connection==='lost'||m?.connection==='stale')useAnnouncer.getState().stop();},[m?.connection]);
   const detail = feed.detail;
+  const onboardRoute=useOnboardRoute(server,m?detail?.train??null:null,!isDemo);
+  useDispatcher(server,detail,m,trains,trainsAt,onboardRoute.route,standalone,isDemo);
   useEffect(()=>{if(!standalone&&!isDemo&&server&&m&&detail?.train)useJourneyLibrary.getState().observe(server,detail.train,m);},[standalone,isDemo,server,m,detail]);
   useEffect(()=>{if(standalone)return;return()=>useJourneyLibrary.getState().finish();},[standalone,server,sel.train,sel.mode]);
   const freight = !isDemo && isFreightTrain(detail?.train);
@@ -123,7 +136,7 @@ export function DashboardPage({ standalone = false, active = true }: { standalon
   const field = 'rounded-lg border border-line bg-ink-800 px-3 py-1.5 text-sm text-slate-200 outline-none focus:border-sky-brand';
 
   return (
-    <div className={`mx-auto flex max-w-6xl flex-col gap-4 ${standalone ? 'p-5' : ''}`}>
+    <div className={`onboard-dashboard mx-auto flex max-w-6xl flex-col gap-4 ${standalone ? 'p-5' : ''}`}>
       {/* zdroj dat */}
       {!standalone && <div className="dashboard-toolbar">
         <div className="dashboard-source"><h2>Palubní počítač</h2><div className="source-switch">
@@ -154,13 +167,27 @@ export function DashboardPage({ standalone = false, active = true }: { standalon
 
           <section className="journey-overview journey-summary"><div className="train-compact"><VehicleCard vehicles={feed.detail?.train?.vehicles??[]} number={m.trainNumber}/><p>{m.start??'—'} → {m.end??'—'}</p><Conn c={m.connection}/></div>
           <JourneyPanel model={m} train={feed.detail?.train??null} updatedAt={feed.updatedAt}/></section>
-          <div className="grid grid-cols-[1fr_20rem] gap-4">
-            {/* seznam stanic */}
+          <div className="onboard-workspace">
+            <div className="onboard-main"><div className="onboard-map-actions"><span>Mapa a provoz na jednom místě</span><button className="secondary-action" onClick={()=>setShowSchedule(true)} aria-haspopup="dialog">Otevřít jízdní řád</button></div>
+            <OnboardMap standalone={standalone} train={detail!.train!} trains={trains} stations={detail?.stations??[]} route={onboardRoute.route} error={onboardRoute.error} alert={dispatch.server===server?dispatch.alert:null} active={active&&visual}/>
+            <details className="onboard-telemetry"><summary>Technické údaje jízdy</summary>              <div className="panel rounded-2xl p-4 text-sm">
+                <div className="mb-2 font-medium text-white">Poloha a jízda</div>
+                <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1.5 text-xs">
+                  <dt className="text-slate-500">Rychlost</dt><dd className="text-slate-200">{m.speedKmh === null ? NA : `${Math.round(m.speedKmh)} km/h`}</dd>
+                  <dt className="text-slate-500">Souřadnice</dt><dd className="text-slate-200">{m.lat.toFixed(5)}, {m.lon.toFixed(5)}</dd>
+                  <dt className="text-slate-500">K další zastávce (vzdušně)</dt><dd className="text-slate-200">{m.distanceToFollowingStopM === null ? NA : m.distanceToFollowingStopM >= 1000 ? `${(m.distanceToFollowingStopM / 1000).toFixed(1)} km` : `${Math.round(m.distanceToFollowingStopM)} m`}</dd>
+                  <dt className="text-slate-500">Stav</dt><dd className="text-slate-200">{{ standing: 'Stojí ve stanici', moving: 'Jede', 'standing-unknown': 'Stojí', unknown: NA }[m.phase]}</dd>
+                </dl>
+                {feed.notes.filter((n) => !n.startsWith('DEMO')).map((n, i) => <div key={i} className="mt-2 text-[11px] text-slate-500">{n}</div>)}
+              </div>
+
+</details>
+            {showSchedule&&<ScheduleDialog onClose={closeSchedule}>            {/* seznam stanic */}
             <div className="panel rounded-2xl p-4">
               {m.rows.length === 0 ? (
                 <div className="py-8 text-center text-sm text-slate-400">Jízdní řád vlaku není k dispozici ({NA}).{feed.notes.map((n, i) => <div key={i} className="mt-1 text-xs text-slate-500">{n}</div>)}</div>
               ) : (
-                <><div className="schedule-heading"><strong>Jízdní řád</strong><button className="secondary-action" onClick={() => setShowPassed(!showPassed)}>{showPassed ? 'Skrýt projeté stanice' : 'Zobrazit projeté stanice'}</button><button className="secondary-action" onClick={() => activeRow.current?.scrollIntoView({block:'center',behavior:'smooth'})}>Aktuální poloha</button></div><div className="schedule-columns"><span>Stanice</span><span>Plán</span><span>Odhad</span></div><ol className="relative">
+                <><div className="schedule-heading"><strong>Jízdní řád</strong><button className="secondary-action" onClick={() => setShowPassed(!showPassed)}>{showPassed ? 'Skrýt projeté stanice' : 'Zobrazit projeté stanice'}</button><button className="secondary-action" onClick={scrollSchedule}>Aktuální poloha</button></div><div className="schedule-columns"><span>Stanice</span><span>Plán</span><span>Odhad</span></div><ol className="relative">
                   {m.rows.filter(r => showPassed || r.status !== 'passed').map((r) => (
                     <li ref={r.status === 'target' ? activeRow : undefined} key={r.index} className={'relative pl-8 schedule-row '+r.status+(r.standing?' standing':'')+(r.passengerStop&&r.name===m.next?' next-stop':'')}>
                       <span className="absolute bottom-0 left-[11px] top-0 w-px bg-line" />
@@ -185,19 +212,11 @@ export function DashboardPage({ standalone = false, active = true }: { standalon
               )}
             </div>
 
-            {/* pravý sloupec */}
-            <div className="flex flex-col gap-4">
-              <div className="panel rounded-2xl p-4 text-sm">
-                <div className="mb-2 font-medium text-white">Poloha a jízda</div>
-                <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1.5 text-xs">
-                  <dt className="text-slate-500">Rychlost</dt><dd className="text-slate-200">{m.speedKmh === null ? NA : `${Math.round(m.speedKmh)} km/h`}</dd>
-                  <dt className="text-slate-500">Souřadnice</dt><dd className="text-slate-200">{m.lat.toFixed(5)}, {m.lon.toFixed(5)}</dd>
-                  <dt className="text-slate-500">K další zastávce (vzdušně)</dt><dd className="text-slate-200">{m.distanceToFollowingStopM === null ? NA : m.distanceToFollowingStopM >= 1000 ? `${(m.distanceToFollowingStopM / 1000).toFixed(1)} km` : `${Math.round(m.distanceToFollowingStopM)} m`}</dd>
-                  <dt className="text-slate-500">Stav</dt><dd className="text-slate-200">{{ standing: 'Stojí ve stanici', moving: 'Jede', 'standing-unknown': 'Stojí', unknown: NA }[m.phase]}</dd>
-                </dl>
-                {feed.notes.filter((n) => !n.startsWith('DEMO')).map((n, i) => <div key={i} className="mt-2 text-[11px] text-slate-500">{n}</div>)}
-              </div>
+</ScheduleDialog>}
+            </div>
 
+            {/* pravý sloupec */}
+            <div className="onboard-side flex flex-col gap-4"><DispatcherPanel standalone={standalone}/>
               <div className="panel rounded-2xl p-4 text-sm">
                 <div className="mb-3 flex items-center gap-2 font-medium text-white"><Megaphone size={15} className="text-sky-soft" /> Hlášení</div>
                 {freight ? <p className="text-sm text-slate-400">Nákladní vlak · hlášení pro cestující jsou vypnutá.</p> : <>

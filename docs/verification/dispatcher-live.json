@@ -1,0 +1,24 @@
+{
+  "at": "2026-11-26T06:00:35.021Z",
+  "errors": [],
+  "info": {
+    "version": "0.7.0",
+    "platform": "win32",
+    "electron": "45.4.1",
+    "channel": "test",
+    "buildId": "2026-11-26T05:58:23.286Z"
+  },
+  "trainCount": 161,
+  "sections": 8,
+  "selected": "32906",
+  "liveStatus": "V dostupných datech není potvrzené zdržení.",
+  "realSpeech": {
+    "bytes": 528776,
+    "voice": "cs_CZ-jirka-medium"
+  },
+  "realAudioWhileMinimized": [
+    0.45,
+    11.989388,
+    0.32
+  ]
+}

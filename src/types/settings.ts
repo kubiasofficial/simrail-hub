@@ -19,6 +19,8 @@ export interface Settings {
     auto: boolean;
     gapSeconds:number;
     gong: boolean;
+    gongEnd:boolean;
+    gongVolume:number;
     recorded: boolean;
     language: AnnouncementLang;
     engine: TtsEngine;
@@ -26,6 +28,7 @@ export interface Settings {
     volume: number;
     rate: number;
   };
+  dispatcher:{enabled:boolean;audio:boolean;rangeKm:number;volume:number;radioVolume:number};
   updates: { repo: string | null };
   /** Průvodce prvním spuštěním (nastavení hlášení) byl odložen/dokončen. */
   onboarding: { dismissed: boolean };
@@ -42,7 +45,8 @@ export const DEFAULT_SETTINGS: Settings = {
   dataRefreshSeconds: 30,
   selectedServer: null,
   map: { basemap: 'osm-dark', railwayOverlay: true, followSelected: false },
-  announcements: { auto: false, gapSeconds:30, gong:true, recorded:true, language: 'cs', engine: 'piper', voiceId: 'cs_CZ-jirka-medium', volume: 0.8, rate: 1 },
+  announcements: { auto: false, gapSeconds:30, gong:true, gongEnd:true, gongVolume:0.8, recorded:true, language: 'cs', engine: 'piper', voiceId: 'cs_CZ-jirka-medium', volume: 0.8, rate: 1 },
+  dispatcher:{enabled:false,audio:false,rangeKm:5,volume:0.8,radioVolume:0.65},
   updates: { repo: 'kubiasofficial/simrail-hub' },
   onboarding: { dismissed: false }
 };

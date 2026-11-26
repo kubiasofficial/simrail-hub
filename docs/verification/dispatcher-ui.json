@@ -1,0 +1,42 @@
+{
+  "at": "2026-11-26T06:04:58.947Z",
+  "errors": [],
+  "scheduleOnDemand": true,
+  "alert": "Ve vzdálenosti přibližně 1400 metrů před vámi se nachází pomalu jedoucí vlak. Sledujte návěstidla.",
+  "largeMapPulse": true,
+  "radioClips": [
+    {
+      "volume": 0.15,
+      "bytes": 43244
+    },
+    {
+      "volume": 0.75,
+      "bytes": 9644
+    },
+    {
+      "volume": 0.15,
+      "bytes": 30764
+    }
+  ],
+  "radioText": "Vlak 53103, informace dispečera. Ve vzdálenosti přibližně 1400 metrů před vámi se nachází pomalu jedoucí vlak. Sledujte návěstidla.",
+  "manualRadioPreview": true,
+  "background": {
+    "dataRequests": 1,
+    "mapChanges": 0
+  },
+  "staleSilenced": true,
+  "gongClips": [
+    {
+      "volume": 0.25,
+      "bytes": 120044
+    },
+    {
+      "volume": 0.7,
+      "bytes": 567404
+    },
+    {
+      "volume": 0.25,
+      "bytes": 120044
+    }
+  ]
+}

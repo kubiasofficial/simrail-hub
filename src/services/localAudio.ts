@@ -58,3 +58,10 @@ export class LocalRecordings {
   return encodeWav(joinSamples([...(gong?[gongSamples(),new Float32Array(4800)]:[]),...audio.flatMap((samples,index)=>index?[new Float32Array(4800),samples]:[samples])]));
  }
 }
+
+/** Original local radio squelch: deterministic filtered noise with a short release click. */
+export function radioSamples(closing=false):Float32Array {
+ const out=new Float32Array(Math.round(RATE*(closing?.32:.45)));let seed=271828,low=0;
+ for(let i=0;i<out.length;i++){seed=(Math.imul(seed,1664525)+1013904223)>>>0;const white=seed/2147483648-1;low+=.12*(white-low);const t=i/RATE,envelope=Math.min(1,t/.012)*Math.min(1,(out.length-i)/(RATE*.04));out[i]=((white-low)*.12+Math.sin(2*Math.PI*(closing?1350:950)*t)*.035*Math.exp(-t*18))*envelope;}
+ return out;
+}

@@ -1,0 +1,7 @@
+import {createPortal} from 'react-dom';
+import {useLayoutEffect,useRef,type ReactNode} from 'react';import {X} from 'lucide-react';
+export function ScheduleDialog({children,onClose}:{children:ReactNode;onClose:()=>void}){
+ const ref=useRef<HTMLDialogElement>(null);
+ useLayoutEffect(()=>{const d=ref.current!,opener=document.activeElement as HTMLElement|null,positions:{element:HTMLElement;top:number;left:number}[]=[];for(let el=opener?.parentElement;el;el=el.parentElement)positions.push({element:el,top:el.scrollTop,left:el.scrollLeft});const restore=()=>{opener?.focus({preventScroll:true});for(const p of positions){p.element.scrollTop=p.top;p.element.scrollLeft=p.left;}};d.showModal();const close=()=>{restore();onClose();};d.addEventListener('close',close);return()=>{d.removeEventListener('close',close);d.close();restore();};},[onClose]);
+ return createPortal(<dialog ref={ref} className="schedule-dialog" aria-labelledby="schedule-title" onClick={e=>{if(e.target===e.currentTarget){const r=e.currentTarget.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)onClose();}}}><header><div><span className="eyebrow">TVŮJ JÍZDNÍ ŘÁD</span><h2 id="schedule-title">Stanice a plánované časy</h2></div><button className="secondary-action" aria-label="Zavřít jízdní řád" onClick={onClose}><X size={18}/>Zavřít</button></header>{children}</dialog>,document.body);
+}
