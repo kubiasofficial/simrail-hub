@@ -56,3 +56,7 @@ Původní nahrávky fungují také pro čtyřmístné 35xx/53xx a skupiny 45xx/5
 | lowicz_glowny.wav | Łowicz Główny |
 
 Nahrávat pouze název bez gongu a úvodní věty. Aplikace připojí existující „Příští stanice“, „Přijíždíme do stanice“ nebo „Stanice“. WAV musí být PCM mono 48 kHz / 16 bit; jiné vstupní nahrávky lze převést místně, originály zachovat. Žádné soukromé zvuky se do sestavení nepřidávají.
+
+## Doplnění: Sneak peek připravovaných tratí
+
+Aktuální TEST zahrnuje také výchozí vypnutou vrstvu Lublin Region. Ovládání, zdroje, omezení přesnosti a ověření jsou popsány v [SNEAK-PEEK-TEST-0.7.0.md](SNEAK-PEEK-TEST-0.7.0.md). Souhrnná sada má 188 testů. Náhled nepřidává stanice do hlášení ani dispečera.

@@ -1,57 +1,57 @@
 {
-  "at": "2026-11-25T15:41:02.545Z",
+  "at": "2026-11-26T07:15:59.583Z",
   "errors": [],
   "trainCount": 161,
   "routes": [
     {
-      "number": "1411",
+      "number": "1305",
       "name": "EIJ - EIP",
-      "sections": 22,
-      "coordinates": 596,
+      "sections": 21,
+      "coordinates": 574,
       "first": "Warszawa Włochy",
-      "last": "Katowice",
-      "matched": 23,
+      "last": "Kraków Przedmieście",
+      "matched": 22,
       "total": 34,
       "gaps": 0,
-      "elapsedMs": 1881
+      "elapsedMs": 1714
     },
     {
-      "number": "11524",
-      "name": "ROJ - Ł",
-      "sections": 5,
-      "coordinates": 146,
-      "first": "Łódź Widzew",
-      "last": "Skierniewice",
-      "matched": 6,
-      "total": 23,
+      "number": "23907",
+      "name": "MOJ - R",
+      "sections": 8,
+      "coordinates": 224,
+      "first": "Kozłów",
+      "last": "Kraków Przedmieście",
+      "matched": 9,
+      "total": 38,
       "gaps": 0,
-      "elapsedMs": 5
+      "elapsedMs": 3
     },
     {
-      "number": "16113",
+      "number": "74101",
       "name": "MPE - TLK",
-      "sections": 16,
-      "coordinates": 372,
-      "first": "Warszawa Włochy",
-      "last": "Zduńska Wola",
-      "matched": 17,
-      "total": 41,
+      "sections": 20,
+      "coordinates": 670,
+      "first": "Zduńska Wola",
+      "last": "Katowice",
+      "matched": 21,
+      "total": 60,
       "gaps": 0,
-      "elapsedMs": 10
+      "elapsedMs": 25
     }
   ],
   "dashboard": {
-    "next": "Následující\nBielsko-Biała Główna",
+    "next": "Následující\nKraków Główny",
     "delay": "Zpoždění · odhad\nZatím bez zpoždění\nČekám na první průjezd · předběžný údaj",
     "imageLoaded": true
   },
   "map": {
     "selectedCategory": "EIP",
     "selectedColor": "rgb(117, 66, 183)",
-    "stations": 69,
-    "stationBuildings": 69,
-    "stationCallouts": 69,
-    "routePaths": 22,
-    "loadedTiles": 24
+    "stations": 73,
+    "stationBuildings": 73,
+    "stationCallouts": 72,
+    "routePaths": 21,
+    "loadedTiles": 32
   }
 }

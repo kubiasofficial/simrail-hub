@@ -1,6 +1,6 @@
 import {join} from 'node:path';
 import * as asar from '@electron/asar';import {readFile,writeFile,readdir} from 'node:fs/promises';import {createHash} from 'node:crypto';
-const file=process.argv[2]??'.deployment/dispatcher-pulse-final/win-unpacked/resources/app.asar',pkg=JSON.parse(asar.extractFile(file,'package.json').toString()),files=asar.listPackage(file);
+const file=process.argv[2]??'.deployment/sneak-peek-test/win-unpacked/resources/app.asar',pkg=JSON.parse(asar.extractFile(file,'package.json').toString()),files=asar.listPackage(file);
 if(pkg.version!=='0.7.0'||pkg.hubChannel!=='test'||!pkg.hubBuildId)throw Error('TEST identity missing');
 if(files.some(p=>/\.(wav|mp3|m4a)$/i.test(p)||/CloudAccount|cloudConfig/.test(p)))throw Error('Private audio or removed cloud code bundled');
 const entries=(await readdir('dist/assets')).filter(n=>/\.(js|css)$/.test(n));for(const name of entries){const built=await readFile('dist/assets/'+name),packed=asar.extractFile(file,join('dist','assets',name));if(!built.equals(packed))throw Error('Stale renderer '+name);}

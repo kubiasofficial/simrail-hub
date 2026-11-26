@@ -1,0 +1,26 @@
+{
+  "at": "2026-11-26T07:17:15.570Z",
+  "controlledFixtures": false,
+  "errors": [],
+  "info": {
+    "version": "0.7.0",
+    "platform": "win32",
+    "electron": "45.4.1",
+    "channel": "test",
+    "buildId": "2026-11-26T07:14:25.204Z"
+  },
+  "defaultOffAndLazy": true,
+  "preview": {
+    "path": "M140 300L144 305L146 313L144 316L146 325L162 336L167 343L176 351L188 371L189 377L195 390L209 404L227 410L233 414L237 424L248 434L255 446L268 453L291 455L298 461L302 469L322 489L345 506L369 514L389 510L395 511L402 509L413 500L419 498L423 492L427 491L435 494L440 503L444 506L459 510L473 509L488 517L495 517L503 514L526 517L530 519L537 524L545 541L547 549L566 562L578 562L611 567L630 568L642 566L649 569L660 571L661 574L664 575L672 573L689 565L703 568L713 563L727 561L733 557L745 556",
+    "stroke": "#c9a5fb",
+    "apiText": "Připravovaná traťLublin RegionDęblin → Lublin → ChełmPlán vydáníprosinec 2026Zakreslený úsekpřibližně 145,2 kmZobrazit celou traťOrientační průběh skutečné železnice podle OSM. Přesná herní geometrie ani zastávky konkrétních vlaků tím nejsou potvrzené.Co už je v APINa serveru CZ1 jsou v jízdních řádech názvy Nałęczów, Lublin Zachodni, Lublin Główny. API při kontrole neposkytlo souřadnice stanic tohoto úseku.Body náhledu (12)DęblinGołąbKlementowiceNałęczównázev v APISadurkiLublin Zachodninázev v APILublin Głównynázev v APIŚwidnik MiastoMinkowiceJaszczówRejowiecChełmPodrobnosti DLC na SteamuPůvod a stáří údajůDLC a plán vydání ověřeny 26. 11. 2026. API CZ1 zkontrolováno 26. 11. 2026. Náhled se neobnovuje jako živý provoz.Kolejový průběh: OpenStreetMap ↗ODbL 1.0 · staženo 26. 11. 2026 ↗",
+    "steam": "https://store.steampowered.com/app/5548340/SimRail_The_Railway_Simulator_Lublin_Region/",
+    "legend": "Připravovaná trať · OSM"
+  },
+  "separateFromLiveAndAudio": true,
+  "stationRows": 12,
+  "previewStationMarkers": 12,
+  "toggleAndBackground": true,
+  "persistedAcrossReload": true,
+  "geometryRequests": []
+}

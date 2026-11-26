@@ -32,7 +32,8 @@ export function normalizeSettings(raw: unknown): Settings {
     map: {
       basemap: oneOf(map.basemap, ['osm', 'osm-dark', 'light'] as const, d.map.basemap),
       railwayOverlay: bool(map.railwayOverlay, d.map.railwayOverlay),
-      followSelected: bool(map.followSelected, d.map.followSelected)
+      followSelected: bool(map.followSelected, d.map.followSelected),
+      sneakPeek:bool(map.sneakPeek,false)
     },
     announcements: {
       auto: bool(an.auto, d.announcements.auto),

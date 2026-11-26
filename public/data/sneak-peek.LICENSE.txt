@@ -1,0 +1,16 @@
+Sneak peek Lublin Region preview geometry
+
+Derived from OpenStreetMap contributors, ODbL 1.0.
+Source relation: https://www.openstreetmap.org/relation/318953
+Downloaded 2026-11-26 through https://api.openstreetmap.org/api/0.6/relation/318953/full.json
+Copyright/attribution: https://www.openstreetmap.org/copyright
+License: https://opendatacommons.org/licenses/odbl/1-0/
+
+The simplified preview is in src/data/sneak-peek.json (bundled as a lazy renderer chunk).
+Rebuild with scripts/prepare-sneak-peek.py and the source OSM relation JSON.
+The preview depicts the approximate real railway, not exact SimRail game geometry.
+This dataset is separate from the live railway graph, timetables and dispatcher.
+
+Official DLC information and imagery: SimRail S.A. / PlayWay S.A., Steam app 5548340.
+https://store.steampowered.com/app/5548340/SimRail_The_Railway_Simulator_Lublin_Region/
+The Steam announcement is a source for scope and planned release, not the OSM license.
