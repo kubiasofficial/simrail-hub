@@ -166,7 +166,7 @@ export function DashboardPage({ standalone = false, active = true }: { standalon
           {isDemo && <div className="rounded-xl bg-amber-500/90 px-4 py-1.5 text-center text-sm font-bold text-ink-950">DEMO – simulovaná data, nejde o skutečný vlak</div>}
 
           <section className="journey-overview journey-summary"><div className="train-compact"><VehicleCard vehicles={feed.detail?.train?.vehicles??[]} number={m.trainNumber}/><p>{m.start??'—'} → {m.end??'—'}</p><Conn c={m.connection}/></div>
-          <JourneyPanel model={m} train={feed.detail?.train??null} updatedAt={feed.updatedAt}/></section>
+          <JourneyPanel model={m} train={feed.detail?.train??null} updatedAt={feed.updatedAt} active={active&&visual}/></section>
           <div className="onboard-workspace">
             <div className="onboard-main"><div className="onboard-map-actions"><span>Mapa a provoz na jednom místě</span><button className="secondary-action" onClick={()=>setShowSchedule(true)} aria-haspopup="dialog">Otevřít jízdní řád</button></div>
             <OnboardMap standalone={standalone} train={detail!.train!} trains={trains} stations={detail?.stations??[]} route={onboardRoute.route} error={onboardRoute.error} alert={dispatch.server===server?dispatch.alert:null} active={active&&visual}/>

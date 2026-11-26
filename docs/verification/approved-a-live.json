@@ -1,56 +1,56 @@
 {
-  "at": "2026-11-26T07:15:59.583Z",
+  "at": "2026-11-26T08:58:56.810Z",
   "errors": [],
   "trainCount": 161,
   "routes": [
     {
-      "number": "1305",
+      "number": "3506",
       "name": "EIJ - EIP",
       "sections": 21,
       "coordinates": 574,
-      "first": "Warszawa Włochy",
-      "last": "Kraków Przedmieście",
+      "first": "Kraków Przedmieście",
+      "last": "Warszawa Włochy",
       "matched": 22,
-      "total": 34,
+      "total": 41,
       "gaps": 0,
-      "elapsedMs": 1714
+      "elapsedMs": 1756
     },
     {
-      "number": "23907",
+      "number": "23957",
       "name": "MOJ - R",
       "sections": 8,
       "coordinates": 224,
       "first": "Kozłów",
       "last": "Kraków Przedmieście",
       "matched": 9,
-      "total": 38,
-      "gaps": 0,
-      "elapsedMs": 3
-    },
-    {
-      "number": "74101",
-      "name": "MPE - TLK",
-      "sections": 20,
-      "coordinates": 670,
-      "first": "Zduńska Wola",
-      "last": "Katowice",
-      "matched": 21,
       "total": 60,
       "gaps": 0,
-      "elapsedMs": 25
+      "elapsedMs": 4
+    },
+    {
+      "number": "32156",
+      "name": "MPE - TLK",
+      "sections": 8,
+      "coordinates": 224,
+      "first": "Kraków Przedmieście",
+      "last": "Kozłów",
+      "matched": 9,
+      "total": 24,
+      "gaps": 0,
+      "elapsedMs": 3
     }
   ],
   "dashboard": {
-    "next": "Následující\nKraków Główny",
-    "delay": "Zpoždění · odhad\nZatím bez zpoždění\nČekám na první průjezd · předběžný údaj",
+    "next": "Následující\nWarszawa Zachodnia\nPříjezd\n11:47\nplán\nOdjezd\n11:50\nplán",
+    "delay": "Zpoždění\nZatím neurčeno\nČekám na první potvrzený průjezd",
     "imageLoaded": true
   },
   "map": {
     "selectedCategory": "EIP",
     "selectedColor": "rgb(117, 66, 183)",
-    "stations": 73,
-    "stationBuildings": 73,
-    "stationCallouts": 72,
+    "stations": 69,
+    "stationBuildings": 69,
+    "stationCallouts": 69,
     "routePaths": 21,
     "loadedTiles": 32
   }

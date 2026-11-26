@@ -60,3 +60,7 @@ Nahrávat pouze název bez gongu a úvodní věty. Aplikace připojí existujíc
 ## Doplnění: Sneak peek připravovaných tratí
 
 Aktuální TEST zahrnuje také výchozí vypnutou vrstvu Lublin Region. Ovládání, zdroje, omezení přesnosti a ověření jsou popsány v [SNEAK-PEEK-TEST-0.7.0.md](SNEAK-PEEK-TEST-0.7.0.md). Souhrnná sada má 188 testů. Náhled nepřidává stanice do hlášení ani dispečera.
+
+## Doplnění: palubní displej s časy
+
+Aktuální TEST má výraznější zastávku, časy příjezdu/odjezdu a stavové animace; viz [JOURNEY-DISPLAY-TEST-0.7.0.md](JOURNEY-DISPLAY-TEST-0.7.0.md). Souhrnná sada má 194 testů. Plán a odhad se zobrazují odděleně a nepozorované zpoždění není označeno jako jízda včas.

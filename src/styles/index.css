@@ -6,6 +6,7 @@
 @import "./release060.css";
 @import "./dispatcher.css";
 @import "./sneakPeek.css";
+@import "./journeyDisplay.css";
 @source "../";
 
 @theme {

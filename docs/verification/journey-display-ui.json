@@ -1,0 +1,54 @@
+{
+  "at": "2026-11-26T08:56:33.334Z",
+  "controlledTelemetry": true,
+  "errors": [],
+  "initial": {
+    "next": "NiedźwiedźDo zastávky přibližně 364 m · vzdušně",
+    "motion": "STOJÍPoloha ve stanici zatím nepotvrzena",
+    "times": [
+      "09:42",
+      "09:43"
+    ],
+    "timeNotes": [
+      "plán",
+      "plán"
+    ],
+    "severity": "unknown",
+    "delay": "ZpožděníZatím neurčenoPředběžně nejméně +24 min · čekám na průjezd",
+    "marker": "next"
+  },
+  "timesBesideStation": true,
+  "timeFont": 24,
+  "approach": true,
+  "observed": {
+    "next": "Kraków GłównyDo zastávky přibližně 222 m · vzdušně",
+    "motion": "NA TRATIMezi stanicemi",
+    "times": [
+      "10:08",
+      "10:09"
+    ],
+    "timeNotes": [
+      "odhad · plán 09:43",
+      "odhad · plán 09:44"
+    ],
+    "severity": "critical",
+    "delay": "Zpoždění · odhad+25 minVýrazné zpoždění · Odhad podle posledního průjezdu",
+    "marker": "next"
+  },
+  "criticalColour": "rgb(255, 155, 159)",
+  "narrowTimesBelow": true,
+  "worseningEffect": true,
+  "station": {
+    "next": "Konečná stanice",
+    "motion": "VE STANICIOstrowiec Świętokrzyski",
+    "times": [],
+    "timeNotes": [],
+    "severity": "critical",
+    "delay": "Zpoždění · odhad+26 minVýrazné zpoždění · Odhad podle posledního průjezdu",
+    "marker": "current"
+  },
+  "staleNeutral": true,
+  "narrowLayout": true,
+  "backgroundAndReducedMotion": true,
+  "animationsPreferenceRespected": true
+}
