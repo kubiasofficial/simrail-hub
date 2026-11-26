@@ -1,3 +1,4 @@
+import {ReleaseHighlights} from '@/components/ReleaseHighlights';
 import {HistoryPage} from '@/pages/HistoryPage';
 import {Localization} from '@/components/Localization';
 import { useEffect } from 'react';
@@ -30,7 +31,7 @@ export function App() {
   }
   return (
     <div className="flex h-full flex-col">
-      <Localization/><TitleBar />
+      <Localization/><TitleBar /><ReleaseHighlights/>
       <UpdatePanel compact/>
       <div className="flex min-h-0 flex-1">
         <Sidebar />
