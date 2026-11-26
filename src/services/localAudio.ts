@@ -4,17 +4,17 @@ import {join} from 'node:path';
 import type {AnnKind} from './announcements';
 
 const RATE=48000;
-const STATIONS:Record<string,string>={'warszawa wschodnia':'warszawa_wschodnia','warszawa centralna':'warszawa_centralna','warszawa zachodnia':'warszawa_zachodnia','opoczno poludnie':'opoczno_poludnie','wloszczowa polnoc':'wloszczowa_polnoc','kozlow':'kozlow','miechow':'miechow','krakow glowny':'krakow_glowny'};
+const STATIONS:Record<string,string>={'warszawa wschodnia':'warszawa_wschodnia','warszawa centralna':'warszawa_centralna','warszawa zachodnia':'warszawa_zachodnia','opoczno poludnie':'opoczno_poludnie','wloszczowa polnoc':'wloszczowa_polnoc','kozlow':'kozlow','miechow':'miechow','krakow glowny':'krakow_glowny','katowice':'katowice','sosnowiec glowny':'sosnowiec_glowny','zawiercie':'zawiercie','lask':'lask','pabianice':'pabianice','lodz kaliska':'lodz_kaliska','lodz zabieniec':'lodz_zabieniec','zgierz':'zgierz','lowicz glowny':'lowicz_glowny'};
 const PHRASES:Partial<Record<AnnKind,string>>={'next-station':'pristi_stanice',approaching:'prijizdime_do_stanice',arrived:'stanice'};
 const norm=(s:string)=>s.toLowerCase().replace(/ł/g,'l').normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim();
-export const RECORDING_FILES=[...Object.values(PHRASES),...Object.values(STATIONS)].map(s=>s+'.wav');
+export const RECORDING_FILES=[...Object.values(PHRASES),...Object.values(STATIONS).slice(0,8)].map(s=>s+'.wav');
 export interface RecordingRequest {kind:AnnKind;station:string|null;trainNumber:string|null;isFreight:boolean;service?:ServiceAnnouncementId}
 export interface RecordingStatus {directory:string;available:boolean;missing:string[];services:ServiceRecordingStatus[]}
 export function recordingNames(request:RecordingRequest):string[]|null {
  if(request.isFreight)return null;
  if(request.service!==undefined)return isServiceAnnouncementId(request.service)?[SERVICE_ANNOUNCEMENTS[request.service].file]:null;
  if(request.kind==='delay'||request.kind==='terminal')return [SERVICE_ANNOUNCEMENTS[request.kind].file];
- if(!/^(?:35|53)\d{3}$/.test(request.trainNumber??''))return null;
+ if(!/^(?:35|53|45|54)\d{2,3}$/.test(request.trainNumber??''))return null;
  const phrase=PHRASES[request.kind],station=STATIONS[norm(request.station??'')];
  return phrase&&station?[phrase+'.wav',station+'.wav']:null;
 }

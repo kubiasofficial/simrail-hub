@@ -3,14 +3,16 @@ import {writeFile} from 'node:fs/promises';
 import {join} from 'node:path';
 import {tmp} from './helpers';
 import {LocalRecordings,recordingNames,encodeWav,decodeWav,trimSilence,gongSamples} from '../src/services/localAudio';
-it('selects the phrase and exact playable station only for passenger trains 35xxx and 53xxx',()=>{
+it('selects the phrase and exact playable station only for passenger trains supported four- and five-digit passenger services',()=>{
  const request={kind:'next-station' as const,station:'Kraków Główny',trainNumber:'53103',isFreight:false};
  expect(recordingNames(request)).toEqual(['pristi_stanice.wav','krakow_glowny.wav']);
  expect(recordingNames({...request,trainNumber:'35104'})).toEqual(['pristi_stanice.wav','krakow_glowny.wav']);
  expect(recordingNames({...request,trainNumber:'35104',isFreight:true})).toBeNull();
- expect(recordingNames({...request,trainNumber:'3502'})).toBeNull();
+ expect(recordingNames({...request,trainNumber:'3502'})).toEqual(['pristi_stanice.wav','krakow_glowny.wav']);
  expect(recordingNames({...request,isFreight:true})).toBeNull();
- expect(recordingNames({...request,trainNumber:'5301'})).toBeNull();
+ expect(recordingNames({...request,trainNumber:'5301'})).toEqual(['pristi_stanice.wav','krakow_glowny.wav']);
+ expect(recordingNames({...request,trainNumber:'531030'})).toBeNull();
+ expect(recordingNames({...request,trainNumber:'12345'})).toBeNull();
  expect(recordingNames({...request,station:'Zakopane'})).toBeNull();
  expect(recordingNames({...request,station:'../../outside'})).toBeNull();
  expect(recordingNames({...request,kind:'delay'})).toEqual(['zpozdeni.wav']);
@@ -34,4 +36,14 @@ it('renders gong, phrase, pause and station as a single cancellable sound; missi
  const plain=decodeWav((await service.render(request,false))!);const withGong=decodeWav((await service.render(request,true))!);
  expect(withGong.length-plain.length).toBe(64800);
  expect((await service.status()).missing).toHaveLength(9);
+});
+
+it('reuses Warsaw clips and selects newly supported playable stations across 45/54 without announcing freight',()=>{
+ const base={kind:'approaching' as const,station:'Warszawa Centralna',isFreight:false};
+ for(const trainNumber of ['4500','5401','45100','54101']){
+  expect(recordingNames({...base,trainNumber})).toEqual(['prijizdime_do_stanice.wav','warszawa_centralna.wav']);
+  for(const [station,file] of [['Katowice','katowice'],['Sosnowiec Główny','sosnowiec_glowny'],['Zawiercie','zawiercie'],['Łask','lask'],['Pabianice','pabianice'],['Łódź Kaliska','lodz_kaliska'],['Łódź Żabieniec','lodz_zabieniec'],['Zgierz','zgierz'],['Łowicz Główny','lowicz_glowny']])expect(recordingNames({...base,trainNumber,station})).toEqual(['prijizdime_do_stanice.wav',file+'.wav']);
+  expect(recordingNames({...base,trainNumber,isFreight:true})).toBeNull();
+  expect(recordingNames({...base,trainNumber,station:'Gdynia Główna'})).toBeNull();
+ }
 });

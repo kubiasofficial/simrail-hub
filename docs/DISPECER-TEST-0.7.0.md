@@ -26,7 +26,7 @@ Okolní trasy se načítají až při zapnutí dispečera, nejvýše tři souča
 
 ## Ověření
 
-- 178 automatických testů, kontrola typů a sestavení.
+- 184 automatických testů, kontrola typů a sestavení.
 - `dispatcher-ui.json`: celý tok se zřetelně označenými řízenými daty, ověření pulzu obou map, dialogu, samostatných hlasitostí a pořadí zvuků; test syntézy hlasu je zde nahrazen krátkým PCM signálem.
 - `dispatcher-live.json`: zabalený TEST se skutečným API a skutečnou českou syntézou Piper; skutečné WAV přehrání otevření vysílačky, zhruba dvanáctisekundové zprávy a ukončení při minimalizaci (záměrně ztlumené). Nejde o subjektivní poslech reproduktorů ani potvrzení úplnosti detekce zdržení ve hře.
 - Nové jednotkové scénáře zahrnují protisměr, souběžnou trať, mezeru v trase, nezmapovanou jízdu, stáří dat, oddělené úseky, potvrzení situace, omezení opakování a neplatné zprávy ve frontě.
@@ -34,3 +34,25 @@ Okolní trasy se načítají až při zapnutí dispečera, nejvýše tři souča
 ## Připravený TEST
 
 Stávající soubor `C:\Users\PC\Desktop\simrail-hub\SimRail Hub TEST.exe` byl nahrazen finálním TESTem 0.7.0. Předchozí kandidát je zachovaný v ignorované složce `.deployment/old-test-candidates`. Ověřený skutečný start portable a shoda SHA-256 jsou v `verification/dispatcher-portable.json`; shoda zabaleného rendereru a IPC s finálním sestavením v `verification/dispatcher-distribution.json`. Vznikla jen místní větev `feature/dispatcher-test`, žádný nový veřejný tag ani vydání.
+
+## Doplnění: trvalý pulz a nahrávky 35/53/45/54
+
+Potvrzený pulz zůstává až do nejméně 60 sekund čerstvých dat potvrzujících uklidnění, poté půl sekundy dohasíná. Zpomalení vlastního vlaku, vypnutí hlasu ani změna dosahu incident neukončí. Výpadek dat či zmizení sledovaného vlaku z dostupných dat ponechá poslední polohu šedě jako neověřenou; nevyvolá hlášení o uvolnění. Přerušení ověřování restartuje minutové potvrzení. Změna sledovaného vlaku/serveru nebo vypnutí dispečera stav vyčistí.
+
+Střed pulzu otevře aktuální popis myší, fokusem klávesnice nebo klepnutím. Escape a kliknutí do mapy popis zavřou. Obsah zahrnuje typ komplikace, popis, počet vlaků, úsek, vzdálenost s rozlišením výpočtu po trase / vzdušnou čarou a stáří posledního ověření. Okolní vlny neblokují ovládání mapy. Ověřuje se jeden potvrzený incident; další se vyhledá po jeho uzavření. Pokud původní jízda zmizí z pokrytí, může zůstat neověřená až do návratu dat nebo změny sledování.
+
+Původní nahrávky fungují také pro čtyřmístné 35xx/53xx a skupiny 45xx/54xx/45xxx/54xxx. Pro 45/54 je připraveno devět volitelných názvů níže. Chybějící soubor dovolí syntetický hlas a neblokuje původních 11 souborů. Používají se jen skutečné zastávky PH; tabulka je sjednocení zastávek na současném řiditelném úseku podle CZ1, ověřené 26. 11. 2026, ne příslib stejných zastávek každého vlaku.
+
+| Soubor | Samostatně namluvit |
+| --- | --- |
+| katowice.wav | Katowice |
+| sosnowiec_glowny.wav | Sosnowiec Główny |
+| zawiercie.wav | Zawiercie |
+| lask.wav | Łask |
+| pabianice.wav | Pabianice |
+| lodz_kaliska.wav | Łódź Kaliska |
+| lodz_zabieniec.wav | Łódź Żabieniec |
+| zgierz.wav | Zgierz |
+| lowicz_glowny.wav | Łowicz Główny |
+
+Nahrávat pouze název bez gongu a úvodní věty. Aplikace připojí existující „Příští stanice“, „Přijíždíme do stanice“ nebo „Stanice“. WAV musí být PCM mono 48 kHz / 16 bit; jiné vstupní nahrávky lze převést místně, originály zachovat. Žádné soukromé zvuky se do sestavení nepřidávají.

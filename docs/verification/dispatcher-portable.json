@@ -1,11 +1,11 @@
 {
-  "at": "2026-11-26T06:10:08.543Z",
+  "at": "2026-11-26T06:46:26.792Z",
   "info": {
     "version": "0.7.0",
     "platform": "win32",
     "electron": "45.4.1",
     "channel": "test",
-    "buildId": "2026-11-26T06:06:07.099Z"
+    "buildId": "2026-11-26T06:43:24.850Z"
   },
   "actualCanonicalPortable": true,
   "normalProfileUsed": false,
@@ -18,5 +18,5 @@
     30764
   ],
   "publicUpdaterDisabled": true,
-  "sha256": "66822b94141f4e7c3804028de100a434facee0e27b1fc79797a5063127065b27"
+  "sha256": "bd1aaeb3a1c45cb3f0d76bfdcdb25a009865627575cee11f859efdd29121a3f0"
 }
