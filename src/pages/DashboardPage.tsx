@@ -1,3 +1,4 @@
+import {takeoverOrigin} from '@/services/takeoverOrigin';
 import {DrivingButton} from '@/components/DrivingControls';
 import {useDriving} from '@/stores/driving';
 import {MusicRadioButton} from '@/components/MusicRadio';
@@ -167,7 +168,7 @@ export function DashboardPage({ standalone = false, active = true }: { standalon
         <div className="dashboard-controls">
         {!isDemo&&<TrainPicker server={server} trains={trains} selected={sel.train} onSelect={train=>{ann.stop();sel.set({train});}}/>}
         <button className="stop-watching" onClick={stopWatching} disabled={!isDemo&&!sel.train}><Square size={14}/>Přestat sledovat</button>
-        {!isDemo&&<MobilePairing server={server} train={sel.train}/>}<MusicRadioButton/><DrivingButton server={server} number={sel.train} runId={detail?.train?.runId??null} location={m?.current??null} enabled={!isDemo&&m?.connection==='live'}/>
+        {!isDemo&&<MobilePairing server={server} train={sel.train}/>}<MusicRadioButton/><DrivingButton server={server} number={sel.train} runId={detail?.train?.runId??null} location={detail?takeoverOrigin(detail).origin:null} enabled={!isDemo&&m?.connection==='live'}/>
         <button className="secondary-action standalone-button" onClick={()=>void window.simrailHub!.call('dashboard:open',isDemo?'demo':server,isDemo?null:sel.train)} disabled={!isDemo&&!sel.train}><ExternalLink size={14}/>Samostatné okno</button>
         </div></div>}
 

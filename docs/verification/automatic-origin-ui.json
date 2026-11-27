@@ -1,0 +1,11 @@
+{
+  "at": "2026-11-27T10:16:53.562Z",
+  "actualStartIpc": true,
+  "discordTransport": "intercepted in isolated main process; no real messages",
+  "errors": [],
+  "noManualStartInput": true,
+  "refreshesAtConfirmation": true,
+  "origin": "Kraków Główny",
+  "ignoresLegacyManualOrigin": true,
+  "correctDiscordFields": true
+}

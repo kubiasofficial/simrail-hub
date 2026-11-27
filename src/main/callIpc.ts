@@ -1,3 +1,4 @@
+import {takeoverOrigin} from '../services/takeoverOrigin';
 import {CommunityRelay} from '../services/CommunityRelay';
 import {DrivingJournal,sendDiscord,validDiscordWebhook,cleanText} from '../services/DrivingJournal';
 import {computeOnboard,DelayTracker} from '../services/onboard';
@@ -75,11 +76,11 @@ export function registerCallIpc(ctx: AppContext, openDashboard: (server: string 
   on('driving:resume',id=>safe('driving',async()=>(await journal()).resume(cleanText(id,100))));
   on('driving:retry',(id,confirmed)=>safe('driving',async()=>(await journal()).retry(cleanText(id,100),confirmed===true)));
   on('driving:start',raw=>safe('driving',async()=>{
-    const q=object(raw),nickname=cleanText(q.nickname,80),server=serverCode(q.server),number=trainNumber(q.number),location=cleanText(q.location,150);await journal();community?.ensureReady();
+    const q=object(raw),nickname=cleanText(q.nickname,80),server=serverCode(q.server),number=trainNumber(q.number);await journal();community?.ensureReady();
     const result=await tracking.getDetail(server,number);if(!result.ok||!result.data.train)throw Error('Vlak nyní není dostupný. Ověř jeho číslo a server.');
     const detail=result.data,t=detail.train!;if(q.runId!==null&&(typeof q.runId!=='string'||q.runId!==t.runId))throw Error('Spoj se mezitím změnil. Vyber vlak znovu.');
-    const model=computeOnboard({train:t,timetable:detail.timetable,stations:detail.stations,nowSod:detail.serverSod,tracker:new DelayTracker(),connection:Date.now()-detail.fetchedAt<15000?'live':'stale'});
-    return (await journal()).startDrive({nickname,server,number,runId:t.runId,from:detail.timetable?.startStation??t.startStation??'Neuvedeno',to:detail.timetable?.endStation??t.endStation??'Neuvedeno',origin:location,originVerified:model.connection==='live'&&model.current===location});
+    const origin=takeoverOrigin(detail);
+    return (await journal()).startDrive({nickname,server,number,runId:t.runId,from:detail.timetable?.startStation??t.startStation??'Neuvedeno',to:detail.timetable?.endStation??t.endStation??'Neuvedeno',...origin});
   }));
   on('driving:end',raw=>safe('driving',async()=>{
     const q=object(raw),id=cleanText(q.id,100),location=cleanText(q.location,150),note=q.note===''?'':cleanText(q.note,500),service=await journal(),active=service.status().drive;let verified=false;

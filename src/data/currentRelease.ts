@@ -1,11 +1,11 @@
 export const CURRENT_RELEASE={
- version:'0.8.1',date:'27. 11. 2026',banner:'./assets/releases/0.8.1.png',
- title:'Převzít vlak. Sdílet svoji jízdu.',subtitle:'Komunitní Discord teď i ve veřejném launcheru.',
- url:'https://github.com/kubiasofficial/simrail-hub/releases/tag/v0.8.1',
+ version:'0.8.2',date:'27. 11. 2026',banner:'./assets/releases/0.8.2.png',
+ title:'Začátek jízdy určí launcher.',subtitle:'Převzetí vlaku bez ručního psaní stanice.',
+ url:'https://github.com/kubiasofficial/simrail-hub/releases/tag/v0.8.2',
  features:[
-  {id:'display',title:'Převzít vlak pro každého',tag:'OPRAVA',text:'Tlačítko je zpět v palubním počítači. Vyber živý vlak, zadej přezdívku a potvrď skutečné místo převzetí.'},
-  {id:'dispatcher',title:'Jízda i směna na Discordu',text:'Oznámení začátku a konce jízdy i potvrzené směny se odesílají na společný komunitní Discord.'},
-  {id:'preview',title:'Jednorázové propojení',text:'Při prvním použití ověř zařízení v prohlížeči. Přístup se uloží šifrovaně; společný webhook zůstává na serveru.'}
+  {id:'display',title:'Začátek řízení automaticky',tag:'OPRAVA',text:'Při převzetí zadáš přezdívku. Stanici nebo úsek launcher určí z aktuálních dat vybraného vlaku.'},
+  {id:'preview',title:'Čerstvá poloha při potvrzení',text:'Místo znovu vyhodnotíme až při potvrzení, i když se vlak během otevřeného okna posunul.'},
+  {id:'dispatcher',title:'Poctivé určení místa',text:'Rozlišujeme stanici, její blízkost, úsek i souřadnice vlaku. Chybějící nebo stará data nejsou vydávána za potvrzenou stanici.'}
  ],
- soundNote:'Samotné sledování vlaku nic nezveřejňuje. Převzetí ve hře provádíš ručně; odeslání na Discord vždy potvrzuješ.'
+ soundNote:'Oznámení na společný Discord dál odešleš až vlastním potvrzením. Skutečné převzetí vlaku ve hře provádíš ručně.'
 } as const;

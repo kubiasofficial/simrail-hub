@@ -1,3 +1,4 @@
+import {originDescription} from './takeoverOrigin';
 import {randomUUID} from 'node:crypto';
 import type {Database} from './Database';
 import type {DiscordPayload,DriveSession,SharedShift,DeliverySummary,DrivingStatus} from '../types/driving';
@@ -30,7 +31,7 @@ export class DrivingJournal {
   if(!this.configured)throw Error('Discord není v této TEST instalaci nastavený.');
   const active=this.state.drive;if(active){if(active.server===input.server&&active.number===input.number&&active.runId===input.runId)return this.status();throw Error('Nejdřív ukonči nebo obnov rozpracované řízení.');}
   const drive:DriveSession={...input,id:randomUUID(),startedAt:this.now(),shiftId:this.state.shift?.server===input.server&&this.state.shift.legs.some(l=>l.number===input.number)?this.state.shift.id:null};
-  this.change(s=>{s.drive=drive;s.nickname=drive.nickname;this.event(s,drive.id+':start','drive-start',drive.nickname+' právě převzal vlak '+drive.number,[field('Trasa',drive.from+' → '+drive.to),field('Začátek řízení',drive.origin),field('Místo',drive.originVerified?'Potvrzená PH zastávka podle polohy':'Ručně uvedené strojvedoucím'),field('Server',drive.server.toUpperCase()),...(drive.shiftId?[field('Součást směny',this.state.shift?.transport==='freight'?'Nákladní doprava':'Osobní doprava')]:[])]);});this.interrupted=false;return this.status();
+  this.change(s=>{s.drive=drive;s.nickname=drive.nickname;this.event(s,drive.id+':start','drive-start',drive.nickname+' právě převzal vlak '+drive.number,[field('Trasa',drive.from+' → '+drive.to),field('Začátek řízení',drive.origin),field('Místo',originDescription(drive.originSource,drive.originVerified)),field('Server',drive.server.toUpperCase()),...(drive.shiftId?[field('Součást směny',this.state.shift?.transport==='freight'?'Nákladní doprava':'Osobní doprava')]:[])]);});this.interrupted=false;return this.status();
  }
  resume(id:string){if(this.state.drive?.id!==id)throw Error('Řízení už není aktivní.');this.interrupted=false;this.change(()=>{});return this.status();}
  endDrive(id:string,location:string,verified:boolean,note:string,delay:number|null){
