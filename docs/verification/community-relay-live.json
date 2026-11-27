@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-27T09:47:39.441Z",
+  "health": {
+    "service": "simrail-hub-community",
+    "version": 1,
+    "ready": true
+  },
+  "remoteRegistration": true,
+  "unverifiedDevicePending": true,
+  "anonymousPostRejected": true,
+  "activationPage": true,
+  "noDrivingMessageSent": true
+}

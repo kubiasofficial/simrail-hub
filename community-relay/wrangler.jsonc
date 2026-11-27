@@ -1,0 +1,25 @@
+{
+  "name": "simrail-hub-community",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-11-27",
+  "account_id": "394774490e425be71d8ba52c20ab5ce7",
+  "workers_dev": true,
+  "vars": {
+    "TURNSTILE_SITEKEY": "0x4AAAAAAGVe5DaStYgrqFBb"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "simrail-hub-community",
+      "database_id": "57891859-dbeb-48c2-89b9-f8d8a91e4f64"
+    }
+  ],
+  "triggers": {
+    "crons": [
+      "23 3 * * *"
+    ]
+  },
+  "observability": {
+    "enabled": false
+  }
+}

@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);
+INSERT OR IGNORE INTO meta VALUES ('schema','1');
+CREATE TABLE IF NOT EXISTS rates (key TEXT PRIMARY KEY, count INTEGER NOT NULL, expires INTEGER NOT NULL);
+CREATE INDEX IF NOT EXISTS rates_expiry ON rates(expires);
+CREATE TABLE IF NOT EXISTS enrollments (code TEXT PRIMARY KEY, client TEXT NOT NULL, poll_hash TEXT NOT NULL, expires INTEGER NOT NULL, approved INTEGER);
+CREATE INDEX IF NOT EXISTS enrollments_expiry ON enrollments(expires);
+CREATE TABLE IF NOT EXISTS devices (client TEXT PRIMARY KEY, token_hash TEXT NOT NULL, expires INTEGER NOT NULL);
+CREATE INDEX IF NOT EXISTS devices_expiry ON devices(expires);
+CREATE TABLE IF NOT EXISTS events (id TEXT PRIMARY KEY, client TEXT NOT NULL, hash TEXT NOT NULL, kind TEXT NOT NULL, state TEXT NOT NULL, created INTEGER NOT NULL, message_id TEXT, retry_at INTEGER, error TEXT);
+CREATE INDEX IF NOT EXISTS events_created ON events(created);

@@ -1,11 +1,13 @@
-# Soukromí a místní data – verze 0.8.0
+# Soukromí a místní data – verze 0.8.1
 
 Launcher nenabízí registraci, přihlášení ani synchronizaci osobního účtu.
 Nastavení a slovník výslovnosti ukládá existující SQLite v uživatelské složce aplikace. Oblíbené servery, vlaky, poslední výběr a historie sledování používají lokální úložiště rendereru. Historie uchovává nejvýše 100 sledování a 256 pozorovaných PH průjezdů na sledování; neukládá Steam identitu ani přesnou historii polohy. Lze ji vymazat na stránce Historie a oblíbené. Doplňky, stažené hlasy a soukromé nahrávky zůstávají na počítači. Odinstalace zachovává místní aplikační data.
 
 Živá data získává hlavní proces ze SimRail API. Veřejné avatary se načítají ze Steamu, mapové dlaždice z OpenStreetMap a případně OpenRailwayMap, snímky z oficiálních zdrojů hry a informace o DLC ze Steamu. Aktualizace pocházejí z GitHub Releases. Tito poskytovatelé dostávají běžné síťové požadavky. Mapová ani herní data se nekopírují do Firebase.
 
-Internetové rádio se připojí k poskytovateli audio streamu po ručním spuštění. Poskytovatel dostává běžný síťový požadavek včetně IP adresy. Předvolby, vlastní adresy streamů a hlasitost se ukládají místně. Plán směny a jeho průběh se uchovávají lokálně. Veřejná verze neobsahuje společný Discord webhook; evidence řízení se společným webhookem zůstává v místně nakonfigurovaném TEST kanálu.
+Internetové rádio se připojí k poskytovateli audio streamu po ručním spuštění. Poskytovatel dostává běžný síťový požadavek včetně IP adresy. Předvolby, vlastní adresy streamů a hlasitost se ukládají místně. Plán směny a jeho průběh se uchovávají lokálně. Veřejná verze umožňuje po výslovném potvrzení oznámit převzetí/ukončení vlaku a sdílenou směnu na společný Discord. Zveřejňuje zadanou přezdívku, číslo a trasu vlaku, stanici nebo úsek, časy evidence a dostupný odhad zpoždění. Přezdívka není ověřeným účtem Steamu. Samotné sledování vlaku nic neodesílá. Společný webhook je uložen pouze na serveru Cloudflare Workers.
+
+Před prvním odesláním proběhne jednorázové ověření přes Cloudflare Turnstile. Náhodné ID zařízení a časově omezené přístupové údaje slouží k omezení spamu; přístupový token je na počítači šifrován prostředky Windows. Na serveru se uchovává otisk tokenu a token platí 30 dnů. Odesílací služba uchovává ID a otisky událostí, stav doručení a časy nejvýše přibližně 15 dnů; vlastní text oznámení se do serverové databáze neukládá. IP adresa slouží k omezení četnosti; databáze uchovává jen její HMAC otisk a omezené čítače. Cloudflare a Discord dostávají běžné síťové požadavky. Veřejně odeslané zprávy zůstávají na Discordu podle pravidel daného serveru.
 
 Hlas Piper běží místně. Hlasový model a program je potřeba nejprve stáhnout; kontrolují se připnuté SHA-256. České a polské segmenty vybírají model příslušného jazyka. Soukromé nahrávky nejsou v instalačním balíčku.
 

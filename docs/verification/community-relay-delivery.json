@@ -1,0 +1,12 @@
+{
+  "at": "2026-11-27T10:01:37.102Z",
+  "livePublicRelay": true,
+  "credentialSetup": "controlled QA approval in own database; production Turnstile validation remains required",
+  "discordAcknowledged": true,
+  "readBackVerified": true,
+  "messageId": "1575813837603741699",
+  "channelId": "1575749979530731681",
+  "connectionTestOnly": true,
+  "noDrivingClaim": true,
+  "redirectCompatibilityFixed": true
+}

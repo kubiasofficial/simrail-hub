@@ -1,11 +1,11 @@
 export const CURRENT_RELEASE={
- version:'0.8.0',date:'27. 11. 2026',banner:'./assets/releases/0.8.0.png',
- title:'Tvoje jízda. Tvoje rádio.',subtitle:'Pusť si rádio, naplánuj směnu a vyraz na trať.',
- url:'https://github.com/kubiasofficial/simrail-hub/releases/tag/v0.8.0',
+ version:'0.8.1',date:'27. 11. 2026',banner:'./assets/releases/0.8.1.png',
+ title:'Převzít vlak. Sdílet svoji jízdu.',subtitle:'Komunitní Discord teď i ve veřejném launcheru.',
+ url:'https://github.com/kubiasofficial/simrail-hub/releases/tag/v0.8.1',
  features:[
-  {id:'dispatcher',title:'Rádio přímo v kabině',text:'Rádio Kiss, vlastní stanice, předvolby a samostatná hlasitost. Během hlášení se přehrávání plynule ztiší.'},
-  {id:'preview',title:'Režim Směna',tag:'BETA',text:'Osobní nebo nákladní doprava, vlastní DLC a konec směny podle tebe. Plán s přestávkami vychází z dostupných jízdních řádů.'},
-  {id:'display',title:'Nový vzhled a lepší hlášení',text:'Přepracované rozhraní, opravené souřadnice tří varšavských stanic a podpora místních nahrávek pro 16xx / 61xx i pětimístné varianty.'}
+  {id:'display',title:'Převzít vlak pro každého',tag:'OPRAVA',text:'Tlačítko je zpět v palubním počítači. Vyber živý vlak, zadej přezdívku a potvrď skutečné místo převzetí.'},
+  {id:'dispatcher',title:'Jízda i směna na Discordu',text:'Oznámení začátku a konce jízdy i potvrzené směny se odesílají na společný komunitní Discord.'},
+  {id:'preview',title:'Jednorázové propojení',text:'Při prvním použití ověř zařízení v prohlížeči. Přístup se uloží šifrovaně; společný webhook zůstává na serveru.'}
  ],
- soundNote:'Rádio pokračuje i při minimalizaci. Uvítání, zavazadla i čekání na odjezd mají vlastní pravidla a rozestupy.'
+ soundNote:'Samotné sledování vlaku nic nezveřejňuje. Převzetí ve hře provádíš ručně; odeslání na Discord vždy potvrzuješ.'
 } as const;

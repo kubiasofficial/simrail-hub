@@ -63,6 +63,7 @@ export interface UpdateInfoDto { status: 'unconfigured' | 'current' | 'available
 
 /** Typované „volací“ kanály (kromě specializovaných metod výše). Preload pustí jen kanály z CALL_CHANNELS. */
 export interface IpcMap {
+  'driving:connect':{args:[];result:Res<import('./driving').DrivingStatus>};
   'driving:status':{args:[];result:Res<import('./driving').DrivingStatus>};
   'driving:start':{args:[import('./driving').DriveStartRequest];result:Res<import('./driving').DrivingStatus>};
   'driving:end':{args:[import('./driving').DriveEndRequest];result:Res<import('./driving').DrivingStatus>};
@@ -114,7 +115,7 @@ export interface IpcMap {
 }
 export type CallChannel = keyof IpcMap;
 export const CALL_CHANNELS: readonly CallChannel[] = [
-  'driving:status','driving:start','driving:end','driving:resume','driving:retry','driving:shift-start','driving:shift-progress','driving:shift-end',
+  'driving:connect','driving:status','driving:start','driving:end','driving:resume','driving:retry','driving:shift-start','driving:shift-progress','driving:shift-end',
   'shift:plan','dlc:list','update:status','update:auto-check','update:install','audio:gong','audio:radio','recordings:status','recordings:choose','recordings:render',
   'stations:board', 'stations:list', 'mobile:start', 'mobile:stop', 'settings:get', 'settings:update', 'trains:list', 'trains:detail', 'trains:route','dashboard:stop', 'tts:status', 'tts:install-piper', 'tts:install-voice', 'tts:synthesize',
   'tts:clear-cache', 'dict:list', 'dict:set', 'dict:delete', 'mods:list', 'mods:import', 'mods:set-enabled', 'mods:uninstall', 'mods:backup',

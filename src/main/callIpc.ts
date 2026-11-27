@@ -1,3 +1,4 @@
+import {CommunityRelay} from '../services/CommunityRelay';
 import {DrivingJournal,sendDiscord,validDiscordWebhook,cleanText} from '../services/DrivingJournal';
 import {computeOnboard,DelayTracker} from '../services/onboard';
 import {TrainRouteService} from '../services/TrainRouteService';
@@ -6,7 +7,7 @@ import {net} from 'electron';
 import {DlcService} from '../services/DlcService';
 import { autoUpdater } from 'electron-updater';
 import { AutomaticUpdates } from '../services/AutomaticUpdates';
-import { app, dialog, ipcMain, BrowserWindow, powerMonitor } from 'electron';
+import { app, dialog, ipcMain, BrowserWindow, powerMonitor, safeStorage, shell } from 'electron';
 import { readFile, stat, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import type { AppContext } from './appContext';
@@ -59,18 +60,22 @@ export function registerCallIpc(ctx: AppContext, openDashboard: (server: string 
   };
   const modList = async () => mods.list();
   const recordings=async()=>new LocalRecordings((await settings.get()).recordingsPath??join(app.getPath('desktop'),'simrail-hub','hlaseni'));
+  let community:CommunityRelay|null=null;
   let journalPromise:Promise<DrivingJournal>|null=null;
   const journal=()=>journalPromise??=(async()=>{
     let webhook='';if(runtimeIdentity.channel==='test'&&!ctx.fixtures){try{const value=(await readFile(join(app.getPath('desktop'),'simrail-hub','.local-config','driving-webhook.secret'),'utf8')).trim();if(validDiscordWebhook(value))webhook=value;}catch{/* local configuration is optional */}}
-    const service=new DrivingJournal(ctx.db,!!webhook,payload=>sendDiscord(webhook,payload,net.fetch.bind(net) as typeof fetch));
+    if(!webhook&&!ctx.fixtures)community=new CommunityRelay(ctx.db,{encrypt:text=>{if(!safeStorage.isEncryptionAvailable())throw Error('Šifrování Windows není dostupné.');return safeStorage.encryptString(text).toString('base64');},decrypt:text=>safeStorage.decryptString(Buffer.from(text,'base64'))},net.fetch.bind(net) as typeof fetch,url=>shell.openExternal(url));
+    const service=new DrivingJournal(ctx.db,!!webhook||!!community,(payload,event)=>community?community.send(payload,event):sendDiscord(webhook,payload,net.fetch.bind(net) as typeof fetch));
     app.once('before-quit',()=>service.dispose());return service;
   })();
   const object=(raw:unknown)=>{if(!raw||typeof raw!=='object'||Array.isArray(raw))throw Error('Neplatné zadání evidence.');return raw as Record<string,unknown>;};
-  on('driving:status',()=>safe('driving',async()=>(await journal()).status()));
+  const drivingStatus=async()=>{const service=await journal();return {...service.status(),connection:community?await community.status():{mode:service.status().configured?'direct' as const:'disabled' as const,verified:service.status().configured,pending:false,error:null}};};
+  on('driving:status',()=>safe('driving',drivingStatus));
+  on('driving:connect',()=>safe('driving',async()=>{await journal();if(community)await community.connect();return drivingStatus();}));
   on('driving:resume',id=>safe('driving',async()=>(await journal()).resume(cleanText(id,100))));
   on('driving:retry',(id,confirmed)=>safe('driving',async()=>(await journal()).retry(cleanText(id,100),confirmed===true)));
   on('driving:start',raw=>safe('driving',async()=>{
-    const q=object(raw),nickname=cleanText(q.nickname,80),server=serverCode(q.server),number=trainNumber(q.number),location=cleanText(q.location,150);
+    const q=object(raw),nickname=cleanText(q.nickname,80),server=serverCode(q.server),number=trainNumber(q.number),location=cleanText(q.location,150);await journal();community?.ensureReady();
     const result=await tracking.getDetail(server,number);if(!result.ok||!result.data.train)throw Error('Vlak nyní není dostupný. Ověř jeho číslo a server.');
     const detail=result.data,t=detail.train!;if(q.runId!==null&&(typeof q.runId!=='string'||q.runId!==t.runId))throw Error('Spoj se mezitím změnil. Vyber vlak znovu.');
     const model=computeOnboard({train:t,timetable:detail.timetable,stations:detail.stations,nowSod:detail.serverSod,tracker:new DelayTracker(),connection:Date.now()-detail.fetchedAt<15000?'live':'stale'});
@@ -83,7 +88,7 @@ export function registerCallIpc(ctx: AppContext, openDashboard: (server: string 
     return service.endDrive(id,location,verified,note,delay);
   }));
   on('driving:shift-start',raw=>safe('driving',async()=>{
-    const q=object(raw),nickname=cleanText(q.nickname,80),p=object(q.plan),request=object(p.request),server=serverCode(p.server);
+    const q=object(raw),nickname=cleanText(q.nickname,80),p=object(q.plan),request=object(p.request),server=serverCode(p.server);await journal();community?.ensureReady();
     if(!Array.isArray(p.legs)||!p.legs.length||p.legs.length>12||typeof p.generatedAt!=='number'||!Number.isFinite(p.generatedAt)||!['passenger','freight'].includes(String(request.transport))||typeof p.end!=='number'||!Number.isFinite(p.end)||typeof request.breakMinutes!=='number'||request.breakMinutes<5||request.breakMinutes>120)throw Error('Neplatný plán směny.');
     const legs=p.legs.map(raw=>{const l=object(raw);return {id:cleanText(l.id,150),number:trainNumber(l.number),from:cleanText(l.from,150),to:cleanText(l.to,150)};});
     return (await journal()).startShift({nickname,server,transport:request.transport as 'passenger'|'freight',planKey:server+':'+p.generatedAt,plannedEnd:p.end,breakMinutes:request.breakMinutes,legs});

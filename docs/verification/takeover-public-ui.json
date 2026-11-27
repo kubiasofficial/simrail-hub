@@ -1,0 +1,14 @@
+{
+  "at": "2026-11-27T09:49:33.553Z",
+  "controlledChallenge": true,
+  "discordTransport": "mock; no real driving messages",
+  "errors": [],
+  "requiresVerification": true,
+  "startOnceAndReload": true,
+  "endOnce": true,
+  "connectCount": 1,
+  "titles": [
+    "TEST ověření právě převzal vlak 4421",
+    "TEST ověření ukončil řízení vlaku 4421"
+  ]
+}

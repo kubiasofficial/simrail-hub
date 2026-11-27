@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-27T10:04:22.879Z",
+  "errors": [],
+  "updaterResponsesControlled": true,
+  "screenshotReducedMotion": true,
+  "autoOnceAndEscape": true,
+  "manualCloseAndUnderlyingUi": true,
+  "noRepeatAfterReload": true,
+  "postponeWithoutInstall": true,
+  "waitsForOtherDialogAndExplicitInstall": true,
+  "deferWhileMinimized": true,
+  "smallWindow": true
+}
