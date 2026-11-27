@@ -63,6 +63,14 @@ export interface UpdateInfoDto { status: 'unconfigured' | 'current' | 'available
 
 /** Typované „volací“ kanály (kromě specializovaných metod výše). Preload pustí jen kanály z CALL_CHANNELS. */
 export interface IpcMap {
+  'driving:status':{args:[];result:Res<import('./driving').DrivingStatus>};
+  'driving:start':{args:[import('./driving').DriveStartRequest];result:Res<import('./driving').DrivingStatus>};
+  'driving:end':{args:[import('./driving').DriveEndRequest];result:Res<import('./driving').DrivingStatus>};
+  'driving:resume':{args:[string];result:Res<import('./driving').DrivingStatus>};
+  'driving:retry':{args:[string,boolean];result:Res<import('./driving').DrivingStatus>};
+  'driving:shift-start':{args:[import('./driving').SharedShiftRequest];result:Res<import('./driving').DrivingStatus>};
+  'driving:shift-progress':{args:[string,string,boolean];result:Res<import('./driving').DrivingStatus>};
+  'driving:shift-end':{args:[string];result:Res<import('./driving').DrivingStatus>};
   'shift:plan':{args:[string,import('./shift').ShiftRequest];result:Res<import('./shift').ShiftPlan>};
   'dlc:list':{args:[string];result:Res<import('./dlc').DlcCatalog>};
   'audio:radio':{args:[boolean];result:Res<Uint8Array>};
@@ -106,6 +114,7 @@ export interface IpcMap {
 }
 export type CallChannel = keyof IpcMap;
 export const CALL_CHANNELS: readonly CallChannel[] = [
+  'driving:status','driving:start','driving:end','driving:resume','driving:retry','driving:shift-start','driving:shift-progress','driving:shift-end',
   'shift:plan','dlc:list','update:status','update:auto-check','update:install','audio:gong','audio:radio','recordings:status','recordings:choose','recordings:render',
   'stations:board', 'stations:list', 'mobile:start', 'mobile:stop', 'settings:get', 'settings:update', 'trains:list', 'trains:detail', 'trains:route','dashboard:stop', 'tts:status', 'tts:install-piper', 'tts:install-voice', 'tts:synthesize',
   'tts:clear-cache', 'dict:list', 'dict:set', 'dict:delete', 'mods:list', 'mods:import', 'mods:set-enabled', 'mods:uninstall', 'mods:backup',

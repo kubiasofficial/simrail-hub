@@ -1,0 +1,21 @@
+{
+  "at": "2026-11-27T06:21:25.592Z",
+  "info": {
+    "version": "0.7.0",
+    "platform": "win32",
+    "electron": "45.4.1",
+    "channel": "test",
+    "buildId": "2026-11-27T06:18:33.564Z"
+  },
+  "actualCanonicalPortable": true,
+  "normalProfileUsed": false,
+  "publicUpdaterDisabled": true,
+  "privateWebhookConfigured": true,
+  "webhookExposedToRenderer": false,
+  "radioAndDrivingButtonsPresent": true,
+  "escapeAndOutsideClose": true,
+  "noAutoplay": true,
+  "noRealDrivingEventsSent": true,
+  "errors": [],
+  "sha256": "8d0221c335b9b55116bdf0b3859ac601d568b8dc0cf4b399e612c1f446d0ad93"
+}

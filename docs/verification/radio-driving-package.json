@@ -1,0 +1,12 @@
+{
+  "at": "2026-11-27T06:21:10.142Z",
+  "identity": {
+    "version": "0.7.0",
+    "channel": "test",
+    "buildId": "2026-11-27T06:18:33.564Z"
+  },
+  "matchedFiles": 141,
+  "privateAudioBundled": false,
+  "privateWebhookBundled": false,
+  "sha256": "8d0221c335b9b55116bdf0b3859ac601d568b8dc0cf4b399e612c1f446d0ad93"
+}

@@ -1,3 +1,5 @@
+import {DrivingHost} from '@/components/DrivingControls';
+import {MusicRadioHost} from '@/components/MusicRadio';
 import {ShiftStatus} from '@/components/ShiftStatus';
 import {ShiftPage} from '@/pages/ShiftPage';
 import {DlcPage} from '@/pages/DlcPage';
@@ -34,8 +36,8 @@ export function App() {
   }
   return (
     <div className="railway-shell flex h-full flex-col">
-      <Localization/><TitleBar /><ReleaseHighlights/>
-      <UpdatePanel compact/><ShiftStatus/>
+      <Localization/><TitleBar /><ReleaseHighlights/><MusicRadioHost/>
+      <UpdatePanel compact/><ShiftStatus/><DrivingHost/>
       <div className="flex min-h-0 flex-1">
         <Sidebar />
         <main data-page={page} className={`min-w-0 flex-1 ${page === 'map' ? 'overflow-hidden' : 'overflow-y-auto p-8'}`}>

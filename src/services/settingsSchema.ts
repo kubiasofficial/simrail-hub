@@ -1,3 +1,4 @@
+import {normalizeRadio} from './radioPreferences';
 import {APP_LOCALES} from '../types/locale';
 import { DEFAULT_SETTINGS, type Settings, type SettingsPatch } from '../types/settings';
 
@@ -26,6 +27,7 @@ export function normalizeSettings(raw: unknown): Settings {
     appLanguage:oneOf(r.appLanguage,APP_LOCALES,'cs'),
     appCountry:oneOf(r.appCountry,['cz','de','pl','fr','sk','at','be','bg','hr','cy','dk','ee','fi','gr','hu','ie','it','lv','lt','lu','mt','nl','pt','ro','si','es','se','gb'] as const,'cz'),
     animations: bool(r.animations,d.animations),
+    radio:normalizeRadio(r.radio),
     ownedDlc:Array.isArray(r.ownedDlc)?[...new Set(r.ownedDlc.filter((x):x is number=>typeof x==='number'&&Number.isSafeInteger(x)&&x>0))].slice(0,50):[],
     theme: oneOf(r.theme, ['blue', 'graphite'] as const, d.theme),
     dataRefreshSeconds: clamp(r.dataRefreshSeconds, 15, 300, d.dataRefreshSeconds),

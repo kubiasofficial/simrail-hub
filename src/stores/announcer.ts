@@ -1,3 +1,4 @@
+import {holdAudioFocus,releaseAudioFocus,clearAudioFocus,focusedAudio} from './audioFocus';
 import {voiceForLanguage} from '@/services/voiceCatalog';
 import {SERVICE_ANNOUNCEMENTS,type ServiceAnnouncementId} from '@/services/serviceAnnouncements';
 import { create } from 'zustand';
@@ -81,14 +82,14 @@ export const useAnnouncer = create<AnnouncerState>((set, get) => {
     try { await playSegment(seg); set({ lastError: null }); }
     catch (e) { if((e as Error).name!=='AbortError')set({ lastError: (e as Error).message }); throw e; }
     finally { set({ playing:false }); }
-  }, Date.now, (pending) => set({ pending }),{gapMs:()=>useSettings.getState().settings.announcements.gapSeconds*1000,onCooldown:nextAllowedAt=>set({nextAllowedAt}),before:item=>frame(item.channel,false),after:item=>frame(item.channel,true)});
+  }, Date.now, (pending) => set({ pending }),{gapMs:()=>useSettings.getState().settings.announcements.gapSeconds*1000,onCooldown:nextAllowedAt=>set({nextAllowedAt}),before:async item=>{holdAudioFocus(item.key);await frame(item.channel,false);},after:item=>frame(item.channel,true),finished:item=>releaseAudioFocus(item.key)});
   return {
     suspendPassengers:()=>queue.discard(item=>item.channel!=='dispatcher'&&!!item.automatic),
     radio:(key,text,valid)=>queue.enqueue({key,kind:'delay',channel:'dispatcher',automatic:true,valid,segments:[{lang:'cs',text:spokenName(text,'cs',get().pron),radio:true}]}),
     reconcileRadio:()=>queue.discard(item=>item.channel==='dispatcher'&&!!item.valid&&!item.valid()),
     discardRadio:()=>queue.discard(item=>item.channel==='dispatcher'),
     testRadioVoice:()=>{get().stop();return queue.enqueue({key:'radio-preview:'+Date.now(),kind:'delay',channel:'dispatcher',segments:[{lang:'cs',text:'Zkouška spojení. Tady dispečer. Příjem.',radio:true}]});},
-    speakRadio:async()=>{get().stop();const generation=playbackGeneration;try{await cue('open',generation);if(generation===playbackGeneration)await cue('close',generation);}catch(e){if((e as Error).name!=='AbortError')set({lastError:(e as Error).message});}},
+    speakRadio:async()=>{get().stop();return focusedAudio(async()=>{const generation=playbackGeneration;try{await cue('open',generation);if(generation===playbackGeneration)await cue('close',generation);}catch(e){if((e as Error).name!=='AbortError')set({lastError:(e as Error).message});}});},
     resetRun:()=>{get().stop();queue.resetHistory();},
     reconcile:(station,delayMin)=>queue.discard(item=>item.channel!=='dispatcher'&&!!item.automatic&&(item.service?!!item.valid&&!item.valid():item.kind==='delay'?(delayMin===null||delayMin<=0):!!item.station&&item.station!==station)),
     pending: 0, playing: false, nextAllowedAt:0, lastText: null, lastError: null, lastSource:null, pron: [], templates: {},
@@ -115,8 +116,8 @@ export const useAnnouncer = create<AnnouncerState>((set, get) => {
       get().stop();
       return queue.enqueue({key,kind:'delay',segments:[{lang:'cs',text:entry.label,intro:true,recording:{kind:'delay',station:null,trainNumber:null,isFreight:false,service:id}}]});
     },
-    speakText: async (seg) => { get().stop();set({ lastText: seg.text }); try {const generation=playbackGeneration;await frame(undefined,false);if(generation===playbackGeneration){await playSegment(seg);if(generation===playbackGeneration)await frame(undefined,true);}set({ lastError: null }); } catch (e) { if((e as Error).name!=='AbortError')set({ lastError: (e as Error).message }); } },
-    speakGong: async()=>{get().stop();const generation=playbackGeneration;try{const r=await api().call('audio:gong');if(generation!==playbackGeneration)throw new DOMException('Přehrávání zastaveno','AbortError');if(!r.ok)throw Error(r.error);await playBytes(r.data,useSettings.getState().settings.announcements.gongVolume);set({lastError:null});}catch(e){if((e as Error).name!=='AbortError')set({lastError:(e as Error).message});}},
-    stop: () => { playbackGeneration++;queue.clear();cancelCurrent?.();current?.pause();speechSynthesis.cancel();set({playing:false}); }
+    speakText: async (seg) => {get().stop();return focusedAudio(async()=>{set({ lastText: seg.text }); try {const generation=playbackGeneration;await frame(undefined,false);if(generation===playbackGeneration){await playSegment(seg);if(generation===playbackGeneration)await frame(undefined,true);}set({ lastError: null }); } catch (e) { if((e as Error).name!=='AbortError')set({ lastError: (e as Error).message }); } });},
+    speakGong: async()=>{get().stop();return focusedAudio(async()=>{const generation=playbackGeneration;try{const r=await api().call('audio:gong');if(generation!==playbackGeneration)throw new DOMException('Přehrávání zastaveno','AbortError');if(!r.ok)throw Error(r.error);await playBytes(r.data,useSettings.getState().settings.announcements.gongVolume);set({lastError:null});}catch(e){if((e as Error).name!=='AbortError')set({lastError:(e as Error).message});}});},
+    stop: () => { clearAudioFocus();playbackGeneration++;queue.clear();cancelCurrent?.();current?.pause();speechSynthesis.cancel();set({playing:false}); }
   };
 });

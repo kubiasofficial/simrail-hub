@@ -1,3 +1,4 @@
+import {DEFAULT_RADIO,type RadioPreferences} from '../services/radioPreferences';
 import type {AppLocale} from './locale';
 export type AnnouncementLang = 'cs' | 'pl' | 'cs-pl';
 export type TtsEngine = 'piper' | 'system';
@@ -12,6 +13,7 @@ export interface Settings {
   appCountry:string;
   animations:boolean;
   ownedDlc:number[];
+  radio:RadioPreferences;
   theme: 'blue' | 'graphite';
   dataRefreshSeconds: number;
   selectedServer: string | null;
@@ -44,6 +46,7 @@ export const DEFAULT_SETTINGS: Settings = {
   appLanguage: 'cs',appCountry:'cz',
   animations:true,
   ownedDlc:[],
+  radio:structuredClone(DEFAULT_RADIO),
   theme: 'blue',
   dataRefreshSeconds: 30,
   selectedServer: null,

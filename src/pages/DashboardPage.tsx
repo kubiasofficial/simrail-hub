@@ -1,3 +1,6 @@
+import {DrivingButton} from '@/components/DrivingControls';
+import {useDriving} from '@/stores/driving';
+import {MusicRadioButton} from '@/components/MusicRadio';
 import {useShift} from '@/stores/shift';
 import {AutomaticServices} from '@/services/automaticServices';
 import {useOnboardRoute} from '@/hooks/useOnboardRoute';
@@ -140,12 +143,15 @@ export function DashboardPage({ standalone = false, active = true }: { standalon
     ann.announce(`manual:${Date.now()}`, kind, { station, delayMin: m.delayMin ?? undefined,trainNumber:m.trainNumber,isFreight:freight });
   }, [m, ann, freight]);
 
-  const stopWatching=()=>{
+  useEffect(()=>{if(!standalone&&!isDemo&&m&&detail?.train&&feed.updatedAt)useDriving.getState().observe({server:detail.train.serverCode,number:detail.train.number,runId:detail.train.runId,station:m.current,previous:m.previous,next:m.next,delay:m.delayKind==='observed'?m.delayMin:null,at:feed.updatedAt});},[standalone,isDemo,m,detail,feed.updatedAt]);
+  const stopWatchingNow=()=>{
     ann.stop();ann.resetRun();trigger.current.reset();demo.setRunning(false);
     sel.set({mode:'live',train:null});
     void window.simrailHub!.call('mobile:stop').catch(()=>undefined);
     void window.simrailHub!.call('dashboard:stop').catch(()=>undefined);
   };
+
+  const stopWatching=()=>{const journal=useDriving.getState();if(journal.data?.drive){journal.openEnd(stopWatchingNow);return;}stopWatchingNow();};
 
   const field = 'rounded-lg border border-line bg-ink-800 px-3 py-1.5 text-sm text-slate-200 outline-none focus:border-sky-brand';
 
@@ -161,7 +167,7 @@ export function DashboardPage({ standalone = false, active = true }: { standalon
         <div className="dashboard-controls">
         {!isDemo&&<TrainPicker server={server} trains={trains} selected={sel.train} onSelect={train=>{ann.stop();sel.set({train});}}/>}
         <button className="stop-watching" onClick={stopWatching} disabled={!isDemo&&!sel.train}><Square size={14}/>Přestat sledovat</button>
-        {!isDemo&&<MobilePairing server={server} train={sel.train}/>}
+        {!isDemo&&<MobilePairing server={server} train={sel.train}/>}<MusicRadioButton/><DrivingButton server={server} number={sel.train} runId={detail?.train?.runId??null} location={m?.current??null} enabled={!isDemo&&m?.connection==='live'}/>
         <button className="secondary-action standalone-button" onClick={()=>void window.simrailHub!.call('dashboard:open',isDemo?'demo':server,isDemo?null:sel.train)} disabled={!isDemo&&!sel.train}><ExternalLink size={14}/>Samostatné okno</button>
         </div></div>}
 

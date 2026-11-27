@@ -1,3 +1,5 @@
+import {DrivingJournal,sendDiscord,validDiscordWebhook,cleanText} from '../services/DrivingJournal';
+import {computeOnboard,DelayTracker} from '../services/onboard';
 import {TrainRouteService} from '../services/TrainRouteService';
 import {runtimeIdentity} from './runtimeIdentity';
 import {net} from 'electron';
@@ -57,6 +59,37 @@ export function registerCallIpc(ctx: AppContext, openDashboard: (server: string 
   };
   const modList = async () => mods.list();
   const recordings=async()=>new LocalRecordings((await settings.get()).recordingsPath??join(app.getPath('desktop'),'simrail-hub','hlaseni'));
+  let journalPromise:Promise<DrivingJournal>|null=null;
+  const journal=()=>journalPromise??=(async()=>{
+    let webhook='';if(runtimeIdentity.channel==='test'&&!ctx.fixtures){try{const value=(await readFile(join(app.getPath('desktop'),'simrail-hub','.local-config','driving-webhook.secret'),'utf8')).trim();if(validDiscordWebhook(value))webhook=value;}catch{/* local configuration is optional */}}
+    const service=new DrivingJournal(ctx.db,!!webhook,payload=>sendDiscord(webhook,payload,net.fetch.bind(net) as typeof fetch));
+    app.once('before-quit',()=>service.dispose());return service;
+  })();
+  const object=(raw:unknown)=>{if(!raw||typeof raw!=='object'||Array.isArray(raw))throw Error('Neplatné zadání evidence.');return raw as Record<string,unknown>;};
+  on('driving:status',()=>safe('driving',async()=>(await journal()).status()));
+  on('driving:resume',id=>safe('driving',async()=>(await journal()).resume(cleanText(id,100))));
+  on('driving:retry',(id,confirmed)=>safe('driving',async()=>(await journal()).retry(cleanText(id,100),confirmed===true)));
+  on('driving:start',raw=>safe('driving',async()=>{
+    const q=object(raw),nickname=cleanText(q.nickname,80),server=serverCode(q.server),number=trainNumber(q.number),location=cleanText(q.location,150);
+    const result=await tracking.getDetail(server,number);if(!result.ok||!result.data.train)throw Error('Vlak nyní není dostupný. Ověř jeho číslo a server.');
+    const detail=result.data,t=detail.train!;if(q.runId!==null&&(typeof q.runId!=='string'||q.runId!==t.runId))throw Error('Spoj se mezitím změnil. Vyber vlak znovu.');
+    const model=computeOnboard({train:t,timetable:detail.timetable,stations:detail.stations,nowSod:detail.serverSod,tracker:new DelayTracker(),connection:Date.now()-detail.fetchedAt<15000?'live':'stale'});
+    return (await journal()).startDrive({nickname,server,number,runId:t.runId,from:detail.timetable?.startStation??t.startStation??'Neuvedeno',to:detail.timetable?.endStation??t.endStation??'Neuvedeno',origin:location,originVerified:model.connection==='live'&&model.current===location});
+  }));
+  on('driving:end',raw=>safe('driving',async()=>{
+    const q=object(raw),id=cleanText(q.id,100),location=cleanText(q.location,150),note=q.note===''?'':cleanText(q.note,500),service=await journal(),active=service.status().drive;let verified=false;
+    if(active){const d=await tracking.getDetail(active.server,active.number);if(d.ok&&d.data.train){const model=computeOnboard({train:d.data.train,timetable:d.data.timetable,stations:d.data.stations,nowSod:d.data.serverSod,tracker:new DelayTracker(),connection:Date.now()-d.data.fetchedAt<15000?'live':'stale'});verified=model.connection==='live'&&model.current===location;}}
+    const delay=typeof q.delayMin==='number'&&Number.isFinite(q.delayMin)&&Math.abs(q.delayMin)<=720&&typeof q.delayAt==='number'&&Math.abs(Date.now()-q.delayAt)<=15000?q.delayMin:null;
+    return service.endDrive(id,location,verified,note,delay);
+  }));
+  on('driving:shift-start',raw=>safe('driving',async()=>{
+    const q=object(raw),nickname=cleanText(q.nickname,80),p=object(q.plan),request=object(p.request),server=serverCode(p.server);
+    if(!Array.isArray(p.legs)||!p.legs.length||p.legs.length>12||typeof p.generatedAt!=='number'||!Number.isFinite(p.generatedAt)||!['passenger','freight'].includes(String(request.transport))||typeof p.end!=='number'||!Number.isFinite(p.end)||typeof request.breakMinutes!=='number'||request.breakMinutes<5||request.breakMinutes>120)throw Error('Neplatný plán směny.');
+    const legs=p.legs.map(raw=>{const l=object(raw);return {id:cleanText(l.id,150),number:trainNumber(l.number),from:cleanText(l.from,150),to:cleanText(l.to,150)};});
+    return (await journal()).startShift({nickname,server,transport:request.transport as 'passenger'|'freight',planKey:server+':'+p.generatedAt,plannedEnd:p.end,breakMinutes:request.breakMinutes,legs});
+  }));
+  on('driving:shift-progress',(id,legId,ready)=>safe('driving',async()=>(await journal()).progressShift(cleanText(id,100),cleanText(legId,150),ready===true)));
+  on('driving:shift-end',id=>safe('driving',async()=>(await journal()).endShift(cleanText(id,100))));
   on('shift:plan',(code,raw)=>safe('shift',async()=>{
     const c=serverCode(code);if(!raw||typeof raw!=='object')throw Error('Neplatné zadání směny.');
     const q=raw as import('../types/shift').ShiftRequest;
