@@ -1,9 +1,11 @@
-# Soukromí a místní data – verze 0.6.0
+# Soukromí a místní data – verze 0.8.0
 
 Launcher nenabízí registraci, přihlášení ani synchronizaci osobního účtu.
 Nastavení a slovník výslovnosti ukládá existující SQLite v uživatelské složce aplikace. Oblíbené servery, vlaky, poslední výběr a historie sledování používají lokální úložiště rendereru. Historie uchovává nejvýše 100 sledování a 256 pozorovaných PH průjezdů na sledování; neukládá Steam identitu ani přesnou historii polohy. Lze ji vymazat na stránce Historie a oblíbené. Doplňky, stažené hlasy a soukromé nahrávky zůstávají na počítači. Odinstalace zachovává místní aplikační data.
 
 Živá data získává hlavní proces ze SimRail API. Veřejné avatary se načítají ze Steamu, mapové dlaždice z OpenStreetMap a případně OpenRailwayMap, snímky z oficiálních zdrojů hry a informace o DLC ze Steamu. Aktualizace pocházejí z GitHub Releases. Tito poskytovatelé dostávají běžné síťové požadavky. Mapová ani herní data se nekopírují do Firebase.
+
+Internetové rádio se připojí k poskytovateli audio streamu po ručním spuštění. Poskytovatel dostává běžný síťový požadavek včetně IP adresy. Předvolby, vlastní adresy streamů a hlasitost se ukládají místně. Plán směny a jeho průběh se uchovávají lokálně. Veřejná verze neobsahuje společný Discord webhook; evidence řízení se společným webhookem zůstává v místně nakonfigurovaném TEST kanálu.
 
 Hlas Piper běží místně. Hlasový model a program je potřeba nejprve stáhnout; kontrolují se připnuté SHA-256. České a polské segmenty vybírají model příslušného jazyka. Soukromé nahrávky nejsou v instalačním balíčku.
 

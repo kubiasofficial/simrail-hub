@@ -1,0 +1,72 @@
+{
+  "at": "2026-11-27T06:45:01.769Z",
+  "version": "0.8.0",
+  "release": {
+    "at": "2026-11-27T06:42:29.360Z",
+    "version": "0.8.0",
+    "commit": "0369ec5ed5ba467100e891c85b12fc4303448dc6",
+    "url": "https://github.com/kubiasofficial/simrail-hub/releases/tag/v0.8.0",
+    "id": 460247177,
+    "latest": true,
+    "assets": [
+      {
+        "name": "SimRail-Hub-Portable-0.8.0.exe",
+        "size": 139011423,
+        "sha256": "f40f3100ec7412ab3bbfc5c6654fb4d593a18114263e60a5e084912d12b85575"
+      },
+      {
+        "name": "SimRail-Hub-Setup-0.8.0.exe",
+        "size": 152922290,
+        "sha256": "69cf0cbae7bd38e0fc11657013147e6457ec203c7cfac3f30fbeeca308c54efc"
+      },
+      {
+        "name": "SimRail-Hub-Setup-0.8.0.exe.blockmap",
+        "size": 161439,
+        "sha256": "ba8004af65d71339364bb5ef69b25fa831b177cd9e0108465f93e79327e7483b"
+      },
+      {
+        "name": "latest.yml",
+        "size": 351,
+        "sha256": "f49058e84816371622e78cc18e3b3fb687d6ea17aea7b9550faf13ba1b558fb3"
+      },
+      {
+        "name": "SimRail-Hub-0.8.0-banner.png",
+        "size": 2185893,
+        "sha256": "77cd94e4b05098ef8454c73bfa7d3b6505936606fc6fc9f4a85ab8b27187f0c1"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 471,
+        "sha256": "5f9ee06dea4eb31e0b6794f5cfe80bf9bd7230acfc92959c8a005667935b90d5"
+      }
+    ],
+    "updaterManifestVerified": true
+  },
+  "hosting": {
+    "at": "2026-11-27T06:44:09.861Z",
+    "url": "https://simrail-hub-kubias.web.app",
+    "version": "0.8.0",
+    "htmlVerified": true,
+    "bannerSha256": "77cd94e4b05098ef8454c73bfa7d3b6505936606fc6fc9f4a85ab8b27187f0c1"
+  },
+  "updater": {
+    "at": "2026-11-27T06:43:31.979Z",
+    "baseline": "0.7.0",
+    "target": "0.8.0",
+    "status": "ready",
+    "isolatedProfile": true,
+    "isolatedCache": true,
+    "autoInstallOnAppQuit": false,
+    "installationTriggered": false,
+    "downloadedInstaller": {
+      "bytes": 152922290,
+      "sha256": "69cf0cbae7bd38e0fc11657013147e6457ec203c7cfac3f30fbeeca308c54efc"
+    }
+  },
+  "discord": {
+    "sent": true,
+    "bannerVerified": true,
+    "url": "https://discord.com/channels/1561680787676467230/1574724609931087922/1575764158668869662"
+  },
+  "testLauncherUnchanged": true
+}
