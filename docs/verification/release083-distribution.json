@@ -1,0 +1,27 @@
+{
+  "at": "2026-11-27T12:37:58.680Z",
+  "version": "0.8.3",
+  "info": {
+    "version": "0.8.3",
+    "platform": "win32",
+    "electron": "45.4.1",
+    "channel": "stable",
+    "buildId": null
+  },
+  "channel": "stable",
+  "actualPortableStarted": true,
+  "matchedFiles": 148,
+  "privateWebhookBundled": false,
+  "privateAudioBundled": false,
+  "approvedPublicRecordings": 61,
+  "cleanMachineRecordings": true,
+  "privateWebhookDisabledInPublic": true,
+  "communityRelayEnabled": true,
+  "takeoverButtonVisible": true,
+  "releasePopupAndArtwork": true,
+  "radioAvailable": true,
+  "warsawStations": 3,
+  "updaterSHA512Valid": true,
+  "errors": [],
+  "setupSHA256": "66dcb3e12e0a76e97bb31733bca30ce2d269ebdf67a6ce7e3bf3b9f28a525792"
+}
