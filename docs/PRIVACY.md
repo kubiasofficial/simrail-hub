@@ -1,4 +1,4 @@
-# Soukromí a místní data – verze 0.8.3
+# Soukromí a místní data – verze 0.8.4
 
 Launcher nenabízí registraci, přihlášení ani synchronizaci osobního účtu.
 Nastavení a slovník výslovnosti ukládá existující SQLite v uživatelské složce aplikace. Oblíbené servery, vlaky, poslední výběr a historie sledování používají lokální úložiště rendereru. Historie uchovává nejvýše 100 sledování a 256 pozorovaných PH průjezdů na sledování; neukládá Steam identitu ani přesnou historii polohy. Lze ji vymazat na stránce Historie a oblíbené. Doplňky, stažené hlasy a soukromé nahrávky zůstávají na počítači. Odinstalace zachovává místní aplikační data.

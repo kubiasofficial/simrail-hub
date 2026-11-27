@@ -21,3 +21,6 @@ When stopped near a PH and the API index has advanced, the model can retain the 
 The final portable booted in an isolated profile. All 149 application files matched the build, real IPC returned all three station clips, and a QR session served the new mobile HTML and revision directly from the package. These checks use controlled telemetry. A physical phone and a real game ride are still needed to verify device-specific sleep and in-game platform positions.
 
 Evidence: `docs/verification/mobile-station-fix-browser.json`, `docs/verification/mobile-station-fix-package.json`. Local screenshots: `.deployment/mobile-station-fix/phone-portrait.png` and `phone-landscape.png`.
+
+## Public promotion
+On 2026-11-28 the owner explicitly authorized promoting these fixes to the main public launcher. They are included in release 0.8.4; the TEST executable stays separate and unchanged. Public package and updater evidence is recorded under `release084-*` and `update083-to084.json`.
