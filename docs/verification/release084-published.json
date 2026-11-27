@@ -1,0 +1,106 @@
+{
+  "at": "2026-11-27T23:43:41.371403+00:00",
+  "version": "0.8.4",
+  "release": {
+    "at": "2026-11-27T23:42:32.242Z",
+    "version": "0.8.4",
+    "commit": "f00ffc61a21f729195066c2ec6b59056c780797b",
+    "url": "https://github.com/kubiasofficial/simrail-hub/releases/tag/v0.8.4",
+    "id": 461160706,
+    "latest": true,
+    "assets": [
+      {
+        "name": "SimRail-Hub-Portable-0.8.4.exe",
+        "size": 159498634,
+        "sha256": "a85247faa2182fab738adf6c8a428adf46f5f631a07288ba80dda68a6742a58e"
+      },
+      {
+        "name": "SimRail-Hub-Setup-0.8.4.exe",
+        "size": 179350395,
+        "sha256": "860024fa841e78b9aa2af062e1623634ab3f1a9dd84be8768256f9c43eaaba47"
+      },
+      {
+        "name": "SimRail-Hub-Setup-0.8.4.exe.blockmap",
+        "size": 187917,
+        "sha256": "169860c7d4deb8796a829da8de1effab73dd554f026db1c981259b35654d9890"
+      },
+      {
+        "name": "latest.yml",
+        "size": 351,
+        "sha256": "461dc54a157dc969c67bbb7ca397d90c66a8af57be378c81b06b236b07ae7130"
+      },
+      {
+        "name": "SimRail-Hub-0.8.4-banner.png",
+        "size": 1647551,
+        "sha256": "05034fd068bc154b024d4febd6f2327175c1d9551defc44f67fe84998aacad6a"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 471,
+        "sha256": "247508f3d9fd74e0def94f6bab63649c8efffdf115983c1ca6971522876fbd87"
+      }
+    ],
+    "updaterManifestVerified": true
+  },
+  "distribution": {
+    "at": "2026-11-27T23:40:28.023Z",
+    "version": "0.8.4",
+    "info": {
+      "version": "0.8.4",
+      "platform": "win32",
+      "electron": "45.4.1",
+      "channel": "stable",
+      "buildId": null
+    },
+    "channel": "stable",
+    "actualPortableStarted": true,
+    "matchedFiles": 150,
+    "privateWebhookBundled": false,
+    "privateAudioBundled": false,
+    "approvedPublicRecordings": 61,
+    "cleanMachineRecordings": true,
+    "pairedMobileRevision": "2026-11-28.1",
+    "mobileVersion": "0.8.4",
+    "privateWebhookDisabledInPublic": true,
+    "communityRelayEnabled": true,
+    "takeoverButtonVisible": true,
+    "releasePopupAndArtwork": true,
+    "radioAvailable": true,
+    "warsawStations": 3,
+    "updaterSHA512Valid": true,
+    "errors": [],
+    "setupSHA256": "860024fa841e78b9aa2af062e1623634ab3f1a9dd84be8768256f9c43eaaba47"
+  },
+  "updater": {
+    "at": "2026-11-27T23:43:02.704Z",
+    "baseline": "0.8.3",
+    "target": "0.8.4",
+    "status": "ready",
+    "isolatedProfile": true,
+    "isolatedCache": true,
+    "autoInstallOnAppQuit": false,
+    "installationTriggered": false,
+    "downloadedInstaller": {
+      "bytes": 179350395,
+      "sha256": "860024fa841e78b9aa2af062e1623634ab3f1a9dd84be8768256f9c43eaaba47"
+    }
+  },
+  "mobileBrowserVerification": {
+    "at": "2026-11-27T23:27:16.733Z",
+    "source": "controlled real HTTP MobileServer + browser, no actual game drive",
+    "phoneClockOffsetHours": 18,
+    "clockSkewSafe": true,
+    "sharedTimes": true,
+    "criticalDelay": true,
+    "reconnect": true,
+    "unlockRecovery": true,
+    "oldResponseIgnored": true,
+    "narrowAndLandscape": true,
+    "expiryStopsPolling": true,
+    "errors": []
+  },
+  "testsPassed": 251,
+  "testLauncherUnchanged": true,
+  "installationTriggeredOnUserMachine": false,
+  "newPaidServices": false
+}
