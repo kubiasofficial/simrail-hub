@@ -1,0 +1,82 @@
+{
+  "at": "2026-11-27T10:11:05.778Z",
+  "version": "0.8.1",
+  "release": {
+    "at": "2026-11-27T10:08:17.615Z",
+    "version": "0.8.1",
+    "commit": "3f207aabf614d6f73de95d59e8e7ea1c4702a595",
+    "url": "https://github.com/kubiasofficial/simrail-hub/releases/tag/v0.8.1",
+    "id": 460429960,
+    "latest": true,
+    "assets": [
+      {
+        "name": "SimRail-Hub-Portable-0.8.1.exe",
+        "size": 140771002,
+        "sha256": "f8f806975d80555ac242fd181f8221c42c6a2da66c7f11e85cc9298bf0b9cd13"
+      },
+      {
+        "name": "SimRail-Hub-Setup-0.8.1.exe",
+        "size": 154756737,
+        "sha256": "41803d2e51d57dc0a78d04dc7a9564b3a03ebf6c36d1089302418d5d9583e539"
+      },
+      {
+        "name": "SimRail-Hub-Setup-0.8.1.exe.blockmap",
+        "size": 162937,
+        "sha256": "10a805efdd8c83dfd7c87a2f9d268f7fd6c2e91d9f35543a39d302224ae4d706"
+      },
+      {
+        "name": "latest.yml",
+        "size": 351,
+        "sha256": "355debaabaa528b47cd1a64b73425bd7931def0d63275cc8811ba7047780fcdb"
+      },
+      {
+        "name": "SimRail-Hub-0.8.1-banner.png",
+        "size": 2041781,
+        "sha256": "9ca39d77b4ba8dcded1df416d074e1e41105b710e0908e9e9ca6b82d7b834ceb"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 471,
+        "sha256": "6a1fb9fa2dcf6ff7ce184fc9728dcef8f2f5a5bdca56e83da37c4c0e8b16943e"
+      }
+    ],
+    "updaterManifestVerified": true
+  },
+  "hosting": {
+    "url": "https://simrail-hub-kubias.web.app",
+    "htmlVerified": true,
+    "bannerSha256": "9ca39d77b4ba8dcded1df416d074e1e41105b710e0908e9e9ca6b82d7b834ceb"
+  },
+  "updater": {
+    "at": "2026-11-27T10:09:30.128Z",
+    "baseline": "0.8.0",
+    "target": "0.8.1",
+    "status": "ready",
+    "isolatedProfile": true,
+    "isolatedCache": true,
+    "autoInstallOnAppQuit": false,
+    "installationTriggered": false,
+    "downloadedInstaller": {
+      "bytes": 154756737,
+      "sha256": "41803d2e51d57dc0a78d04dc7a9564b3a03ebf6c36d1089302418d5d9583e539"
+    }
+  },
+  "community": {
+    "endpoint": "https://simrail-hub-community.suslik-kuba.workers.dev",
+    "ready": true,
+    "delivery": {
+      "at": "2026-11-27T10:01:37.102Z",
+      "livePublicRelay": true,
+      "credentialSetup": "controlled QA approval in own database; production Turnstile validation remains required",
+      "discordAcknowledged": true,
+      "readBackVerified": true,
+      "messageId": "1575813837603741699",
+      "channelId": "1575749979530731681",
+      "connectionTestOnly": true,
+      "noDrivingClaim": true,
+      "redirectCompatibilityFixed": true
+    }
+  },
+  "testLauncherUnchanged": true,
+  "tests": 228
+}
