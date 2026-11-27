@@ -1,0 +1,125 @@
+{
+  "at": "2026-11-27T12:41:41.768310+00:00",
+  "version": "0.8.3",
+  "release": {
+    "at": "2026-11-27T12:40:03.550Z",
+    "version": "0.8.3",
+    "commit": "898c4cf2a24d18197818c014a3559f29f51e0f11",
+    "url": "https://github.com/kubiasofficial/simrail-hub/releases/tag/v0.8.3",
+    "id": 460584965,
+    "latest": true,
+    "assets": [
+      {
+        "name": "SimRail-Hub-Portable-0.8.3.exe",
+        "size": 159489716,
+        "sha256": "a726d4cf69689fd6771a9aaf270a79d665604ae9e60fed7f3d7a4318c8a70869"
+      },
+      {
+        "name": "SimRail-Hub-Setup-0.8.3.exe",
+        "size": 177710959,
+        "sha256": "66dcb3e12e0a76e97bb31733bca30ce2d269ebdf67a6ce7e3bf3b9f28a525792"
+      },
+      {
+        "name": "SimRail-Hub-Setup-0.8.3.exe.blockmap",
+        "size": 185782,
+        "sha256": "300fd711397a25250e4fa460979fd7290a19195279caf71bd51a3fdd8ca84500"
+      },
+      {
+        "name": "latest.yml",
+        "size": 351,
+        "sha256": "095130bda1650bd795aa614f810b4d2fa16bc071f0ac8b94ff12c5700172e55b"
+      },
+      {
+        "name": "SimRail-Hub-0.8.3-banner.png",
+        "size": 1699245,
+        "sha256": "409f5f35c135ac43bc6342fcf3b2ba5f766a169f6d7bcbf0f5a197c69de5a52a"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 471,
+        "sha256": "8b226bb75ef070c85ea7ad9c0c79d83782297cb358ef5f7d6caa6cf090fdec40"
+      }
+    ],
+    "updaterManifestVerified": true
+  },
+  "hosting": {
+    "at": "2026-11-27T12:34:11.372Z",
+    "hostingDisabled": true,
+    "sites": [
+      {
+        "url": "https://simrail-hub-kubias.web.app",
+        "status": 404
+      },
+      {
+        "url": "https://simrail-hub-kubias.firebaseapp.com",
+        "status": 404
+      }
+    ],
+    "discordRelayReady": true,
+    "mobileServer": "local LAN; no Firebase dependency",
+    "firebaseProjectDeleted": false,
+    "databasesDeleted": false,
+    "approvedWebFilesRemoved": [
+      "site\\app.js",
+      "site\\index.html",
+      "site\\style.css",
+      "site\\assets\\releases\\0.7.0.png",
+      "site\\assets\\releases\\0.8.0.png",
+      "site\\assets\\releases\\0.8.1.png",
+      "site\\assets\\releases\\0.8.2.png",
+      "firebase.json",
+      ".firebaserc",
+      "src\\data\\cloud.json"
+    ]
+  },
+  "updater": {
+    "at": "2026-11-27T12:40:54.263Z",
+    "baseline": "0.8.2",
+    "target": "0.8.3",
+    "status": "ready",
+    "isolatedProfile": true,
+    "isolatedCache": true,
+    "autoInstallOnAppQuit": false,
+    "installationTriggered": false,
+    "downloadedInstaller": {
+      "bytes": 177710959,
+      "sha256": "66dcb3e12e0a76e97bb31733bca30ce2d269ebdf67a6ce7e3bf3b9f28a525792"
+    }
+  },
+  "distribution": {
+    "at": "2026-11-27T12:37:58.680Z",
+    "version": "0.8.3",
+    "info": {
+      "version": "0.8.3",
+      "platform": "win32",
+      "electron": "45.4.1",
+      "channel": "stable",
+      "buildId": null
+    },
+    "channel": "stable",
+    "actualPortableStarted": true,
+    "matchedFiles": 148,
+    "privateWebhookBundled": false,
+    "privateAudioBundled": false,
+    "approvedPublicRecordings": 61,
+    "cleanMachineRecordings": true,
+    "privateWebhookDisabledInPublic": true,
+    "communityRelayEnabled": true,
+    "takeoverButtonVisible": true,
+    "releasePopupAndArtwork": true,
+    "radioAvailable": true,
+    "warsawStations": 3,
+    "updaterSHA512Valid": true,
+    "errors": [],
+    "setupSHA256": "66dcb3e12e0a76e97bb31733bca30ce2d269ebdf67a6ce7e3bf3b9f28a525792"
+  },
+  "cleanup": {
+    "userApproved": true,
+    "originalM4ARemoved": 50,
+    "webFilesRemoved": 10,
+    "allWavsPreserved": true
+  },
+  "testsPassed": 247,
+  "testLauncherUnchanged": true,
+  "newPaidServices": false
+}

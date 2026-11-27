@@ -1,0 +1,273 @@
+{
+  "at": "2026-11-27T12:40:58.458047+00:00",
+  "userApproved": true,
+  "originalsRemoved": [
+    {
+      "file": "baranowka.m4a",
+      "bytes": 52856,
+      "preservedWav": "baranowka.wav"
+    },
+    {
+      "file": "cekani_na_odjezd.m4a",
+      "bytes": 338480,
+      "preservedWav": "cekani_na_odjezd.wav"
+    },
+    {
+      "file": "dziadowki.m4a",
+      "bytes": 51570,
+      "preservedWav": "dziadowki.wav"
+    },
+    {
+      "file": "goszcza.m4a",
+      "bytes": 62604,
+      "preservedWav": "goszcza.wav"
+    },
+    {
+      "file": "grodzisk_mazowiecki.m4a",
+      "bytes": 117203,
+      "preservedWav": "grodzisk_mazowiecki.wav"
+    },
+    {
+      "file": "hlaseni.m4a",
+      "bytes": 288816,
+      "preservedWav": "hlaseni_zavad.wav"
+    },
+    {
+      "file": "kamienczyce.m4a",
+      "bytes": 45977,
+      "preservedWav": "kamienczyce.wav"
+    },
+    {
+      "file": "katowice.m4a",
+      "bytes": 93866,
+      "preservedWav": "katowice.wav"
+    },
+    {
+      "file": "klimatow.m4a",
+      "bytes": 58490,
+      "preservedWav": "klimontow.wav"
+    },
+    {
+      "file": "koluszki.m4a",
+      "bytes": 87148,
+      "preservedWav": "koluszki.wav"
+    },
+    {
+      "file": "konecna.m4a",
+      "bytes": 430272,
+      "preservedWav": "konecna.wav"
+    },
+    {
+      "file": "kontrola_jizdenek.m4a",
+      "bytes": 319143,
+      "preservedWav": "kontrola_jizdenek.wav"
+    },
+    {
+      "file": "krakow_batowice.m4a",
+      "bytes": 81682,
+      "preservedWav": "krakow_batowice.wav"
+    },
+    {
+      "file": "kutno.m4a",
+      "bytes": 66476,
+      "preservedWav": "kutno.wav"
+    },
+    {
+      "file": "lask.m4a",
+      "bytes": 81568,
+      "preservedWav": "lask.wav"
+    },
+    {
+      "file": "lodz_chojny.m4a",
+      "bytes": 74028,
+      "preservedWav": "lodz_chojny.wav"
+    },
+    {
+      "file": "lodz_kaliska.m4a",
+      "bytes": 113952,
+      "preservedWav": "lodz_kaliska.wav"
+    },
+    {
+      "file": "lodz_widzew.m4a",
+      "bytes": 84443,
+      "preservedWav": "lodz_widzew.wav"
+    },
+    {
+      "file": "lodz_zabieniec.m4a",
+      "bytes": 112068,
+      "preservedWav": "lodz_zabieniec.wav"
+    },
+    {
+      "file": "lowicz_glowny.m4a",
+      "bytes": 107672,
+      "preservedWav": "lowicz_glowny.wav"
+    },
+    {
+      "file": "luczyce.m4a",
+      "bytes": 52968,
+      "preservedWav": "luczyce.wav"
+    },
+    {
+      "file": "nevystupujte.m4a",
+      "bytes": 295259,
+      "preservedWav": "nevystupujte.wav"
+    },
+    {
+      "file": "niedzwiedz.m4a",
+      "bytes": 55314,
+      "preservedWav": "niedzwiedz.wav"
+    },
+    {
+      "file": "ohleduplnost.m4a",
+      "bytes": 377064,
+      "preservedWav": "ohleduplnost.wav"
+    },
+    {
+      "file": "olkusz.m4a",
+      "bytes": 82613,
+      "preservedWav": "olkusz.wav"
+    },
+    {
+      "file": "pabianice.m4a",
+      "bytes": 91650,
+      "preservedWav": "pabianice.wav"
+    },
+    {
+      "file": "piotrkow_trybunalski.m4a",
+      "bytes": 113640,
+      "preservedWav": "piotrkow_trybunalski.wav"
+    },
+    {
+      "file": "pobyt_na_trati.m4a",
+      "bytes": 528734,
+      "preservedWav": "pobyt_na_trati.wav"
+    },
+    {
+      "file": "Sieradz.m4a",
+      "bytes": 73021,
+      "preservedWav": "sieradz.wav"
+    },
+    {
+      "file": "skierniewic.m4a",
+      "bytes": 88379,
+      "preservedWav": "skierniewice.wav"
+    },
+    {
+      "file": "slomniki.m4a",
+      "bytes": 56146,
+      "preservedWav": "slomniki.wav"
+    },
+    {
+      "file": "slomniki_miasto.m4a",
+      "bytes": 85996,
+      "preservedWav": "slomniki_miasto.wav"
+    },
+    {
+      "file": "smrokow.m4a",
+      "bytes": 64407,
+      "preservedWav": "smrokow.wav"
+    },
+    {
+      "file": "sosnowiec_glowny.m4a",
+      "bytes": 98808,
+      "preservedWav": "sosnowiec_glowny.wav"
+    },
+    {
+      "file": "sosnowiec_poludniowy.m4a",
+      "bytes": 91080,
+      "preservedWav": "sosnowiec_poludniowy.wav"
+    },
+    {
+      "file": "szczepanowice.m4a",
+      "bytes": 69248,
+      "preservedWav": "szczepanowice.wav"
+    },
+    {
+      "file": "tunel.m4a",
+      "bytes": 58977,
+      "preservedWav": "tunel.wav"
+    },
+    {
+      "file": "vanoce_rozlouceni.m4a",
+      "bytes": 957454,
+      "preservedWav": "vanoce_rozlouceni.wav"
+    },
+    {
+      "file": "vanoce_uvitani.m4a",
+      "bytes": 894622,
+      "preservedWav": "vanoce_uvitani.wav"
+    },
+    {
+      "file": "vitejte.m4a",
+      "bytes": 232744,
+      "preservedWav": "vitejte.wav"
+    },
+    {
+      "file": "volne_ulicky.m4a",
+      "bytes": 461348,
+      "preservedWav": "volne_ulicky.wav"
+    },
+    {
+      "file": "vystupovani.m4a",
+      "bytes": 438424,
+      "preservedWav": "vystupovani.wav"
+    },
+    {
+      "file": "Wolbrom.m4a",
+      "bytes": 81616,
+      "preservedWav": "wolbrom.wav"
+    },
+    {
+      "file": "zasow.m4a",
+      "bytes": 50268,
+      "preservedWav": "zastow.wav"
+    },
+    {
+      "file": "zavazadla.m4a",
+      "bytes": 384448,
+      "preservedWav": "zavazadla.wav"
+    },
+    {
+      "file": "zawiercie.m4a",
+      "bytes": 85456,
+      "preservedWav": "zawiercie.wav"
+    },
+    {
+      "file": "zdunska_wola.m4a",
+      "bytes": 88728,
+      "preservedWav": "zdunska_wola.wav"
+    },
+    {
+      "file": "zgierz.m4a",
+      "bytes": 75692,
+      "preservedWav": "zgierz.wav"
+    },
+    {
+      "file": "zpozdeni.m4a",
+      "bytes": 283395,
+      "preservedWav": "zpozdeni.wav"
+    },
+    {
+      "file": "zyrardow.m4a",
+      "bytes": 85066,
+      "preservedWav": "zyrardow.wav"
+    }
+  ],
+  "originalCount": 50,
+  "bytesFreed": 9070879,
+  "allWavsPreserved": true,
+  "publicRelease": "https://github.com/kubiasofficial/simrail-hub/releases/tag/v0.8.3",
+  "approvedWebFilesRemoved": [
+    "site\\app.js",
+    "site\\index.html",
+    "site\\style.css",
+    "site\\assets\\releases\\0.7.0.png",
+    "site\\assets\\releases\\0.8.0.png",
+    "site\\assets\\releases\\0.8.1.png",
+    "site\\assets\\releases\\0.8.2.png",
+    "firebase.json",
+    ".firebaserc",
+    "src\\data\\cloud.json"
+  ],
+  "otherBackupsDeleted": false
+}
