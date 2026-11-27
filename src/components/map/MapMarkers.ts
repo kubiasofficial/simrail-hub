@@ -3,7 +3,7 @@ import L from 'leaflet';
 import type {Train,StationCoord} from '@/types/trains';
 import {bearingDeg,haversineM} from '@/services/geo';
 const trainSvg='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="15" rx="4"/><path d="M5 10h14M12 3v7M8 18l-2 3m10-3 2 3M8 21h8"/><circle cx="9" cy="14" r="1"/><circle cx="15" cy="14" r="1"/></svg>';
-const stationSvg='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9 12 3l10 6v3l-2-1v10H4V11l-2 1z"/><path class="station-door" d="M10 14h4v7h-4zM6 11h3v3H6zm9 0h3v3h-3z"/><path d="M2 21h20v2H2z"/></svg>';
+const stationSvg='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="1"/></svg>';
 interface Entry {marker:L.Marker;signature:string}
 interface Options {train:string|null;station:string|null;trains:boolean;stations:boolean;routeStops?:Set<string>}
 export class MapMarkers{
@@ -60,7 +60,7 @@ export class MapMarkers{
    if(bearing!==null){const direction=document.createElement('span');direction.className='train-direction';direction.style.transform='rotate('+bearing+'deg)';const arrow=document.createElement('span');arrow.className='ahead-arrow';direction.append(arrow);root.append(direction);}
    this.avatar(train.avatarUrl,root);
    const pixel=this.map.latLngToContainerPoint([train.lat,train.lon]),cell=Math.floor(pixel.x/110)+':'+Math.floor(pixel.y/30);
-   const label=selected||(zoom>=10&&!labelCells.has(cell));if(label)labelCells.add(cell);if(label){const text=document.createElement('span');text.className='train-number';text.textContent=(category.label?category.label+' ':'')+train.number;root.append(text);}
+   const label=selected||(zoom>=9&&!labelCells.has(cell));if(label)labelCells.add(cell);if(label){const text=document.createElement('span');text.className='train-number';text.textContent=(category.label?category.label+' ':'')+train.number;root.append(text);}
    this.upsert(key,train.lat,train.lon,[train.type,selected,train.avatarUrl,label,bearing,category.key,!!options.train].join('|'),root,'train-entity', 'Vlak '+train.number,()=>this.selectTrain(train));
   }
   for(const [key,entry] of this.entries)if(!live.has(key)){entry.marker.remove();this.entries.delete(key);this.operations.removed++;}

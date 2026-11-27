@@ -91,7 +91,7 @@ export function ServersPage() {
 
 const ServerTile=memo(function ServerTile({server:s,favorite,toggleFavorite}:{server:ServerRow;favorite:boolean;toggleFavorite:(code:string)=>void}){
  const flag=serverFlag(s);
- return <article className={'server-tile'+(!s.active?' offline':'')}>
+ return <article className={'server-tile'+(!s.active?' offline':'')+(favorite?' favorite':'')}>
  <header><div className="server-identity">{flag?<img className="server-flag" src={flag} alt="Vlajka serveru"/>:<Globe2 className="server-globe"/>}<div><h3>{s.code.toUpperCase()}</h3><p>{s.name}</p></div></div><button className="favorite-button" aria-label={'Oblíbený server '+s.name} aria-pressed={favorite} onClick={()=>toggleFavorite(s.code)}><Star size={17} fill={favorite?'currentColor':'none'}/></button></header>
  <div className="server-state"><span className={s.active?'online-dot':'offline-dot'}/>{s.active?'Online':'Offline'}<small>{s.region??'—'}</small></div>
  <div className="server-counts"><div><UserRound/><strong>{s.stats?s.stats.trainsUser+' / '+s.stats.dispatchers:'—'}</strong><span>Strojvedoucí / dispečeři</span></div><div><TrainFront/><strong>{s.stats?s.stats.trainsUser+' / '+s.stats.trainsBot:'—'}</strong><span>Hráčské / AI vlaky</span></div></div>

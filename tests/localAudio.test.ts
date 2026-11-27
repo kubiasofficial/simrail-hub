@@ -47,3 +47,8 @@ it('reuses Warsaw clips and selects newly supported playable stations across 45/
   expect(recordingNames({...base,trainNumber,station:'Gdynia Główna'})).toBeNull();
  }
 });
+
+it('supports 16/61 four and five digit services and distinct Sosnowiec stations',()=>{
+ for(const trainNumber of ['1601','6160','16105','61180'])expect(recordingNames({kind:'approaching',station:'Łódź Widzew',trainNumber,isFreight:false})).toEqual(['prijizdime_do_stanice.wav','lodz_widzew.wav']);
+ expect(recordingNames({kind:'arrived',station:'Sosnowiec Południowy',trainNumber:'61170',isFreight:false})).toEqual(['stanice.wav','sosnowiec_poludniowy.wav']);
+});

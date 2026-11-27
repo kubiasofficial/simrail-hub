@@ -1,0 +1,39 @@
+{
+  "at": "2026-11-27T05:20:43.284Z",
+  "privateAudioBundled": false,
+  "files": [
+    {
+      "file": "grodzisk_mazowiecki.wav",
+      "seconds": 4.544
+    },
+    {
+      "file": "zyrardow.wav",
+      "seconds": 3.2853333333333334
+    },
+    {
+      "file": "skierniewice.wav",
+      "seconds": 3.4133333333333336
+    },
+    {
+      "file": "koluszki.wav",
+      "seconds": 3.3706666666666667
+    },
+    {
+      "file": "lodz_widzew.wav",
+      "seconds": 3.264
+    },
+    {
+      "file": "lodz_chojny.wav",
+      "seconds": 2.8586666666666667
+    },
+    {
+      "file": "zdunska_wola.wav",
+      "seconds": 3.4346666666666668
+    },
+    {
+      "file": "sosnowiec_poludniowy.wav",
+      "seconds": 3.52
+    }
+  ],
+  "rendered": 96
+}

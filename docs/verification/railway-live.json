@@ -1,0 +1,59 @@
+{
+  "at": "2026-11-27T05:21:37.236Z",
+  "liveApi": true,
+  "warsaw": [
+    {
+      "name": "Warszawa Wschodnia",
+      "lat": 52.2515889,
+      "lon": 21.0523678
+    },
+    {
+      "name": "Warszawa Centralna",
+      "lat": 52.2288207,
+      "lon": 21.00316
+    },
+    {
+      "name": "Warszawa Zachodnia",
+      "lat": 52.2201572,
+      "lon": 20.9651719
+    }
+  ],
+  "trains": 157,
+  "timetable": {
+    "number": "1601",
+    "points": 21,
+    "vehicle": "ED250 (Pendolino)"
+  },
+  "plan": {
+    "legs": [
+      {
+        "number": "14005",
+        "from": "Warszawa Wschodnia",
+        "to": "Katowice",
+        "departure": 22920,
+        "arrival": 33480,
+        "availability": "ai"
+      },
+      {
+        "number": "42156",
+        "from": "Katowice",
+        "to": "Kozłów",
+        "departure": 35400,
+        "arrival": 40860,
+        "availability": "future"
+      },
+      {
+        "number": "53105",
+        "from": "Kozłów",
+        "to": "Miechów",
+        "departure": 42660,
+        "arrival": 43320,
+        "availability": "future"
+      }
+    ],
+    "notes": [
+      "Návrh vychází z plánovaných časů. Vlak nelze rezervovat; před převzetím ověř dostupnost.",
+      "DLC se filtrují podle známého typu vozidla. Požadavky na trať a zbývající vozidla soupravy ověř ve hře."
+    ]
+  }
+}

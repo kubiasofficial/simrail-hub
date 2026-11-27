@@ -1,5 +1,5 @@
 import type {AnnKind,Segment} from './announcements';
-export interface QueueItem {key:string;kind:AnnKind;segments:Segment[];enqueuedAt:number;automatic?:boolean;station?:string|null;channel?:'passenger'|'dispatcher';valid?:()=>boolean}
+export interface QueueItem {key:string;kind:AnnKind;segments:Segment[];enqueuedAt:number;automatic?:boolean;station?:string|null;channel?:'passenger'|'dispatcher';valid?:()=>boolean;service?:boolean;onComplete?:()=>void}
 const PRIORITY:Record<AnnKind,number>={terminal:0,arrived:1,approaching:2,'next-station':3,delay:4};
 const MAX_AGE_MS:Partial<Record<AnnKind,number>>={approaching:60000,'next-station':120000,delay:120000};
 interface QueueOptions {gapMs?:()=>number;onCooldown?:(until:number)=>void;before?:(item:QueueItem)=>Promise<void>;after?:(item:QueueItem)=>Promise<void>}
@@ -29,6 +29,7 @@ export class AnnouncementQueue {
    try{if(item.valid&&!item.valid())continue;await this.options.before?.(item);}catch{failed=true;}
    if(!failed)for(const segment of item.segments){if(generation!==this.generation||item.valid&&!item.valid())break;try{await this.play(segment);}catch{failed=true;}}
    if(!failed&&generation===this.generation)try{await this.options.after?.(item);}catch{/* failed outro does not block the next item */}
+   if(!failed&&generation===this.generation&&(!item.valid||item.valid()))item.onComplete?.();
    if(generation===this.generation){this.nextAutomaticAt=this.now()+Math.max(0,this.options.gapMs?.()??0);this.options.onCooldown?.(this.nextAutomaticAt);}
   }}finally{this.busy=false;}
  }

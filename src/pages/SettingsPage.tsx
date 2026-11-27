@@ -103,6 +103,9 @@ export function SettingsPage() {
 
       {tab==='Hlášení'&&<RecordingPanel/>}
       <Section title="Hlášení a hlas">
+        <Row label="Uvítání po odjezdu" hint="Jednou po odjezdu ze stanice, ve které jsi začal sledovat; bez uvítání při připojení k jedoucímu vlaku."><input type="checkbox" checked={s.announcements.welcome} onChange={e=>void update({announcements:{welcome:e.target.checked}})}/></Row>
+        <Row label="Upozornění na zavazadla" hint="Nejdříve minutu po dokončení uvítání."><input type="checkbox" checked={s.announcements.luggage} onChange={e=>void update({announcements:{luggage:e.target.checked}})}/></Row>
+        <Row label="Čekání na odjezd" hint="Po 5 minutách souvislého stání před návěstí Stůj; mimo potvrzenou PH zastávku naváže Nevystupujte."><input type="checkbox" checked={s.announcements.waiting} onChange={e=>void update({announcements:{waiting:e.target.checked}})}/></Row>
         <Row label="Mezera mezi automatickými hlášeními" hint="Od konce hlášení do začátku dalšího. Omluva za zpoždění nejdříve po 15 minutách."><select className={field} value={s.announcements.gapSeconds} onChange={e=>void update({announcements:{gapSeconds:Number(e.target.value)}})}>{[10,15,20,30,45,60].map(n=><option key={n} value={n}>{n} s</option>)}</select></Row>
         <Row label="Automatická hlášení" hint="Podle jízdního řádu, polohy a rychlosti"><input type="checkbox" checked={s.announcements.auto} onChange={(e) => void update({ announcements: { auto: e.target.checked } })} /></Row>
         <Row label="Jazyk hlášení"><select className={field} value={s.announcements.language} onChange={(e) => void update({ announcements: { language: e.target.value as 'cs' | 'pl' | 'cs-pl' } })}><option value="cs">Česky</option><option value="pl">Polsky</option><option value="cs-pl">Česky + polsky</option></select></Row>

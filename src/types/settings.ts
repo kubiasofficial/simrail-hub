@@ -11,12 +11,14 @@ export interface Settings {
   appLanguage: AppLocale;
   appCountry:string;
   animations:boolean;
+  ownedDlc:number[];
   theme: 'blue' | 'graphite';
   dataRefreshSeconds: number;
   selectedServer: string | null;
   map: { basemap: 'osm' | 'osm-dark' | 'light'; railwayOverlay: boolean; followSelected: boolean; sneakPeek:boolean };
   announcements: {
     auto: boolean;
+    welcome:boolean; luggage:boolean; waiting:boolean;
     gapSeconds:number;
     gong: boolean;
     gongEnd:boolean;
@@ -41,11 +43,12 @@ export const DEFAULT_SETTINGS: Settings = {
   launchViaSteam: true,
   appLanguage: 'cs',appCountry:'cz',
   animations:true,
+  ownedDlc:[],
   theme: 'blue',
   dataRefreshSeconds: 30,
   selectedServer: null,
   map: { basemap: 'osm-dark', railwayOverlay: true, followSelected: false, sneakPeek:false },
-  announcements: { auto: false, gapSeconds:30, gong:true, gongEnd:true, gongVolume:0.8, recorded:true, language: 'cs', engine: 'piper', voiceId: 'cs_CZ-jirka-medium', volume: 0.8, rate: 1 },
+  announcements: { auto: false, welcome:true, luggage:true, waiting:true, gapSeconds:30, gong:true, gongEnd:true, gongVolume:0.8, recorded:true, language: 'cs', engine: 'piper', voiceId: 'cs_CZ-jirka-medium', volume: 0.8, rate: 1 },
   dispatcher:{enabled:false,audio:false,rangeKm:5,volume:0.8,radioVolume:0.65},
   updates: { repo: 'kubiasofficial/simrail-hub' },
   onboarding: { dismissed: false }

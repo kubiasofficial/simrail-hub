@@ -26,6 +26,7 @@ export function normalizeSettings(raw: unknown): Settings {
     appLanguage:oneOf(r.appLanguage,APP_LOCALES,'cs'),
     appCountry:oneOf(r.appCountry,['cz','de','pl','fr','sk','at','be','bg','hr','cy','dk','ee','fi','gr','hu','ie','it','lv','lt','lu','mt','nl','pt','ro','si','es','se','gb'] as const,'cz'),
     animations: bool(r.animations,d.animations),
+    ownedDlc:Array.isArray(r.ownedDlc)?[...new Set(r.ownedDlc.filter((x):x is number=>typeof x==='number'&&Number.isSafeInteger(x)&&x>0))].slice(0,50):[],
     theme: oneOf(r.theme, ['blue', 'graphite'] as const, d.theme),
     dataRefreshSeconds: clamp(r.dataRefreshSeconds, 15, 300, d.dataRefreshSeconds),
     selectedServer: strOrNull(r.selectedServer, 50),
@@ -37,6 +38,7 @@ export function normalizeSettings(raw: unknown): Settings {
     },
     announcements: {
       auto: bool(an.auto, d.announcements.auto),
+      welcome:bool(an.welcome,true), luggage:bool(an.luggage,true), waiting:bool(an.waiting,true),
       gapSeconds:clamp(an.gapSeconds,10,60,d.announcements.gapSeconds),
       gong: bool(an.gong,d.announcements.gong),
       gongEnd:bool(an.gongEnd,bool(an.gong,d.announcements.gongEnd)),
@@ -59,7 +61,7 @@ export function applyPatch(current: Settings, patch: SettingsPatch): Settings {
   const merged: Record<string, unknown> = { ...current };
   for (const [k, v] of Object.entries(rec(patch))) {
     const cur = (current as unknown as Record<string, unknown>)[k];
-    merged[k] = typeof v === 'object' && v !== null && typeof cur === 'object' && cur !== null ? { ...cur, ...v } : v;
+    merged[k] = typeof v === 'object' && v !== null && !Array.isArray(v) && typeof cur === 'object' && cur !== null ? { ...cur, ...v } : v;
   }
   return normalizeSettings(merged);
 }

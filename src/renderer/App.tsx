@@ -1,3 +1,6 @@
+import {ShiftStatus} from '@/components/ShiftStatus';
+import {ShiftPage} from '@/pages/ShiftPage';
+import {DlcPage} from '@/pages/DlcPage';
 import {ReleaseHighlights} from '@/components/ReleaseHighlights';
 import {HistoryPage} from '@/pages/HistoryPage';
 import {Localization} from '@/components/Localization';
@@ -27,12 +30,12 @@ export function App() {
   useEffect(()=>{if(isStandaloneDashboard())return;void useAutomaticUpdates.getState().refresh();const id=setInterval(()=>void useAutomaticUpdates.getState().refresh(),2000);return()=>clearInterval(id);},[]);
 
   if (isStandaloneDashboard()) {
-    return <div className="h-full overflow-y-auto"><Localization/><DashboardPage standalone /></div>;
+    return <div className="railway-standalone h-full overflow-y-auto"><Localization/><DashboardPage standalone /></div>;
   }
   return (
-    <div className="flex h-full flex-col">
+    <div className="railway-shell flex h-full flex-col">
       <Localization/><TitleBar /><ReleaseHighlights/>
-      <UpdatePanel compact/>
+      <UpdatePanel compact/><ShiftStatus/>
       <div className="flex min-h-0 flex-1">
         <Sidebar />
         <main data-page={page} className={`min-w-0 flex-1 ${page === 'map' ? 'overflow-hidden' : 'overflow-y-auto p-8'}`}>
@@ -40,6 +43,8 @@ export function App() {
           {page === 'servers' && <ServersPage />}
           {page === 'map' && <MapPage />}
           <div hidden={page !== 'dashboard'} className={page==='dashboard'?'page-enter':''}><DashboardPage active={page==='dashboard'}/></div>
+          {page === 'shift' && <ShiftPage />}
+          {page === 'dlc' && <DlcPage />}
           {page === 'history' && <HistoryPage />}
           {page === 'mods' && <ModsPage />}
           {page === 'settings' && <SettingsPage />}

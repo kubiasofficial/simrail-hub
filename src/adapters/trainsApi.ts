@@ -88,7 +88,7 @@ export function parseTimetables(json: unknown): Timetable[] {
         track: str(pick(p, 'track', 'Track'))
       });
     });
-    out.push({ runId: str(pick(r, 'runId', 'RunId')), trainNumber: number, startStation: str(pick(r, 'startStation', 'StartStation')), endStation: str(pick(r, 'endStation', 'EndStation')), points });
+    out.push({ vehicleType:str(pick(r,'locoType','LocoType'))??'', category:str(pick(raw.find(isRec)??{},'trainType','TrainType'))??'', continuesAs:str(pick(r,'continuesAs'))??'', runId: str(pick(r, 'runId', 'RunId')), trainNumber: number, startStation: str(pick(r, 'startStation', 'StartStation')), endStation: str(pick(r, 'endStation', 'EndStation')), points });
   }
   return out;
 }

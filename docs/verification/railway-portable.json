@@ -1,0 +1,51 @@
+{
+  "at": "2026-11-27T05:34:23.566Z",
+  "info": {
+    "version": "0.7.0",
+    "platform": "win32",
+    "electron": "45.4.1",
+    "channel": "test",
+    "buildId": "2026-11-27T05:27:38.789Z"
+  },
+  "actualCanonicalPortable": true,
+  "normalProfileUsed": false,
+  "publicUpdaterDisabled": true,
+  "ownedDlcPersisted": true,
+  "automaticServiceSettingsPresent": true,
+  "warsawStations": 3,
+  "clips": [
+    {
+      "station": "Grodzisk Mazowiecki",
+      "bytes": 644204
+    },
+    {
+      "station": "Żyrardów",
+      "bytes": 496364
+    },
+    {
+      "station": "Skierniewice",
+      "bytes": 534764
+    },
+    {
+      "station": "Koluszki",
+      "bytes": 480044
+    },
+    {
+      "station": "Łódź Widzew",
+      "bytes": 588524
+    },
+    {
+      "station": "Łódź Chojny",
+      "bytes": 572204
+    },
+    {
+      "station": "Zduńska Wola",
+      "bytes": 578924
+    },
+    {
+      "station": "Sosnowiec Południowy",
+      "bytes": 605804
+    }
+  ],
+  "sha256": "ec0e6e54fe7de6aad78ffb1b96928e99ca63cfeaeb1f0807532b0417a79b1208"
+}

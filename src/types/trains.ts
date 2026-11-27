@@ -37,6 +37,7 @@ export interface TimetablePoint {
 }
 
 export interface Timetable {
+  vehicleType?:string; category?:string; continuesAs?:string;
   runId: string | null;
   trainNumber: string;
   startStation: string | null;

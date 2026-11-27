@@ -1,3 +1,5 @@
+import {useShift} from '@/stores/shift';
+import {AutomaticServices} from '@/services/automaticServices';
 import {useOnboardRoute} from '@/hooks/useOnboardRoute';
 import {useDispatcher} from '@/hooks/useDispatcher';
 import {useDispatcherState} from '@/stores/dispatcher';
@@ -98,6 +100,7 @@ export function DashboardPage({ standalone = false, active = true }: { standalon
 
   // automatická hlášení
   const trigger = useRef(new AnnouncementTrigger());
+  const serviceTrigger=useRef(new AutomaticServices());
   const [disabled, setDisabled] = useState<string[]>([]);
   useEffect(() => { trigger.current.reset(); }, [sel.mode, server, sel.train]);
   const auto = settings.announcements.auto;
@@ -119,6 +122,17 @@ export function DashboardPage({ standalone = false, active = true }: { standalon
     for (const e of r.events) ann.announce(`${runKey}:${e.key}`, e.kind, { station: e.station, delayMin: e.delayMin, trainNumber:detail.train.number,isFreight:freight,automatic:true });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [m, auto, freight]);
+
+  useEffect(()=>{
+    if(standalone)return;
+    const train=detail?.train;
+    if(!train||!m){serviceTrigger.current.reset();return;}
+    const run=`${isDemo?'demo':server}:${train.runId??train.number}`;
+    const events=serviceTrigger.current.update({run,train,points:detail.timetable?.points??[],model:m,serverSod:detail.serverSod,fetchedAt:detail.fetchedAt,enabled:auto&&settings.announcements.recorded,freight,options:settings.announcements});
+    for(const event of events)ann.automaticService(run+':service:'+event.key,event.ids,event.valid,event.complete);
+  },[standalone,detail,m,auto,freight,isDemo,server,settings.announcements,ann.automaticService]);
+
+  useEffect(()=>{if(!standalone&&!isDemo&&m&&detail?.train)useShift.getState().observe(detail.train,m);},[standalone,isDemo,m,detail]);
 
   const manual = useCallback((kind: AnnKind) => {
     if (!m || freight) return;

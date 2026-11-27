@@ -57,6 +57,12 @@ export function registerCallIpc(ctx: AppContext, openDashboard: (server: string 
   };
   const modList = async () => mods.list();
   const recordings=async()=>new LocalRecordings((await settings.get()).recordingsPath??join(app.getPath('desktop'),'simrail-hub','hlaseni'));
+  on('shift:plan',(code,raw)=>safe('shift',async()=>{
+    const c=serverCode(code);if(!raw||typeof raw!=='object')throw Error('Neplatné zadání směny.');
+    const q=raw as import('../types/shift').ShiftRequest;
+    if(!['passenger','freight'].includes(q.transport)||typeof q.origin!=='string'||q.origin.length>150||!Number.isInteger(q.endSod)||q.endSod<0||q.endSod>=86400||!Number.isInteger(q.breakMinutes)||q.breakMinutes<5||q.breakMinutes>120||!Array.isArray(q.ownedDlc)||q.ownedDlc.length>50||q.ownedDlc.some(x=>!Number.isSafeInteger(x)||x<1)||q.startDelayMinutes!==undefined&&(!Number.isInteger(q.startDelayMinutes)||q.startDelayMinutes<0||q.startDelayMinutes>120))throw Error('Neplatné zadání směny.');
+    return tracking.planShift(c,q);
+  }));
   on('dlc:list',region=>safe('dlc',()=>dlc.get(typeof region==='string'?region:'cz')));
   on('audio:radio',closing=>safe('audio',async()=>encodeWav(radioSamples(closing===true))));
   on('audio:gong',()=>safe('audio',async()=>encodeWav(gongSamples())));

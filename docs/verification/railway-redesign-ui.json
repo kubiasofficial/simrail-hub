@@ -1,0 +1,30 @@
+{
+  "at": "2026-11-27T05:28:46.830Z",
+  "controlledData": true,
+  "errors": [],
+  "pages": [
+    "Domů",
+    "Online servery",
+    "Živá mapa",
+    "Palubní počítač",
+    "Směna",
+    "Historie a oblíbené",
+    "Dostupná DLC",
+    "Rozšíření launcheru",
+    "Nastavení"
+  ],
+  "overflows": [],
+  "packagedIdentity": {
+    "version": "0.7.0",
+    "platform": "win32",
+    "electron": "45.4.1",
+    "channel": "test",
+    "buildId": "2026-11-27T05:27:38.789Z"
+  },
+  "serviceOptions": true,
+  "languageClosable": true,
+  "narrowHome": true,
+  "allPagesNarrow": true,
+  "shiftPlanDisplayed": true,
+  "shiftPersisted": true
+}

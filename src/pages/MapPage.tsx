@@ -47,11 +47,11 @@ export function MapPage(){
  useEffect(()=>{void refresh(false);const id=setInterval(()=>{if(visual)setNow(Date.now());},1000);return()=>clearInterval(id);},[refresh,visual]);
  useEffect(()=>{
   if(!canvas.current)return;
-  const m=L.map(canvas.current,{center:[51.2,19.6],zoom:7,preferCanvas:true,zoomControl:false});map.current=m;L.control.zoom({position:'bottomright'}).addTo(m);
+  const m=L.map(canvas.current,{center:[51.2,19.6],zoom:7,preferCanvas:true,zoomControl:false,zoomAnimation:false});map.current=m;L.control.zoom({position:'bottomright'}).addTo(m);
   markers.current=new MapMarkers(m,t=>{setSelectedTrain(t.number);setSelectedStation(null);setSelectedPreview(null);},s=>{setSelectedStation(s);setSelectedTrain(null);setSelectedPreview(null);});
   let timer:ReturnType<typeof setTimeout>;const change=()=>{clearTimeout(timer);timer=setTimeout(()=>setView(v=>v+1),80);};m.on('zoomend moveend',change);
-  const observer=new ResizeObserver(()=>m.invalidateSize({animate:false}));observer.observe(canvas.current);
-  return()=>{clearTimeout(timer);if(previewFitTimer.current)clearTimeout(previewFitTimer.current);observer.disconnect();markers.current?.clear();m.remove();map.current=null;};
+  let mapAlive=true;const observer=new ResizeObserver(()=>{if(mapAlive)m.invalidateSize({animate:false});});observer.observe(canvas.current);
+  return()=>{mapAlive=false;clearTimeout(timer);if(previewFitTimer.current)clearTimeout(previewFitTimer.current);observer.disconnect();m.stop();markers.current?.clear();m.remove();map.current=null;};
  },[]);
  useEffect(()=>{const m=map.current;if(!m)return;const source=BASES[settings.map.basemap];const layer=L.tileLayer(source[0],{attribution:source[1],className:'map-base map-base-'+settings.map.basemap,maxZoom:19,keepBuffer:1,updateWhenIdle:true}).addTo(m);layer.bringToBack();return()=>{layer.remove();};},[settings.map.basemap]);
  const peek=useSneakPeek(map.current,settings.map.sneakPeek,mapActive,openPreview);

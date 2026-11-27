@@ -12,6 +12,7 @@ interface AnnouncerState {
   pron: PronEntry[]; templates: TemplateOverrides;
   reloadContent: () => Promise<void>;
   announce: (key: string, kind: AnnKind, params: { station?: string | null; delayMin?: number;trainNumber?:string;isFreight?:boolean;automatic?:boolean }) => boolean;
+  automaticService:(key:string,ids:ServiceAnnouncementId[],valid:()=>boolean,complete:()=>void)=>boolean;
   announceService:(key:string,id:ServiceAnnouncementId,isFreight:boolean)=>boolean;
   lastSource:'recorded'|'tts'|null;
   speakText: (seg: Segment) => Promise<void>;
@@ -89,7 +90,7 @@ export const useAnnouncer = create<AnnouncerState>((set, get) => {
     testRadioVoice:()=>{get().stop();return queue.enqueue({key:'radio-preview:'+Date.now(),kind:'delay',channel:'dispatcher',segments:[{lang:'cs',text:'Zkouška spojení. Tady dispečer. Příjem.',radio:true}]});},
     speakRadio:async()=>{get().stop();const generation=playbackGeneration;try{await cue('open',generation);if(generation===playbackGeneration)await cue('close',generation);}catch(e){if((e as Error).name!=='AbortError')set({lastError:(e as Error).message});}},
     resetRun:()=>{get().stop();queue.resetHistory();},
-    reconcile:(station,delayMin)=>queue.discard(item=>item.channel!=='dispatcher'&&!!item.automatic&&(item.kind==='delay'?(delayMin===null||delayMin<=0):!!item.station&&item.station!==station)),
+    reconcile:(station,delayMin)=>queue.discard(item=>item.channel!=='dispatcher'&&!!item.automatic&&(item.service?!!item.valid&&!item.valid():item.kind==='delay'?(delayMin===null||delayMin<=0):!!item.station&&item.station!==station)),
     pending: 0, playing: false, nextAllowedAt:0, lastText: null, lastError: null, lastSource:null, pron: [], templates: {},
     reloadContent: async () => {
       const [d, m] = await Promise.all([api().call('dict:list'), api().call('mods:active')]);
@@ -103,6 +104,10 @@ export const useAnnouncer = create<AnnouncerState>((set, get) => {
       for(const segment of segments)if(segment.lang==='cs')segment.recording={kind,station:params.station??null,trainNumber:params.trainNumber??null,isFreight:false};
       if(!params.automatic)get().stop();
       return queue.enqueue({ key, kind, segments,automatic:!!params.automatic,station:params.station });
+    },
+    automaticService:(key,ids,valid,complete)=>{
+      if(!useSettings.getState().settings.announcements.recorded||!valid())return false;
+      return queue.enqueue({key,kind:'delay',channel:'passenger',automatic:true,service:true,valid,onComplete:complete,segments:ids.map(id=>({lang:'cs',text:SERVICE_ANNOUNCEMENTS[id].label,recording:{kind:'delay',station:null,trainNumber:null,isFreight:false,service:id}}))});
     },
     announceService:(key,id,isFreight)=>{
       if(isFreight||!useSettings.getState().settings.announcements.recorded)return false;

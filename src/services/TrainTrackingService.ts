@@ -1,3 +1,5 @@
+import {buildShift} from './shiftPlanner';
+import {withStationFallbacks} from './stationFallbacks';
 import { isPassengerStop } from './passengerStops';
 import { ApiError, fetchJson, stationsUrl, trainsUrl, type FetchLike } from '../adapters/simrailApi';
 import { parseStations, parseTimetables, parseTrains, serverTimeToSod, timeUrl, timetablesUrl } from '../adapters/trainsApi';
@@ -49,8 +51,8 @@ export class TrainTrackingService {
     while(this.timetables.size>3)this.timetables.delete(this.timetables.keys().next().value!);
     const hit = this.fresh(this.stations.get(code), 30_000);
     if (hit) return hit;
-    try { const v = parseStations(await fetchJson(this.fetchFn, stationsUrl(code))); await Promise.all(v.flatMap(s => (s.dispatchers ?? []).map(async d => { d.avatarUrl = await this.profiles.avatar(d.steamId); }))); this.stations.set(code, { at: this.now(), value: v }); return v; }
-    catch (e) { notes.push(`Souřadnice stanic nejsou dostupné: ${(e as Error).message}`); return this.stations.get(code)?.value ?? []; }
+    try { const v = withStationFallbacks(parseStations(await fetchJson(this.fetchFn, stationsUrl(code)))); await Promise.all(v.flatMap(s => (s.dispatchers ?? []).map(async d => { d.avatarUrl = await this.profiles.avatar(d.steamId); }))); this.stations.set(code, { at: this.now(), value: v }); return v; }
+    catch (e) { notes.push(`Souřadnice stanic nejsou dostupné: ${(e as Error).message}`); return withStationFallbacks(this.stations.get(code)?.value ?? []); }
   }
 
   async getStationBoard(code: string, name: string) {
@@ -78,6 +80,13 @@ export class TrainTrackingService {
     catch (e) { notes.push(`Jízdní řády nejsou dostupné: ${(e as Error).message}`); return this.timetables.get(code)?.value ?? null; }
   }
 
+  async planShift(code:string,request:import('../types/shift').ShiftRequest){
+    const notes:string[]=[];
+    const [schedules,stations,trains,clock]=await Promise.all([this.getTimetables(code,notes),this.getStations(code,notes),this.getTrains(code),fetchJson(this.fetchFn,timeUrl(code))]);
+    const sod=serverTimeToSod(clock);
+    if(!schedules||!trains.ok||sod===null||notes.length)throw Error(notes.join(' ')||'Pro směnu chybí aktuální jízdní řád, stanice nebo čas serveru.');
+    return buildShift(code,request,schedules,stations,trains.data.trains,sod,this.now());
+  }
   async getDetail(code: string, trainNumber: string): Promise<TrainDetailResult> {
     const tr = await this.getTrains(code);
     if (!tr.ok) return tr;
