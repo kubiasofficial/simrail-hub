@@ -1,0 +1,30 @@
+{
+  "at": "2026-11-27T12:34:11.372Z",
+  "hostingDisabled": true,
+  "sites": [
+    {
+      "url": "https://simrail-hub-kubias.web.app",
+      "status": 404
+    },
+    {
+      "url": "https://simrail-hub-kubias.firebaseapp.com",
+      "status": 404
+    }
+  ],
+  "discordRelayReady": true,
+  "mobileServer": "local LAN; no Firebase dependency",
+  "firebaseProjectDeleted": false,
+  "databasesDeleted": false,
+  "approvedWebFilesRemoved": [
+    "site\\app.js",
+    "site\\index.html",
+    "site\\style.css",
+    "site\\assets\\releases\\0.7.0.png",
+    "site\\assets\\releases\\0.8.0.png",
+    "site\\assets\\releases\\0.8.1.png",
+    "site\\assets\\releases\\0.8.2.png",
+    "firebase.json",
+    ".firebaserc",
+    "src\\data\\cloud.json"
+  ]
+}

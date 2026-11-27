@@ -34,3 +34,6 @@ hlaseni/
 # Local Cloudflare development state and secrets
 community-relay/.wrangler/
 community-relay/.dev.vars*
+
+# Explicitly approved public announcement pack (original M4A remain excluded).
+!assets/recordings/*.wav

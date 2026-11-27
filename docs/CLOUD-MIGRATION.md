@@ -20,3 +20,6 @@ Před přechodem zavřít launcher a zálohovat celou jeho uživatelskou složku
 Až po záloze a kontrole případných nových účtů vlastník výslovně schválí rozsah odstranění: projekt, seznam UID/dokumentů, dobu uchování exportu a termín.
 Teprve další samostatný úkol může vypnout registrace a odstranit konkrétní Auth účty nebo dokumenty. Nepoužít smazání Firebase projektu; Hosting a veřejné stahování musí zůstat zachované.
 Veškeré takové zásahy jsou mimo tuto pracovní větev. Kořenová Firebase konfigurace obsahuje pouze Hosting, takže běžná práce s webem již necílí Firestore pravidla.
+
+## Rozhodnuti vlastnika 27. 11. 2026
+Vlastnik nasledne vyslovne schvalil vypnuti samotneho Firebase Hostingu a odstraneni deseti webovych souboru. Hosting je vypnut, zdroje a verejne aktualizace jsou na GitHubu. Projekt, Auth ani databaze se nemazou. Toto rozhodnuti nahrazuje drivejsi pozadavek ponechat Hosting; neudeluje souhlas s mazanim vzdalenych osobnich dat.

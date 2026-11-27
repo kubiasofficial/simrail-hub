@@ -46,15 +46,30 @@ export function gongSamples():Float32Array {
 }
 export function joinSamples(parts:Float32Array[]):Float32Array {const result=new Float32Array(parts.reduce((n,p)=>n+p.length,0));let offset=0;for(const part of parts){result.set(part,offset);offset+=part.length;}return result;}
 export class LocalRecordings {
- constructor(private directory:string){}
- async status():Promise<RecordingStatus>{const missing:string[]=[];for(const file of RECORDING_FILES){try{const info=await stat(join(this.directory,file));if(!info.isFile())missing.push(file);}catch{missing.push(file);}}const services:ServiceRecordingStatus[]=[];
- for(const [id,entry] of Object.entries(SERVICE_ANNOUNCEMENTS)){let available=false;try{available=(await stat(join(this.directory,entry.file))).isFile();}catch{/* optional recording */}
- services.push({id:id as ServiceAnnouncementId,label:entry.label,available});}
- return {directory:this.directory,available:missing.length===0,missing,services};}
+ constructor(private directory:string,private bundledDirectory?:string){}
+ private async file(name:string):Promise<string|null>{
+  for(const directory of new Set([this.directory,this.bundledDirectory].filter((p):p is string=>!!p))){
+   const path=join(directory,name);
+   try{if((await stat(path)).isFile())return path;}
+   catch(e){if(!['ENOENT','ENOTDIR'].includes((e as NodeJS.ErrnoException).code??''))throw e;}
+  }
+  return null;
+ }
+ async status():Promise<RecordingStatus>{
+  const missing:string[]=[];
+  for(const name of RECORDING_FILES)if(!await this.file(name))missing.push(name);
+  const services:ServiceRecordingStatus[]=[];
+  for(const [id,entry] of Object.entries(SERVICE_ANNOUNCEMENTS))services.push({id:id as ServiceAnnouncementId,label:entry.label,available:!!await this.file(entry.file)});
+  return {directory:this.directory,available:missing.length===0,missing,services};
+ }
  async render(request:RecordingRequest,gong:boolean):Promise<Uint8Array|null>{
   const names=recordingNames(request);if(!names)return null;
   const audio:Float32Array[]=[];
-  for(const name of names){let b:Buffer;try{const file=join(this.directory,name),info=await stat(file);if(info.size>5*1024*1024)throw Error('Nahrávka je příliš velká.');b=await readFile(file);}catch(e){if((e as NodeJS.ErrnoException).code==='ENOENT')return null;throw e;}audio.push(trimSilence(decodeWav(b)));}
+  for(const name of names){
+   const file=await this.file(name);if(!file)return null;
+   const info=await stat(file);if(info.size>5*1024*1024)throw Error('Nahrávka je příliš velká.');
+   audio.push(trimSilence(decodeWav(await readFile(file))));
+  }
   return encodeWav(joinSamples([...(gong?[gongSamples(),new Float32Array(4800)]:[]),...audio.flatMap((samples,index)=>index?[new Float32Array(4800),samples]:[samples])]));
  }
 }

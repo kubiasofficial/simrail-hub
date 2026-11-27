@@ -4,7 +4,7 @@
 
 ## Veřejný projekt
 
-[Web a stažení](https://simrail-hub-kubias.web.app) · [GitHub](https://github.com/kubiasofficial/simrail-hub) · [Vydání](https://github.com/kubiasofficial/simrail-hub/releases)
+[GitHub](https://github.com/kubiasofficial/simrail-hub) · [Vydání](https://github.com/kubiasofficial/simrail-hub/releases)
 
 ## Spuštění
 
@@ -24,7 +24,7 @@ Minimalizace nepřeruší načítání vlaku ani přehrávání hlášení. Vybr
 
 Místní WAV nahrávky lze spustit z palubního počítače: uvítání, omluva za zpoždění, čekání na odjezd, pobyt na trati, zavazadla, volné uličky, vystupování/dveře, konečná a nevystupujte. Důvod zastavení ani pokyny k dveřím se neodvozují z rychlosti vlaku. Všechny tyto pokyny se spouštějí ručně. Stávající automatické události zpoždění a konečné mohou využít odpovídající místní nahrávku; chybějící obecná nahrávka ponechá syntetický hlas.
 
-Obecné nahrávky lze použít v osobních vlacích nezávisle na čísle. Nahrané názvy osmi stanic zůstávají použitelné pro řady 35xxx i 53xxx. Nákladní vlaky nehlásí cestujícím. Zvukové soubory se nepřibalují do veřejného vydání a neposílají do cloudu.
+Obecné nahrávky lze použít v osobních vlacích nezávisle na čísle. Nahrané názvy stanic se používají u všech osobních linek podle zastávek PH bez omezení číslem vlaku. Nákladní vlaky nehlásí cestujícím. Od verze 0.8.3 obsahuje veřejné vydání 61 schválených WAV hlášení včetně 44 názvů stanic, sdílených mezi všemi osobními linkami. Vlastní soubory uživatele se do cloudu neposílají.
 
 ## Novinky 0.6.0
 
@@ -109,7 +109,7 @@ Aktuální snímky vozidel a stanic pocházejí z oficiální SimRail Wiki, podr
 
 Pracovní větev stabilizace verze 0.5.0 již registraci ani přihlašování nenabízí. Nastavení, výslovnost, doplňky, oblíbené servery a výběr vlaku zůstávají v existujícím místním úložišti. Nastavení funguje bez internetu. Místní cesty a nahrávky se nikam neodesílají.
 
-[Postup migrace starých cloudových nastavení](docs/CLOUD-MIGRATION.md) a [soukromí](docs/PRIVACY.md). Produkční služby ani data se odstraněním integrace v kódu automaticky nevypínají. Firebase Hosting zůstává zachovaný.
+[Postup migrace starých cloudových nastavení](docs/CLOUD-MIGRATION.md) a [soukromí](docs/PRIVACY.md). Produkční služby ani data se odstraněním integrace v kódu automaticky nevypínají. Veřejný Firebase Hosting byl se souhlasem vlastníka vypnut 27. 11. 2026. Stažení a aktualizace poskytuje GitHub Releases; mobilní displej běží místně a Discord relé na Cloudflare. Firebase projekt ani jeho data nebyly smazány.
 
 ## Aktualizace launcheru
 

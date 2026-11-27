@@ -1,0 +1,376 @@
+{
+  "schema": 1,
+  "version": "0.8.3",
+  "description": "Czech passenger announcement recordings supplied and approved for public distribution by the project owner.",
+  "files": [
+    {
+      "file": "baranowka.wav",
+      "bytes": 194638,
+      "sha256": "a3ce60ea06c9a9051dd1881dd78fe727c44fd4a60d0f11002444b2933b9c9918",
+      "seconds": 2.026666666666667
+    },
+    {
+      "file": "cekani_na_odjezd.wav",
+      "bytes": 1273934,
+      "sha256": "2cf280b91315903ebd31958755945188bd14fd1ae07a9b9b787b2ddbaf8a40be",
+      "seconds": 13.269333333333334
+    },
+    {
+      "file": "dziadowki.wav",
+      "bytes": 188494,
+      "sha256": "25411a279d9209c87ffb9607f2ba74b5554a64804607ac68aad40beaf6ddbdb3",
+      "seconds": 1.9626666666666666
+    },
+    {
+      "file": "goszcza.wav",
+      "bytes": 231502,
+      "sha256": "98094237587d171ff181bf6efb43c0e95d4ea057e78200aef26be670ad44df1c",
+      "seconds": 2.4106666666666667
+    },
+    {
+      "file": "grodzisk_mazowiecki.wav",
+      "bytes": 436302,
+      "sha256": "5652dc67590251d6280e9fb1007eb2564486d1fdbcf22e41b27dcad363b846bf",
+      "seconds": 4.544
+    },
+    {
+      "file": "hlaseni_zavad.wav",
+      "bytes": 1085518,
+      "sha256": "49a22d028ed01b082b725359a3d6d2b02d1c449cb0788e1e2b4ce0b9ad3405b8",
+      "seconds": 11.306666666666667
+    },
+    {
+      "file": "kamienczyce.wav",
+      "bytes": 168014,
+      "sha256": "4af866afbdbbbe460d0871d08320a1e886da237ae9ea6791d5f371c2768c9579",
+      "seconds": 1.7493333333333334
+    },
+    {
+      "file": "katowice.wav",
+      "bytes": 348238,
+      "sha256": "fabcd664a58c00edfcaf924cb0c0df8ce1347f720e5a03ef5fa99f055b5e70b8",
+      "seconds": 3.6266666666666665
+    },
+    {
+      "file": "klimontow.wav",
+      "bytes": 215118,
+      "sha256": "8380e3325a57b5dc980091a0a3a9b84c5ba982c49fcccb2d028add05d4a98350",
+      "seconds": 2.24
+    },
+    {
+      "file": "koluszki.wav",
+      "bytes": 323662,
+      "sha256": "9eafff736bcd93e04a916634b6f7d0ceedadf3896383a74a74581f5ce8ae29e3",
+      "seconds": 3.3706666666666667
+    },
+    {
+      "file": "konecna.wav",
+      "bytes": 1620046,
+      "sha256": "beff93e4e7c2f9865977f6c4d4ae0f7bdbb38276b31e5316374c3079d16d1890",
+      "seconds": 16.874666666666666
+    },
+    {
+      "file": "kontrola_jizdenek.wav",
+      "bytes": 1200206,
+      "sha256": "c895f05b212b41593b406940d8fb6c9b022ce8ca70f4d0237116cc8b8c9e2a84",
+      "seconds": 12.501333333333333
+    },
+    {
+      "file": "kozlow.wav",
+      "bytes": 309326,
+      "sha256": "0fdfdd26887dc822c493e88fcf600fe5fcb32f0a2a0c7d6c05e3c55b57a06ce9",
+      "seconds": 3.2213333333333334
+    },
+    {
+      "file": "krakow_batowice.wav",
+      "bytes": 303182,
+      "sha256": "aaeb9468d60e2e4d2314125197b63dd3d6a79bea9b43ffbce5dea8150fe58595",
+      "seconds": 3.1573333333333333
+    },
+    {
+      "file": "krakow_glowny.wav",
+      "bytes": 288846,
+      "sha256": "462205fbc2ea017af7f9c809927d34b9699339f6a2fa349ee9e4bbbb342505bf",
+      "seconds": 3.008
+    },
+    {
+      "file": "kutno.wav",
+      "bytes": 245838,
+      "sha256": "742c34b5e42789b4d1389c3a33a7d44ad7595565e72cf23970dbdc6c2e8fc8b3",
+      "seconds": 2.56
+    },
+    {
+      "file": "lask.wav",
+      "bytes": 303182,
+      "sha256": "e1b7a494fa3c5da8d30fc9472830bc806a1c6a5956a6c70570df56ca479eb8ce",
+      "seconds": 3.1573333333333333
+    },
+    {
+      "file": "lodz_chojny.wav",
+      "bytes": 274510,
+      "sha256": "9735ce77bfe094da99b93d5f62e8dd110950c9bc91fa43f46c6c5266829c5a40",
+      "seconds": 2.8586666666666667
+    },
+    {
+      "file": "lodz_kaliska.wav",
+      "bytes": 426062,
+      "sha256": "c1e7d3294404d1c8bb9613483d3a3327c902933e02d955ffcf63b54931bfa64b",
+      "seconds": 4.437333333333333
+    },
+    {
+      "file": "lodz_widzew.wav",
+      "bytes": 313422,
+      "sha256": "b830984211d0f11327011d931668ae88c46ec2405e8b77ea8864d70390955db0",
+      "seconds": 3.264
+    },
+    {
+      "file": "lodz_zabieniec.wav",
+      "bytes": 417870,
+      "sha256": "2e3add9c28678a020ba42a6421621c6cba51e022d5db6a6b91844ce67fa93f5c",
+      "seconds": 4.352
+    },
+    {
+      "file": "lowicz_glowny.wav",
+      "bytes": 401486,
+      "sha256": "212be51532ffd8e06f012a07f9c24498d965d4ab64ea02c4e263d242f7da2582",
+      "seconds": 4.181333333333333
+    },
+    {
+      "file": "luczyce.wav",
+      "bytes": 194638,
+      "sha256": "a6fb0dec2ff6f833f96aeec002eb4098af13d0e0c21c129a73d7a4d98baab8e0",
+      "seconds": 2.026666666666667
+    },
+    {
+      "file": "miechow.wav",
+      "bytes": 327758,
+      "sha256": "cfcf5b34ad2029386f89ce72179fad40cdee7bfd1e4ad6ed020a0637f304cfda",
+      "seconds": 3.4133333333333336
+    },
+    {
+      "file": "nevystupujte.wav",
+      "bytes": 1108046,
+      "sha256": "9b5755168d6262f0735bc2246a8d1d5f40a849c6da819563eb79743cb0f17a90",
+      "seconds": 11.541333333333334
+    },
+    {
+      "file": "niedzwiedz.wav",
+      "bytes": 202830,
+      "sha256": "5f04d6efe94b48c4ea7c68eccc1cad48491102e1d3c48c3c300117d771321a63",
+      "seconds": 2.112
+    },
+    {
+      "file": "ohleduplnost.wav",
+      "bytes": 1419342,
+      "sha256": "e5709806a098ed4aaea1568ec49591c7297a1aa89b1a8b8b7fb47e97c0e95ad0",
+      "seconds": 14.784
+    },
+    {
+      "file": "olkusz.wav",
+      "bytes": 307278,
+      "sha256": "66f3529509221dbad914a6b6a2067097221df7f173b288152ebf8e79a0e6b25c",
+      "seconds": 3.2
+    },
+    {
+      "file": "opoczno_poludnie.wav",
+      "bytes": 356430,
+      "sha256": "6ab51ddd58406cd27eff29aeffb0606e2c01de1e96cedceece56b4cda256f0ae",
+      "seconds": 3.712
+    },
+    {
+      "file": "pabianice.wav",
+      "bytes": 340046,
+      "sha256": "5713d243ec3bf5e3cdae2702a87d3714a3fbb0d13d5e99d27e54ac37adcfb9ed",
+      "seconds": 3.541333333333333
+    },
+    {
+      "file": "piotrkow_trybunalski.wav",
+      "bytes": 424014,
+      "sha256": "fecc7b5997cfb30909c3ce55732b9a5fb7748ba6516dd80efd43e0748517bf6b",
+      "seconds": 4.416
+    },
+    {
+      "file": "pobyt_na_trati.wav",
+      "bytes": 1988686,
+      "sha256": "483d2a783c2751ebf3311215a56cdf3d266af96fe1f8324159664c61a93f7386",
+      "seconds": 20.714666666666666
+    },
+    {
+      "file": "prijizdime_do_stanice.wav",
+      "bytes": 544846,
+      "sha256": "ce7a43248dc958e084c59cae60e5919ada3e8510c82af800bb5894339033f3b1",
+      "seconds": 5.674666666666667
+    },
+    {
+      "file": "pristi_stanice.wav",
+      "bytes": 540750,
+      "sha256": "8d22a4d8497e2f2c4f1ad9479d2499e1c9c96dba306e780db087c51ef1429cbe",
+      "seconds": 5.632
+    },
+    {
+      "file": "sieradz.wav",
+      "bytes": 270414,
+      "sha256": "bdc691252aad17da11cf28d4778eb4ccc11bd5e0c8a501dafd33d5b9bbb512cf",
+      "seconds": 2.816
+    },
+    {
+      "file": "skierniewice.wav",
+      "bytes": 327758,
+      "sha256": "8a8d0c2f89957fc584e10408df7076321798caeb79dc05c6123dbb0b2d1886ce",
+      "seconds": 3.4133333333333336
+    },
+    {
+      "file": "slomniki.wav",
+      "bytes": 206926,
+      "sha256": "d482df34a3d906d1fd8fddf964955f16f7ceeee4ac06ecc88be3b9d7b6416d09",
+      "seconds": 2.1546666666666665
+    },
+    {
+      "file": "slomniki_miasto.wav",
+      "bytes": 319566,
+      "sha256": "c5554e2c51eb9a7c6cb99398099b78e06e3f0a14db6b4552105ba75f68ad3c88",
+      "seconds": 3.328
+    },
+    {
+      "file": "smrokow.wav",
+      "bytes": 237646,
+      "sha256": "3c908ee129568e8fe99a9eda12694f41f4cf99c56266bf62641db9711d22a76b",
+      "seconds": 2.474666666666667
+    },
+    {
+      "file": "sosnowiec_glowny.wav",
+      "bytes": 366670,
+      "sha256": "fbe7fbe548730ca6de3d597dbfc5fbbb33e428fb7ed7907db100fc65a6af85ca",
+      "seconds": 3.8186666666666667
+    },
+    {
+      "file": "sosnowiec_poludniowy.wav",
+      "bytes": 337998,
+      "sha256": "e0db4bda5d3a3817fd8ab11b73da44ff054cb74352f06adc7f628bb4bd352ced",
+      "seconds": 3.52
+    },
+    {
+      "file": "stanice.wav",
+      "bytes": 532558,
+      "sha256": "1fbff9801bc01eb2215a6d035267120a98cda53da472eb28404c1a0c1f3b669d",
+      "seconds": 5.546666666666667
+    },
+    {
+      "file": "szczepanowice.wav",
+      "bytes": 256078,
+      "sha256": "8b6fd96870c60133701519e55c43e9d6605a1d432b4919092ceb655b8bc0805b",
+      "seconds": 2.6666666666666665
+    },
+    {
+      "file": "tunel.wav",
+      "bytes": 217166,
+      "sha256": "dbd8419dce58399a23aac91a811421ee67c880e0a8d57f3f7f5cc17c82dc1225",
+      "seconds": 2.2613333333333334
+    },
+    {
+      "file": "vanoce_rozlouceni.wav",
+      "bytes": 3612750,
+      "sha256": "07924b77a3d3bed9c5f758ac7fba4e925632a872c277a26b7bd9020c48862697",
+      "seconds": 37.632
+    },
+    {
+      "file": "vanoce_uvitani.wav",
+      "bytes": 3373134,
+      "sha256": "61dd7e30e6701242802151aa84336fbb3d8905a766041d916b5ea63359d94788",
+      "seconds": 35.136
+    },
+    {
+      "file": "vitejte.wav",
+      "bytes": 874574,
+      "sha256": "9ef407038092cc1684a6fdc51f35d8f0dcd6ddfac91de72b8e560747b157bf40",
+      "seconds": 9.109333333333334
+    },
+    {
+      "file": "volne_ulicky.wav",
+      "bytes": 1736782,
+      "sha256": "002a7f157b21f4c5409d5243b57bba54e3a63ac39ab96469279a80e56ae03aa8",
+      "seconds": 18.090666666666667
+    },
+    {
+      "file": "vystupovani.wav",
+      "bytes": 1650766,
+      "sha256": "b24e6926245c697a373516fe2f706d149e20f49658ea105ea7cc1cfc6b2954de",
+      "seconds": 17.194666666666667
+    },
+    {
+      "file": "warszawa_centralna.wav",
+      "bytes": 464974,
+      "sha256": "d4608c39c5fd2cc30bcd77db2c82e2c6c5e30a3506b357ee39b95bcc43171446",
+      "seconds": 4.842666666666666
+    },
+    {
+      "file": "warszawa_wschodnia.wav",
+      "bytes": 424014,
+      "sha256": "51661a4f96ddd9cc1c39eb6a5381151f267adf6ce952603fc667779a558d7e3f",
+      "seconds": 4.416
+    },
+    {
+      "file": "warszawa_zachodnia.wav",
+      "bytes": 397390,
+      "sha256": "96983d783409dfceddce432e80e284d44aaa325b9c80b48bfee7b653985404dc",
+      "seconds": 4.1386666666666665
+    },
+    {
+      "file": "wloszczowa_polnoc.wav",
+      "bytes": 395342,
+      "sha256": "b38c7aa992a8b655368ea7f8ef52fcc1857641b53a2f07ed19290cf03ffcdc51",
+      "seconds": 4.117333333333334
+    },
+    {
+      "file": "wolbrom.wav",
+      "bytes": 303182,
+      "sha256": "531d7aa2157f89c380e14c361c83040ade5c7ec98056f06481f30b7a5a1af204",
+      "seconds": 3.1573333333333333
+    },
+    {
+      "file": "zastow.wav",
+      "bytes": 184398,
+      "sha256": "9db36b4f0f7daf36cc7f286a74eb815ebd5b6189318be67fcde209d5e74138f6",
+      "seconds": 1.92
+    },
+    {
+      "file": "zavazadla.wav",
+      "bytes": 1445966,
+      "sha256": "74fbb86937f0e28d62c176cbac4dc05d1e9764df530aece7d7f5d20ae12da910",
+      "seconds": 15.061333333333334
+    },
+    {
+      "file": "zawiercie.wav",
+      "bytes": 317518,
+      "sha256": "640611317f18a45c58479d6a74ea7b58c5cec42186e2eeebc943bb4a1aa5ff89",
+      "seconds": 3.3066666666666666
+    },
+    {
+      "file": "zdunska_wola.wav",
+      "bytes": 329806,
+      "sha256": "07cf327b3241d2a9a747645ca3e048f39534f5e7378d9e314c0f484dec8a025e",
+      "seconds": 3.4346666666666668
+    },
+    {
+      "file": "zgierz.wav",
+      "bytes": 280654,
+      "sha256": "a7f194064657a4134cf398bf0e33e55664055f6a40a884753118b7c6a7bfefcc",
+      "seconds": 2.9226666666666667
+    },
+    {
+      "file": "zpozdeni.wav",
+      "bytes": 1065038,
+      "sha256": "de9a9bcf267ffc058fc6df2629fe7b5a2cd1c85026031dfee60e2fed858e8483",
+      "seconds": 11.093333333333334
+    },
+    {
+      "file": "zyrardow.wav",
+      "bytes": 315470,
+      "sha256": "1fc583affdfa36e39fc37111eb655947690499e467e101ff4ceacd1292ef1537",
+      "seconds": 3.2853333333333334
+    }
+  ],
+  "optionalMissing": [
+    "vanoce_behem_jizdy.wav"
+  ]
+}

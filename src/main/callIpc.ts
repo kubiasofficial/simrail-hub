@@ -60,7 +60,8 @@ export function registerCallIpc(ctx: AppContext, openDashboard: (server: string 
     });
   };
   const modList = async () => mods.list();
-  const recordings=async()=>new LocalRecordings((await settings.get()).recordingsPath??join(app.getPath('desktop'),'simrail-hub','hlaseni'));
+  const bundledRecordings=app.isPackaged?join(process.resourcesPath,'recordings'):join(app.getAppPath(),'assets','recordings');
+  const recordings=async()=>new LocalRecordings((await settings.get()).recordingsPath??bundledRecordings,bundledRecordings);
   let community:CommunityRelay|null=null;
   let journalPromise:Promise<DrivingJournal>|null=null;
   const journal=()=>journalPromise??=(async()=>{

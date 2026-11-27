@@ -1,4 +1,4 @@
-# Soukromí a místní data – verze 0.8.2
+# Soukromí a místní data – verze 0.8.3
 
 Launcher nenabízí registraci, přihlášení ani synchronizaci osobního účtu.
 Nastavení a slovník výslovnosti ukládá existující SQLite v uživatelské složce aplikace. Oblíbené servery, vlaky, poslední výběr a historie sledování používají lokální úložiště rendereru. Historie uchovává nejvýše 100 sledování a 256 pozorovaných PH průjezdů na sledování; neukládá Steam identitu ani přesnou historii polohy. Lze ji vymazat na stránce Historie a oblíbené. Doplňky, stažené hlasy a soukromé nahrávky zůstávají na počítači. Odinstalace zachovává místní aplikační data.
@@ -9,7 +9,7 @@ Internetové rádio se připojí k poskytovateli audio streamu po ručním spuš
 
 Před prvním odesláním proběhne jednorázové ověření přes Cloudflare Turnstile. Náhodné ID zařízení a časově omezené přístupové údaje slouží k omezení spamu; přístupový token je na počítači šifrován prostředky Windows. Na serveru se uchovává otisk tokenu a token platí 30 dnů. Odesílací služba uchovává ID a otisky událostí, stav doručení a časy nejvýše přibližně 15 dnů; vlastní text oznámení se do serverové databáze neukládá. IP adresa slouží k omezení četnosti; databáze uchovává jen její HMAC otisk a omezené čítače. Cloudflare a Discord dostávají běžné síťové požadavky. Veřejně odeslané zprávy zůstávají na Discordu podle pravidel daného serveru.
 
-Hlas Piper běží místně. Hlasový model a program je potřeba nejprve stáhnout; kontrolují se připnuté SHA-256. České a polské segmenty vybírají model příslušného jazyka. Soukromé nahrávky nejsou v instalačním balíčku.
+Hlas Piper běží místně. Hlasový model a program je potřeba nejprve stáhnout; kontrolují se připnuté SHA-256. České a polské segmenty vybírají model příslušného jazyka. Se souhlasem autora je součástí instalačního balíčku a veřejného repozitáře 61 hotových WAV hlášení. Původní záznamy M4A ani další soukromé nahrávky se nezveřejňují. Vlastní složka uživatele se nikam neodesílá.
 
 Mobilní displej otevře dočasný HTTP server na privátní síti počítače. QR obsahuje náhodný přístupový token platný nejvýše 12 hodin. Token nesdílejte; kdo ho získá na stejné síti, může displej otevřít. Cookie je HttpOnly a SameSite=Lax. Lokální HTTP není šifrované a nemůže použít Secure cookie. Používejte důvěryhodnou soukromou síť, nepřesměrovávejte port z internetu. Ukončení sdílení, změna párování a uspání počítače relaci zneplatní.
 

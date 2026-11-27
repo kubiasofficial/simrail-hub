@@ -1,7 +1,7 @@
 {
   "name": "simrail-hub",
   "productName": "SimRail Hub",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "description": "Komunitní launcher pro SimRail: The Railway Simulator",
   "author": "SimRail Hub",
   "license": "MIT",
@@ -106,6 +106,16 @@
         "owner": "kubiasofficial",
         "repo": "simrail-hub",
         "releaseType": "release"
+      }
+    ],
+    "extraResources": [
+      {
+        "from": "assets/recordings",
+        "to": "recordings",
+        "filter": [
+          "*.wav",
+          "manifest.json"
+        ]
       }
     ]
   },
