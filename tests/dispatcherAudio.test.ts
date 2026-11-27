@@ -14,3 +14,12 @@ it('generates bounded original radio cues locally and migrates separate volume s
  for(const closing of [true,false]){const sound=radioSamples(closing);expect(sound.length).toBeGreaterThan(10000);expect(sound.every(x=>Number.isFinite(x)&&Math.abs(x)<=1)).toBe(true);expect(decodeWav(encodeWav(sound)).length).toBe(sound.length);expect(sound).toEqual(radioSamples(closing));}
  expect(gongSamples().length).toBe(60000);expect(normalizeSettings({announcements:{gong:false}}).announcements.gongEnd).toBe(false);const s=normalizeSettings({announcements:{volume:.25},dispatcher:{rangeKm:999,volume:50,radioVolume:-2}});expect(s.announcements.volume).toBe(.25);expect(s.announcements.gongVolume).toBe(.25);expect(s.announcements.gongEnd).toBe(true);expect(s.dispatcher).toMatchObject({enabled:false,audio:false,rangeKm:5,volume:1,radioVolume:0});
 });
+
+it('has strong narrow-band acknowledgement tones and only brief quieter squelch at the edges',()=>{
+ const amplitude=(samples:Float32Array,start:number,end:number,hz:number)=>{let sin=0,cos=0;const from=Math.round(start*48000),to=Math.round(end*48000);for(let i=from;i<to;i++){sin+=samples[i]*Math.sin(2*Math.PI*hz*i/48000);cos+=samples[i]*Math.cos(2*Math.PI*hz*i/48000);}return 2*Math.hypot(sin,cos)/(to-from);};
+ const open=radioSamples(false),close=radioSamples(true);
+ expect(amplitude(open,.10,.16,1050)).toBeGreaterThan(.20);expect(amplitude(open,.23,.29,1450)).toBeGreaterThan(.20);
+ expect(amplitude(close,.04,.08,1450)).toBeGreaterThan(.20);expect(amplitude(close,.14,.18,1050)).toBeGreaterThan(.20);
+ const rms=(a:Float32Array)=>Math.sqrt(a.reduce((n,x)=>n+x*x,0)/a.length);
+ expect(rms(open.slice(0,3000))).toBeLessThan(.025);expect(rms(open.slice(16000))).toBeLessThan(.001);
+});

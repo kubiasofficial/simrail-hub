@@ -3,7 +3,7 @@ import {writeFile} from 'node:fs/promises';
 import {join} from 'node:path';
 import {tmp} from './helpers';
 import {LocalRecordings,recordingNames,encodeWav,decodeWav,trimSilence,gongSamples} from '../src/services/localAudio';
-it('selects the phrase and exact playable station only for passenger trains supported four- and five-digit passenger services',()=>{
+it('shares known station clips across passenger services without restricting train numbers',()=>{
  const request={kind:'next-station' as const,station:'Kraków Główny',trainNumber:'53103',isFreight:false};
  expect(recordingNames(request)).toEqual(['pristi_stanice.wav','krakow_glowny.wav']);
  expect(recordingNames({...request,trainNumber:'35104'})).toEqual(['pristi_stanice.wav','krakow_glowny.wav']);
@@ -11,8 +11,8 @@ it('selects the phrase and exact playable station only for passenger trains supp
  expect(recordingNames({...request,trainNumber:'3502'})).toEqual(['pristi_stanice.wav','krakow_glowny.wav']);
  expect(recordingNames({...request,isFreight:true})).toBeNull();
  expect(recordingNames({...request,trainNumber:'5301'})).toEqual(['pristi_stanice.wav','krakow_glowny.wav']);
- expect(recordingNames({...request,trainNumber:'531030'})).toBeNull();
- expect(recordingNames({...request,trainNumber:'12345'})).toBeNull();
+ expect(recordingNames({...request,trainNumber:'531030'})).toEqual(['pristi_stanice.wav','krakow_glowny.wav']);
+ expect(recordingNames({...request,trainNumber:'12345'})).toEqual(['pristi_stanice.wav','krakow_glowny.wav']);
  expect(recordingNames({...request,station:'Zakopane'})).toBeNull();
  expect(recordingNames({...request,station:'../../outside'})).toBeNull();
  expect(recordingNames({...request,kind:'delay'})).toEqual(['zpozdeni.wav']);
@@ -51,4 +51,12 @@ it('reuses Warsaw clips and selects newly supported playable stations across 45/
 it('supports 16/61 four and five digit services and distinct Sosnowiec stations',()=>{
  for(const trainNumber of ['1601','6160','16105','61180'])expect(recordingNames({kind:'approaching',station:'Łódź Widzew',trainNumber,isFreight:false})).toEqual(['prijizdime_do_stanice.wav','lodz_widzew.wav']);
  expect(recordingNames({kind:'arrived',station:'Sosnowiec Południowy',trainNumber:'61170',isFreight:false})).toEqual(['stanice.wav','sosnowiec_poludniowy.wav']);
+});
+
+it('shares the five added station recordings across all passenger train numbers while preserving freight silence',()=>{
+ for(const [station,file] of [['Kutno','kutno'],['Piotrk\u00f3w Trybunalski','piotrkow_trybunalski'],['Sieradz','sieradz'],['Olkusz','olkusz'],['Wolbrom','wolbrom']])for(const trainNumber of ['16105','45100','1801','23901','12345',null]){
+  const request={kind:'next-station' as const,station,trainNumber,isFreight:false};
+  expect(recordingNames(request)).toEqual(['pristi_stanice.wav',file+'.wav']);
+  expect(recordingNames({...request,isFreight:true})).toBeNull();
+ }
 });

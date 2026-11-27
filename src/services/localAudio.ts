@@ -4,7 +4,7 @@ import {join} from 'node:path';
 import type {AnnKind} from './announcements';
 
 const RATE=48000;
-const STATIONS:Record<string,string>={'warszawa wschodnia':'warszawa_wschodnia','warszawa centralna':'warszawa_centralna','warszawa zachodnia':'warszawa_zachodnia','opoczno poludnie':'opoczno_poludnie','wloszczowa polnoc':'wloszczowa_polnoc','kozlow':'kozlow','miechow':'miechow','krakow glowny':'krakow_glowny','katowice':'katowice','sosnowiec glowny':'sosnowiec_glowny','zawiercie':'zawiercie','lask':'lask','pabianice':'pabianice','lodz kaliska':'lodz_kaliska','lodz zabieniec':'lodz_zabieniec','zgierz':'zgierz','lowicz glowny':'lowicz_glowny','grodzisk mazowiecki':'grodzisk_mazowiecki','zyrardow':'zyrardow','skierniewice':'skierniewice','koluszki':'koluszki','lodz widzew':'lodz_widzew','lodz chojny':'lodz_chojny','zdunska wola':'zdunska_wola','sosnowiec poludniowy':'sosnowiec_poludniowy'};
+const STATIONS:Record<string,string>={'warszawa wschodnia':'warszawa_wschodnia','warszawa centralna':'warszawa_centralna','warszawa zachodnia':'warszawa_zachodnia','opoczno poludnie':'opoczno_poludnie','wloszczowa polnoc':'wloszczowa_polnoc','kozlow':'kozlow','miechow':'miechow','krakow glowny':'krakow_glowny','katowice':'katowice','sosnowiec glowny':'sosnowiec_glowny','zawiercie':'zawiercie','lask':'lask','pabianice':'pabianice','lodz kaliska':'lodz_kaliska','lodz zabieniec':'lodz_zabieniec','zgierz':'zgierz','lowicz glowny':'lowicz_glowny','grodzisk mazowiecki':'grodzisk_mazowiecki','zyrardow':'zyrardow','skierniewice':'skierniewice','koluszki':'koluszki','lodz widzew':'lodz_widzew','lodz chojny':'lodz_chojny','zdunska wola':'zdunska_wola','sosnowiec poludniowy':'sosnowiec_poludniowy','kutno':'kutno','piotrkow trybunalski':'piotrkow_trybunalski','sieradz':'sieradz','olkusz':'olkusz','wolbrom':'wolbrom','klimontow':'klimontow','tunel':'tunel','dziadowki':'dziadowki','kamienczyce':'kamienczyce','szczepanowice':'szczepanowice','smrokow':'smrokow','slomniki':'slomniki','slomniki miasto':'slomniki_miasto','niedzwiedz':'niedzwiedz','goszcza':'goszcza','luczyce':'luczyce','baranowka':'baranowka','zastow':'zastow','krakow batowice':'krakow_batowice'};
 const PHRASES:Partial<Record<AnnKind,string>>={'next-station':'pristi_stanice',approaching:'prijizdime_do_stanice',arrived:'stanice'};
 const norm=(s:string)=>s.toLowerCase().replace(/ł/g,'l').normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim();
 export const RECORDING_FILES=[...Object.values(PHRASES),...Object.values(STATIONS).slice(0,8)].map(s=>s+'.wav');
@@ -14,7 +14,7 @@ export function recordingNames(request:RecordingRequest):string[]|null {
  if(request.isFreight)return null;
  if(request.service!==undefined)return isServiceAnnouncementId(request.service)?[SERVICE_ANNOUNCEMENTS[request.service].file]:null;
  if(request.kind==='delay'||request.kind==='terminal')return [SERVICE_ANNOUNCEMENTS[request.kind].file];
- if(!/^(?:16|61|35|53|45|54)\d{2,3}$/.test(request.trainNumber??''))return null;
+ // Clips are shared by station across every passenger service, regardless of train number.
  const phrase=PHRASES[request.kind],station=STATIONS[norm(request.station??'')];
  return phrase&&station?[phrase+'.wav',station+'.wav']:null;
 }
@@ -59,9 +59,21 @@ export class LocalRecordings {
  }
 }
 
-/** Original local radio squelch: deterministic filtered noise with a short release click. */
+/** Short narrow-band squelch plus a clearly audible two-tone radio acknowledgement. */
 export function radioSamples(closing=false):Float32Array {
  const out=new Float32Array(Math.round(RATE*(closing?.32:.45)));let seed=271828,low=0;
- for(let i=0;i<out.length;i++){seed=(Math.imul(seed,1664525)+1013904223)>>>0;const white=seed/2147483648-1;low+=.12*(white-low);const t=i/RATE,envelope=Math.min(1,t/.012)*Math.min(1,(out.length-i)/(RATE*.04));out[i]=((white-low)*.12+Math.sin(2*Math.PI*(closing?1350:950)*t)*.035*Math.exp(-t*18))*envelope;}
+ // Brief quiet noise at key-up/key-down, rather than a full-length TV hiss.
+ for(let i=0;i<out.length;i++){
+  seed=(Math.imul(seed,1664525)+1013904223)>>>0;
+  const white=seed/2147483648-1;low+=.32*(white-low);
+  const t=i/RATE,edge=closing?t>.255:t<.065;
+  if(edge){const local=closing?t-.255:t;const envelope=Math.min(1,local/.008)*Math.max(0,1-local/.065);out[i]+=(white-low)*.035*envelope;}
+ }
+ const tones=closing?[{start:.025,length:.075,hz:1450},{start:.125,length:.075,hz:1050}]:[{start:.085,length:.095,hz:1050},{start:.215,length:.095,hz:1450}];
+ for(const tone of tones)for(let n=0;n<Math.round(tone.length*RATE);n++){
+  const at=Math.round(tone.start*RATE)+n;if(at>=out.length)break;
+  const t=n/RATE,envelope=Math.min(1,t/.008,(tone.length-t)/.012);
+  out[at]+=.24*envelope*Math.sin(2*Math.PI*tone.hz*t);
+ }
  return out;
 }

@@ -1,0 +1,39 @@
+{
+  "at": "2026-11-27T11:41:51.624Z",
+  "channel": "test",
+  "isolatedProfile": true,
+  "ipcClips": [
+    {
+      "station": "Klimontów",
+      "bytes": 501164
+    },
+    {
+      "station": "Zastów",
+      "bytes": 478124
+    },
+    {
+      "station": "Kraków Batowice",
+      "bytes": 618284
+    },
+    {
+      "station": "Kutno",
+      "bytes": 457964
+    },
+    {
+      "station": "Piotrków Trybunalski",
+      "bytes": 768044
+    }
+  ],
+  "radioPlayback": [
+    {
+      "closing": false,
+      "seconds": 0.45
+    },
+    {
+      "closing": true,
+      "seconds": 0.32
+    }
+  ],
+  "newSettingsVisible": true,
+  "errors": []
+}

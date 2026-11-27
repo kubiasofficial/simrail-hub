@@ -1,3 +1,4 @@
+import type {ServiceAnnouncementId} from '@/services/serviceAnnouncements';
 import {takeoverOrigin} from '@/services/takeoverOrigin';
 import {DrivingButton} from '@/components/DrivingControls';
 import {useDriving} from '@/stores/driving';
@@ -105,6 +106,11 @@ export function DashboardPage({ standalone = false, active = true }: { standalon
   // automatická hlášení
   const trigger = useRef(new AnnouncementTrigger());
   const serviceTrigger=useRef(new AutomaticServices());
+  const [availableServices,setAvailableServices]=useState<ServiceAnnouncementId[]>([]);
+  useEffect(()=>{let alive=true;const refresh=()=>{void window.simrailHub!.call('recordings:status').then(r=>{if(alive)setAvailableServices(r.ok?r.data.services.filter(s=>s.available).map(s=>s.id):[]);}).catch(()=>{if(alive)setAvailableServices([]);});};
+    setAvailableServices([]);refresh();const timer=setInterval(refresh,60000);return()=>{alive=false;clearInterval(timer);};
+  },[settings.recordingsPath]);
+
   const [disabled, setDisabled] = useState<string[]>([]);
   useEffect(() => { trigger.current.reset(); }, [sel.mode, server, sel.train]);
   const auto = settings.announcements.auto;
@@ -132,9 +138,9 @@ export function DashboardPage({ standalone = false, active = true }: { standalon
     const train=detail?.train;
     if(!train||!m){serviceTrigger.current.reset();return;}
     const run=`${isDemo?'demo':server}:${train.runId??train.number}`;
-    const events=serviceTrigger.current.update({run,train,points:detail.timetable?.points??[],model:m,serverSod:detail.serverSod,fetchedAt:detail.fetchedAt,enabled:auto&&settings.announcements.recorded,freight,options:settings.announcements});
+    const events=serviceTrigger.current.update({run,train,points:detail.timetable?.points??[],model:m,serverSod:detail.serverSod,fetchedAt:detail.fetchedAt,enabled:auto&&settings.announcements.recorded,freight,options:settings.announcements,availableServices});
     for(const event of events)ann.automaticService(run+':service:'+event.key,event.ids,event.valid,event.complete);
-  },[standalone,detail,m,auto,freight,isDemo,server,settings.announcements,ann.automaticService]);
+  },[standalone,detail,m,auto,freight,isDemo,server,settings.announcements,ann.automaticService,availableServices]);
 
   useEffect(()=>{if(!standalone&&!isDemo&&m&&detail?.train)useShift.getState().observe(detail.train,m);},[standalone,isDemo,m,detail]);
 

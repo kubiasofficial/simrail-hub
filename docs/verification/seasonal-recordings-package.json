@@ -1,0 +1,18 @@
+{
+  "at": "2026-11-27T11:43:08.807Z",
+  "info": {
+    "version": "0.8.2",
+    "platform": "win32",
+    "electron": "45.4.1",
+    "channel": "test",
+    "buildId": "2026-11-27T11:39:30.962Z"
+  },
+  "actualPortableStarted": true,
+  "isolatedProfile": true,
+  "matchedFiles": 147,
+  "privateAudioBundled": false,
+  "servicesAvailable": 14,
+  "portableSHA256": "53585f50ace4a357a242fa33e4eb6e4acd275e3ccbd88e149c7b4e6413015956",
+  "installedTestPath": "C:\\Users\\PC\\Desktop\\simrail-hub\\SimRail Hub TEST.exe",
+  "previousTestBackup": "C:\\Users\\PC\\Desktop\\simrail-hub\\.zalohy\\pred-sezonnim-hlasenim-20261127-124405\\SimRail Hub TEST.exe"
+}

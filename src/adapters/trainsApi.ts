@@ -82,6 +82,7 @@ export function parseTimetables(json: unknown): Timetable[] {
         departure: str(pick(p, 'departureTime', 'DepartureTime')),
         isStop: stopType === null ? null : stopType.toLowerCase() !== 'nostopover',
         stopType,
+        line: num(pick(p, 'line', 'Line')),
         maxSpeed: num(pick(p, 'maxSpeed', 'MaxSpeed')),
         km: num(pick(p, 'kilometrage', 'Kilometrage', 'mileage')),
         platform: str(pick(p, 'platform', 'Platform')),

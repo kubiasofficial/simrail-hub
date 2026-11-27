@@ -30,6 +30,8 @@ export interface TimetablePoint {
   /** true = zastavuje, false = průjezd (stopType NoStopOver), null = neznámé. */
   isStop: boolean | null;
   stopType: string | null;
+  /** Concrete railway line; missing/zero cannot establish the playable section. */
+  line?:number|null;
   maxSpeed: number | null;
   km: number | null;
   platform: string | null;

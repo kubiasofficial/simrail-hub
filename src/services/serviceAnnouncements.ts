@@ -8,7 +8,13 @@ export const SERVICE_ANNOUNCEMENTS = {
  clear_aisles: {file:'volne_ulicky.wav',label:'Volné uličky'},
  exit: {file:'vystupovani.wav',label:'Vystupování / dveře'},
  terminal: {file:'konecna.wav',label:'Konečná stanice'},
- stay_onboard: {file:'nevystupujte.wav',label:'Nevystupujte'}
+ stay_onboard: {file:'nevystupujte.wav',label:'Nevystupujte'},
+ consideration: {file:'ohleduplnost.wav',label:'Ohleduplnost'},
+ tickets: {file:'kontrola_jizdenek.wav',label:'Kontrola jízdenek'},
+ assistance: {file:'hlaseni_zavad.wav',label:'Pomoc a hlášení závad'},
+ christmas_welcome: {file:'vanoce_uvitani.wav',label:'Vánoční uvítání'},
+ christmas_farewell: {file:'vanoce_rozlouceni.wav',label:'Vánoční rozloučení'},
+ christmas_journey: {file:'vanoce_behem_jizdy.wav',label:'Vánoční přání během jízdy'}
 } as const;
 export type ServiceAnnouncementId=keyof typeof SERVICE_ANNOUNCEMENTS;
 export function isServiceAnnouncementId(value:unknown):value is ServiceAnnouncementId {

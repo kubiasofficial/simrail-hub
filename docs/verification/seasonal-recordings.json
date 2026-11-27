@@ -1,0 +1,112 @@
+{
+  "at": "2026-11-27T11:39:24.836Z",
+  "privateAudioBundled": false,
+  "files": [
+    {
+      "file": "dziadowki.wav",
+      "seconds": 1.9626666666666666
+    },
+    {
+      "file": "kamienczyce.wav",
+      "seconds": 1.7493333333333334
+    },
+    {
+      "file": "szczepanowice.wav",
+      "seconds": 2.6666666666666665
+    },
+    {
+      "file": "smrokow.wav",
+      "seconds": 2.474666666666667
+    },
+    {
+      "file": "slomniki.wav",
+      "seconds": 2.1546666666666665
+    },
+    {
+      "file": "slomniki_miasto.wav",
+      "seconds": 3.328
+    },
+    {
+      "file": "niedzwiedz.wav",
+      "seconds": 2.112
+    },
+    {
+      "file": "goszcza.wav",
+      "seconds": 2.4106666666666667
+    },
+    {
+      "file": "luczyce.wav",
+      "seconds": 2.026666666666667
+    },
+    {
+      "file": "baranowka.wav",
+      "seconds": 2.026666666666667
+    },
+    {
+      "file": "krakow_batowice.wav",
+      "seconds": 3.1573333333333333
+    },
+    {
+      "file": "tunel.wav",
+      "seconds": 2.2613333333333334
+    },
+    {
+      "file": "klimontow.wav",
+      "seconds": 2.24
+    },
+    {
+      "file": "zastow.wav",
+      "seconds": 1.92
+    },
+    {
+      "file": "ohleduplnost.wav",
+      "seconds": 14.784
+    },
+    {
+      "file": "kontrola_jizdenek.wav",
+      "seconds": 12.501333333333333
+    },
+    {
+      "file": "hlaseni_zavad.wav",
+      "seconds": 11.306666666666667
+    },
+    {
+      "file": "vanoce_uvitani.wav",
+      "seconds": 35.136
+    },
+    {
+      "file": "vanoce_rozlouceni.wav",
+      "seconds": 37.632
+    }
+  ],
+  "stationCombinations": 171,
+  "services": [
+    {
+      "id": "consideration",
+      "seconds": 12.9
+    },
+    {
+      "id": "tickets",
+      "seconds": 11.74
+    },
+    {
+      "id": "assistance",
+      "seconds": 10.45
+    },
+    {
+      "id": "christmas_welcome",
+      "seconds": 33.57
+    },
+    {
+      "id": "christmas_farewell",
+      "seconds": 36.4
+    }
+  ],
+  "missing": [
+    "christmas_journey"
+  ],
+  "radio": {
+    "openingSeconds": 0.45,
+    "closingSeconds": 0.32
+  }
+}

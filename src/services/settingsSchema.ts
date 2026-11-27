@@ -40,7 +40,7 @@ export function normalizeSettings(raw: unknown): Settings {
     },
     announcements: {
       auto: bool(an.auto, d.announcements.auto),
-      welcome:bool(an.welcome,true), luggage:bool(an.luggage,true), waiting:bool(an.waiting,true),
+      welcome:bool(an.welcome,true), luggage:bool(an.luggage,true), waiting:bool(an.waiting,true), journeyInfo:bool(an.journeyInfo,true), seasonal:bool(an.seasonal,true),
       gapSeconds:clamp(an.gapSeconds,10,60,d.announcements.gapSeconds),
       gong: bool(an.gong,d.announcements.gong),
       gongEnd:bool(an.gongEnd,bool(an.gong,d.announcements.gongEnd)),
