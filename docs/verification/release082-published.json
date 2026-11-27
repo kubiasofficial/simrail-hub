@@ -1,0 +1,82 @@
+{
+  "at": "2026-11-27T10:30:04.250615+00:00",
+  "version": "0.8.2",
+  "release": {
+    "at": "2026-11-27T10:28:56.567Z",
+    "version": "0.8.2",
+    "commit": "3f14ea6b2820f5312016b5273446bf1297c240b4",
+    "url": "https://github.com/kubiasofficial/simrail-hub/releases/tag/v0.8.2",
+    "id": 460450707,
+    "latest": true,
+    "assets": [
+      {
+        "name": "SimRail-Hub-Portable-0.8.2.exe",
+        "size": 140798910,
+        "sha256": "6ea67fef0829c7ea9499711f69f2a23d23927871be641ade395b5155dd084859"
+      },
+      {
+        "name": "SimRail-Hub-Setup-0.8.2.exe",
+        "size": 156569665,
+        "sha256": "3b319875a8f86c9a502ee8237d1f7dcb0c5026ade96707daf8b017d9ac02055e"
+      },
+      {
+        "name": "SimRail-Hub-Setup-0.8.2.exe.blockmap",
+        "size": 164702,
+        "sha256": "226e20043ecb4e4b8da84492ac848f5b74f236e0d39d542bc391f1cc67d3d4e6"
+      },
+      {
+        "name": "latest.yml",
+        "size": 351,
+        "sha256": "c024faa01562031e5e71026c32aa86c1bfd85b639152618cbb455a20a34e2ffa"
+      },
+      {
+        "name": "SimRail-Hub-0.8.2-banner.png",
+        "size": 1810864,
+        "sha256": "07f5a9deb47483985158af58423d32c432984edd56102c6ded3adb17e0ecef30"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "size": 471,
+        "sha256": "c64971baf99afb7eaa476e926a0f07bcdb5aa52d8a38b03c987751a3a0c5cf19"
+      }
+    ],
+    "updaterManifestVerified": true
+  },
+  "hosting": {
+    "at": "2026-11-27T10:29:40.666Z",
+    "url": "https://simrail-hub-kubias.web.app",
+    "version": "0.8.2",
+    "hostingRevision": "1b24a5547b19db74",
+    "downloadLinkVerified": true,
+    "bannerSHA256": "07f5a9deb47483985158af58423d32c432984edd56102c6ded3adb17e0ecef30",
+    "communityRelayReady": true,
+    "testLauncherUnchanged": true
+  },
+  "updater": {
+    "at": "2026-11-27T10:29:28.582Z",
+    "baseline": "0.8.1",
+    "target": "0.8.2",
+    "status": "ready",
+    "isolatedProfile": true,
+    "isolatedCache": true,
+    "autoInstallOnAppQuit": false,
+    "installationTriggered": false,
+    "downloadedInstaller": {
+      "bytes": 156569665,
+      "sha256": "3b319875a8f86c9a502ee8237d1f7dcb0c5026ade96707daf8b017d9ac02055e"
+    }
+  },
+  "automaticOrigin": {
+    "at": "2026-11-27T10:16:53.562Z",
+    "actualStartIpc": true,
+    "discordTransport": "intercepted in isolated main process; no real messages",
+    "errors": [],
+    "noManualStartInput": true,
+    "refreshesAtConfirmation": true,
+    "origin": "Kraków Główny",
+    "ignoresLegacyManualOrigin": true,
+    "correctDiscordFields": true
+  },
+  "testsPassed": 234,
+  "paidServicesAdded": false
+}
