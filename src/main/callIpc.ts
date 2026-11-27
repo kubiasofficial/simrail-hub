@@ -32,7 +32,7 @@ const trainNumber=(v:unknown)=>{const s=str(v,12,'vlak');if(!/^\d+$/.test(s))thr
 export function registerCallIpc(ctx: AppContext, openDashboard: (server: string | null, train: string | null) => void, isTrusted: (e: Electron.IpcMainInvokeEvent) => boolean,stopDashboard:()=>void=()=>{}): void {
   const { settings, tracking, tts, mods, log } = ctx;
   const routes = new TrainRouteService(tracking,join(__dirname,'../../dist/data/rail-network.json'));
-  const mobile = new MobileServer(tracking, join(__dirname, '../../dist'),undefined,undefined,(code,number)=>routes.get(code,number));
+  const mobile = new MobileServer(tracking, join(__dirname, '../../dist'),undefined,undefined,(code,number)=>routes.get(code,number),{...runtimeIdentity,version:app.getVersion()});
   const dlc=new DlcService(async(url,init)=>{const r=await net.fetch(url,init);return {ok:r.ok,status:r.status,text:()=>r.text()};});
 
   const testChannel=runtimeIdentity.channel==='test';

@@ -1,3 +1,6 @@
+import {journeyDelay,journeyMotion,nextStopTimes} from './journeyPresentation';
+import type {TrainDetailPayload} from '../types/trains';
+import type {OnboardModel} from './onboard';
 import {trainCategory} from './trainCategory';
 import type {TrainRoute} from '../types/route';
 import {createServer,type Server} from 'node:http';
@@ -13,20 +16,27 @@ export function privateAddress(raw:string):boolean{
  const ip=raw.replace(/^::ffff:/,'');if(!isIPv4(ip))return false;const [a,b]=ip.split('.').map(Number);
  return a===127||a===10||(a===192&&b===168)||(a===172&&b>=16&&b<=31);
 }
+export const MOBILE_REVISION='2026-11-28.1';
+type MobileBase=TrainDetailPayload&{category:ReturnType<typeof trainCategory>|null;model:OnboardModel|null};
 export class MobileServer{
  private server:Server|null=null;private token='';private expiresAt=0;private code='';private train='';private tracker=new DelayTracker();
- private cached:{at:number;value:unknown}|null=null;private pending:Promise<unknown>|null=null;private generation=0;
+ private cached:{at:number;value:MobileBase}|null=null;private pending:Promise<ReturnType<MobileServer['present']>>|null=null;private generation=0;
  private urls:string[]=[];private network='';private starting:Promise<{urls:string[];expiresAt:number}>|null=null;
- constructor(private tracking:TrainTrackingService,private staticDir:string,private interfaces:typeof networkInterfaces=networkInterfaces,private now:()=>number=Date.now,private routeProvider?:(code:string,train:string)=>Promise<TrainRoute>){}
+ constructor(private tracking:TrainTrackingService,private staticDir:string,private interfaces:typeof networkInterfaces=networkInterfaces,private now:()=>number=Date.now,private routeProvider?:(code:string,train:string)=>Promise<TrainRoute>,private identity:{version:string;channel:string;buildId:string|null}={version:'development',channel:'test',buildId:null}){}
  stop(){this.generation++;this.pending=null;this.server?.closeAllConnections();this.server?.close();this.server=null;this.token='';this.cached=null;this.urls=[];}
  private valid(value:string){const a=Buffer.from(value),b=Buffer.from(this.token);return a.length===b.length&&a.length>0&&timingSafeEqual(a,b)&&this.now()<this.expiresAt;}
+ private present(value:MobileBase){
+  const serverNowMs=this.now(),dataAgeMs=Math.max(0,serverNowMs-value.fetchedAt),connection=dataAgeMs>=30000?'lost':dataAgeMs>=15000?'stale':'live';
+  const model=value.model?{...value.model,connection:connection as OnboardModel['connection']}:null;
+  return {...value,model,serverNowMs,dataAgeMs,app:{...this.identity,mobileRevision:MOBILE_REVISION},presentation:model?{motion:journeyMotion(model),delay:journeyDelay(model),times:nextStopTimes(model)}:null};
+ }
  private async state(){
-  if(this.cached&&this.now()-this.cached.at<4500)return this.cached.value;if(this.pending)return this.pending;
+  if(this.cached&&this.now()-this.cached.at<4500)return this.present(this.cached.value);if(this.pending)return this.pending;
   const generation=this.generation,tracker=this.tracker;
   const task=(async()=>{const r=await this.tracking.getDetail(this.code,this.train);if(!r.ok)throw Error(r.error);if(generation!==this.generation)throw Error('Párování bylo změněno.');
    const age=this.now()-r.data.fetchedAt;const connection=age>=30000?'lost':age>=15000?'stale':'live';
-   const value={...r.data,category:r.data.train?trainCategory(r.data.train):null,model:r.data.train?computeOnboard({train:r.data.train,timetable:r.data.timetable,stations:r.data.stations,nowSod:r.data.serverSod,tracker,connection}):null};
-   this.cached={at:this.now(),value};return value;
+   const value:MobileBase={...r.data,category:r.data.train?trainCategory(r.data.train):null,model:r.data.train?computeOnboard({train:r.data.train,timetable:r.data.timetable,stations:r.data.stations,nowSod:r.data.serverSod,tracker,connection}):null};
+   this.cached={at:this.now(),value};return this.present(value);
   })().finally(()=>{if(this.pending===task)this.pending=null;});this.pending=task;return task;
  }
  async start(code:string,train:string):Promise<{urls:string[];expiresAt:number}>{

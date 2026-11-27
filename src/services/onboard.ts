@@ -1,3 +1,4 @@
+import {passengerStationLocation} from './passengerStationLocations';
 import { isPassengerStop } from './passengerStops';
 import { haversineM } from './geo';
 import { parseSod } from '../adapters/trainsApi';
@@ -11,7 +12,7 @@ export const normName = (s: string) =>
 
 export function findStation(name: string, stations: StationCoord[]): StationCoord | null {
   const n = normName(name);
-  return stations.find((s) => normName(s.name) === n) ?? null;
+  return passengerStationLocation(name,stations.find((s) => normName(s.name) === n) ?? null);
 }
 
 const DAY = 86400;
@@ -81,6 +82,7 @@ export interface OnboardModel {
   speedKmh: number | null; lat: number; lon: number;
   delayMin: number | null; delayKind: 'observed' | 'estimate' | null; delayClass: DelayClass;
   distanceToNextStopM: number | null;
+  distanceToCurrentStopM?:number|null;
   distanceToFollowingStopM: number | null;
   connection: Connection;
   /** Je dost dat pro automatická hlášení (jízdní řád + index)? */
@@ -106,11 +108,20 @@ export function computeOnboard(i: { train: Train; timetable: Timetable | null; s
 
   const speed = train.speedKmh;
   let phase: OnboardModel['phase'] = 'unknown';
-  if (speed !== null) {
-    if (speed > 1) phase = 'moving';
-    else phase = dist !== null && dist <= AT_STATION_M ? 'standing' : 'standing-unknown';
+  let standingIdx:number|null=null,currentDistance:number|null=null;
+  if(speed!==null){
+    if(speed>1)phase='moving';
+    else{
+      // The API can advance its timetable index while the train still occupies a PH platform.
+      // Consider only the immediate previous PH and next PH, and require measured proximity.
+      const previous=idx===null?null:[...points].reverse().find(p=>p.index<idx&&isPassengerStop(p))??null;
+      const candidates=[nextStop,previous].filter((p):p is TimetablePoint=>!!p).map(p=>{const coord=findStation(p.name,stations);return {point:p,distance:coord?haversineM(train.lat,train.lon,coord.lat,coord.lon):Infinity};}).filter(p=>p.distance<=AT_STATION_M).sort((a,b)=>a.distance-b.distance);
+      const standing=candidates[0];standingIdx=standing?.point.index??null;
+      if(standing)currentDistance=standing.distance;
+      phase=standing?'standing':'standing-unknown';
+    }
   }
-  const standingIdx = phase === 'standing' ? nextStopIdx : null;
+  const targetIndex=standingIdx??idx;
   const delaySec = d ? d.min * 60 : null;
 
   const rows: RowModel[] = points.map((p, k) => {
@@ -119,7 +130,7 @@ export function computeOnboard(i: { train: Train; timetable: Timetable | null; s
       index: k, name: p.name, isStop: p.isStop, passengerStop: isPassengerStop(p),
       arrival: hhmm(p.arrival), departure: hhmm(p.departure),
       estimated: idx !== null && k >= idx && arr !== null && delaySec !== null ? fmtSod(arr + delaySec) : null,
-      status: idx === null ? 'upcoming' : k < idx ? 'passed' : k === idx ? 'target' : 'upcoming',
+      status: targetIndex === null ? 'upcoming' : k < targetIndex ? 'passed' : k === targetIndex ? 'target' : 'upcoming',
       standing: standingIdx === k
     };
   });
@@ -135,6 +146,7 @@ export function computeOnboard(i: { train: Train; timetable: Timetable | null; s
     rows, phase, speedKmh: speed, lat: train.lat, lon: train.lon,
     delayMin: d?.min ?? null, delayKind: d?.kind ?? null, delayClass: delayClass(d?.min ?? null),
     distanceToNextStopM: dist,
+    distanceToCurrentStopM:currentDistance,
     distanceToFollowingStopM: (() => {
       const target = standingIdx !== null ? stops.find(p => p.index > standingIdx) : nextStop;
       const coord = target ? findStation(target.name, stations) : null;

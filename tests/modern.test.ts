@@ -35,7 +35,7 @@ it('mobile pairing gates data, restricts methods, blocks traversal and invalidat
  const service=new MobileServer(tracking,resolve('public'),()=>({test:[{address:'192.168.0.2',family:'IPv4',internal:false,netmask:'255.255.255.0',mac:'00:00:00:00:00:00',cidr:'192.168.0.2/24'}]}));
  try{const session=await service.start('cz1','123');const target=new URL(session.urls[0]);const base=`http://127.0.0.1:${target.port}`;
  expect((await fetch(base+'/api/state')).status).toBe(401);
- const pair=await fetch(base+target.pathname+target.search,{redirect:'manual'});expect(pair.status).toBe(200);expect(pair.headers.get('location')).toBeNull();expect(pair.headers.get('set-cookie')).toContain('SameSite=Lax');expect(await pair.text()).toContain('MOBILNÍ');const cookie=pair.headers.get('set-cookie')!.split(';')[0];
+ const pair=await fetch(base+target.pathname+target.search,{redirect:'manual'});expect(pair.status).toBe(200);expect(pair.headers.get('location')).toBeNull();expect(pair.headers.get('set-cookie')).toContain('SameSite=Lax');expect(await pair.text()).toContain('Palubní displej');const cookie=pair.headers.get('set-cookie')!.split(';')[0];
  const reused=await service.start('cz1','123');expect(reused.urls).toEqual(session.urls);expect(reused.expiresAt).toEqual(session.expiresAt);
  const headers={cookie};expect((await fetch(base+'/api/state',{headers})).status).toBe(200);expect((await fetch(base+'/api/state',{method:'POST',headers})).status).toBe(405);expect((await fetch(base+'/package.json',{headers})).status).toBe(404);
  const replacement=await service.start('cz1','456');const newer=new URL(replacement.urls[0]);expect((await fetch('http://127.0.0.1:'+newer.port+'/api/state',{headers})).status).toBe(401);

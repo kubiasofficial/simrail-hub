@@ -1,0 +1,14 @@
+{
+  "at": "2026-11-27T23:27:16.733Z",
+  "source": "controlled real HTTP MobileServer + browser, no actual game drive",
+  "phoneClockOffsetHours": 18,
+  "clockSkewSafe": true,
+  "sharedTimes": true,
+  "criticalDelay": true,
+  "reconnect": true,
+  "unlockRecovery": true,
+  "oldResponseIgnored": true,
+  "narrowAndLandscape": true,
+  "expiryStopsPolling": true,
+  "errors": []
+}

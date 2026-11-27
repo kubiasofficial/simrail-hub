@@ -13,3 +13,15 @@ it('mobile sends actual freshness and category; rail routes use the same private
  expect((await fetch(base+'/api/route',{headers:{cookie,Origin:'https://example.com'}})).status).toBe(403);expect(routeCalls).toBe(1);
  }finally{service.stop();}
 });
+
+it('reports host-measured data age and build identity and updates stale status even when the snapshot is cached',async()=>{
+ const snap=new DemoSim(0).snapshot(0);let now=200000,calls=0;
+ const tracking={getDetail:async()=>{calls++;return {ok:true,data:{...snap,serverSod:snap.nowSod,fetchedAt:186000,notes:[]}};}};
+ const service=new MobileServer(tracking as never,resolve('public'),(()=>({wifi:[{address:'192.168.1.2',family:'IPv4',internal:false}]})) as never,()=>now,undefined,{version:'0.8.3',channel:'test',buildId:'verified-test'});
+ try{const pair=await service.start('cz1','35104'),url=new URL(pair.urls[0]);url.hostname='127.0.0.1';const root=await fetch(url),cookie=root.headers.get('set-cookie')!.split(';')[0];
+ const get=()=>fetch(url.origin+'/api/state',{headers:{cookie}}).then(r=>r.json());
+ const first=await get();expect(first.dataAgeMs).toBe(14000);expect(first.serverNowMs).toBe(now);expect(first.app).toMatchObject({version:'0.8.3',channel:'test',buildId:'verified-test',mobileRevision:'2026-11-28.1'});expect(first.model.connection).toBe('live');expect(first.presentation.times).toHaveProperty('arrival');
+ now+=2000;const second=await get();expect(calls).toBe(1);expect(second.fetchedAt).toBe(first.fetchedAt);expect(second.dataAgeMs).toBe(16000);expect(second.model.connection).toBe('stale');
+ expect((await fetch(url.origin+'/app.js?v=20261128-1',{headers:{cookie}})).headers.get('cache-control')).toBe('no-store');
+ }finally{service.stop();}
+});
