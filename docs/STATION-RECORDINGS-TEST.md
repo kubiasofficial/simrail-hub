@@ -12,4 +12,4 @@ Checks: 262 tests passed across 42 files, TypeScript checks and production build
 
 The remaining 48 API candidates are not automatically a list of playable stations. Verify corridor/DLC availability before requesting another recording batch.
 
-Public release 0.8.4 is unchanged. This batch is delivered in the separate TEST executable.
+This batch was first delivered in the separate TEST executable, then promoted to public stable 0.8.5 on 2026-11-28. See RELEASE-0.8.5.md and verification/release085-published.json.

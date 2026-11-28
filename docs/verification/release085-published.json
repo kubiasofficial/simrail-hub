@@ -1,0 +1,41 @@
+{
+  "at": "2026-11-28T07:31:40.879Z",
+  "version": "0.8.5",
+  "commit": "7923ee252d15f528482fee8912298d1ba0ce30ba",
+  "url": "https://github.com/kubiasofficial/simrail-hub/releases/tag/v0.8.5",
+  "id": 461382593,
+  "latest": true,
+  "assets": [
+    {
+      "name": "SimRail-Hub-Portable-0.8.5.exe",
+      "size": 172898957,
+      "sha256": "819694913fc416216f6f25f5c328c95b1ce1b5c434852c5274667c762d33eb7e"
+    },
+    {
+      "name": "SimRail-Hub-Setup-0.8.5.exe",
+      "size": 195438068,
+      "sha256": "f9e2238bda51fc87015c244e3c2f1d99dcf120741e47740d4b1539f86d314ee8"
+    },
+    {
+      "name": "SimRail-Hub-Setup-0.8.5.exe.blockmap",
+      "size": 204655,
+      "sha256": "cabd0fe92561730c982a2f118caee25414006a505edab61c980b67122a441384"
+    },
+    {
+      "name": "latest.yml",
+      "size": 351,
+      "sha256": "fa69955fb64ebf5a3abc6f5952a12b6b073ebf93a4942756a2925f317179805d"
+    },
+    {
+      "name": "SimRail-Hub-0.8.5-banner.png",
+      "size": 1810864,
+      "sha256": "07f5a9deb47483985158af58423d32c432984edd56102c6ded3adb17e0ecef30"
+    },
+    {
+      "name": "SHA256SUMS.txt",
+      "size": 466,
+      "sha256": "fffd4c783ea70b7bee699662084d03f0c95edca0e832d481be8bfde5285d1919"
+    }
+  ],
+  "updaterManifestVerified": true
+}
