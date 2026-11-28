@@ -1,0 +1,31 @@
+{
+  "at": "2026-11-28T07:28:20.123Z",
+  "version": "0.8.5",
+  "renderedStations": 156,
+  "upcomingExcluded": 9,
+  "info": {
+    "version": "0.8.5",
+    "platform": "win32",
+    "electron": "45.4.1",
+    "channel": "stable",
+    "buildId": null
+  },
+  "channel": "stable",
+  "actualPortableStarted": true,
+  "matchedFiles": 153,
+  "privateWebhookBundled": false,
+  "privateAudioBundled": false,
+  "approvedPublicRecordings": 174,
+  "cleanMachineRecordings": true,
+  "pairedMobileRevision": "2026-11-28.1",
+  "mobileVersion": "0.8.5",
+  "privateWebhookDisabledInPublic": true,
+  "communityRelayEnabled": true,
+  "takeoverButtonVisible": true,
+  "releasePopupAndArtwork": true,
+  "radioAvailable": true,
+  "warsawStations": 3,
+  "updaterSHA512Valid": true,
+  "errors": [],
+  "setupSHA256": "f9e2238bda51fc87015c244e3c2f1d99dcf120741e47740d4b1539f86d314ee8"
+}

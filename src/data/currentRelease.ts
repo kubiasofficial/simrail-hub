@@ -1,11 +1,11 @@
 export const CURRENT_RELEASE={
- version:'0.8.4',date:'28. 11. 2026',banner:'./assets/releases/0.8.4.png',
- title:'Tvoje jízda. I v telefonu.',subtitle:'Aktuální mobilní displej a opravená hlášení.',
- url:'https://github.com/kubiasofficial/simrail-hub/releases/tag/v0.8.4',
+ version:'0.8.5',date:'28. 11. 2026',banner:'./assets/releases/0.8.5.png',
+ title:'Tvůj hlas na 156 stanicích.',subtitle:'Více vlastních hlášení. Klidnější cesta.',
+ url:'https://github.com/kubiasofficial/simrail-hub/releases/tag/v0.8.5',
  features:[
-  {id:'display',title:'Mobil sladěný s palubním počítačem',tag:'OPRAVA',text:'Předchozí, aktuální a následující stanice, příjezd a odjezd, výrazné zpoždění a viditelná verze. Přehledně na výšku i naležato.'},
-  {id:'preview',title:'Obnova po odemčení telefonu',text:'Stáří dat už nezávisí na rozdílných hodinách telefonu a počítače. Po návratu na stránku nebo obnovení sítě se načtou čerstvá data.'},
-  {id:'dispatcher',title:'Katowice a Sosnowiec znovu hlásí',text:'Opravené polohy nástupišť Sosnowiece a rozpoznání PH zastávky i po předčasném posunu indexu API. Stávající nahrávky zůstávají součástí launcheru.'}
+  {id:'display',title:'112 nových názvů stanic',tag:'NOVÉ',text:'Celkem 156 namluvených stanic včetně Sędziszówa. Nahrávky se sdílejí mezi všemi osobními spoji podle skutečných zastávek PH.'},
+  {id:'dispatcher',title:'Dispečer se skutečnou vysílačkou',text:'Nový zvuk před zprávou i po ní, volitelná četnost a informace o přiblížení, zhoršení či uklidnění komplikace.'},
+  {id:'preview',title:'Hlášení s rozumným odstupem',tag:'OPRAVA',text:'Omluva od 5 minut potvrzeného zpoždění. Zavazadla, uličky, ohleduplnost a pomoc automaticky s odstupem. Rádio Kiss ukazuje skladbu a interpreta.'}
  ],
- soundNote:'Po aktualizaci zavři starou mobilní záložku a v launcheru vytvoř nový QR kód. Mobilní displej běží přímo z tvého počítače.'
+ soundNote:'Automatická hlášení a vlastní nahrávky zapneš v Nastavení → Hlášení. Nové názvy můžeš vyzkoušet v nabídce Stanice pro zkoušku. Snímek EP08-001: SimRail Wiki.'
 } as const;
