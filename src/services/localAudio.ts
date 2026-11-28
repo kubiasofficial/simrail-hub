@@ -1,12 +1,13 @@
+import {STATION_RECORDINGS} from './stationRecordings';
 import {SERVICE_ANNOUNCEMENTS,isServiceAnnouncementId,type ServiceAnnouncementId,type ServiceRecordingStatus} from './serviceAnnouncements';
 import {readFile,stat} from 'node:fs/promises';
 import {join} from 'node:path';
 import type {AnnKind} from './announcements';
 
 const RATE=48000;
-const STATIONS:Record<string,string>={'warszawa wschodnia':'warszawa_wschodnia','warszawa centralna':'warszawa_centralna','warszawa zachodnia':'warszawa_zachodnia','opoczno poludnie':'opoczno_poludnie','wloszczowa polnoc':'wloszczowa_polnoc','kozlow':'kozlow','miechow':'miechow','krakow glowny':'krakow_glowny','katowice':'katowice','sosnowiec glowny':'sosnowiec_glowny','zawiercie':'zawiercie','lask':'lask','pabianice':'pabianice','lodz kaliska':'lodz_kaliska','lodz zabieniec':'lodz_zabieniec','zgierz':'zgierz','lowicz glowny':'lowicz_glowny','grodzisk mazowiecki':'grodzisk_mazowiecki','zyrardow':'zyrardow','skierniewice':'skierniewice','koluszki':'koluszki','lodz widzew':'lodz_widzew','lodz chojny':'lodz_chojny','zdunska wola':'zdunska_wola','sosnowiec poludniowy':'sosnowiec_poludniowy','kutno':'kutno','piotrkow trybunalski':'piotrkow_trybunalski','sieradz':'sieradz','olkusz':'olkusz','wolbrom':'wolbrom','klimontow':'klimontow','tunel':'tunel','dziadowki':'dziadowki','kamienczyce':'kamienczyce','szczepanowice':'szczepanowice','smrokow':'smrokow','slomniki':'slomniki','slomniki miasto':'slomniki_miasto','niedzwiedz':'niedzwiedz','goszcza':'goszcza','luczyce':'luczyce','baranowka':'baranowka','zastow':'zastow','krakow batowice':'krakow_batowice'};
-const PHRASES:Partial<Record<AnnKind,string>>={'next-station':'pristi_stanice',approaching:'prijizdime_do_stanice',arrived:'stanice'};
 const norm=(s:string)=>s.toLowerCase().replace(/ł/g,'l').normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim();
+const STATIONS:Record<string,string>=Object.fromEntries(Object.entries(STATION_RECORDINGS).map(([name,file])=>[norm(name),file]));
+const PHRASES:Partial<Record<AnnKind,string>>={'next-station':'pristi_stanice',approaching:'prijizdime_do_stanice',arrived:'stanice'};
 export const RECORDING_FILES=[...Object.values(PHRASES),...Object.values(STATIONS).slice(0,8)].map(s=>s+'.wav');
 export interface RecordingRequest {kind:AnnKind;station:string|null;trainNumber:string|null;isFreight:boolean;service?:ServiceAnnouncementId}
 export interface RecordingStatus {directory:string;available:boolean;missing:string[];services:ServiceRecordingStatus[]}

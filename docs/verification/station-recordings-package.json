@@ -1,0 +1,39 @@
+{
+  "at": "2026-11-28T07:19:09.619Z",
+  "info": {
+    "version": "0.8.4",
+    "platform": "win32",
+    "electron": "45.4.1",
+    "channel": "test",
+    "buildId": "2026-11-28T07:14:48.210Z"
+  },
+  "recordedStations": 156,
+  "passengerRenders": 312,
+  "originalsVerified": 121,
+  "upcomingExcluded": 9,
+  "previewStations": 156,
+  "radioCueBundled": true,
+  "publicAudioFiles": 174,
+  "radioMetadata": {
+    "artist": "LYKKE LI",
+    "title": "I FOLLOW RIVERS",
+    "fetchedAt": 1795850340460,
+    "validUntil": 1795850400460
+  },
+  "actualPortableStarted": true,
+  "isolatedProfile": true,
+  "matchedFiles": 152,
+  "privateAudioBundled": false,
+  "stationClips": [
+    "Sędziszów",
+    "Warszawa Śródmieście",
+    "Łódź Fabryczna",
+    "Katowice Szopienice Południowe",
+    "Zgierz Kontrewers",
+    "Dąbrowa Górnicza Ząbkowice"
+  ],
+  "mobileRevision": "2026-11-28.1",
+  "pairedPackagedMobile": true,
+  "servicesAvailable": 14,
+  "portableSHA256": "1c6d683a0e07b5dd74994f65d2fae2f737c687bfee933878b6c168d12903f40a"
+}

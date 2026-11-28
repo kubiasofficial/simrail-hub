@@ -1,0 +1,10 @@
+{
+  "testLauncher": "C:\\Users\\PC\\Desktop\\simrail-hub\\SimRail Hub TEST.exe",
+  "sha256": "1c6d683a0e07b5dd74994f65d2fae2f737c687bfee933878b6c168d12903f40a",
+  "backup": "C:\\Users\\PC\\Desktop\\simrail-hub\\.zalohy\\station-recordings-before-20261128-081957",
+  "addedStations": 112,
+  "totalStations": 156,
+  "preparedUpcoming": 9,
+  "originalM4ARetained": 121,
+  "publicReleaseUnchanged": "0.8.4"
+}

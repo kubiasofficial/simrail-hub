@@ -1,7 +1,9 @@
-# Public announcement pack
+# Czech passenger announcement pack
 
-The 61 voice WAV files were supplied by the project owner and explicitly authorized for publication with SimRail Hub on 2026-11-27. Source M4A recordings and other private recordings are not included.
+This pack contains 156 recorded station names shared across all passenger services, 3 phrase clips, 14 general/seasonal clips and the supplied dispatcher radio cue: 174 WAV files total.
 
-The manifest pins every file by SHA-256, byte size and duration. The application uses these resources locally and needs no external voice API. Custom user recordings are not uploaded. Do not include arbitrary files from a personal recordings folder: extend the explicit station/service catalog and regenerate the reviewed manifest.
+The project owner supplied and authorized these recordings for integration. The original voice pack was approved on 2026-11-27, the radio cue and 112 additional station names on 2026-11-28. Source M4A and MP3 files are retained in the private recordings folder and are not packaged.
 
-The additional `vysilacka.wav` radio acknowledgement was converted from the owner-supplied `vysilacka.mp3` on 2026-11-28 for the approved dispatcher update. The original MP3 is retained in the private recordings folder. The manifest now verifies 62 WAV files.
+Every WAV is mono PCM16 at 48 kHz; `manifest.json` records byte length, duration and SHA256. Optional local WAV overrides take precedence per file. The shared station lookup is `src/services/stationRecordings.ts`; train numbers do not restrict playback. Automatic station triggers still require a passenger stop (PH/CommercialStop), and freight services remain silent.
+
+Nine recordings for confirmed upcoming Lublin Region DLC are stored separately under `assets/upcoming-recordings/lublin-region`. They are not part of the active lookup, preview list or packaged application resources. Activate them only after the playable route and actual passenger stops have been verified.

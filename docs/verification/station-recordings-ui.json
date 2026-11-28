@@ -1,0 +1,25 @@
+{
+  "at": "2026-11-28T07:18:35.387Z",
+  "previewCount": 156,
+  "selected": [
+    "Sędziszów",
+    "Warszawa Śródmieście",
+    "Katowice Szopienice Południowe",
+    "Zgierz Kontrewers"
+  ],
+  "played": [
+    {
+      "station": "Sędziszów",
+      "seconds": 4.4,
+      "actualWavPlayback": true,
+      "muted": true
+    },
+    {
+      "station": "Warszawa Śródmieście",
+      "seconds": 6.49,
+      "actualWavPlayback": true,
+      "muted": true
+    }
+  ],
+  "errors": []
+}

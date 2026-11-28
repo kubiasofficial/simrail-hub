@@ -1,0 +1,116 @@
+{
+  "dlcId": 5548340,
+  "status": "confirmed-upcoming",
+  "automaticPlayback": false,
+  "officialSource": "https://store.steampowered.com/app/5548340/",
+  "files": [
+    {
+      "station": "Chełm",
+      "file": "chelm.wav",
+      "source": "chelm.m4a",
+      "sourceSha256": "936ed8877ec5ef46836472bba600975319a6229acf183dd44ec0bc287f6d5b89",
+      "bytes": 172110,
+      "sha256": "fee009134e75ff430233a082daea15c308eda5c0f7a5796240df6d2ae3421efb",
+      "seconds": 1.792,
+      "peak": 0.68146,
+      "rms": 0.05221,
+      "status": "upcoming"
+    },
+    {
+      "station": "Dęblin",
+      "file": "deblin.wav",
+      "source": "deblin.m4a",
+      "sourceSha256": "7ffa757b8c7842a9edc5a8057eccc60ae01af6bc4ece756678c8312b36f3017b",
+      "bytes": 176206,
+      "sha256": "2abdd0260514b35459e0a14242c680116c1dfbbb38a951bc537e4f35a2cd7583",
+      "seconds": 1.8346666666666667,
+      "peak": 0.62854,
+      "rms": 0.0487,
+      "status": "upcoming"
+    },
+    {
+      "station": "Gołąb",
+      "file": "golab.wav",
+      "source": "golab.m4a",
+      "sourceSha256": "adf4237fc2ebdd4927d6c015624f215a0230be42691e3ab0e8b94c23dfd12bd1",
+      "bytes": 157774,
+      "sha256": "d23b86423f3748d5019fc053cced14a65aabbceb19e0a8b23a203e649edf4abf",
+      "seconds": 1.6426666666666667,
+      "peak": 0.49442,
+      "rms": 0.05409,
+      "status": "upcoming"
+    },
+    {
+      "station": "Jaszczów",
+      "file": "jaszczow.wav",
+      "source": "jaszczow.m4a",
+      "sourceSha256": "304e5c7ba793bee90b492a658982d8175676d2efb3b646639fe6adea8937e3c1",
+      "bytes": 157774,
+      "sha256": "036b8cf6cb4ca729a672a824e32c260d84338fd7cee1484a4129eb6b861d25f6",
+      "seconds": 1.6426666666666667,
+      "peak": 0.79156,
+      "rms": 0.04649,
+      "status": "upcoming"
+    },
+    {
+      "station": "Klementowice",
+      "file": "klementowice.wav",
+      "source": "klematowice.m4a",
+      "sourceSha256": "2c0bb53915b1b20254ec8b04f05db40932445910b6b959841b4fd3dc4d98c7f3",
+      "bytes": 249934,
+      "sha256": "7b12fc9683c76d7a1402ea05af73e887ddba49f20f8a047ff97cfc3de490f5cf",
+      "seconds": 2.6026666666666665,
+      "peak": 0.65887,
+      "rms": 0.05777,
+      "status": "upcoming"
+    },
+    {
+      "station": "Lublin Główny",
+      "file": "lublin_glowny.wav",
+      "source": "lublin_glowny.m4a",
+      "sourceSha256": "d7b0c1f88878e9d7620721e1bfca3115411f67aa1c71fbeaf6b31a451ae96e8f",
+      "bytes": 288846,
+      "sha256": "7e5c78b25f5bd376bc02f5977c7382a0c0b19b6f03aef071b1507310eb50d129",
+      "seconds": 3.008,
+      "peak": 0.70642,
+      "rms": 0.07682,
+      "status": "upcoming"
+    },
+    {
+      "station": "Minkowice",
+      "file": "minkowice.wav",
+      "source": "minkowice.m4a",
+      "sourceSha256": "4a421180fb6934b2c4f27b87ab1207f28bcd9029ad4bb635db2a52a28b458d66",
+      "bytes": 194638,
+      "sha256": "f0ac093a4da5479e54d6c55071e074b9ccdd3ce8db2c8431057ff28904a1312a",
+      "seconds": 2.026666666666667,
+      "peak": 0.52594,
+      "rms": 0.0614,
+      "status": "upcoming"
+    },
+    {
+      "station": "Rejowiec",
+      "file": "rejowiec.wav",
+      "source": "rejowice.m4a",
+      "sourceSha256": "0dbc44618b65bc2f8008eab65e2dc4b926f373f2f4f8a5182d876fabbbdc4df7",
+      "bytes": 153678,
+      "sha256": "44c51ec242de7eadc2c4818d6b89041a0039b707f64fa1df91546d0f17a983ee",
+      "seconds": 1.6,
+      "peak": 0.55811,
+      "rms": 0.06288,
+      "status": "upcoming"
+    },
+    {
+      "station": "Sadurki",
+      "file": "sadurki.wav",
+      "source": "sadurki.m4a",
+      "sourceSha256": "bd7b4940594605be6aa9083b6947b49249cdef9d3ced7495f84a91fda2582ebc",
+      "bytes": 200782,
+      "sha256": "d991f7af145c3e79a901e980d971c27e8de97c97e338e620ad22370c03e24511",
+      "seconds": 2.0906666666666665,
+      "peak": 0.72586,
+      "rms": 0.05699,
+      "status": "upcoming"
+    }
+  ]
+}
