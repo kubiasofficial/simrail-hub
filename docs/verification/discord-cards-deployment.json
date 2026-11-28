@@ -1,0 +1,21 @@
+{
+  "at": "2026-11-28T07:47:32.247Z",
+  "workerVersion": "11a0e740-855c-4423-b00b-838abc2bc510",
+  "presentation": "compact-cards-2026-11-28",
+  "health": {
+    "service": "simrail-hub-community",
+    "version": 1,
+    "presentation": "compact-cards-2026-11-28",
+    "ready": true
+  },
+  "launcherVersion": "0.8.5",
+  "publicReleaseAssetsUnchanged": true,
+  "compatibilityTestsPassed": 15,
+  "fullTestsPassed": 268,
+  "testMessagesPostedToDiscord": false,
+  "oldMessagesEdited": false,
+  "sourceSHA256": {
+    "community-relay/worker.mjs": "cd9f0d4a4892c4bee781c43150966385ca0ee3935e064d405e4e96d6e7051bf6",
+    "community-relay/discordCards.mjs": "d888035bbd2c28362e9d1ac472e12e744afeb009f642dc7e2ad4454e6bea8526"
+  }
+}

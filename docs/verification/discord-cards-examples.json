@@ -1,0 +1,189 @@
+{
+  "presentation": "compact-cards-2026-11-28",
+  "sampleData": true,
+  "postedToDiscord": false,
+  "cards": [
+    {
+      "kind": "drive-start",
+      "payload": {
+        "username": "SimRail Hub",
+        "avatar_url": "https://raw.githubusercontent.com/kubiasofficial/simrail-hub/main/build/icon.png",
+        "allowed_mentions": {
+          "parse": []
+        },
+        "embeds": [
+          {
+            "title": "🚆 Převzetí vlaku · 53117",
+            "description": "Strojvůdce **kubiasofficial**",
+            "color": 5553544,
+            "fields": [
+              {
+                "name": "Trasa vlaku",
+                "value": "Gdynia Główna → Kraków Płaszów",
+                "inline": false
+              },
+              {
+                "name": "Převzetí",
+                "value": "Warszawa Wschodnia",
+                "inline": true
+              },
+              {
+                "name": "Server",
+                "value": "🇨🇿 CZ1",
+                "inline": true
+              }
+            ],
+            "timestamp": "2026-11-28T07:00:00.000Z",
+            "footer": {
+              "text": "SimRail Hub · Komunitní evidence"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "kind": "drive-end",
+      "payload": {
+        "username": "SimRail Hub",
+        "avatar_url": "https://raw.githubusercontent.com/kubiasofficial/simrail-hub/main/build/icon.png",
+        "allowed_mentions": {
+          "parse": []
+        },
+        "embeds": [
+          {
+            "title": "🏁 Ukončení jízdy · 53117",
+            "description": "Strojvůdce **kubiasofficial**",
+            "color": 6399464,
+            "fields": [
+              {
+                "name": "Trasa vlaku",
+                "value": "Gdynia Główna → Kraków Płaszów",
+                "inline": false
+              },
+              {
+                "name": "Převzetí",
+                "value": "Warszawa Wschodnia",
+                "inline": true
+              },
+              {
+                "name": "Ukončení · zadáno ručně",
+                "value": "Kraków Główny",
+                "inline": true
+              },
+              {
+                "name": "Čas evidence",
+                "value": "3 h 11 min",
+                "inline": true
+              },
+              {
+                "name": "Server",
+                "value": "🇨🇿 CZ1",
+                "inline": true
+              },
+              {
+                "name": "Zpoždění · odhad",
+                "value": "+6 min",
+                "inline": true
+              }
+            ],
+            "timestamp": "2026-11-28T07:01:00.000Z",
+            "footer": {
+              "text": "SimRail Hub · Komunitní evidence"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "kind": "shift-start",
+      "payload": {
+        "username": "SimRail Hub",
+        "avatar_url": "https://raw.githubusercontent.com/kubiasofficial/simrail-hub/main/build/icon.png",
+        "allowed_mentions": {
+          "parse": []
+        },
+        "embeds": [
+          {
+            "title": "🗓️ Zahájení směny",
+            "description": "**Strojvedoucí**",
+            "color": 10783453,
+            "fields": [
+              {
+                "name": "Doprava",
+                "value": "Osobní",
+                "inline": true
+              },
+              {
+                "name": "Server",
+                "value": "🇨🇿 CZ1",
+                "inline": true
+              },
+              {
+                "name": "Plánovaný konec",
+                "value": "18:00 · čas serveru",
+                "inline": true
+              },
+              {
+                "name": "Plán jízd",
+                "value": "1. 53117: Warszawa Wschodnia → Kraków Główny\n2. 35104: Kraków Główny → Warszawa Wschodnia",
+                "inline": false
+              },
+              {
+                "name": "Přestávka",
+                "value": "30 min",
+                "inline": true
+              }
+            ],
+            "timestamp": "2026-11-28T07:02:00.000Z",
+            "footer": {
+              "text": "SimRail Hub · Komunitní evidence"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "kind": "shift-break",
+      "payload": {
+        "username": "SimRail Hub",
+        "avatar_url": "https://raw.githubusercontent.com/kubiasofficial/simrail-hub/main/build/icon.png",
+        "allowed_mentions": {
+          "parse": []
+        },
+        "embeds": [
+          {
+            "title": "☕ Přestávka ve směně",
+            "description": "**Strojvedoucí**",
+            "color": 15119966,
+            "fields": [
+              {
+                "name": "Stanice",
+                "value": "Kraków Główny",
+                "inline": true
+              },
+              {
+                "name": "Vlak",
+                "value": "53117",
+                "inline": true
+              },
+              {
+                "name": "Server",
+                "value": "🇨🇿 CZ1",
+                "inline": true
+              },
+              {
+                "name": "Přestávka",
+                "value": "30 min",
+                "inline": false
+              }
+            ],
+            "timestamp": "2026-11-28T07:03:00.000Z",
+            "footer": {
+              "text": "SimRail Hub · Pozorovaný příjezd"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
