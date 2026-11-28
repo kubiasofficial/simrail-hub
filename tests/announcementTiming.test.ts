@@ -30,7 +30,7 @@ it('delay repeats after 15 minutes even when unchanged and resets when recovered
  expect(trigger.update(input).events.map(x=>x.kind)).toEqual(['delay']);
  now=899999;expect(trigger.update({...input,delayMin:30}).events).toEqual([]);
  now=900000;expect(trigger.update(input).events.map(x=>x.kind)).toEqual(['delay']);
- trigger.update({...input,delayMin:0});expect(trigger.update({...input,delayMin:1}).events.map(x=>x.kind)).toEqual(['delay']);
+ trigger.update({...input,delayMin:0});expect(trigger.update({...input,delayMin:1}).events).toEqual([]);expect(trigger.update({...input,delayMin:4.99}).events).toEqual([]);expect(trigger.update({...input,delayMin:5}).events.map(x=>x.kind)).toEqual(['delay']);
 });
 it('selecting a train already approaching a station emits one relevant station event',()=>{
  const sim=new DemoSim(0),trigger=new AnnouncementTrigger();

@@ -1,0 +1,38 @@
+{
+  "at": "2026-11-28T06:07:13.995Z",
+  "errors": [],
+  "profileIsolated": true,
+  "radioCue": [
+    {
+      "closing": false,
+      "seconds": 0.528583,
+      "sha256": "2fdf424f7243253ff57a641fa7b6a07d55144b364e42f32d02d69f1fadb611fc",
+      "matchesSuppliedClip": true
+    },
+    {
+      "closing": true,
+      "seconds": 0.528583,
+      "sha256": "2fdf424f7243253ff57a641fa7b6a07d55144b364e42f32d02d69f1fadb611fc",
+      "matchesSuppliedClip": true
+    }
+  ],
+  "metadata": {
+    "artist": "KATE RYAN",
+    "title": "ELLA ELLE L'A",
+    "fetchedAt": 1795846036146,
+    "validUntil": 1795846080000
+  },
+  "ui": {
+    "nowPlaying": "PRÁVĚ HRAJE\nELLA ELLE L'A\nKATE RYAN",
+    "clearedOnStationSwitch": true,
+    "automaticGroups": true
+  },
+  "backgroundPlayback": true,
+  "info": {
+    "version": "0.8.4",
+    "platform": "win32",
+    "electron": "45.4.1",
+    "channel": "test",
+    "buildId": "2026-11-28T06:02:37.481Z"
+  }
+}

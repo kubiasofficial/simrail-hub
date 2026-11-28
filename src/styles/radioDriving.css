@@ -11,3 +11,12 @@
 html[data-animations=off] .app-dialog *,html[data-window-active=false] .app-dialog *{animation:none!important;transition:none!important}
 
 .community-connection{border:1px solid #587e93;border-radius:9px;padding:14px 16px;background:#18374840}.community-connection strong{font-size:14px;color:#b4e4f6}.community-connection p{font-size:12px;line-height:1.65;color:#b9cfdd;margin-top:7px}.community-connection button{margin-top:10px}
+
+.radio-track{min-width:0;max-width:100%;overflow:hidden;margin:8px 0;line-height:1.35}
+.radio-track small{display:block;font-size:9px;letter-spacing:.14em;color:#85a9bb;margin-bottom:4px}
+.radio-track strong{display:block;width:max-content;max-width:none;font-size:17px;color:#e4f5ff;white-space:nowrap}
+.radio-track>span{display:block;font-size:12px;color:#a9c7d5;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.radio-track strong.is-long{animation:radio-track-scroll 16s ease-in-out infinite alternate}
+@keyframes radio-track-scroll{0%,20%{transform:translateX(0)}80%,100%{transform:translateX(min(0px, calc(230px - 100%)))}}
+@media(prefers-reduced-motion:reduce){.radio-track strong.is-long{animation:none;max-width:100%;overflow:hidden;text-overflow:ellipsis}}
+html[data-animations="off"] .radio-track strong.is-long{animation:none}

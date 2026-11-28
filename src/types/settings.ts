@@ -20,7 +20,7 @@ export interface Settings {
   map: { basemap: 'osm' | 'osm-dark' | 'light'; railwayOverlay: boolean; followSelected: boolean; sneakPeek:boolean };
   announcements: {
     auto: boolean;
-    welcome:boolean; luggage:boolean; waiting:boolean; journeyInfo:boolean; seasonal:boolean;
+    welcome:boolean; luggage:boolean; waiting:boolean; journeyInfo:boolean; exit:boolean; seasonal:boolean;
     gapSeconds:number;
     gong: boolean;
     gongEnd:boolean;
@@ -32,7 +32,7 @@ export interface Settings {
     volume: number;
     rate: number;
   };
-  dispatcher:{enabled:boolean;audio:boolean;rangeKm:number;volume:number;radioVolume:number};
+  dispatcher:{enabled:boolean;audio:boolean;rangeKm:number;verbosity:'brief'|'normal'|'detailed';volume:number;radioVolume:number};
   updates: { repo: string | null };
   /** Průvodce prvním spuštěním (nastavení hlášení) byl odložen/dokončen. */
   onboarding: { dismissed: boolean };
@@ -51,8 +51,8 @@ export const DEFAULT_SETTINGS: Settings = {
   dataRefreshSeconds: 30,
   selectedServer: null,
   map: { basemap: 'osm-dark', railwayOverlay: true, followSelected: false, sneakPeek:false },
-  announcements: { auto: false, welcome:true, luggage:true, waiting:true, journeyInfo:true, seasonal:true, gapSeconds:30, gong:true, gongEnd:true, gongVolume:0.8, recorded:true, language: 'cs', engine: 'piper', voiceId: 'cs_CZ-jirka-medium', volume: 0.8, rate: 1 },
-  dispatcher:{enabled:false,audio:false,rangeKm:5,volume:0.8,radioVolume:0.65},
+  announcements: { auto: false, welcome:true, luggage:true, waiting:true, journeyInfo:true, exit:true, seasonal:true, gapSeconds:30, gong:true, gongEnd:true, gongVolume:0.8, recorded:true, language: 'cs', engine: 'piper', voiceId: 'cs_CZ-jirka-medium', volume: 0.8, rate: 1 },
+  dispatcher:{enabled:false,audio:false,rangeKm:5,verbosity:'normal',volume:0.8,radioVolume:0.65},
   updates: { repo: 'kubiasofficial/simrail-hub' },
   onboarding: { dismissed: false }
 };

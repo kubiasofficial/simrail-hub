@@ -95,8 +95,8 @@ export class AnnouncementTrigger {
     this.fired.add('next:'+si);const terminal=si===inp.points.length-1;emit((terminal?'terminal':'approach')+':'+si,terminal?'terminal':'approaching',stop.name);
    }else if(moving)emit('next:'+si,'next-station',stop.name);
   }
-  if(inp.delayMin!==null&&inp.delayMin<=0)this.lastDelayAt=null;
-  if(inp.delayMin!==null&&inp.delayMin>0&&!events.length&&(this.lastDelayAt===null||this.now()-this.lastDelayAt>=15*60*1000)){
+  if(inp.delayMin===null||inp.delayMin<5)this.lastDelayAt=null;
+  if(inp.delayMin!==null&&inp.delayMin>=5&&!events.length&&(this.lastDelayAt===null||this.now()-this.lastDelayAt>=15*60*1000)){
    this.lastDelayAt=this.now();events.push({key:'delay:'+this.delaySequence++,kind:'delay',station:null,delayMin:inp.delayMin});
   }
   return {events,disabled};

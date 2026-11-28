@@ -62,6 +62,14 @@ export class LocalRecordings {
   for(const [id,entry] of Object.entries(SERVICE_ANNOUNCEMENTS))services.push({id:id as ServiceAnnouncementId,label:entry.label,available:!!await this.file(entry.file)});
   return {directory:this.directory,available:missing.length===0,missing,services};
  }
+ async radioCue(closing=false):Promise<Uint8Array>{
+  const path=await this.file('vysilacka.wav');
+  if(!path)return encodeWav(radioSamples(closing));
+  const info=await stat(path);if(info.size>2*1024*1024)throw Error('Zvuk vysílačky je příliš velký.');
+  const samples=trimSilence(decodeWav(await readFile(path)));
+  if(samples.length>48000*10)throw Error('Zvuk vysílačky je příliš dlouhý.');
+  return encodeWav(samples);
+ }
  async render(request:RecordingRequest,gong:boolean):Promise<Uint8Array|null>{
   const names=recordingNames(request);if(!names)return null;
   const audio:Float32Array[]=[];

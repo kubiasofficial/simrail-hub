@@ -60,3 +60,13 @@ it('shares the five added station recordings across all passenger train numbers 
   expect(recordingNames({...request,isFreight:true})).toBeNull();
  }
 });
+
+it('uses the supplied radio clip at both edges, honours local override and falls back if absent',async()=>{
+ const own=await tmp(),bundled=await tmp();
+ const clip=new Float32Array(12000).fill(.1);await writeFile(join(bundled,'vysilacka.wav'),encodeWav(clip));
+ const service=new LocalRecordings(own,bundled);
+ expect(decodeWav(await service.radioCue(false)).length).toBe(clip.length);expect(await service.radioCue(true)).toEqual(await service.radioCue(false));
+ await writeFile(join(own,'vysilacka.wav'),encodeWav(new Float32Array(15000).fill(.15)));
+ expect(decodeWav(await service.radioCue()).length).toBe(15000);
+ expect(decodeWav(await new LocalRecordings(await tmp()).radioCue()).length).toBeGreaterThan(10000);
+});

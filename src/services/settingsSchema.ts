@@ -40,7 +40,7 @@ export function normalizeSettings(raw: unknown): Settings {
     },
     announcements: {
       auto: bool(an.auto, d.announcements.auto),
-      welcome:bool(an.welcome,true), luggage:bool(an.luggage,true), waiting:bool(an.waiting,true), journeyInfo:bool(an.journeyInfo,true), seasonal:bool(an.seasonal,true),
+      welcome:bool(an.welcome,true), luggage:bool(an.luggage,true), waiting:bool(an.waiting,true), journeyInfo:bool(an.journeyInfo,true), exit:bool(an.exit,true), seasonal:bool(an.seasonal,true),
       gapSeconds:clamp(an.gapSeconds,10,60,d.announcements.gapSeconds),
       gong: bool(an.gong,d.announcements.gong),
       gongEnd:bool(an.gongEnd,bool(an.gong,d.announcements.gongEnd)),
@@ -52,7 +52,7 @@ export function normalizeSettings(raw: unknown): Settings {
       volume: clamp(an.volume, 0, 1, d.announcements.volume),
       rate: clamp(an.rate, 0.5, 2, d.announcements.rate)
     },
-    dispatcher:{enabled:bool(dispatch.enabled,false),audio:bool(dispatch.audio,false),rangeKm:[2,5,10].includes(Number(dispatch.rangeKm))?Number(dispatch.rangeKm):5,volume:clamp(dispatch.volume,0,1,0.8),radioVolume:clamp(dispatch.radioVolume,0,1,0.65)},
+    dispatcher:{verbosity:oneOf(dispatch.verbosity,['brief','normal','detailed'] as const,'normal'),enabled:bool(dispatch.enabled,false),audio:bool(dispatch.audio,false),rangeKm:[2,5,10].includes(Number(dispatch.rangeKm))?Number(dispatch.rangeKm):5,volume:clamp(dispatch.volume,0,1,0.8),radioVolume:clamp(dispatch.radioVolume,0,1,0.65)},
     updates: { repo: typeof up.repo === 'string' && /^[\w.-]+\/[\w.-]+$/.test(up.repo) ? up.repo : d.updates.repo },
     onboarding: { dismissed: bool(ob.dismissed, false) }
   };

@@ -91,7 +91,7 @@ export const useAnnouncer = create<AnnouncerState>((set, get) => {
     testRadioVoice:()=>{get().stop();return queue.enqueue({key:'radio-preview:'+Date.now(),kind:'delay',channel:'dispatcher',segments:[{lang:'cs',text:'Zkouška spojení. Tady dispečer. Příjem.',radio:true}]});},
     speakRadio:async()=>{get().stop();return focusedAudio(async()=>{const generation=playbackGeneration;try{await cue('open',generation);if(generation===playbackGeneration)await cue('close',generation);}catch(e){if((e as Error).name!=='AbortError')set({lastError:(e as Error).message});}});},
     resetRun:()=>{get().stop();queue.resetHistory();},
-    reconcile:(station,delayMin)=>queue.discard(item=>item.channel!=='dispatcher'&&!!item.automatic&&(item.service?!!item.valid&&!item.valid():item.kind==='delay'?(delayMin===null||delayMin<=0):!!item.station&&item.station!==station)),
+    reconcile:(station,delayMin)=>queue.discard(item=>item.channel!=='dispatcher'&&!!item.automatic&&(item.service?!!item.valid&&!item.valid():item.kind==='delay'?(delayMin===null||delayMin<5):!!item.station&&item.station!==station)),
     pending: 0, playing: false, nextAllowedAt:0, lastText: null, lastError: null, lastSource:null, pron: [], templates: {},
     reloadContent: async () => {
       const [d, m] = await Promise.all([api().call('dict:list'), api().call('mods:active')]);
@@ -100,7 +100,7 @@ export const useAnnouncer = create<AnnouncerState>((set, get) => {
     announce: (key, kind, params) => {
       const { language } = useSettings.getState().settings.announcements;
       const segments = buildSegments(kind, params, language, get().pron, get().templates);
-      if(params.isFreight)return false;
+      if(params.isFreight||params.automatic&&kind==='delay'&&(params.delayMin===undefined||params.delayMin<5))return false;
       if(segments[0])segments[0].intro=true;
       for(const segment of segments)if(segment.lang==='cs')segment.recording={kind,station:params.station??null,trainNumber:params.trainNumber??null,isFreight:false};
       if(!params.automatic)get().stop();

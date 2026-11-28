@@ -58,3 +58,12 @@ it('only clears density or a station queue when verified train speeds or counts 
  expect(followTraffic({...i,trains:others.slice(0,2)},detected)).toBeUndefined();
  expect(followTraffic({...i,trains:others.map(t=>({...t,speedKmh:50,lon:19.06}))},detected)).toBeNull();
 });
+
+it('reports approaching only on verified route distance and applies verbosity cooldowns',()=>{
+ for(const mode of ['brief','normal','detailed'] as const){
+  const m=new TrafficMonitor();for(let n=100000;n<=120000;n+=10000)m.update({...alert,distanceM:4000,distanceBasis:'route'},n,n,true,mode);
+  let event:TrafficAlert|null=null;for(let n=130000;n<=240000;n+=10000){const r=m.update({...alert,distanceM:n>=180000?1500:4000,distanceBasis:'route'},n,n,true,mode);if(r.event)event=r.event;}
+  expect(event?.reason??null).toBe(mode==='brief'?null:'approaching');
+ }
+ const m=new TrafficMonitor();for(let n=100000;n<=250000;n+=10000)expect(m.update({...alert,distanceM:n<180000?4000:500,distanceBasis:'air'},n,n,true).event?.reason).not.toBe('approaching');
+});

@@ -126,7 +126,7 @@ export function DashboardPage({ standalone = false, active = true }: { standalon
   useEffect(() => {
     if (standalone || !auto || freight || !m || m.connection==='stale'||m.connection==='lost'||!detail?.train) { setDisabled([]); return; }
     const runKey = `${isDemo ? 'demo' : server}:${detail.train.runId ?? detail.train.number}`;
-    ann.reconcile(m.current??m.next,m.delayMin);
+    ann.reconcile(m.current??m.next,m.delayKind==='observed'?m.delayMin:null);
     const r = trigger.current.update({ runKey, index: m.rows.find(row=>row.standing)?.index??detail.train.timetableIndex, speedKmh: detail.train.speedKmh, distToNextStopM: m.current?(m.distanceToCurrentStopM??m.distanceToNextStopM):m.distanceToNextStopM, points: detail.timetable?.points ?? [], delayMin: m.delayKind === 'observed' ? m.delayMin : null });
     setDisabled(r.disabled);
     for (const e of r.events) ann.announce(`${runKey}:${e.key}`, e.kind, { station: e.station, delayMin: e.delayMin, trainNumber:detail.train.number,isFreight:freight,automatic:true });

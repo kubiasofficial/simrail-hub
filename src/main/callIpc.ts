@@ -1,3 +1,4 @@
+import {RadioMetadataService} from '../services/RadioMetadataService';
 import {takeoverOrigin} from '../services/takeoverOrigin';
 import {CommunityRelay} from '../services/CommunityRelay';
 import {DrivingJournal,sendDiscord,validDiscordWebhook,cleanText} from '../services/DrivingJournal';
@@ -15,7 +16,7 @@ import type { AppContext } from './appContext';
 import type { CallChannel, IpcMap, Res } from '../types/ipc';
 import { normalizeSettings } from '../services/settingsSchema';
 import { MobileServer } from '../services/MobileServer';
-import {LocalRecordings,encodeWav,gongSamples,radioSamples,type RecordingRequest} from '../services/localAudio';
+import {LocalRecordings,encodeWav,gongSamples,type RecordingRequest} from '../services/localAudio';
 import {isServiceAnnouncementId} from '../services/serviceAnnouncements';
 import { MAX_TEXT } from '../services/TextToSpeechService';
 import { ModError } from '../services/ModManager';
@@ -104,7 +105,9 @@ export function registerCallIpc(ctx: AppContext, openDashboard: (server: string 
     return tracking.planShift(c,q);
   }));
   on('dlc:list',region=>safe('dlc',()=>dlc.get(typeof region==='string'?region:'cz')));
-  on('audio:radio',closing=>safe('audio',async()=>encodeWav(radioSamples(closing===true))));
+  const radioMetadata=new RadioMetadataService(net.fetch.bind(net) as typeof fetch);
+  on('radio:now-playing',id=>safe('radio',()=>radioMetadata.get(typeof id==='string'?id:'')));
+  on('audio:radio',closing=>safe('audio',async()=>(await recordings()).radioCue(closing===true)));
   on('audio:gong',()=>safe('audio',async()=>encodeWav(gongSamples())));
   on('recordings:status',()=>safe('audio',async()=>(await recordings()).status()));
   on('recordings:choose',()=>safe('audio',async()=>{const choice=await dialog.showOpenDialog({title:'Složka soukromých nahrávek',properties:['openDirectory'],defaultPath:join(app.getPath('desktop'),'simrail-hub','hlaseni')});if(choice.canceled||!choice.filePaths[0])return null;await settings.update({recordingsPath:choice.filePaths[0]});return (await recordings()).status();}));

@@ -12,7 +12,13 @@ it('restores all Warsaw PH proximity triggers in both directions without replaci
  expect(withStationFallbacks([{...STATION_FALLBACKS[0],lat:52}]).find(s=>s.name===points[0].name)?.lat).toBe(52);
 });
 const setup=(start=1000)=>{let now=start;const trigger=new AutomaticServices(()=>now);const input:ServiceInput={run:'a',train:{...train},points,model:model(),serverSod:44000,fetchedAt:now,enabled:true,freight:false,options:{welcome:true,luggage:true,waiting:true}};return {trigger,input,tick:(delta=5000)=>{now+=delta;input.fetchedAt=now;return trigger.update(input);},now:()=>now};};
-it('welcomes only after observed origin departure and waits a minute after finished welcome for luggage',()=>{const {trigger,input,tick}=setup();trigger.update(input);input.train.speedKmh=20;input.model.current=null;const e=tick();expect(e.map(e=>e.ids)).toEqual([['welcome']]);expect(tick(70000)).toEqual([]);e[0].complete();expect(tick(59000)).toEqual([]);expect(tick(5000).map(e=>e.ids)).toEqual([['luggage']]);expect(tick()).toEqual([]);});
+it('welcomes after observed departure then spaces supplementary clips by ten minutes from completion',()=>{
+ const {trigger,input,tick}=setup();input.availableServices=['luggage','clear_aisles'];input.model.distanceToNextStopM=10000;
+ trigger.update(input);input.train.speedKmh=20;input.model.current=null;const e=tick();expect(e.map(e=>e.ids)).toEqual([['welcome']]);
+ expect(tick(70000)).toEqual([]);e[0].complete();
+ for(let k=0;k<119;k++)expect(tick()).toEqual([]);const luggage=tick();expect(luggage.map(e=>e.ids)).toEqual([['luggage']]);expect(tick()).toEqual([]);luggage[0].complete();
+ for(let k=0;k<119;k++)expect(tick()).toEqual([]);expect(tick().map(e=>e.ids)).toEqual([['clear_aisles']]);
+});
 it('does not welcome joining a moving train mid-route',()=>{const {trigger,input,tick}=setup();input.train.speedKmh=60;input.train.timetableIndex=2;input.model.current=null;expect(trigger.update(input)).toEqual([]);expect(tick()).toEqual([]);});
 it('requires five minutes of fresh continuous red-signal evidence; resets on loss and cancels queued warning after movement',()=>{const {trigger,input,tick}=setup();input.model.current=null;trigger.update(input);for(let k=0;k<59;k++)expect(tick()).toEqual([]);const events=tick();expect(events[0].ids).toEqual(['departure_wait','stay_onboard']);expect(tick()).toEqual([]);input.train.speedKmh=10;tick();expect(events[0].valid()).toBe(false);});
 it('does not infer red from speed, planned dwell, freight, stale snapshots, or a sampling gap',()=>{for(const variant of ['missing','dwell','freight','stale','gap']){const {trigger,input,tick}=setup();input.model.current=null;if(variant==='missing')input.train.signalSpeedKmh=null;if(variant==='dwell'){input.serverSod=43200;input.model.current=points[0].name;}if(variant==='freight')input.freight=true;if(variant==='stale')input.model.connection='stale';trigger.update(input);if(variant==='gap')expect(tick(300000)).toEqual([]);else for(let k=0;k<65;k++)expect(tick()).toEqual([]);}});
@@ -47,7 +53,7 @@ it('does not invent a last playable station without line and point metadata',()=
  const s=holidaySetup();s.input.points=points;s.trigger.update(s.input);s.input.train.speedKmh=50;s.input.model.current=null;s.tick();s.input.train.timetableIndex=2;s.input.model.next=points[2].name;s.input.model.distanceToNextStopM=500;
  expect(s.tick()).toEqual([]);
 });
-it('spaces journey information by fifteen minutes, defers near stations and never announces ticket inspection automatically',()=>{
+it('spaces journey information by at least ten minutes, defers near stations and never announces ticket inspection automatically',()=>{
  const s=holidaySetup('2026-11-27T10:00:00Z');s.trigger.update(s.input);s.input.train.speedKmh=50;s.input.model.current=null;s.tick()[0].complete();
  let events:ReturnType<AutomaticServices['update']>=[];
  for(let k=0;k<120;k++)events=s.tick();expect(events.map(e=>e.ids)).toEqual([['consideration']]);events[0].complete();
@@ -59,4 +65,24 @@ it('skips missing journey files and cancels a queued message on stale data or pr
  const s=holidaySetup();s.input.availableServices=['consideration'];s.trigger.update(s.input);s.input.train.speedKmh=50;s.input.model.current=null;s.tick()[0].complete();let events:ReturnType<AutomaticServices['update']>=[];
  for(let k=0;k<120;k++)events=s.tick();expect(events[0].ids).toEqual(['consideration']);s.input.model.distanceToNextStopM=200;s.tick();expect(events[0].valid()).toBe(false);
  s.input.model.distanceToNextStopM=10000;s.input.model.connection='stale';s.tick();expect(events[0].valid()).toBe(false);
+});
+
+it('automatically reminds passengers about alighting at PH, retries deferred clips and respects switches',()=>{
+ const s=setup();s.input.options={welcome:false,luggage:false,waiting:false,journeyInfo:false,exit:true};s.input.availableServices=['exit'];s.trigger.update(s.input);
+ s.input.train.speedKmh=40;s.input.train.timetableIndex=1;s.input.model.current=null;s.input.model.next=points[1].name;s.input.model.distanceToNextStopM=10000;
+ for(let k=0;k<120;k++)expect(s.tick()).toEqual([]);
+ s.input.model.distanceToNextStopM=700;const first=s.tick();expect(first[0].ids).toEqual(['exit']);
+ s.input.model.next=points[2].name;s.tick();expect(first[0].valid()).toBe(false);
+ s.input.model.next=points[1].name;const retry=s.tick();expect(retry[0].key).not.toBe(first[0].key);expect(retry[0].valid()).toBe(true);retry[0].complete();expect(s.tick()).toEqual([]);
+ s.input.options.exit=false;s.input.model.next=points[2].name;for(let k=0;k<130;k++)expect(s.tick()).toEqual([]);
+});
+it('moving joins wait ten minutes for available journey info and do not replay a welcome backlog',()=>{
+ const s=setup();s.input.availableServices=['consideration','assistance'];s.input.options.journeyInfo=true;s.input.train.speedKmh=50;s.input.train.timetableIndex=1;s.input.model.current=null;s.input.model.distanceToNextStopM=10000;
+ expect(s.trigger.update(s.input)).toEqual([]);for(let k=0;k<119;k++)expect(s.tick()).toEqual([]);const event=s.tick();expect(event.map(e=>e.ids)).toEqual([['consideration']]);
+ s.input.model.connection='stale';s.tick();expect(event[0].valid()).toBe(false);s.input.model.connection='live';expect(s.tick()[0].ids).toEqual(['consideration']);
+});
+
+it('does not call planned platform dwell a red-signal wait when API index already points to the following station',()=>{
+ const s=setup();s.input.train.timetableIndex=1;s.input.model.current=points[0].name;s.input.serverSod=43200;s.trigger.update(s.input);
+ for(let k=0;k<65;k++)expect(s.tick().flatMap(e=>e.ids)).not.toContain('departure_wait');
 });

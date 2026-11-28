@@ -1,4 +1,4 @@
-// Only file identifiers and UI labels. Personal audio stays outside the application.
+// File identifiers shared by the bundled voice pack and optional local overrides.
 export const SERVICE_ANNOUNCEMENTS = {
  welcome: {file:'vitejte.wav',label:'Uvítání'},
  delay: {file:'zpozdeni.wav',label:'Omluva za zpoždění'},

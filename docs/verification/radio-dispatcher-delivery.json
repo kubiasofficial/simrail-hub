@@ -1,0 +1,8 @@
+{
+  "testLauncher": "C:\\Users\\PC\\Desktop\\simrail-hub\\SimRail Hub TEST.exe",
+  "sha256": "6814dc738e1da287eb1ec0daf6de375447693e831f8cc5395adfd0db55f63a7d",
+  "backup": "C:\\Users\\PC\\Desktop\\simrail-hub\\.zalohy\\radio-dispatcher-before-20261128-071000",
+  "stationList": "C:\\Users\\PC\\Desktop\\simrail-hub\\Stanice-k-namluveni.txt",
+  "publicReleaseUnchanged": "0.8.4",
+  "originalRadioMP3Retained": true
+}

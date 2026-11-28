@@ -7,7 +7,7 @@ import {tmp} from './helpers';
 import {LocalRecordings,encodeWav,decodeWav,RECORDING_FILES} from '../src/services/localAudio';
 it('ships all approved public clips with verified hashes, format and nonempty speech',async()=>{
  const manifest=JSON.parse(await readFile(new URL('../assets/recordings/manifest.json',import.meta.url),'utf8'));
- expect(manifest.files).toHaveLength(61);expect(new Set(manifest.files.map((r:{file:string})=>r.file)).size).toBe(61);
+ expect(manifest.files).toHaveLength(62);expect(new Set(manifest.files.map((r:{file:string})=>r.file)).size).toBe(62);
  for(const clip of manifest.files){expect(clip.file).toMatch(/^[a-z0-9_]+\.wav$/);const bytes=await readFile(new URL('../assets/recordings/'+clip.file,import.meta.url));expect(bytes.length).toBe(clip.bytes);expect(createHash('sha256').update(bytes).digest('hex')).toBe(clip.sha256);const samples=decodeWav(bytes);expect(samples.length).toBeGreaterThan(4800);expect(samples.some(x=>Math.abs(x)>.01)).toBe(true);}
  expect(manifest.optionalMissing).toEqual(['vanoce_behem_jizdy.wav']);
  for(const name of RECORDING_FILES)expect(manifest.files.some((r:{file:string})=>r.file===name)).toBe(true);

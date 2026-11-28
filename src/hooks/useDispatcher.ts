@@ -28,11 +28,11 @@ export function useDispatcher(server:string|null,detail:TrainDetailPayload|null,
    if(candidate===undefined){unavailable('Čekám na ověření dříve hlášené komplikace.');return;}
    if(candidate)candidate.trainRuns=Object.fromEntries(candidate.trainIds.map(id=>[id,near.find(t=>t.number===id)?.runId??null]));
    const valid=Date.now()-fetchedAt<15000&&Date.now()-detail!.fetchedAt<15000;
-   const result=monitor.current.update(candidate,fetchedAt,Date.now(),valid);
+   const result=monitor.current.update(candidate,fetchedAt,Date.now(),valid,config.verbosity);
    set({alert:result.current,candidateKey:candidate?.key??null,updatedAt:valid?Date.now():0,status:!valid?'Čekám na aktuální data.':result.current?.state==='checking'?'Ověřuji uklidnění situace…':result.current?'Potvrzená provozní informace':candidate?'Situaci ověřuji několika vzorky…':'V dostupných datech není potvrzené zdržení.'});
    useAnnouncer.getState().reconcileRadio();
    if(result.event){const event=result.event;set({lastMessage:event.text});if(config.audio)useAnnouncer.getState().radio(context+':radio:'+Date.now(),'Vlak '+own.number+', informace dispečera. '+event.text,()=>{const state=useDispatcherState.getState(),settings=useSettings.getState().settings.dispatcher;return settings.enabled&&settings.audio&&state.server===server&&state.number===own.number&&Date.now()-state.updatedAt<15000&&(event.kind==='clear'?!state.alert&&!state.candidateKey:state.alert?.key===event.key&&state.alert.state==='active');});}
   }
   void run();return()=>{alive=false;};
- },[context,config.enabled,config.audio,config.rangeKm,detail,model,trains,fetchedAt,route]);
+ },[context,config.enabled,config.audio,config.rangeKm,config.verbosity,detail,model,trains,fetchedAt,route]);
 }

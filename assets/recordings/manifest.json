@@ -292,6 +292,12 @@
       "seconds": 18.090666666666667
     },
     {
+      "file": "vysilacka.wav",
+      "bytes": 52742,
+      "sha256": "b91cead58bcace90da662734853ba9df2b062e350f76926bc9ef673c2dd0df14",
+      "seconds": 0.5485833333333333
+    },
+    {
       "file": "vystupovani.wav",
       "bytes": 1650766,
       "sha256": "b24e6926245c697a373516fe2f706d149e20f49658ea105ea7cc1cfc6b2954de",

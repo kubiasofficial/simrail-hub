@@ -1,0 +1,31 @@
+{
+  "at": "2026-11-28T06:08:49.570Z",
+  "info": {
+    "version": "0.8.4",
+    "platform": "win32",
+    "electron": "45.4.1",
+    "channel": "test",
+    "buildId": "2026-11-28T06:02:37.481Z"
+  },
+  "radioCueBundled": true,
+  "publicAudioFiles": 62,
+  "radioMetadata": {
+    "artist": "MARC KORN x SEMITOO",
+    "title": "RAGGA GA BAM",
+    "fetchedAt": 1795846129501,
+    "validUntil": 1795846189501
+  },
+  "actualPortableStarted": true,
+  "isolatedProfile": true,
+  "matchedFiles": 151,
+  "privateAudioBundled": false,
+  "stationClips": [
+    "Katowice",
+    "Sosnowiec Główny",
+    "Sosnowiec Południowy"
+  ],
+  "mobileRevision": "2026-11-28.1",
+  "pairedPackagedMobile": true,
+  "servicesAvailable": 14,
+  "portableSHA256": "6814dc738e1da287eb1ec0daf6de375447693e831f8cc5395adfd0db55f63a7d"
+}
